@@ -1,0 +1,297 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+body {
+    background-color: #040F15 !important;
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+
+}
+
+
+nav,
+footer {
+    background-color: #E1EBDC;
+}
+
+.nav-link {
+    padding-left: 3%;
+
+}
+
+
+.nav1 {
+    background-color: #040F15;
+    box-shadow: rgba(20, 18, 18, 0.189) 0px 7px 10px, rgba(30, 28, 28, 0.961) 0px 5px 5px;
+}
+
+.nav1 .navbar-nav .nav-item {
+    color: white;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.nav1 .navbar-nav .nav-item:hover, 
+.nav1 .navbar-nav .nav-item:focus, 
+.nav1 .navbar-nav .nav-item:active {
+    background-color: #343a40;
+    color: #ffc107;
+}
+
+.nav1 .navbar-nav .profile-link:hover, 
+.nav1 .navbar-nav .profile-link:focus, 
+.nav1 .navbar-nav .profile-link:active {
+    background-color: #343a40;
+    color: #ffc107;
+}
+
+.nav1 .navbar-nav .profile-link {
+    display: flex;
+    align-items: center;
+}
+
+
+
+
+
+
+#main .title-text {
+    padding: 5%;
+
+}
+
+#main h1 {
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    background-image: linear-gradient(135deg, #823D99, #CC2C5F);
+    font-size: clamp(120px, 20px, 30px);
+}
+
+#main p {
+    color: white;
+    font-size: clamp(25px, 10px, 8px);
+}
+
+#main .helpbtn {
+    background-color: #008A90;
+
+}
+
+#unleas {
+    background-color: #222831;
+}
+
+#unleas1 {
+    padding: 5%;
+    /* width: 70%; */
+}
+
+#unleas1 h3 {
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    background-image: linear-gradient(135deg, #548279, #815CCE);
+    font-size: clamp(80px, 20px, 10px);
+}
+
+#unleas1 p {
+    color: white;
+    font-size: clamp(20px, 8px, 5px);
+}
+
+#unleas1 .imapcttbn {
+    background-color: violet;
+    color: white;
+}
+
+
+#expedition {
+    h3 {
+        color: white;
+        font-weight: 700;
+        /* width: 70%; */
+        font-size: clamp(50px, 20px, 10px);
+    }
+
+    p {
+        color: white;
+        font-size: clamp(20px, 8px, 5px);
+    }
+
+    Button {
+        background-color: violet;
+        color: white;
+        width: 50%;
+    }
+}
+
+
+
+#envoffr {
+    background-color: #393E46;
+    padding: 2% 5% 2% 5%;
+    color: white;
+
+
+
+    h3 {
+        color: white;
+        font-weight: 700;
+
+        font-size: clamp(50px, 20px, 10px);
+    }
+
+    h3 {
+        color: white;
+        font-weight: 700;
+        width: 70%;
+        font-size: clamp(50px, 20px, 10px);
+    }
+
+    p {
+        color: white;
+        font-size: clamp(20px, 8px, 5px);
+    }
+}
+
+
+#prtteam {
+    h3 {
+        color: white;
+        font-weight: 700;
+        /* width: 70%; */
+        font-size: clamp(50px, 20px, 10px);
+    }
+
+    p {
+        color: white;
+        font-size: clamp(20px, 8px, 5px);
+    }
+
+    Button {
+        background-color: #008A90;
+        color: white;
+        width: 50%;
+    }
+
+}
+
+
+#services {
+    padding: 2% 5% 2% 5%;
+    color: white;
+
+    /* div {
+        width: 100%;
+
+    } */
+
+    h3 {
+        color: white;
+        font-weight: 700;
+
+        font-size: clamp(50px, 20px, 10px);
+    }
+
+    h3 {
+        color: white;
+        font-weight: 700;
+        width: 70%;
+        font-size: clamp(50px, 20px, 10px);
+    }
+
+    p {
+        color: white;
+        font-size: clamp(20px, 8px, 5px);
+    }
+}
+
+#mentor-nav {
+    
+    background-color: #040F15 !important;
+
+    span {
+        font-family: "Roboto", sans-serif;
+        font-weight: 400;
+        letter-spacing: 1px;
+        font-style:normal;
+    }
+    
+}
+
+#mentor-table {
+    border-collapse: separate;
+    border-spacing: 15px 0; /* Prevent any default spacing */
+    background-color: transparent !important;
+    
+    
+    
+    font-style:normal;
+    td{
+        font-weight: 300;
+    }
+    th{
+        font-weight: 500;
+    }
+}
+
+#mentor-table td, #mentor-table th {
+ 
+    position: relative;
+    background-color: #102836 !important;
+    color: white !important;
+    
+}
+
+.pagination, .pagination li, .pagination a {
+    background-color: transparent !important;
+    color: white;
+    border: none;
+}
+
+.pagination li:active, .pagination li:hover {
+    background-color: orangered;
+    box-shadow: none;
+    color: white !important;
+}
+
+.pagination .active-page .page-link {
+    background-color: orangered !important;
+    color: white !important;
+    border-color: orangered !important;
+}
+
+#pagebar {
+    background-color: #040F15 !important;
+}
+
+#mentorsPerPageSelect {
+    background-color: transparent !important;
+    border: none;
+    color: white;
+}
+
+#mentorsPerPageSelect option {
+    background-color: #000 !important; /* Change this to the desired color for the dropdown items */
+    color: white !important;
+    border: none;
+}
+
+.pagination-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.pagination {
+    white-space: nowrap;
+}
+
+.row-label{
+    font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+    .row-label {
+        font-size: 0.875rem; /* Slightly smaller for mobile view */
+    }
+}

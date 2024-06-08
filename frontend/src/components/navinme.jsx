@@ -4,9 +4,11 @@ import { Link } from 'react-router-dom';
 import soloLogo1 from '../images/image.svg';
 import axios from 'axios';
 
-const Navinvmen = ({ username, profilePhoto }) => {
+const Navinvmen = () => {
   const [appointmentCount, setAppointmentCount] = useState(0);
-
+  const username = localStorage.getItem('username');
+    const profilePhoto = localStorage.getItem('profilePhoto');
+    const id = localStorage.getItem('id');
   const fetchAppointmentCount = async () => {
     try {
       const response = await axios.get('/api/appointments/count');
@@ -35,7 +37,7 @@ const Navinvmen = ({ username, profilePhoto }) => {
             <NavLink as={Link} to="appointment" className="nav-item text-white">
               Appointments {appointmentCount > 0 && (<span className="badge bg-secondary">{appointmentCount}</span>)}
             </NavLink>
-            <NavLink href="#profile" className="profile-link nav-item">
+            <NavLink href={`/mi/miprofile/${id}`} className="profile-link nav-item">
               <div className='d-flex align-items-center col'>
                 <img src={profilePhoto} width="30" height="30" className="rounded-circle me-2" alt="profile" />
                 {username}

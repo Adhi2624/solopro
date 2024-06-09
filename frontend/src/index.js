@@ -5,6 +5,7 @@ import App from './App';
 
 import { Auth0Provider } from '@auth0/auth0-react';
 import Stepper from './components/Timeline';
+import SignupQuestions from './components/SignupQuestions';
 
 import reportWebVitals from './reportWebVitals';
  import 'bootstrap/dist/css/bootstrap.min.css'

@@ -1,0 +1,23 @@
+.container {
+    max-width: 800px;
+  }
+  
+  h2 {
+    margin-bottom: 30px;
+  }
+  
+  .form-control {
+    margin-bottom: 15px;
+  }
+  
+  .btn-primary {
+    margin-top: 10px;
+  }
+  
+  .table-responsive {
+    margin-top: 20px;
+  }
+  
+  .table {
+    margin-top: 20px;
+  }

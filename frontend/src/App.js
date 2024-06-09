@@ -1,24 +1,31 @@
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './pages/home';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import  StudentsRoute  from './routes/studentsRoute';
-import SignUp from './components/SignUP';
-import './css/style.css';
 import Login from './components/Login';
-import MiRoute from './routes/mi';
+import SignUP from './components/SignUP';
+import Blogs from './components/blog/blog-cards';
+import BlogDetail from './components/blog/BlogDetails';
+import AdminBlog from './components/blog/AdminBlog';
+// import Dashboard from './pages/dashboard';
+import Navbarr from './components/nav';
 
 function App() {
-  return (
-    <Router>
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/signup' element={<SignUp />} />  
-        <Route path='/students/*' element={<StudentsRoute />} />
-        <Route path='/mi/*' element={<MiRoute />} />
-        <Route path='/login' element={<Login />} />
-      </Routes>
-    </Router>
-  );
+    return (
+        <Router>
+            <div className="App">
+                {/* <Navbarr /> */}
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/signup" element={<SignUP />} />
+                    <Route path="/blogs" element={<Blogs />} />
+                    <Route path="/blogs/:id" element={<BlogDetail />} />
+                    <Route path="/adminblog" element={<AdminBlog />} />
+                    {/* <Route path="/dashboard" element={<Dashboard />} /> */}
+                </Routes>
+            </div>
+        </Router>
+    );
 }
 
 export default App;

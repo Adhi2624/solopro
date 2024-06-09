@@ -14,13 +14,13 @@ import service2 from '../images/service2.png';
 import service3 from '../images/service3.png';
 import service4 from '../images/service4.png';
 import { CiHeart } from "react-icons/ci";
-import { RouterLink } from 'react-router-dom';
 import Stepper from '../components/Timeline';
+
 const Home = () => {
     const navigate = useNavigate();
 
     const handleSignUpNavigation = () => {
-        navigate('/SignUp');
+        navigate('/signup');
     };
 
     return (
@@ -145,7 +145,9 @@ const Home = () => {
                                 <img src={service2} alt="service2 img" className="bg-light rounded-4" />
                             </Col>
                             <Col>
-                                <img src={service3} alt="service3 img" className="bg-light rounded-4" />
+                                <Link to="/blogs" style={{ textDecoration: 'none' }}>
+                                    <img src={service3} alt="service3 img" className="bg-light rounded-4" />
+                                </Link>
                             </Col>
                             <Col>
                                 <img src={service4} alt="service4 img" className="bg-light rounded-4" />
@@ -202,62 +204,66 @@ const Home = () => {
                                 </p>
                                 <p>
                                     <a href="#!" className="text-reset">
-                                        News
+                                        Vendors
+                                    </a>
+                                </p>
+                                <p>
+                                    <a href="#!" className="text-reset">
+                                        Investors
                                     </a>
                                 </p>
                             </Col>
 
                             <Col md="3" lg="2" xl="2" className="mx-auto mb-4">
-                                <h6 className="text-uppercase fw-bold mb-4">Packages</h6>
+                                <h6 className="text-uppercase fw-bold mb-4">Affiliate</h6>
                                 <p>
                                     <a href="#!" className="text-reset">
-                                        Features
+                                        Become a Partner
                                     </a>
                                 </p>
                                 <p>
                                     <a href="#!" className="text-reset">
-                                        Pricing Structure
+                                        Lead Generator
                                     </a>
                                 </p>
                                 <p>
                                     <a href="#!" className="text-reset">
-                                        Illustrations
+                                        Press Media
+                                    </a>
+                                </p>
+                                <p>
+                                    <a href="#!" className="text-reset">
+                                        Ambassadors
                                     </a>
                                 </p>
                             </Col>
 
                             <Col md="4" lg="3" xl="3" className="mx-auto mb-md-0 mb-4">
-                                <h6 className="text-uppercase fw-bold mb-4">Engage</h6>
-                                <p>Tweet to Us</p>
-                                <p>Stay Updated</p>
-                                <p>Community Chats</p>
+                                <h6 className="text-uppercase fw-bold mb-4">Engage Us</h6>
+                                <p>
+                                    <i icon="home" className="me-3" />New York, NY 10012, US
+                                </p>
+                                <p>
+                                    <i icon="envelope" className="me-3" />
+                                    info@example.com
+                                </p>
+                                <p>
+                                    <i icon="phone" className="me-3" /> + 01 234 567 88
+                                </p>
+                                <p>
+                                    <i icon="print" className="me-3" /> + 01 234 567 89
+                                </p>
                             </Col>
                         </Row>
                     </Container>
                 </section>
-                <div>
-                    <Row>
-                        <Col lg={3}>
-                            <div className="text-start">© SOLOPRO 2024</div>
-                        </Col>
-                        <Col lg={3}>
-                            <div className="text-end">
-                                <Row>
-                                    <Col lg={2}>
-                                        <p>Privacy</p>
-                                    </Col>
-                                    <Col lg={2}>
-                                        <p>Policy</p>
-                                    </Col>
-                                </Row>
-                            </div>
-                        </Col>
-                    </Row>
+
+                <div className="text-center p-4" bgColor="white">
+                    © 2021 Copyright:
+                    <a className="text-reset fw-bold" href="https://solopro.com/">Solopro.com</a>
                 </div>
             </footer>
-        </div>
-        </>
-        
+        </div></>
     );
 };
 

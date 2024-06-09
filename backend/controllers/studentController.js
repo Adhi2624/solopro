@@ -1,5 +1,5 @@
 const { ObjectId } = require("mongodb");
-const { getDB } = require('../db');
+const { getDB } = require('../config/db');
 
 exports.getStudentById = async (req, res) => {
     const id = req.body._id;

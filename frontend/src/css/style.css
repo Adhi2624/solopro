@@ -4,20 +4,15 @@ body {
     background-color: #040F15 !important;
     font-family: "Montserrat", sans-serif;
     font-optical-sizing: auto;
-
 }
 
-
-nav,
-footer {
+nav, footer {
     background-color: #E1EBDC;
 }
 
 .nav-link {
     padding-left: 3%;
-
 }
-
 
 .nav1 {
     background-color: #040F15;
@@ -30,15 +25,15 @@ footer {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.nav1 .navbar-nav .nav-item:hover, 
-.nav1 .navbar-nav .nav-item:focus, 
+.nav1 .navbar-nav .nav-item:hover,
+.nav1 .navbar-nav .nav-item:focus,
 .nav1 .navbar-nav .nav-item:active {
     background-color: #343a40;
     color: #ffc107;
 }
 
-.nav1 .navbar-nav .profile-link:hover, 
-.nav1 .navbar-nav .profile-link:focus, 
+.nav1 .navbar-nav .profile-link:hover,
+.nav1 .navbar-nav .profile-link:focus,
 .nav1 .navbar-nav .profile-link:active {
     background-color: #343a40;
     color: #ffc107;
@@ -49,14 +44,8 @@ footer {
     align-items: center;
 }
 
-
-
-
-
-
 #main .title-text {
     padding: 5%;
-
 }
 
 #main h1 {
@@ -64,17 +53,16 @@ footer {
     -webkit-background-clip: text;
     background-clip: text;
     background-image: linear-gradient(135deg, #823D99, #CC2C5F);
-    font-size: clamp(120px, 20px, 30px);
+    font-size: clamp(30px, 6vw, 120px);
 }
 
 #main p {
     color: white;
-    font-size: clamp(25px, 10px, 8px);
+    font-size: clamp(10px, 2vw, 25px);
 }
 
 #main .helpbtn {
     background-color: #008A90;
-
 }
 
 #unleas {
@@ -83,7 +71,6 @@ footer {
 
 #unleas1 {
     padding: 5%;
-    /* width: 70%; */
 }
 
 #unleas1 h3 {
@@ -91,12 +78,12 @@ footer {
     -webkit-background-clip: text;
     background-clip: text;
     background-image: linear-gradient(135deg, #548279, #815CCE);
-    font-size: clamp(80px, 20px, 10px);
+    font-size: clamp(20px, 4vw, 80px);
 }
 
 #unleas1 p {
     color: white;
-    font-size: clamp(20px, 8px, 5px);
+    font-size: clamp(8px, 2vw, 20px);
 }
 
 #unleas1 .imapcttbn {
@@ -104,143 +91,103 @@ footer {
     color: white;
 }
 
-
-#expedition {
-    h3 {
-        color: white;
-        font-weight: 700;
-        /* width: 70%; */
-        font-size: clamp(50px, 20px, 10px);
-    }
-
-    p {
-        color: white;
-        font-size: clamp(20px, 8px, 5px);
-    }
-
-    Button {
-        background-color: violet;
-        color: white;
-        width: 50%;
-    }
+#expedition h3 {
+    color: white;
+    font-weight: 700;
+    font-size: clamp(20px, 4vw, 50px);
 }
 
+#expedition p {
+    color: white;
+    font-size: clamp(8px, 2vw, 20px);
+}
 
+#expedition button {
+    background-color: violet;
+    color: white;
+
+}
 
 #envoffr {
     background-color: #393E46;
-    padding: 2% 5% 2% 5%;
+    padding: 2% 5%;
     color: white;
-
-
-
-    h3 {
-        color: white;
-        font-weight: 700;
-
-        font-size: clamp(50px, 20px, 10px);
-    }
-
-    h3 {
-        color: white;
-        font-weight: 700;
-        width: 70%;
-        font-size: clamp(50px, 20px, 10px);
-    }
-
-    p {
-        color: white;
-        font-size: clamp(20px, 8px, 5px);
-    }
 }
 
-
-#prtteam {
-    h3 {
-        color: white;
-        font-weight: 700;
-        /* width: 70%; */
-        font-size: clamp(50px, 20px, 10px);
-    }
-
-    p {
-        color: white;
-        font-size: clamp(20px, 8px, 5px);
-    }
-
-    Button {
-        background-color: #008A90;
-        color: white;
-        width: 50%;
-    }
-
+#envoffr h3 {
+    color: white;
+    font-weight: 700;
+    font-size: clamp(20px, 4vw, 50px);
 }
 
+#envoffr p {
+    color: white;
+    font-size: clamp(8px, 2vw, 20px);
+}
+
+#prtteam h3 {
+    color: white;
+    font-weight: 700;
+    font-size: clamp(20px, 4vw, 50px);
+}
+
+#prtteam p {
+    color: white;
+    font-size: clamp(8px, 2vw, 20px);
+}
+
+#prtteam button {
+    background-color: #008A90;
+    color: white;
+    
+}
 
 #services {
-    padding: 2% 5% 2% 5%;
+    padding: 2% 5%;
     color: white;
+}
 
-    /* div {
-        width: 100%;
+#services h3 {
+    color: white;
+    font-weight: 700;
+    font-size: clamp(20px, 4vw, 50px);
+}
 
-    } */
-
-    h3 {
-        color: white;
-        font-weight: 700;
-
-        font-size: clamp(50px, 20px, 10px);
-    }
-
-    h3 {
-        color: white;
-        font-weight: 700;
-        width: 70%;
-        font-size: clamp(50px, 20px, 10px);
-    }
-
-    p {
-        color: white;
-        font-size: clamp(20px, 8px, 5px);
-    }
+#services p {
+    color: white;
+    font-size: clamp(8px, 2vw, 20px);
 }
 
 #mentor-nav {
-    
     background-color: #040F15 !important;
+}
 
-    span {
-        font-family: "Roboto", sans-serif;
-        font-weight: 400;
-        letter-spacing: 1px;
-        font-style:normal;
-    }
-    
+#mentor-nav span {
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    letter-spacing: 1px;
+    font-style: normal;
 }
 
 #mentor-table {
     border-collapse: separate;
-    border-spacing: 15px 0; /* Prevent any default spacing */
+    border-spacing: 15px 0;
     background-color: transparent !important;
-    
-    
-    
-    font-style:normal;
-    td{
-        font-weight: 300;
-    }
-    th{
-        font-weight: 500;
-    }
+    font-style: normal;
+}
+
+#mentor-table td {
+    font-weight: 300;
+}
+
+#mentor-table th {
+    font-weight: 500;
 }
 
 #mentor-table td, #mentor-table th {
- 
     position: relative;
     background-color: #102836 !important;
     color: white !important;
-    
 }
 
 .pagination, .pagination li, .pagination a {
@@ -272,7 +219,7 @@ footer {
 }
 
 #mentorsPerPageSelect option {
-    background-color: #000 !important; /* Change this to the desired color for the dropdown items */
+    background-color: #000 !important;
     color: white !important;
     border: none;
 }
@@ -286,12 +233,12 @@ footer {
     white-space: nowrap;
 }
 
-.row-label{
+.row-label {
     font-size: 1rem;
 }
 
 @media (max-width: 768px) {
     .row-label {
-        font-size: 0.875rem; /* Slightly smaller for mobile view */
+        font-size: 0.875rem;
     }
 }

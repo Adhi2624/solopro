@@ -1,8 +1,31 @@
+// const express = require('express');
+// const cors = require('cors');
+// const dotenv = require('dotenv');
+// const connectDB = require('./config/db'); // Ensure this points to the correct path of your db connection file
+// const { auth } = require('./middleware/auth');
+
+// const mentorController = require('./controllers/mentorController');
+// const studentController = require('./controllers/studentController');
+// const meetingController = require('./controllers/meetingController');
+// const blogRoutes = require('./routes/blogs');
+// const featuredStoryRoutes = require('./routes/featuredStories');
+// const moreStoryRoutes = require('./routes/moreStories');
+// const userRoutes = require('./routes/userRoutes'); // Import userRoutes
+// const mentorRoutes = require('./routes/mentorRoutes'); // Import mentorRoutes
+// const studentRoutes = require('./routes/studentRoutes'); // Import studentRoutes
+// const investorRoutes = require('./routes/investorRoutes'); // Import investorRoutes
+// const { errorHandler } = require('./middleware/errorHandler');
+// Import required route files first
+const userRoutes = require('./routes/userRoutes');
+const mentorRoutes = require('./routes/mentorRoutes');
+const studentRoutes = require('./routes/studentRoutes');
+const investorRoutes = require('./routes/investorRoutes');
+
+// Other imports
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
-const connectDB = require('./config/db'); // Ensure this points to the correct path of your db connection file
-
+const connectDB = require('./config/db');
 const mentorController = require('./controllers/mentorController');
 const studentController = require('./controllers/studentController');
 const meetingController = require('./controllers/meetingController');
@@ -11,8 +34,9 @@ const featuredStoryRoutes = require('./routes/featuredStories');
 const moreStoryRoutes = require('./routes/moreStories');
 const { errorHandler } = require('./middleware/errorHandler');
 
-dotenv.config();
+// Rest of the code remains the same
 
+dotenv.config();
 const app = express();
 
 // Init Middleware
@@ -37,6 +61,12 @@ connectDB()
         app.use('/api/blogs', blogRoutes);
         app.use('/api/featuredStories', featuredStoryRoutes);
         app.use('/api/moreStories', moreStoryRoutes);
+        
+        // Define Routes for users, mentors, students, and investors
+        app.use('/api/users', userRoutes);
+        app.use('/api/mentors', mentorRoutes);
+        app.use('/api/students', studentRoutes);
+        app.use('/api/investors', investorRoutes);
 
         // Error Handler Middleware
         app.use(errorHandler);

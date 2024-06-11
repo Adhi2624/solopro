@@ -8,6 +8,7 @@ import BlogDetail from './components/blog/BlogDetails';
 import AdminBlog from './components/blog/AdminBlog';
 // import Dashboard from './pages/dashboard';
 import Navbarr from './components/nav';
+import SignupQuestions from './components/SignupQuestions';
 
 function App() {
     return (
@@ -17,7 +18,8 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/login" element={<Login />} />
-                    <Route path="/signup" element={<SignUP />} />
+                    <Route path="/newReg" element={<SignUP />} />
+                    <Route path="/signUp" element={<SignupQuestions />} />
                     <Route path="/blogs" element={<Blogs />} />
                     <Route path="/blogs/:type/:id" element={<BlogDetail />} />
                     <Route path="/adminblog" element={<AdminBlog />} />

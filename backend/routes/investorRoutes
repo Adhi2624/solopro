@@ -1,0 +1,7 @@
+const express = require('express');
+const router = express.Router();
+const { registerInvestor } = require('../controllers/investorController');
+
+router.post('/register', registerInvestor);
+
+module.exports = router;

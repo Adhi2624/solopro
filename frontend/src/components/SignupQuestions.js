@@ -7,7 +7,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 const CustomTextField = styled(TextField)`
   & .MuiOutlinedInput-root {
     color: white;
-    
+
     & fieldset {
       border: 1px solid #fff;
     }
@@ -70,14 +70,16 @@ const theme = createTheme({
 
 export default function SignupQuestions() {
   const [userType, setUserType] = useState('');
-  const [userQuestions, setUserQuestions] = useState([
-    { label: 'Name', key: 'name', value: '', required: true, error: '' },
-    { label: 'Phone', key: 'phone', value: '', minLength: 10, maxLength: 10, required: true, error: '' },
-    { label: 'Email', key: 'email', value: '', required: true, error: '' },
-    { label: 'LinkedIn', key: 'linkedin', value: '', required: true, error: '' },
-    { label: 'Institution', key: 'institution', value: '', required: true, error: '' },
-    { label: 'Native/Place of Work', key: 'workplace', value: '', required: true, error: '' },
-  ]);
+  const [name, setName] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
+  const [linkedin, setLinkedin] = useState('');
+  const [institution, setInstitution] = useState('');
+  const [workplace, setWorkplace] = useState('');
+  const [errors, setErrors] = useState({});
 
   const [profileImage, setProfileImage] = useState(null);
   const [profileImageUrl, setProfileImageUrl] = useState(null);
@@ -94,14 +96,6 @@ export default function SignupQuestions() {
     setUserType(event.target.value);
   };
 
-  const handleInputChange = (key, value) => {
-    setUserQuestions((prevQuestions) =>
-      prevQuestions.map((question) =>
-        question.key === key ? { ...question, value: value, error: '' } : question
-      )
-    );
-  };
-
   const handleFileChange = (event, setImage, setImageUrl) => {
     const file = event.target.files[0];
     if (file) {
@@ -111,23 +105,58 @@ export default function SignupQuestions() {
   };
 
   const validateForm = () => {
+    const newErrors = {};
     let isValid = true;
-    setUserQuestions((prevQuestions) =>
-      prevQuestions.map((question) => {
-        let error = '';
-        if (question.required && !question.value) {
-          error = `${question.label} is required`;
-          isValid = false;
-        } else if (question.minLength && question.value.length < question.minLength) {
-          error = `${question.label} should be at least ${question.minLength} characters`;
-          isValid = false;
-        } else if (question.maxLength && question.value.length > question.maxLength) {
-          error = `${question.label} should be at most ${question.maxLength} characters`;
-          isValid = false;
-        }
-        return { ...question, error };
-      })
-    );
+
+    if (!name) {
+      newErrors.name = 'Name is required';
+      isValid = false;
+    }
+
+    if (!username) {
+      newErrors.username = 'Username is required';
+      isValid = false;
+    }
+
+    if (!password) {
+      newErrors.password = 'Password is required';
+      isValid = false;
+    }
+
+    if (password !== confirmPassword) {
+      newErrors.confirmPassword = 'Passwords do not match';
+      isValid = false;
+    }
+
+    if (!phone) {
+      newErrors.phone = 'Phone is required';
+      isValid = false;
+    } else if (phone.length !== 10) {
+      newErrors.phone = 'Phone should be exactly 10 characters';
+      isValid = false;
+    }
+
+    if (!email) {
+      newErrors.email = 'Email is required';
+      isValid = false;
+    }
+
+    if (!linkedin) {
+      newErrors.linkedin = 'LinkedIn is required';
+      isValid = false;
+    }
+
+    if (!institution) {
+      newErrors.institution = 'Institution is required';
+      isValid = false;
+    }
+
+    if (!workplace) {
+      newErrors.workplace = 'Native/Place of Work is required';
+      isValid = false;
+    }
+
+    setErrors(newErrors);
     return isValid;
   };
 
@@ -135,182 +164,9 @@ export default function SignupQuestions() {
     event.preventDefault();
     if (validateForm()) {
       // Form is valid, proceed with form submission logic
-      console.log('Form submitted', userQuestions);
+      console.log('Form submitted', { name, username, password, phone, email, linkedin, institution, workplace });
     }
   };
-
-  const renderUserQuestions = () => (
-    <>
-      <Typography variant="h6" sx={{ fontWeight: 'bold', display: 'flex', textAlign: 'center', alignContent: 'center' }}>
-        Before you Finish, Let's get to know about you a bit
-      </Typography>
-      {userQuestions.map((question) => (
-        <CustomTextField
-          key={question.key}
-          label={question.label}
-          variant="outlined"
-          value={question.value}
-          onChange={(e) => handleInputChange(question.key, e.target.value)}
-          fullWidth
-          sx={{ mb: 2 }}
-          InputLabelProps={{ style: { color: 'white' } }}
-          InputProps={{ style: { color: 'white' } }}
-          placeholder={question.label} // Set placeholder to test
-          error={!!question.error}
-          helperText={question.error}
-        />
-      ))}
-      <CustomSelect
-        value={userType}
-        onChange={handleUserTypeChange}
-        variant="outlined"
-        fullWidth
-        sx={{ mb: 2 }}
-      >
-        <CustomMenuItem value="">Select User Type</CustomMenuItem>
-        <CustomMenuItem value="Student">Student</CustomMenuItem>
-        <CustomMenuItem value="Mentor">Mentor</CustomMenuItem>
-        <CustomMenuItem value="Investor">Investor</CustomMenuItem>
-      </CustomSelect>
-      {userType && renderAdditionalQuestions(userType)}
-    </>
-  );
-
-  const renderAdditionalQuestions = (type) => {
-    switch (type) {
-      case 'Student':
-        return renderStudentQuestions();
-      case 'Mentor':
-      case 'Investor':
-        return renderMentorOrInvestorQuestions(type);
-      default:
-        return null;
-    }
-  };
-
-  const renderStudentQuestions = () => (
-    <>
-      <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
-        Student Model:
-      </Typography>
-      <CustomTextField
-        label="College Name"
-        variant="outlined"
-        fullWidth
-        sx={{ mb: 2 }}
-      />
-      <CustomTextField
-        label="Course"
-        variant="outlined"
-        fullWidth
-        sx={{ mb: 2 }}
-      />
-      <CustomTextField
-        label="College Location"
-        variant="outlined"
-        fullWidth
-        sx={{ mb: 2 }}
-      />
-      <CustomTextField
-        label="GitHub"
-        variant="outlined"
-        fullWidth
-        sx={{ mb: 2 }}
-      />
-      <input type="file" accept="image/*" id="college-id-image" style={{ display: 'none' }} onChange={(e) => handleFileChange(e, setCollegeIdImage, setCollegeIdImageUrl)} />
-      <label htmlFor="college-id-image">
-        <Button component="span" variant="outlined" sx={{ color: '#fff', borderColor: '#369eff', mb: 2 }}>
-          Upload College ID Photo
-        </Button>
-      </label>
-      {collegeIdImageUrl && <img src={collegeIdImageUrl} alt="College ID Preview" style={{ width: '100%', marginBottom: '16px' }} />}
-      <input type="file" accept="image/*" id="profile-image" style={{ display: 'none' }} onChange={(e) => handleFileChange(e, setProfileImage, setProfileImageUrl)} />
-      <label htmlFor="profile-image">
-        <Button component="span" variant="outlined" sx={{ color: '#fff', borderColor: '#369eff', mb: 2 }}>
-          Upload Profile Image
-        </Button>
-      </label>
-      {profileImageUrl && <img src={profileImageUrl} alt="Profile Preview" style={{ width: '100%', marginBottom: '16px' }} />}
-    </>
-  );
-
-  const renderMentorOrInvestorQuestions = (type) => (
-    <>
-      <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
-        {type} Model:
-      </Typography>
-      <CustomTextField
-        label="Area of Expertise"
-        variant="outlined"
-        fullWidth
-        sx={{ mb: 2 }}
-      />
-      <CustomTextField
-        label="Experience"
-        variant="outlined"
-        fullWidth
-        sx={{ mb: 2 }}
-      />
-      <input type="file" accept="image/*" id={`${type.toLowerCase()}-proof-image`} style={{ display: 'none' }} onChange={(e) => handleFileChange(e, setProofImage, setProofImageUrl)} />
-      <label htmlFor={`${type.toLowerCase()}-proof-image`}>
-        <Button component="span" variant="outlined" sx={{ color: '#fff', borderColor: '#369eff', mb: 2 }}>
-          Upload ID Proof
-        </Button>
-      </label>
-      {proofImageUrl && <img src={proofImageUrl} alt="ID Proof Preview" style={{ width: '100%', marginBottom: '16px' }} />}
-      <FormControlLabel
-        control={
-          <Switch
-            checked={availableToMentorOrInvest}
-            onChange={(e) => setAvailableToMentorOrInvest(e.target.checked)}
-            color="primary"
-          />
-        }
-        label={`Available to ${type === 'Mentor' ? 'Mentor' : 'Invest'}`}
-        sx={{ color: 'white', mb: 2 }}
-      />
-      <CustomTextField
-        label="Mentorship Count"
-        variant="outlined"
-        type="number"
-        fullWidth
-        sx={{ mb: 2 }}
-        value={mentorshipCount}
-        onChange={(e) => setMentorshipCount(e.target.value)}
-      />
-      {type === 'Investor' && (
-        <>
-          <CustomTextField
-            label="Investment Count"
-            variant="outlined"
-            type="number"
-            fullWidth
-            sx={{ mb: 2 }}
-            value={investmentCount}
-            onChange={(e) => setInvestmentCount(e.target.value)}
-          />
-          {investmentCount > 0 && (
-            <CustomTextField
-              label="Investment Amount"
-              variant="outlined"
-              type="number"
-              fullWidth
-              sx={{ mb: 2 }}
-              value={investmentAmount}
-              onChange={(e) => setInvestmentAmount(e.target.value)}
-            />
-          )}
-        </>
-      )}
-      <input type="file" accept="image/*" id={`${type.toLowerCase()}-profile-image`} style={{ display: 'none' }} onChange={(e) => handleFileChange(e, setProfileImage, setProfileImageUrl)} />
-      <label htmlFor={`${type.toLowerCase()}-profile-image`}>
-        <Button component="span" variant="outlined" sx={{ color: '#fff', borderColor: '#369eff', mb: 2 }}>
-          Upload Profile Image
-        </Button>
-      </label>
-      {profileImageUrl && <img src={profileImageUrl} alt="Profile Preview" style={{ width: '100%', marginBottom: '16px' }} />}
-    </>
-  );
 
   return (
     <ThemeProvider theme={theme}>
@@ -334,7 +190,301 @@ export default function SignupQuestions() {
           <Typography variant="h6" sx={{ color: 'white', fontWeight: 'bold' }}>
             ONE LAST STEP!
           </Typography>
-          {renderUserQuestions()}
+          <Typography variant="h6" sx={{ fontWeight: 'bold', display: 'flex', textAlign: 'center', alignContent: 'center' }}>
+            Before you Finish, Let's get to know about you a bit
+          </Typography>
+          <CustomTextField
+            label="Name"
+            variant="outlined"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            fullWidth
+            sx={{ mb: 2 }}
+            InputLabelProps={{ style: { color: 'white' } }}
+            InputProps={{ style: { color: 'white' } }}
+            placeholder="Name"
+            error={!!errors.name}
+            helperText={errors.name}
+          />
+          <CustomTextField
+            label="Username"
+            variant="outlined"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            fullWidth
+            sx={{ mb: 2 }}
+            InputLabelProps={{ style: { color: 'white' } }}
+            InputProps={{ style: { color: 'white' } }}
+            placeholder="Username"
+            error={!!errors.username}
+            helperText={errors.username}
+          />
+          <CustomTextField
+            label="Password"
+            variant="outlined"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            fullWidth
+            sx={{ mb: 2 }}
+            InputLabelProps={{ style: { color: 'white' } }}
+            InputProps={{ style: { color: 'white' } }}
+            placeholder="Password"
+            error={!!errors.password}
+            helperText={errors.password}
+            type="password"
+          />
+          <CustomTextField
+            label="Confirm Password"
+            variant="outlined"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            fullWidth
+            sx={{ mb: 2 }}
+            InputLabelProps={{ style: { color: 'white' } }}
+            InputProps={{ style: { color: 'white' } }}
+            placeholder="Confirm Password"
+            error={!!errors.confirmPassword}
+            helperText={errors.confirmPassword}
+            type="password"
+          />
+          <CustomTextField
+            label="Phone"
+            variant="outlined"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            fullWidth
+            sx={{ mb: 2 }}
+            InputLabelProps={{ style: { color: 'white' } }}
+            InputProps={{ style: { color: 'white' } }}
+            placeholder="Phone"
+            error={!!errors.phone}
+            helperText={errors.phone}
+            type="tel"
+          />
+          <CustomTextField
+            label="Email"
+            variant="outlined"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            fullWidth
+            sx={{ mb: 2 }}
+            InputLabelProps={{ style: { color: 'white' } }}
+            InputProps={{ style: { color: 'white' } }}
+            placeholder="Email"
+            error={!!errors.email}
+            helperText={errors.email}
+            type="email"
+          />
+          <CustomTextField
+            label="LinkedIn"
+            variant="outlined"
+            value={linkedin}
+            onChange={(e) => setLinkedin(e.target.value)}
+            fullWidth
+            sx={{ mb: 2 }}
+            InputLabelProps={{ style: { color: 'white' } }}
+            InputProps={{ style: { color: 'white' } }}
+            placeholder="LinkedIn"
+            error={!!errors.linkedin}
+            helperText={errors.linkedin}
+          />
+          <CustomTextField
+            label="Institution"
+            variant="outlined"
+            value={institution}
+            onChange={(e) => setInstitution(e.target.value)}
+            fullWidth
+            sx={{ mb: 2 }}
+            InputLabelProps={{ style: { color: 'white' } }}
+            InputProps={{ style: { color: 'white' } }}
+            placeholder="Institution"
+            error={!!errors.institution}
+            helperText={errors.institution}
+          />
+          <CustomTextField
+            label="Native/Place of Work"
+            variant="outlined"
+            value={workplace}
+            onChange={(e) => setWorkplace(e.target.value)}
+            fullWidth
+            sx={{ mb: 2 }}
+            InputLabelProps={{ style: { color: 'white' } }}
+            InputProps={{ style: { color: 'white' } }}
+            placeholder="Native/Place of Work"
+            error={!!errors.workplace}
+            helperText={errors.workplace}
+          />
+          <CustomSelect
+            value={userType}
+            onChange={handleUserTypeChange}
+            variant="outlined"
+            displayEmpty
+            fullWidth
+            sx={{ mb: 2 }}
+          >
+            <CustomMenuItem value="" disabled>
+              Role
+            </CustomMenuItem>
+            <CustomMenuItem value="Student">Student</CustomMenuItem>
+            <CustomMenuItem value="Mentor">Mentor</CustomMenuItem>
+            <CustomMenuItem value="Investor">Investor</CustomMenuItem>
+          </CustomSelect>
+
+          {userType && (
+            <>
+              {userType === 'Student' && (
+                <>
+                  <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+                    Student Model:
+                  </Typography>
+                  <CustomTextField
+                    label="College Name"
+                    variant="outlined"
+                    fullWidth
+                    sx={{ mb: 2 }}
+                    InputLabelProps={{ style: { color: 'white' } }}
+                    InputProps={{ style: { color: 'white' } }}
+                    placeholder="College Name"
+                  />
+                  <CustomTextField
+                    label="Course"
+                    variant="outlined"
+                    fullWidth
+                    sx={{ mb: 2 }}
+                    InputLabelProps={{ style: { color: 'white' } }}
+                    InputProps={{ style: { color: 'white' } }}
+                    placeholder="Course"
+                  />
+                  <CustomTextField
+                    label="College Location"
+                    variant="outlined"
+                    fullWidth
+                    sx={{ mb: 2 }}
+                    InputLabelProps={{ style: { color: 'white' } }}
+                    InputProps={{ style: { color: 'white' } }}
+                    placeholder="College Location"
+                  />
+                  <CustomTextField
+                    label="GitHub"
+                    variant="outlined"
+                    fullWidth
+                    sx={{ mb: 2 }}
+                    InputLabelProps={{ style: { color: 'white' } }}
+                    InputProps={{ style: { color: 'white' } }}
+                    placeholder="GitHub"
+                  />
+                  <input type="file" accept="image/*" id="college-id-image" style={{ display: 'none' }} onChange={(e) => handleFileChange(e, setCollegeIdImage, setCollegeIdImageUrl)} />
+                  <label htmlFor="college-id-image">
+                    <Button component="span" variant="outlined" sx={{ color: '#fff', borderColor: '#369eff', mb: 2 }}>
+                      Upload College ID Photo
+                    </Button>
+                  </label>
+                  {collegeIdImageUrl && <img src={collegeIdImageUrl} alt="College ID Preview" style={{ width: '100%', marginBottom: '16px' }} />}
+                  <input type="file" accept="image/*" id="profile-image" style={{ display: 'none' }} onChange={(e) => handleFileChange(e, setProfileImage, setProfileImageUrl)} />
+                  <label htmlFor="profile-image">
+                    <Button component="span" variant="outlined" sx={{ color: '#fff', borderColor: '#369eff', mb: 2 }}>
+                      Upload Profile Image
+                    </Button>
+                  </label>
+                  {profileImageUrl && <img src={profileImageUrl} alt="Profile Preview" style={{ width: '100%', marginBottom: '16px' }} />}
+                </>
+              )}
+              {(userType === 'Mentor' || userType === 'Investor') && (
+                <>
+                  <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+                    {userType} Model:
+                  </Typography>
+                  <CustomTextField
+                    label="Area of Expertise"
+                    variant="outlined"
+                    fullWidth
+                    sx={{ mb: 2 }}
+                    InputLabelProps={{ style: { color: 'white' } }}
+                    InputProps={{ style: { color: 'white' } }}
+                    placeholder="Area of Expertise"
+                  />
+                  <CustomTextField
+                    label="Experience"
+                    variant="outlined"
+                    fullWidth
+                    sx={{ mb: 2 }}
+                    InputLabelProps={{ style: { color: 'white' } }}
+                    InputProps={{ style: { color: 'white' } }}
+                    placeholder="Experience"
+                  />
+                  <input type="file" accept="image/*" id={`${userType.toLowerCase()}-proof-image`} style={{ display: 'none' }} onChange={(e) => handleFileChange(e, setProofImage, setProofImageUrl)} />
+                  <label htmlFor={`${userType.toLowerCase()}-proof-image`}>
+                    <Button component="span" variant="outlined" sx={{ color: '#fff', borderColor: '#369eff', mb: 2 }}>
+                      Upload ID Proof
+                    </Button>
+                  </label>
+                  {proofImageUrl && <img src={proofImageUrl} alt="ID Proof Preview" style={{ width: '100%', marginBottom: '16px' }} />}
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        checked={availableToMentorOrInvest}
+                        onChange={(e) => setAvailableToMentorOrInvest(e.target.checked)}
+                        color="primary"
+                      />
+                    }
+                    label={`Available to ${userType === 'Mentor' ? 'Mentor' : 'Invest'}`}
+                    sx={{ color: 'white', mb: 2 }}
+                  />
+                  {userType === 'Mentor' && (
+                    <CustomTextField
+                      label="Mentorship Count"
+                      variant="outlined"
+                      type="number"
+                      fullWidth
+                      sx={{ mb: 2 }}
+                      value={mentorshipCount}
+                      onChange={(e) => setMentorshipCount(e.target.value)}
+                      InputLabelProps={{ style: { color: 'white' } }}
+                      InputProps={{ style: { color: 'white' } }}
+                      placeholder="Mentorship Count"
+                    />
+                  )}
+                  {userType === 'Investor' && (
+                    <>
+                      <CustomTextField
+                        label="Investment Count"
+                        variant="outlined"
+                        type="number"
+                        fullWidth
+                        sx={{ mb: 2 }}
+                        value={investmentCount}
+                        onChange={(e) => setInvestmentCount(e.target.value)}
+                        InputLabelProps={{ style: { color: 'white' } }}
+                        InputProps={{ style: { color: 'white' } }}
+                        placeholder="Investment Count"
+                      />
+                      {investmentCount > 0 && (
+                        <CustomTextField
+                          label="Investment Amount"
+                          variant="outlined"
+                          type="number"
+                          fullWidth
+                          sx={{ mb: 2 }}
+                          value={investmentAmount}
+                          onChange={(e) => setInvestmentAmount(e.target.value)}
+                          InputLabelProps={{ style: { color: 'white' } }}
+                          InputProps={{ style: { color: 'white' } }}
+                          placeholder="Investment Amount"
+                        />
+                      )}
+                    </>
+                  )}
+                  <input type="file" accept="image/*" id={`${userType.toLowerCase()}-profile-image`} style={{ display: 'none' }} onChange={(e) => handleFileChange(e, setProfileImage, setProfileImageUrl)} />
+                  <label htmlFor={`${userType.toLowerCase()}-profile-image`}>
+                    <Button component="span" variant="outlined" sx={{ color: '#fff', borderColor: '#369eff', mb: 2 }}>
+                      Upload Profile Image
+                    </Button>
+                  </label>
+                  {profileImageUrl && <img src={profileImageUrl} alt="Profile Preview" style={{ width: '100%', marginBottom: '16px' }} />}
+                </>
+              )}
+            </>
+          )}
           <Button
             variant="contained"
             fullWidth

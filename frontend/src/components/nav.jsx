@@ -28,7 +28,7 @@ const Navbarr = () => {
                     </Navbar.Brand>
                     <Nav className="ms-auto">
                         {/* Last two links aligned to right corner */}
-                        <Nav.Link as={Link} to="./SignUp" className='text-nowrap'>Register Now</Nav.Link>
+                        <Nav.Link as={Link} to="./signUp" className='text-nowrap'>Register Now</Nav.Link>
                         <Nav.Link as={Link} to="./login" className='text-nowrap'>Login</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>

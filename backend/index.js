@@ -17,17 +17,14 @@
 // const { errorHandler } = require('./middleware/errorHandler');
 // Import required route files first
 const userRoutes = require('./routes/userRoutes');
-const mentorRoutes = require('./routes/mentorRoutes');
-const studentRoutes = require('./routes/studentRoutes');
-const investorRoutes = require('./routes/investorRoutes');
+
 
 // Other imports
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
-const mentorController = require('./controllers/mentorController');
-const studentController = require('./controllers/studentController');
+
 const meetingController = require('./controllers/meetingController');
 const blogRoutes = require('./routes/blogs');
 const featuredStoryRoutes = require('./routes/featuredStories');

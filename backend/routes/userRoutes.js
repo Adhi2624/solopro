@@ -61,6 +61,7 @@ router.post('/', upload.fields([
   { name: 'collegeIdPhoto', maxCount: 1 },
   { name: 'proofImage', maxCount: 1 },
 ]), async (req, res) => {
+  console.log(req.body);
   const { email, password, userType, ...userData } = req.body;
   console.log('request received');
   console.log(req.body)
@@ -107,8 +108,8 @@ router.post('/', upload.fields([
 
     res.status(201).json({ message: 'User created successfully' });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Server error' });
+    console.error("Server error: ", error);
+    res.status(500).json({ message: 'Server error', error: error.message });
   }
 });
 

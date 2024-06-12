@@ -180,18 +180,23 @@ const [availableToInvest, setAvailableToInvest] = useState(false);
       for(const [key,value] of formData.entries()){
         console.log(key,value)
       }
+      console.log(profileImage.name);
       try {
+        
         const response = await axios.post('http://localhost:5000/api/signup', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
         });
-        console.log('Form submitted', response.data);
+        
+        console.log('Response:', response.data);
+      alert('Submitted successfully');alert("Submitted successfully")
         // handle success (e.g., redirect to a new page)
       } catch (error) {
-        console.error('There was an error!', error);
-        // handle error
+        console.error('There was an error!', error.message);
+      alert('An error occurred while submitting the form');
       }
+      console.log(formData)
     }
   };
   

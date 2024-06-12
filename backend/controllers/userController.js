@@ -1,78 +1,47 @@
 const User = require('../models/user');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+const Student = require('../models/student');
+const Mentor = require('../models/mentor');
+const Investor = require('../models/investor');
 
-exports.registerUser = async (req, res) => {
-    try {
-        const { email, password } = req.body;
+const signup = async (req, res) => {
+  const { Email, Password, userType, ...userData } = req.body;
 
-        let user = await User.findOne({ email });
-        if (user) {
-            return res.status(400).json({ msg: 'User already exists' });
-        }
-
-        user = new User({
-            email,
-            password,
-        });
-
-        const salt = await bcrypt.genSalt(10);
-        user.password = await bcrypt.hash(password, salt);
-
-        await user.save();
-
-        const payload = {
-            user: {
-                id: user.id,
-            },
-        };
-
-        jwt.sign(
-            payload,
-            process.env.JWT_SECRET,
-            { expiresIn: '5h' },
-            (err, token) => {
-                if (err) throw err;
-                res.json({ token });
-            }
-        );
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Server error');
+  try {
+    // Check if email already exists
+    const existingUser = await User.findOne({ Email });
+    if (existingUser) {
+      return res.status(400).json({ message: 'Email already exists' });
     }
+
+    // Create user in user collection
+    const user = new User({ Email, Password });
+    await user.save();
+
+    // Create user profile based on user type
+    let profileData;
+    switch (userType) {
+      case 'student':
+        profileData = new Student(userData);
+        break;
+      case 'mentor':
+        profileData = new Mentor(userData);
+        break;
+      case 'investor':
+        profileData = new Investor(userData);
+        break;
+      default:
+        return res.status(400).json({ message: 'Invalid user type' });
+    }
+    profileData.user = user._id;
+    await profileData.save();
+
+    res.status(201).json({ message: 'User created successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
 };
 
-exports.loginUser = async (req, res) => {
-    try {
-        const { email, password } = req.body;
-
-        const user = await User.findOne({ email });
-        if (!user) {
-            return res.status(400).json({ msg: 'Invalid credentials' });
-        }
-
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) {
-            return res.status(400).json({ msg: 'Invalid credentials' });
-        }
-
-        const payload = {
-            user: {
-                id: user.id,
-            },
-        };
-
-        jwt.sign(
-            payload,
-            process.env.JWT_SECRET,
-            { expiresIn: '5h' },
-            (err, token) => {
-                if (err) throw err;
-                res.json({ token });
-            }
-        );
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Server error');
-    }
+module.exports = {
+  signup,
 };

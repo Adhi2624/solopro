@@ -49,13 +49,13 @@ connectDB()
         console.log('MongoDB connection established');
 
         // Define Routes for first project
-        app.get('/getmentors', mentorController.getAllMentors);
-        app.post('/getmentor', mentorController.getAppointmentById);
-        app.post('/getstudent', studentController.getStudentById);
-        app.post('/schedulemeeting', meetingController.scheduleMeeting);
-        app.post('/getmeetingstu', meetingController.getMeetingByStudentId);
-        app.post('/getappointments', meetingController.getAppointmentsByMentorId);
-        app.post('/updatestatus', meetingController.updateAppointmentStatus);
+        // app.get('/getmentors', mentorController.getAllMentors);
+        // app.post('/getmentor', mentorController.getAppointmentById);
+        // app.post('/getstudent', studentController.getStudentById);
+        // app.post('/schedulemeeting', meetingController.scheduleMeeting);
+        // app.post('/getmeetingstu', meetingController.getMeetingByStudentId);
+        // app.post('/getappointments', meetingController.getAppointmentsByMentorId);
+        // app.post('/updatestatus', meetingController.updateAppointmentStatus);
 
         // Define Routes for second project
         app.use('/api/blogs', blogRoutes);
@@ -63,10 +63,10 @@ connectDB()
         app.use('/api/moreStories', moreStoryRoutes);
         
         // Define Routes for users, mentors, students, and investors
-        app.use('/api/users', userRoutes);
-        app.use('/api/mentors', mentorRoutes);
-        app.use('/api/students', studentRoutes);
-        app.use('/api/investors', investorRoutes);
+        app.use('/api/signup', userRoutes);
+        // app.use('/api/mentors', mentorRoutes);
+        // app.use('/api/students', studentRoutes);
+        // app.use('/api/investors', investorRoutes);
 
         // Error Handler Middleware
         app.use(errorHandler);

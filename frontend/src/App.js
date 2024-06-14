@@ -14,7 +14,6 @@ import './css/style.css';
 import MiRoute from './routes/mi';
 import NotFoundPage from './components/404';
 function App() {
-
     return (
         <Router>
             <div className="App">
@@ -30,12 +29,10 @@ function App() {
                     <Route path="/blogs/:type/:id" element={<BlogDetail />} />
                     <Route path="/adminblog" element={<AdminBlog />} />
                     {/* <Route path="/dashboard" element={<Dashboard />} /> */}
-                    <Route path="*" element={<NotFoundPage />}/>
                 </Routes>
             </div>
         </Router>
     );
-
 }
 
 export default App;

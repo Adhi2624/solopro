@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import InvestorRow from '../components/investorRow'
+import InvestorRow from '../investorRow'
 import axios from 'axios';
-import Nav1 from '../components/nav1';
+import Nav1 from '../nav1';
 
 const InvestorList = () => {
     const [mentorList, setMentorList] = useState([]);

@@ -14,7 +14,6 @@ import "./global.css"; // Import the CSS file here
 import testImage from "./login.png";
 import Navbarr from "./nav";
 import { Link as RouterLink } from "react-router-dom"; // Import Link as RouterLink
-
 function Copyright(props) {
   return (
     <Typography
@@ -41,13 +40,11 @@ function Copyright(props) {
     </Typography>
   );
 }
-
 const defaultTheme = createTheme({
   typography: {
     fontFamily: "Montserrat, Arial, sans-serif", // Set Montserrat as the default font family
   },
 });
-
 export default function Login() {
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -57,7 +54,6 @@ export default function Login() {
       password: data.get("password"),
     });
   };
-
   return (
     <ThemeProvider theme={defaultTheme}>
       <>

@@ -211,8 +211,8 @@ export default function SignupQuestions() {
           },
         });
         console.log('Response:', response.data);
-        alert('Submitted successfully'); alert("Submitted successfully")
-        // handle success (e.g., redirect to a new page)
+        alert('Submitted successfully');
+
       } catch (error) {
         console.error('There was an error!', error.message);
         alert('An error occurred while submitting the form');

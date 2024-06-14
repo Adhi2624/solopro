@@ -17,7 +17,7 @@
 // const { errorHandler } = require('./middleware/errorHandler');
 // Import required route files first
 const userRoutes = require('./routes/userRoutes');
-
+const loginRoutes = require('./routes/loginRoutes');  
 
 // Other imports
 const express = require('express');
@@ -61,6 +61,7 @@ connectDB()
         
         // Define Routes for users, mentors, students, and investors
         app.use('/api/signup', userRoutes);
+        app.use('/api/login', loginRoutes);
         // app.use('/api/mentors', mentorRoutes);
         // app.use('/api/students', studentRoutes);
         // app.use('/api/investors', investorRoutes);

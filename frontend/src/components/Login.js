@@ -14,6 +14,7 @@ import testImage from "./login.png";
 import Navbarr from "./nav";
 import { Link as RouterLink } from "react-router-dom";
 import axios from "axios";
+import { setItemWithExpiry } from "./localStorageWithExpiry"; // Import the utility function
 
 function Copyright(props) {
   return (
@@ -41,11 +42,13 @@ function Copyright(props) {
     </Typography>
   );
 }
+
 const defaultTheme = createTheme({
   typography: {
     fontFamily: "Montserrat, Arial, sans-serif",
   },
 });
+
 export default function Login() {
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -53,9 +56,15 @@ export default function Login() {
     const email = data.get("email");
     const password = data.get("password");
     const backend = process.env.REACT_APP_BACKEND;
+
     try {
       const response = await axios.post(`${backend}/api/login`, { email, password });
-      console.log(response.data);
+      const userData = response.data;
+
+      // Store user data in local storage with expiry (1 hour = 3600000 milliseconds)
+      setItemWithExpiry('user', userData, 3600000);
+
+      console.log(userData);
     } catch (error) {
       console.error(error);
     }
@@ -118,43 +127,41 @@ export default function Login() {
                 style={{ color: "white", width: "55%" }}
               >
                 <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                  autoFocus
-                  InputLabelProps={{
-                    style: { color: "white" },
-                  }}
-                  InputProps={{
-                    style: { color: "white", borderColor: "white" },
-                  }}
-                  sx={{
-                    borderRadius: "10px",
-                  }}
-                />
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="current-password"
-                  InputLabelProps={{
-                    style: { color: "white" },
-                  }}
-                  InputProps={{
-                    style: { color: "white", borderColor: "white" },
-                  }}
-                  sx={{
-                    borderRadius: "10px",
-                  }}
-                />
+  margin="normal"
+  required
+  fullWidth
+  id="email"
+  label="Email Address"
+  name="email"
+  autoComplete="email"
+  autoFocus
+  InputLabelProps={{
+    style: { color: "white" },
+  }}
+  
+  sx={{
+    borderRadius: "10px",
+  }}
+/>
+<TextField
+  margin="normal"
+  required
+  fullWidth
+  name="password"
+  label="Password"
+  type="password"
+  id="password"
+  autoComplete="current-password"
+  InputLabelProps={{
+    style: { color: "white" },
+  }}
+  InputProps={{
+    style: { color: "white", borderColor: "white" },
+  }}
+  sx={{
+    borderRadius: "10px",
+  }}
+/>
                 <Button
                   type="submit"
                   fullWidth
@@ -189,3 +196,6 @@ export default function Login() {
     </ThemeProvider>
   );
 }
+
+
+

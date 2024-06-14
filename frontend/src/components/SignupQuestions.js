@@ -229,6 +229,7 @@ export default function SignupQuestions() {
         <CustomTextField
           key={question.key}
           label={question.label}
+          type={question.type}
           variant="outlined"
           value={question.value}
           onChange={(e) => handleInputChange(question.key, e.target.value)}

@@ -10,10 +10,11 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import "./global.css"; // Import the CSS file here
 import testImage from "./login.png";
 import Navbarr from "./nav";
-import { Link as RouterLink } from "react-router-dom"; // Import Link as RouterLink
+import { Link as RouterLink } from "react-router-dom";
+import axios from "axios";
+
 function Copyright(props) {
   return (
     <Typography
@@ -42,18 +43,24 @@ function Copyright(props) {
 }
 const defaultTheme = createTheme({
   typography: {
-    fontFamily: "Montserrat, Arial, sans-serif", // Set Montserrat as the default font family
+    fontFamily: "Montserrat, Arial, sans-serif",
   },
 });
 export default function Login() {
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    const email = data.get("email");
+    const password = data.get("password");
+    const backend = process.env.REACT_APP_BACKEND;
+    try {
+      const response = await axios.post(`${backend}/api/login`, { email, password });
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
   };
+
   return (
     <ThemeProvider theme={defaultTheme}>
       <>
@@ -66,10 +73,10 @@ export default function Login() {
             sm={4}
             md={7}
             sx={{
-              backgroundImage: `url(${testImage})`, // Using template literals to embed the image URL
+              backgroundImage: `url(${testImage})`,
               backgroundRepeat: "no-repeat",
-              backgroundColor: "#040F15", // Set the background color to #040F15
-              backgroundSize: "contain", // Ensures the image is fully visible
+              backgroundColor: "#040F15",
+              backgroundSize: "contain",
               backgroundPosition: "center",
               backgroundSize: "60%",
             }}
@@ -126,7 +133,7 @@ export default function Login() {
                     style: { color: "white", borderColor: "white" },
                   }}
                   sx={{
-                    borderRadius: "10px", // Set the border radius to 10px
+                    borderRadius: "10px",
                   }}
                 />
                 <TextField
@@ -145,7 +152,7 @@ export default function Login() {
                     style: { color: "white", borderColor: "white" },
                   }}
                   sx={{
-                    borderRadius: "10px", // Set the border radius to 10px
+                    borderRadius: "10px",
                   }}
                 />
                 <Button

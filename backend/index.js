@@ -17,17 +17,14 @@
 // const { errorHandler } = require('./middleware/errorHandler');
 // Import required route files first
 const userRoutes = require('./routes/userRoutes');
-const mentorRoutes = require('./routes/mentorRoutes');
-const studentRoutes = require('./routes/studentRoutes');
-const investorRoutes = require('./routes/investorRoutes');
+
 
 // Other imports
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
-const mentorController = require('./controllers/mentorController');
-const studentController = require('./controllers/studentController');
+
 const meetingController = require('./controllers/meetingController');
 const blogRoutes = require('./routes/blogs');
 const featuredStoryRoutes = require('./routes/featuredStories');
@@ -49,13 +46,13 @@ connectDB()
         console.log('MongoDB connection established');
 
         // Define Routes for first project
-        app.get('/getmentors', mentorController.getAllMentors);
-        app.post('/getmentor', mentorController.getAppointmentById);
-        app.post('/getstudent', studentController.getStudentById);
-        app.post('/schedulemeeting', meetingController.scheduleMeeting);
-        app.post('/getmeetingstu', meetingController.getMeetingByStudentId);
-        app.post('/getappointments', meetingController.getAppointmentsByMentorId);
-        app.post('/updatestatus', meetingController.updateAppointmentStatus);
+        // app.get('/getmentors', mentorController.getAllMentors);
+        // app.post('/getmentor', mentorController.getAppointmentById);
+        // app.post('/getstudent', studentController.getStudentById);
+        // app.post('/schedulemeeting', meetingController.scheduleMeeting);
+        // app.post('/getmeetingstu', meetingController.getMeetingByStudentId);
+        // app.post('/getappointments', meetingController.getAppointmentsByMentorId);
+        // app.post('/updatestatus', meetingController.updateAppointmentStatus);
 
         // Define Routes for second project
         app.use('/api/blogs', blogRoutes);
@@ -63,10 +60,10 @@ connectDB()
         app.use('/api/moreStories', moreStoryRoutes);
         
         // Define Routes for users, mentors, students, and investors
-        app.use('/api/users', userRoutes);
-        app.use('/api/mentors', mentorRoutes);
-        app.use('/api/students', studentRoutes);
-        app.use('/api/investors', investorRoutes);
+        app.use('/api/signup', userRoutes);
+        // app.use('/api/mentors', mentorRoutes);
+        // app.use('/api/students', studentRoutes);
+        // app.use('/api/investors', investorRoutes);
 
         // Error Handler Middleware
         app.use(errorHandler);

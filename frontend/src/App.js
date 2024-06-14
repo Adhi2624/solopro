@@ -12,7 +12,7 @@ import SignupQuestions from './components/SignupQuestions';
 import StudentsRoute from './routes/studentsRoute';
 import './css/style.css';
 import MiRoute from './routes/mi';
-
+import NotFoundPage from './components/404';
 function App() {
     return (
         <Router>

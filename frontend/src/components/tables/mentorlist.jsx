@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import MentorTableRow from '../components/mentorRow';
+import MentorTableRow from '../mentorRow';
 import axios from 'axios';
-import Nav1 from '../components/nav1';
+import Nav1 from '../nav1';
 
 const MentorList = () => {
     const [mentorList, setMentorList] = useState([]);

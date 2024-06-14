@@ -1,9 +1,9 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import MentorList from '../pages/mentorlist';
-import MentorProfile from '../pages/mentorProfile';
-import StudentProfileE from '../pages/studentProfileE';
-import InvestorList from '../pages/investorlist';
+import MentorList from '../components/tables/mentorlist';
+import MentorProfile from '../components/tables/mentorProfile';
+import StudentProfileE from '../components/tables/studentProfileE';
+import InvestorList from '../components/tables/investorlist';
 
 const StudentsRoute = () => {
   return (

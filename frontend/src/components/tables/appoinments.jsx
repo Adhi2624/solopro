@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Navinvmen from '../components/navinme';
+import Navinvmen from '../navinme';
 
 const Appointments = () => {
   const [appointments, setAppointments] = useState([]);

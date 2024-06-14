@@ -6,8 +6,8 @@ import '../css/style.css';
 
 const Navbarr = () => {
     return (
-        <Navbar expand="lg" className="rounded-4 mt-lg-2 mx-lg-1 rounded-sm-0 mt-md-1 mx-sm-0">
-            <Container>
+        <Navbar expand="lg" className="rounded-4 mt-lg-2 mx-lg-1 rounded-sm-0 mt-md-1 mx-sm-0 flex-nowrap">
+            <Container fluid>
                 {/* Brand centered for mobile */}
                 <div className="d-lg-none w-100 text-center">
                     <Navbar.Brand href="/" className="mx-auto d-inline-flex align-items-center">
@@ -24,8 +24,8 @@ const Navbarr = () => {
                     </Nav>
                     {/* Register and Login links for mobile */}
                     <Nav className="ms-auto d-lg-none">
-                        <Nav.Link href="#register-now" className='text-nowrap'>Register Now</Nav.Link>
-                        <Nav.Link href="#login" className='text-nowrap'>Login</Nav.Link>
+                        <Nav.Link href="/signUp" className='text-nowrap'>Register Now</Nav.Link>
+                        <Nav.Link href="/login" className='text-nowrap'>Login</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
                 {/* Brand centered for large screens */}
@@ -38,8 +38,8 @@ const Navbarr = () => {
                 {/* Register and Login links for large screens */}
                 <div className="d-none d-lg-flex">
                     <Nav className="ms-auto">
-                        <Nav.Link href="#register-now" className='text-nowrap'>Register Now</Nav.Link>
-                        <Nav.Link href="#login" className='text-nowrap'>Login</Nav.Link>
+                        <Nav.Link href="/signUp" className='text-nowrap'>Register Now</Nav.Link>
+                        <Nav.Link href="/login" className='text-nowrap'>Login</Nav.Link>
                     </Nav>
                 </div>
             </Container>

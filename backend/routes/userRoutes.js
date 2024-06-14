@@ -66,12 +66,6 @@ router.post('/', upload.fields([
   console.log('request received');
   console.log(req.body)
   try {
-    // Check if email already exists
-    // const existingUser = await User.findOne({ email });
-    // if (existingUser) {
-    //   console.log("already existing");
-    //   return res.status(400).json({ message: 'Email already exists' });
-    // }
 
     const user = new User({ email, password });
     await user.save();

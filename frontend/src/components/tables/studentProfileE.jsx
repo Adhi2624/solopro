@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Container, Row, Col, Card, Button, Form, ListGroup } from 'react-bootstrap';
-import Nav1 from '../components/nav1';
-import '../css/Studentprofile.css'; // Import CSS file
+import Nav1 from '../nav1';
+import '../../css/Studentprofile.css'; // Import CSS file
 
 const StudentProfile = () => {
   const { _id } = useParams();
@@ -67,7 +67,7 @@ const StudentProfile = () => {
                       <p className="mb-1">{studentProfile.course || 'Unavailable'}</p>
                       <p className="font-size-sm">{studentProfile.college_name || 'Unavailable'}</p>
                       {!isEditing && (
-                        <Button variant="outline-primary" className="mt-2" onClick={handleEditClick}>
+                        <Button variant="outline-primary " className="mt-2 stu-btn" onClick={handleEditClick}>
                           Edit Profile
                         </Button>
                       )}
@@ -234,10 +234,10 @@ const StudentProfile = () => {
                     {isEditing && (
                       <Row className="mt-3">
                         <Col>
-                          <Button variant="secondary" onClick={handleCancelClick}>
+                          <Button variant="secondary" className='stu-btn' onClick={handleCancelClick}>
                             Cancel
                           </Button>
-                          <Button variant="primary" className="ms-2" onClick={handleFormSubmit}>
+                          <Button variant="primary" className="ms-2 stu-btn" onClick={handleFormSubmit}>
                             Save Changes
                           </Button>
                         </Col>

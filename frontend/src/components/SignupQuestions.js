@@ -3,9 +3,7 @@ import { TextField, Box, Typography, Select, MenuItem, Button, Switch, FormContr
 import { styled } from '@mui/system';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
-
 import CssBaseline from '@mui/material/CssBaseline';
-
 const CustomTextField = styled(TextField)`
   & .MuiOutlinedInput-root {
     color: white;
@@ -34,31 +32,25 @@ const CustomTextField = styled(TextField)`
     opacity: 1; // Override MUI default opacity
   }
 `;
-
 const CustomSelect = styled(Select)`
   & .MuiSelect-outlined {
     color: white;
   }
-
   & .MuiOutlinedInput-notchedOutline {
     border-color: white;
   }
-
   &:hover .MuiOutlinedInput-notchedOutline {
     border-color: white;
   }
-
   &.Mui-focused .MuiOutlinedInput-notchedOutline {
     border-color: white;
   }
 `;
-
 const CustomMenuItem = styled(MenuItem)`
   &.MuiMenuItem-root {
     color: black;
   }
 `;
-
 const theme = createTheme({
   palette: {
     background: {
@@ -69,21 +61,19 @@ const theme = createTheme({
     },
   },
 });
-
 export default function SignupQuestions() {
   const [userType, setUserType] = useState('');
   const [userQuestions, setUserQuestions] = useState([
     { label: 'Name', key: 'name', value: '', required: true, error: '' },
     { label: 'Email', key: 'email', value: '', required: true, error: '' },
-    { label: 'Password', key: 'password', value: '', required: true, error: '' ,type:"password"},
-    { label: 'Confirm Password', key: 'confirmpassword', value: '', required: true, error: '' ,type:"password"},
+    { label: 'Password', key: 'password', value: '', required: true, error: '', type: "password" },
+    { label: 'Confirm Password', key: 'confirmpassword', value: '', required: true, error: '', type: "password" },
     { label: 'Institution', key: 'institution', value: '', required: true, error: '' },
     { label: 'Native/Place of Work', key: 'nativePlaceOrWork', value: '', required: true, error: '' },
-    { label: 'Phone', key: 'phone', value: '', minLength: 10, maxLength: 10, required: true, error: '' },    
-    { label: 'LinkedIn', key: 'linkedin', value: '', required: true, error: '' },   
-    
+    { label: 'Phone', key: 'phone', value: '', minLength: 10, maxLength: 10, required: true, error: '' },
+    { label: 'LinkedIn', key: 'linkedin', value: '', required: true, error: '' },
   ]);
-
+  const backend = process.env.REACT_APP_BACKEND;
   const [profileImage, setProfileImage] = useState(null);
   const [profileImageUrl, setProfileImageUrl] = useState(null);
   const [collegeIdPhoto, setcollegeIdPhoto] = useState(null);
@@ -91,7 +81,7 @@ export default function SignupQuestions() {
   const [proofImage, setProofImage] = useState(null);
   const [proofImageUrl, setProofImageUrl] = useState(null);
   const [availableToMentor, setAvailableToMentor] = useState(false);
-const [availableToInvest, setAvailableToInvest] = useState(false);
+  const [availableToInvest, setAvailableToInvest] = useState(false);
   const [mentorshipCount, setMentorshipCount] = useState(0);
   const [investmentCount, setInvestmentCount] = useState(0);
   const [investmentAmount, setInvestmentAmount] = useState('');
@@ -101,11 +91,9 @@ const [availableToInvest, setAvailableToInvest] = useState(false);
   const [git, setGit] = useState('');
   const [areaOfExpertise, setAreaOfExpertise] = useState('');
   const [experience, setExperience] = useState('');
-
   const handleUserTypeChange = (event) => {
     setUserType(event.target.value);
   };
-
   const handleInputChange = (key, value) => {
     setUserQuestions((prevQuestions) =>
       prevQuestions.map((question) =>
@@ -113,12 +101,49 @@ const [availableToInvest, setAvailableToInvest] = useState(false);
       )
     );
   };
-
   const handleFileChange = (event, setImage, setImageUrl) => {
     const file = event.target.files[0];
     if (file) {
-      setImage(file);
-      setImageUrl(URL.createObjectURL(file));
+      const reader = new FileReader();
+  
+      reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          const MAX_WIDTH = 500; // Maximum width for resizing (adjust as needed)
+          const MAX_HEIGHT = 500; // Maximum height for resizing (adjust as needed)
+          let width = img.width;
+          let height = img.height;
+  
+          if (width > height) {
+            if (width > MAX_WIDTH) {
+              height *= MAX_WIDTH / width;
+              width = MAX_WIDTH;
+            }
+          } else {
+            if (height > MAX_HEIGHT) {
+              width *= MAX_HEIGHT / height;
+              height = MAX_HEIGHT;
+            }
+          }
+  
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+  
+          const dataUrl = canvas.toDataURL('image/jpeg'); // Convert to base64
+  
+          setImage(file); // Set the original file if needed
+          setImageUrl(dataUrl); // Set the base64 string as the URL
+  
+          // Optionally, you can preview the resized image:
+          // setImageUrl(dataUrl);
+        };
+        img.src = e.target.result;
+      };
+  
+      reader.readAsDataURL(file);
     }
   };
   
@@ -150,7 +175,6 @@ const [availableToInvest, setAvailableToInvest] = useState(false);
       userQuestions.forEach((question) => {
         formData.append(question.key, question.value);
       });
-      
       formData.append('userType', userType); // Add userType to form data
       // Append additional data based on user type
       if (userType === 'Student') {
@@ -158,48 +182,44 @@ const [availableToInvest, setAvailableToInvest] = useState(false);
         formData.append('course', course);
         formData.append('collegeLocation', collegeLocation);
         formData.append('git', git);
-        formData.append('profileImage', profileImage);
-        formData.append('collegeIdPhoto', collegeIdPhoto);
+        formData.append('profileImage', profileImageUrl);
+        formData.append('collegeIdPhoto', collegeIdPhotoUrl);
       } else if (userType === 'Mentor') {
         formData.append('areaOfExpertise', areaOfExpertise);
         formData.append('experience', experience);
-        formData.append('profileImage', profileImage);
-        formData.append('proofImage', proofImage);
+        formData.append('profileImage', profileImageUrl);
+        formData.append('proofImage', proofImageUrl);
         formData.append('availableToMentor', availableToMentor);
-
         formData.append('mentorshipCount', mentorshipCount);
       } else if (userType === 'Investor') {
         formData.append('areaOfExpertise', areaOfExpertise);
         formData.append('experience', experience);
-        formData.append('profileImage', profileImage);
-        formData.append('proofImage', proofImage);
+        formData.append('profileImage', profileImageUrl);
+        formData.append('proofImage', proofImageUrl);
         formData.append('availableToInvest', availableToInvest);
         formData.append('investmentCount', investmentCount);
         formData.append('investmentAmount', investmentAmount);
       }
-      for(const [key,value] of formData.entries()){
-        console.log(key,value)
+      for (const [key, value] of formData.entries()) {
+        console.log(key, value)
       }
-      console.log(profileImage.name);
+      console.log(profileImageUrl);
       try {
-        
-        const response = await axios.post('http://localhost:5000/api/signup', formData, {
+        const response = await axios.post(`${backend}/api/signup`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
         });
-        
         console.log('Response:', response.data);
-      alert('Submitted successfully');alert("Submitted successfully")
+        alert('Submitted successfully'); alert("Submitted successfully")
         // handle success (e.g., redirect to a new page)
       } catch (error) {
         console.error('There was an error!', error.message);
-      alert('An error occurred while submitting the form');
+        alert('An error occurred while submitting the form');
       }
       console.log(formData)
     }
   };
-  
   const renderUserQuestions = () => (
     <>
       <Typography variant="h6" sx={{ fontWeight: 'bold', display: 'flex', textAlign: 'center', alignContent: 'center' }}>
@@ -222,23 +242,22 @@ const [availableToInvest, setAvailableToInvest] = useState(false);
         />
       ))}
       <CustomSelect
-            value={userType}
-            onChange={handleUserTypeChange}
-            displayEmpty
-            fullWidth
-            inputProps={{ 'aria-label': 'Without label' }}
-          >
-            <CustomMenuItem value="" disabled>
-              Select User Type
-            </CustomMenuItem>
-            <CustomMenuItem value="Student">Student</CustomMenuItem>
-            <CustomMenuItem value="Mentor">Mentor</CustomMenuItem>
-            <CustomMenuItem value="Investor">Investor</CustomMenuItem>
-          </CustomSelect>
+        value={userType}
+        onChange={handleUserTypeChange}
+        displayEmpty
+        fullWidth
+        inputProps={{ 'aria-label': 'Without label' }}
+      >
+        <CustomMenuItem value="" disabled>
+          Select User Type
+        </CustomMenuItem>
+        <CustomMenuItem value="Student">Student</CustomMenuItem>
+        <CustomMenuItem value="Mentor">Mentor</CustomMenuItem>
+        <CustomMenuItem value="Investor">Investor</CustomMenuItem>
+      </CustomSelect>
       {userType && renderAdditionalQuestions(userType)}
     </>
   );
-
   const renderAdditionalQuestions = (type) => {
     switch (type) {
       case 'Student':
@@ -250,43 +269,42 @@ const [availableToInvest, setAvailableToInvest] = useState(false);
         return null;
     }
   };
-
   const renderStudentQuestions = () => (
     <>
       <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
         Student Model:
       </Typography>
       <CustomTextField
-          label="CollegeName"
-          variant="outlined"
-          fullWidth
-          sx={{ mb: 2 }}
-          value={collegeName}
-          onChange={(e) => setCollegeName(e.target.value)}
+        label="CollegeName"
+        variant="outlined"
+        fullWidth
+        sx={{ mb: 2 }}
+        value={collegeName}
+        onChange={(e) => setCollegeName(e.target.value)}
       />
       <CustomTextField
-          label="Course"
-          variant="outlined"
-          fullWidth
-          sx={{ mb: 2 }}
-          value={course}
-          onChange={(e) => setCourse(e.target.value)}
+        label="Course"
+        variant="outlined"
+        fullWidth
+        sx={{ mb: 2 }}
+        value={course}
+        onChange={(e) => setCourse(e.target.value)}
       />
       <CustomTextField
-          label="CollegeLocation"
-          variant="outlined"
-          fullWidth
-          sx={{ mb: 2 }}
-          value={collegeLocation}
-          onChange={(e) => setCollegeLocation(e.target.value)}
+        label="CollegeLocation"
+        variant="outlined"
+        fullWidth
+        sx={{ mb: 2 }}
+        value={collegeLocation}
+        onChange={(e) => setCollegeLocation(e.target.value)}
       />
       <CustomTextField
-          label="GitHub"
-          variant="outlined"
-          fullWidth
-          sx={{ mb: 2 }}
-          value={git}
-          onChange={(e) => setGit(e.target.value)}
+        label="GitHub"
+        variant="outlined"
+        fullWidth
+        sx={{ mb: 2 }}
+        value={git}
+        onChange={(e) => setGit(e.target.value)}
       />
       <input type="file" accept="image/*" id="college-id-image" style={{ display: 'none' }} onChange={(e) => handleFileChange(e, setcollegeIdPhoto, setcollegeIdPhotoUrl)} />
       <label htmlFor="college-id-image">
@@ -304,27 +322,26 @@ const [availableToInvest, setAvailableToInvest] = useState(false);
       {profileImageUrl && <img src={profileImageUrl} alt="Profile Preview" style={{ width: '100%', marginBottom: '16px' }} />}
     </>
   );
-
   const renderMentorOrInvestorQuestions = (type) => (
     <>
       <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
         {type} Model:
       </Typography>
       <CustomTextField
-          label="Area of Expertise"
-          variant="outlined"
-          fullWidth
-          sx={{ mb: 2 }}
-          value={areaOfExpertise}
-          onChange={(e) => setAreaOfExpertise(e.target.value)}
+        label="Area of Expertise"
+        variant="outlined"
+        fullWidth
+        sx={{ mb: 2 }}
+        value={areaOfExpertise}
+        onChange={(e) => setAreaOfExpertise(e.target.value)}
       />
       <CustomTextField
-          label="Experience"
-          variant="outlined"
-          fullWidth
-          sx={{ mb: 2 }}
-          value={experience}
-          onChange={(e) => setExperience(e.target.value)}
+        label="Experience"
+        variant="outlined"
+        fullWidth
+        sx={{ mb: 2 }}
+        value={experience}
+        onChange={(e) => setExperience(e.target.value)}
       />
       <input type="file" accept="image/*" id={`${type.toLowerCase()}-proof-image`} style={{ display: 'none' }} onChange={(e) => handleFileChange(e, setProofImage, setProofImageUrl)} />
       <label htmlFor={`${type.toLowerCase()}-proof-image`}>
@@ -336,10 +353,10 @@ const [availableToInvest, setAvailableToInvest] = useState(false);
       <FormControlLabel
         control={
           <Switch
-          checked={type === 'Mentor' ? availableToMentor : availableToInvest}
-          onChange={(e) => type === 'Mentor' ? setAvailableToMentor(e.target.checked) : setAvailableToInvest(e.target.checked)}
-          color="primary"
-        />
+            checked={type === 'Mentor' ? availableToMentor : availableToInvest}
+            onChange={(e) => type === 'Mentor' ? setAvailableToMentor(e.target.checked) : setAvailableToInvest(e.target.checked)}
+            color="primary"
+          />
         }
         label={`Available to ${type === 'Mentor' ? 'Mentor' : 'Invest'}`}
         sx={{ color: 'white', mb: 2 }}
@@ -386,7 +403,6 @@ const [availableToInvest, setAvailableToInvest] = useState(false);
       {profileImageUrl && <img src={profileImageUrl} alt="Profile Preview" style={{ width: '100%', marginBottom: '16px' }} />}
     </>
   );
-
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />

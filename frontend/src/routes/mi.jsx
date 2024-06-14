@@ -1,8 +1,8 @@
 import React from 'react';
 import Navinvmen from '../components/navinme';
 import { Routes,Route } from 'react-router-dom';
-import Appoinments from '../pages/appoinments';
-import MentorProfileE from '../pages/mentorProfileE';
+import Appoinments from '../components/tables/appoinments';
+import MentorProfileE from '../components/tables/mentorProfileE';
 
 const MiRoute = () => {
   return (

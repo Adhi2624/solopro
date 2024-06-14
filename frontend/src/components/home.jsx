@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import Navbarr from "../components/nav";
+import Navbarr from "./nav";
 import '../css/style.css';
 import { Row, Col, Button, Container } from 'react-bootstrap';
 import soloLogo1 from '../images/image.svg';
@@ -15,7 +15,7 @@ import service3 from '../images/service3.png';
 import service4 from '../images/service4.png';
 import { CiHeart } from "react-icons/ci";
 import { RouterLink } from 'react-router-dom';
-import Stepper from '../components/Timeline';
+import Stepper from './Timeline';
 const Home = () => {
     const navigate = useNavigate();
 

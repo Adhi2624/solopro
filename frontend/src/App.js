@@ -29,6 +29,7 @@ function App() {
                     <Route path="/blogs/:type/:id" element={<BlogDetail />} />
                     <Route path="/adminblog" element={<AdminBlog />} />
                     {/* <Route path="/dashboard" element={<Dashboard />} /> */}
+                    <Route path='*' element={<NotFoundPage />} />
                 </Routes>
             </div>
         </Router>

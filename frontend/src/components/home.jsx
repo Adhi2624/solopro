@@ -14,7 +14,6 @@ import service2 from '../images/service2.png';
 import service3 from '../images/service3.png';
 import service4 from '../images/service4.png';
 import { CiHeart } from "react-icons/ci";
-import { RouterLink } from 'react-router-dom';
 import Stepper from './Timeline';
 const Home = () => {
     const navigate = useNavigate();

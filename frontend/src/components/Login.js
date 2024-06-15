@@ -71,11 +71,11 @@ export default function Login() {
 
       console.log(userData);
 
-      if (userData.role === "Student") {
-        navigate("/student/mentorpage");
-      } else if (userData.role === "Mentor" || userData.role === "Investor") {
-      } else if (userData.role === "Admin") {
+      if (userData.role==='Student'){
+        navigate('/student/');
       }
+      else if (userData.role==='Mentor' || userData.role==='Investor'){}
+        else if(userData.role==='Admin'){}
     } catch (error) {
       console.error(error);
     }

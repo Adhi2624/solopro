@@ -10,11 +10,11 @@ import './BlogDetails.css';
 const BlogDetail = () => {
   const { id, type } = useParams();
   const [content, setContent] = useState(null);
-
+  const backend=process.env.REACT_APP_BACKEND;
   useEffect(() => {
     const fetchContent = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/${type}/${id}`);
+        const response = await axios.get(`${backend}/api/${type}/${id}`);
         setContent(response.data);
       } catch (error) {
         console.error(error);

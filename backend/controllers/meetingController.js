@@ -1,15 +1,16 @@
 const { ObjectId } = require("mongodb");
 const { getDB } = require('../config/db');
+const meeting=require("../models/meeting")
 
 exports.scheduleMeeting = async (req, res) => {
     try {
-        const db = getDB();
+        //const db = getDB();
         const meetingData = req.body;
         if (!meetingData) {
             return res.status(400).json({ error: 'Invalid meeting data' });
         }
         delete meetingData._id;
-        await db.collection("meetings").insertOne(meetingData);
+        await meeting.insertOne(meetingData);
         res.status(201).json({ message: 'Meeting data inserted' });
     } catch (error) {
         console.error("Error scheduling meeting:", error);
@@ -19,9 +20,9 @@ exports.scheduleMeeting = async (req, res) => {
 
 exports.getMeetingByStudentId = async (req, res) => {
     try {
-        const db = getDB();
+        //const db = getDB();
         const id = req.body.id;
-        const meeting = await db.collection("meetings").findOne({ 'studentid': id });
+        const meeting = await meeting.findOne({ 'studentid': id });
         if (meeting) {
             res.json(meeting);
         } else {
@@ -35,9 +36,9 @@ exports.getMeetingByStudentId = async (req, res) => {
 
 exports.getAppointmentsByMentorId = async (req, res) => {
     try {
-        const db = getDB();
+       // const db = getDB();
         const id = req.body.id;
-        const meetings = await db.collection('meetings').find({ mentorid: id }).toArray();
+        const meetings = await meeting.find({ mentorid: id }).toArray();
         if (meetings.length > 0) {
             res.json(meetings);
         } else {
@@ -51,9 +52,9 @@ exports.getAppointmentsByMentorId = async (req, res) => {
 
 exports.updateAppointmentStatus = async (req, res) => {
     try {
-        const db = getDB();
+     //   const db = getDB();
         const { appointmentId, newStatus } = req.body;
-        const updatedAppointment = await db.collection('meetings').findOneAndUpdate(
+        const updatedAppointment = await meeting.findOneAndUpdate(
             { _id: new ObjectId(appointmentId) },
             { $set: { meetingStatus: newStatus } },
             { returnOriginal: false }

@@ -14,6 +14,7 @@ const MentorList = () => {
         axios.get(`${backend}/getmentors`)
             .then(res => {
                 setMentorList(res.data);
+                console.log(res.data)
                 
             })
             .catch(err => console.log(err));

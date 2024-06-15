@@ -13,14 +13,15 @@ const roleModels = {
   Mentor: Mentor,
   Investor: Investor,
 };
-
+const { getDB, connectDB } = require('../config/db');
 router.post('/', async (req, res) => {
+  const db=connectDB()
   console.log(req.body);
   const { email, password } = req.body;
 
   try {
     // Find the user by email
-    const user = await User.findOne({ email });
+    const user = await (await db).collection('users').findOne({ email });
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
@@ -36,9 +37,9 @@ router.post('/', async (req, res) => {
     if (!RoleModel) {
       return res.status(500).json({ message: 'Invalid user role' });
     }
-
+  
     // Find the user profile in the corresponding collection
-    const userProfile = await RoleModel.findOne({ email });
+    const userProfile = await (await db).collection(RoleModel.collection.name).findOne({ email });
     if (!userProfile) {
       return res.status(404).json({ message: 'User profile not found' });
     }

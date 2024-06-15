@@ -1,10 +1,13 @@
 const { ObjectId } = require("mongodb");
 const { getDB } = require('../config/db');
 
+
 exports.getAllMentors = async (req, res) => {
+    console.log("cn")
     try {
         const db = getDB(); // Get the database object
-        const mentors = await db.collection("mentor").find().toArray();
+        
+        const mentors = await db.collection("mentors").find().toArray();
         res.send(mentors);
     } catch (error) {
         console.error("Error fetching mentors:", error);
@@ -17,7 +20,7 @@ exports.getAppointmentById = async (req, res) => {
     try {
         const db = getDB();
         const id = req.body._id;
-        const user = await db.collection("mentor").findOne({ _id: new ObjectId(id) });
+        const user = await db.collection("mentors").findOne({ _id: new ObjectId(id) });
         if (user) {
             res.json(user);
         } else {

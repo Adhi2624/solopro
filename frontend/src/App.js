@@ -19,7 +19,7 @@ function App() {
         <Router>
             <div className="App">
                 {/* <Navbarr /> */}
-                {/* <Routes>
+                <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path='/student/*' element={<StudentsRoute />} />
                     <Route path='/mi/*' element={<MiRoute />} />
@@ -30,9 +30,8 @@ function App() {
                     <Route path="/blogs/:type/:id" element={<BlogDetail />} />
                     <Route path="/adminblog" element={<AdminBlog />} />
                     {/* <Route path="/dashboard" element={<Dashboard />} /> */}
-                    {/* <Route path='*' element={<NotFoundPage />} />
-                </Routes> */} 
-                <LandingPage />
+                     <Route path='*' element={<NotFoundPage />} />
+                </Routes> 
             </div>
         </Router>
     );

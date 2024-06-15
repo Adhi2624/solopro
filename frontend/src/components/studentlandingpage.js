@@ -50,7 +50,7 @@ const StudentLandingPage = () => {
               <Card className="h-100" style={{ backgroundColor: '#040F15', color: 'white', border:'groove' }}>
                 <Card.Body>
                   <Player
-                    
+                    src={service.animationUrl}
                     className="mx-auto"
                     background="transparent"
                     speed="1"

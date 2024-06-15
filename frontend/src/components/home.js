@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Navbarr from "./nav";
 import '../css/style.css';
@@ -24,8 +23,8 @@ const Home = () => {
 
     return (
         <>
-        <div style={{ overflowX: 'hidden' }}> {/* Add this style */}
-          <Navbarr />
+        <div style={{ overflowX: 'hidden' }}> 
+          <Navbarr/>
           <Container fluid style={{ height: '100vh', width: '100vw' }}>
             <div id="main" className="d-flex flex-column justify-content-center align-items-center h-100 w-100">
               <div className="title-text text-center">

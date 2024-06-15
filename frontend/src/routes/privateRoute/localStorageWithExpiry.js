@@ -1,6 +1,4 @@
 
-// localStorageWithExpiry.js
-
 export const setItemWithExpiry = (key, value, ttl) => {
     const now = new Date();
     const item = {

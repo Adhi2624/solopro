@@ -20,6 +20,7 @@ const StudentProfile = () => {
       .then((res) => {
         setStudentProfile(res.data);
         setEditedProfile(res.data);
+        console.log(res.data);
       })
       .catch((error) => alert(error));
   }, [_id, backend]);

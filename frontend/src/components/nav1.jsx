@@ -6,7 +6,10 @@ const Nav1 = () => {
     // Retrieving data from localStorage
     const username = localStorage.getItem('username');
     const profilePhoto = localStorage.getItem('profilePhoto');
-    const id = localStorage.getItem('id');
+    const lstorage = localStorage.getItem('user');
+    const lstorageparse=JSON.parse(lstorage);
+    console.log(lstorageparse.value.uid)
+    const id=lstorageparse.value.uid;
 
     return (
         <Navbar expand="lg" className="nav1 ">
@@ -22,7 +25,7 @@ const Nav1 = () => {
                         <NavLink href="/student/mentorpage" className="nav-item text-white">Mentors</NavLink>
                         <NavLink href="/student/investorpage" className="nav-item text-white">Investors</NavLink>
                         <NavLink href="#about-us" className="nav-item text-white">About Us</NavLink>
-                        <NavLink href={`student/miprofile/${id}`} className="profile-link nav-item">
+                        <NavLink href={`/student/studentprofile/${id}`} className="profile-link nav-item">
                             <div className='d-flex align-items-center col'>
                                 <img src={profilePhoto} width="30" height="30" className="rounded-circle me-2" alt="profile" />
                                 {username}

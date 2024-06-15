@@ -4,7 +4,7 @@
 // const connectDB = require('./config/db'); // Ensure this points to the correct path of your db connection file
 // const { auth } = require('./middleware/auth');
 
-// const mentorController = require('./controllers/mentorController');
+const mentorController = require('./controllers/mentorController');
 // const studentController = require('./controllers/studentController');
 // const meetingController = require('./controllers/meetingController');
 // const blogRoutes = require('./routes/blogs');
@@ -46,7 +46,7 @@ connectDB()
         console.log('MongoDB connection established');
 
         // Define Routes for first project
-        // app.get('/getmentors', mentorController.getAllMentors);
+         app.get('/getmentors', mentorController.getAllMentors);
         // app.post('/getmentor', mentorController.getAppointmentById);
         // app.post('/getstudent', studentController.getStudentById);
         // app.post('/schedulemeeting', meetingController.scheduleMeeting);

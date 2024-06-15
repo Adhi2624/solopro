@@ -15,8 +15,10 @@ import Navbarr from "./nav";
 import { Link as RouterLink } from "react-router-dom";
 import axios from "axios";
 import { setItemWithExpiry } from "./localStorageWithExpiry"; // Import the utility function
+import { useNavigate } from "react-router-dom";
 
 function Copyright(props) {
+  
   return (
     <Typography
       variant="body2"
@@ -50,13 +52,14 @@ const defaultTheme = createTheme({
 });
 
 export default function Login() {
+  const navigate=useNavigate();
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const email = data.get("email");
     const password = data.get("password");
     const backend = process.env.REACT_APP_BACKEND;
-
+    
     try {
       const response = await axios.post(`${backend}/api/login`, { email, password });
       const userData = response.data;
@@ -65,6 +68,12 @@ export default function Login() {
       setItemWithExpiry('user', userData, 3600000);
 
       console.log(userData);
+
+      if (userData.role==='Student'){
+        navigate('/student/mentorpage');
+      }
+      else if (userData.role==='Mentor' || userData.role==='Investor'){}
+        else if(userData.role==='Admin'){}
     } catch (error) {
       console.error(error);
     }

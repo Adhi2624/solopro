@@ -6,36 +6,41 @@ import SignUP from './components/SignUP';
 import Blogs from './components/blog/blog-cards';
 import BlogDetail from './components/blog/BlogDetails';
 import AdminBlog from './components/blog/AdminBlog';
-// import Dashboard from './pages/dashboard';
 import Navbarr from './components/nav';
 import SignupQuestions from './components/SignupQuestions';
 import StudentsRoute from './routes/studentsRoute';
-import './css/style.css';
 import MiRoute from './routes/mi';
 import NotFoundPage from './components/404';
-import LandingPage from './components/landingpage';
+import PrivateRoute from './routes/privateRoute/PrivateRoute';
+
+import './css/style.css';
+
 function App() {
-    return (
-        <Router>
-            <div className="App">
-                {/* <Navbarr /> */}
-                {/* <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path='/student/*' element={<StudentsRoute />} />
-                    <Route path='/mi/*' element={<MiRoute />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/newReg" element={<SignUP />} />
-                    <Route path="/signUp" element={<SignupQuestions />} />
-                    <Route path="/blogs" element={<Blogs />} />
-                    <Route path="/blogs/:type/:id" element={<BlogDetail />} />
-                    <Route path="/adminblog" element={<AdminBlog />} />
-                    {/* <Route path="/dashboard" element={<Dashboard />} /> */}
-                    {/* <Route path='*' element={<NotFoundPage />} />
-                </Routes> */} 
-                <LandingPage />
-            </div>
-        </Router>
-    );
+  return (
+    <Router>
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/newReg" element={<SignUP />} />
+          <Route path="/signUp" element={<SignupQuestions />} />
+          <Route path="/blogs" element={<Blogs />} />
+          <Route path="/blogs/:type/:id" element={<BlogDetail />} />
+          <Route path="/adminblog" element={<AdminBlog />} />
+
+          <Route element={<PrivateRoute allowedRoles={['Student']} />}>
+            <Route path="/student/*" element={<StudentsRoute />} />
+          </Route>
+
+          <Route element={<PrivateRoute allowedRoles={['Mentor', 'Investor']} />}>
+            <Route path="/mi/*" element={<MiRoute />} />
+          </Route>
+
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </div>
+    </Router>
+  );
 }
 
 export default App;

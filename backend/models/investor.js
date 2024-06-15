@@ -18,5 +18,4 @@ const investorSchema = new Schema({
   investmentAmount: { type: Number, default: 0 },
 });
 
-const Investor = mongoose.model('Investor', investorSchema);
-module.exports = Investor;
+module.exports = mongoose.models.Investor || mongoose.model('Investor', investorSchema);

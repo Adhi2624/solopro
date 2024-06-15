@@ -194,7 +194,6 @@ export default function SignupQuestions() {
   };
 
   const handleSubmit = async (event) => {
-
     event.preventDefault();
     if (validateForm()) {
       console.log('Form submitted', userQuestions);
@@ -202,42 +201,43 @@ export default function SignupQuestions() {
       userQuestions.forEach((question) => {
         formData.append(question.key, question.value);
       });
+      console.log(formData);
       formData.append('userType', userType); // Add userType to form data
+  
       // Append additional data based on user type
       if (userType === 'Student') {
         formData.append('collegeName', collegeName);
         formData.append('course', course);
         formData.append('collegeLocation', collegeLocation);
         formData.append('git', git);
-        formData.append('profileImage', profileImageUrl);
-        formData.append('collegeIdPhoto', collegeIdPhotoUrl);
+        if (profileImage) formData.append('profileImage', profileImageUrl);
+        if (collegeIdPhoto) formData.append('collegeIdPhoto', collegeIdPhotoUrl);
       } else if (userType === 'Mentor') {
         formData.append('areaOfExpertise', areaOfExpertise);
         formData.append('experience', experience);
-        formData.append('profileImage', profileImageUrl);
-        formData.append('proofImage', proofImageUrl);
+        if (profileImage) formData.append('profileImage', profileImageUrl);
+        if (proofImage) formData.append('proofImage', proofImageUrl);
         formData.append('availableToMentor', availableToMentor);
         formData.append('mentorshipCount', mentorshipCount);
       } else if (userType === 'Investor') {
         formData.append('areaOfExpertise', areaOfExpertise);
         formData.append('experience', experience);
-        formData.append('profileImage', profileImageUrl);
-        formData.append('proofImage', proofImageUrl);
+        if (profileImage) formData.append('profileImage', profileImageUrl);
+        if (proofImage) formData.append('proofImage', proofImageUrl);
         formData.append('availableToInvest', availableToInvest);
         formData.append('investmentCount', investmentCount);
         formData.append('investmentAmount', investmentAmount);
       }
-
+  
       for (const [key, value] of formData.entries()) {
         console.log(key, value);
       }
-      console.log(formData)
-      console.log(profileImageUrl);
-
+      console.log(formData);
       try {
+        
         const response = await axios.post(`${backend}/api/signup`, formData, {
           headers: {
-            'Content-Type': 'multipart/form-data'
+            'Content-Type': 'multipart/form-data',
           },
         });
         console.log('Response:', response.data);
@@ -246,9 +246,10 @@ export default function SignupQuestions() {
         console.error('There was an error!', error.message);
         alert('An error occurred while submitting the form');
       }
+      console.log(formData);
     }
   };
-
+  
   const renderUserQuestions = () => (
     <>
       <Typography variant="h6" sx={{ fontWeight: 'bold', display: 'flex', textAlign: 'center', alignContent: 'center' }}>

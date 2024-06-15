@@ -17,5 +17,5 @@ const mentorSchema = new Schema({
   mentorshipCount: { type: Number, default: 0 },
 });
 
-const Mentor = mongoose.model('Mentor', mentorSchema);
-module.exports = Mentor;
+
+module.exports = mongoose.models.Mentor || mongoose.model('Mentor', mentorSchema);

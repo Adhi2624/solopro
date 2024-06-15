@@ -12,14 +12,13 @@ import SignupQuestions from './components/SignupQuestions';
 import StudentsRoute from './routes/studentsRoute';
 import './css/style.css';
 import MiRoute from './routes/mi';
-import NotFoundPage from './components/404';
-import LandingPage from './components/landingpage';
+
 function App() {
     return (
         <Router>
             <div className="App">
                 {/* <Navbarr /> */}
-                {/* <Routes>
+                <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path='/student/*' element={<StudentsRoute />} />
                     <Route path='/mi/*' element={<MiRoute />} />
@@ -30,9 +29,7 @@ function App() {
                     <Route path="/blogs/:type/:id" element={<BlogDetail />} />
                     <Route path="/adminblog" element={<AdminBlog />} />
                     {/* <Route path="/dashboard" element={<Dashboard />} /> */}
-                    {/* <Route path='*' element={<NotFoundPage />} />
-                </Routes> */} 
-                <LandingPage />
+                </Routes>
             </div>
         </Router>
     );

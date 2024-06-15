@@ -5,8 +5,8 @@ import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import Link from "@mui/material/Link";
-import soloLogo1 from '../images/image.svg';
-import Navbar from 'react-bootstrap/Navbar';
+import soloLogo1 from "../images/image.svg";
+import Navbar from "react-bootstrap/Navbar";
 import { useAuth0 } from "@auth0/auth0-react";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
@@ -14,7 +14,7 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import './global.css';
+import "./global.css";
 import testImage from "./signin.png";
 import { Link as RouterLink } from "react-router-dom";
 import GoogleIcon from "./googleicon";
@@ -32,9 +32,9 @@ function Copyright(props) {
         color="inherit"
         href=""
         sx={{
-          textDecoration: 'none',
-          '&:hover': {
-            textDecoration: 'none',
+          textDecoration: "none",
+          "&:hover": {
+            textDecoration: "none",
           },
         }}
       >
@@ -48,7 +48,7 @@ function Copyright(props) {
 
 const defaultTheme = createTheme({
   typography: {
-    fontFamily: 'Montserrat, Arial, sans-serif',
+    fontFamily: "Montserrat, Arial, sans-serif",
   },
 });
 
@@ -73,8 +73,8 @@ const SignUP = () => {
         </Navbar.Brand>
       </Navbar>
       <ThemeProvider theme={defaultTheme}>
+        <CssBaseline />
         <Grid container component="main" sx={{ height: "100vh" }}>
-          <CssBaseline />
           <Grid
             item
             xs={false}
@@ -135,10 +135,21 @@ const SignUP = () => {
                     style: { color: "white" },
                   }}
                   InputProps={{
-                    style: { color: "white", borderColor: "white" },
+                    style: { color: "white", backgroundColor: "#333", borderColor: "white" },
                   }}
                   sx={{
                     borderRadius: "10px",
+                    '& .MuiOutlinedInput-root': {
+                      '& fieldset': {
+                        borderColor: 'white',
+                      },
+                      '&:hover fieldset': {
+                        borderColor: 'white',
+                      },
+                      '&.Mui-focused fieldset': {
+                        borderColor: 'white',
+                      },
+                    },
                   }}
                 />
                 <TextField
@@ -150,14 +161,21 @@ const SignUP = () => {
                   type="password"
                   id="password"
                   autoComplete="current-password"
-                  InputLabelProps={{
-                    style: { color: "white" },
-                  }}
-                  InputProps={{
-                    style: { color: "white", borderColor: "white" },
-                  }}
+                  
+                  
                   sx={{
                     borderRadius: "10px",
+                    '& .MuiOutlinedInput-root': {
+                      '& fieldset': {
+                        borderColor: 'white',
+                      },
+                      '&:hover fieldset': {
+                        borderColor: 'white',
+                      },
+                      '&.Mui-focused fieldset': {
+                        borderColor: 'white',
+                      },
+                    },
                   }}
                 />
                 <Button
@@ -179,21 +197,6 @@ const SignUP = () => {
                       </RouterLink>
                     </Typography>
                   </Grid>
-                  {/* <Grid item xs={12} style={{ textAlign: "center" }}>
-                    <Typography variant="body2" style={{ fontSize: "1.2rem" }}>
-                      Other Ways to Sign Up
-                      <br />
-                      <Button
-                        fullWidth
-                        variant="outlined"
-                        sx={{ mt: 3, mb: 2 }}
-                        startIcon={<GoogleIcon />}
-                        onClick={() => loginWithRedirect()}
-                      >
-                        Signup with Google
-                      </Button>
-                    </Typography>
-                  </Grid> */}
                 </Grid>
                 <Copyright
                   sx={{ mt: 5, color: "white", textDecoration: 'none', '&:hover': { textDecoration: 'none' } }}
@@ -206,5 +209,4 @@ const SignUP = () => {
     </>
   );
 }
-
 export default SignUP;

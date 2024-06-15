@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Container, Row, Col, Card, Button, ListGroup, Modal, Form } from 'react-bootstrap';
-import Nav1 from '../components/nav1';
-import '../css/MentorProfile.css'; // Import CSS file
+import Nav1 from '../nav1';
+import '../../css/MentorProfile.css'; // Import CSS file
 
 const MentorProfile = () => {
   const { _id } = useParams();

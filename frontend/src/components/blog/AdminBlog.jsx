@@ -21,16 +21,16 @@ const AdminBlog = () => {
   const [moreStories, setMoreStories] = useState([]);
   const [editMode, setEditMode] = useState(false);
   const [currentId, setCurrentId] = useState(null);
-
+  const backend=process.env.REACT_APP_BACKEND;
   useEffect(() => {
     fetchData();
   }, []);
 
   const fetchData = async () => {
     try {
-      const blogsResponse = await axios.get('http://localhost:5000/api/blogs');
-      const featuredStoriesResponse = await axios.get('http://localhost:5000/api/featuredStories');
-      const moreStoriesResponse = await axios.get('http://localhost:5000/api/moreStories');
+      const blogsResponse = await axios.get(`${backend}/api/blogs`);
+      const featuredStoriesResponse = await axios.get(`${backend}/api/featuredStories`);
+      const moreStoriesResponse = await axios.get(`${backend}/api/moreStories`);
       setBlogs(blogsResponse.data);
       setFeaturedStories(featuredStoriesResponse.data);
       setMoreStories(moreStoriesResponse.data);
@@ -50,13 +50,13 @@ const AdminBlog = () => {
 
     try {
       if (editMode) {
-        await axios.put(`http://localhost:5000/api/blogs/${currentId}`, formData, {
+        await axios.put(`${backend}/api/blogs/${currentId}`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
         });
       } else {
-        await axios.post('http://localhost:5000/api/blogs', formData, {
+        await axios.post(`${backend}/api/blogs`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
@@ -80,7 +80,7 @@ const AdminBlog = () => {
 
   const handleDeleteBlog = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/blogs/${id}`);
+      await axios.delete(`${backend}/api/blogs/${id}`);
       fetchData();
     } catch (error) {
       console.error(error);
@@ -97,13 +97,13 @@ const AdminBlog = () => {
 
     try {
       if (editMode) {
-        await axios.put(`http://localhost:5000/api/featuredStories/${currentId}`, formData, {
+        await axios.put(`${backend}/api/featuredStories/${currentId}`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
         });
       } else {
-        await axios.post('http://localhost:5000/api/featuredStories', formData, {
+        await axios.post(`${backend}/api/featuredStories`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
@@ -126,7 +126,7 @@ const AdminBlog = () => {
 
   const handleDeleteFeaturedStory = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/featuredStories/${id}`);
+      await axios.delete(`${backend}/api/featuredStories/${id}`);
       fetchData();
     } catch (error) {
       console.error(error);
@@ -143,13 +143,13 @@ const AdminBlog = () => {
 
     try {
       if (editMode) {
-        await axios.put(`http://localhost:5000/api/moreStories/${currentId}`, formData, {
+        await axios.put(`${backend}/api/moreStories/${currentId}`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
         });
       } else {
-        await axios.post('http://localhost:5000/api/moreStories', formData, {
+        await axios.post(`${backend}/api/moreStories`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
@@ -172,7 +172,7 @@ const AdminBlog = () => {
 
   const handleDeleteMoreStory = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/moreStories/${id}`);
+      await axios.delete(`${backend}/api/moreStories/${id}`);
       fetchData();
     } catch (error) {
       console.error(error);

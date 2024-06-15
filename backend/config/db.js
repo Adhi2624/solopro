@@ -1,19 +1,29 @@
-const mongoose = require('mongoose');
-const dotenv = require('dotenv');
+// config/db.js
+const { MongoClient } = require("mongodb");
 
-dotenv.config();
+const url = "mongodb://localhost:27017";
+const dbName = "solopro";
+
+let dbClient;
 
 const connectDB = async () => {
-  try {
-    await mongoose.connect(process.env.MONGO_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    console.log('MongoDB Connected');
-  } catch (err) {
-    console.error('Error connecting to MongoDB:', err.message);
-    process.exit(1);
-  }
+    try {
+        const client = await MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
+        console.log("MongoDB connected successfully");
+        dbClient = client;
+        return client.db(dbName);
+    } catch (error) {
+        console.error("Error connecting to MongoDB:", error);
+        throw error;
+    }
 };
 
-module.exports = connectDB;
+const getDB = () => {
+    if (dbClient) {
+        return dbClient.db(dbName);
+    } else {
+        throw new Error('Database connection not established');
+    }
+};
+
+module.exports = { connectDB, getDB };

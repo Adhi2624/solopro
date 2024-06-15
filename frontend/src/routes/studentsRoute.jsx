@@ -1,9 +1,11 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import MentorList from '../pages/mentorlist';
-import MentorProfile from '../pages/mentorProfile';
-import StudentProfileE from '../pages/studentProfileE';
-import InvestorList from '../pages/investorlist';
+import MentorList from '../components/tables/mentorlist';
+import MentorProfile from '../components/tables/mentorProfile';
+import StudentProfileE from '../components/tables/studentProfileE';
+import InvestorList from '../components/tables/investorlist';
+import Blogs from '../components/blog/blog-cards';
+import BlogDetail from '../components/blog/BlogDetails';
 
 const StudentsRoute = () => {
   return (
@@ -13,6 +15,8 @@ const StudentsRoute = () => {
       <Route path="/investor/:_id" element={<MentorProfile />} />
       <Route path="/mentor/:_id" element={<MentorProfile />} />
       <Route path="/studentprofile/:_id" element={<StudentProfileE />} />
+      <Route path="/blogs" element={<Blogs />} />
+          <Route path="/blogs/:type/:id" element={<BlogDetail />} />
     </Routes>
   );
 };

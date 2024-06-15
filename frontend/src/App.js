@@ -16,31 +16,26 @@ import PrivateRoute from './routes/privateRoute/PrivateRoute';
 import './css/style.css';
 
 function App() {
-  return (
-    <Router>
-      <div className="App">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/newReg" element={<SignUP />} />
-          <Route path="/signUp" element={<SignupQuestions />} />
-          <Route path="/blogs" element={<Blogs />} />
-          <Route path="/blogs/:type/:id" element={<BlogDetail />} />
-          <Route path="/adminblog" element={<AdminBlog />} />
-
-          <Route element={<PrivateRoute allowedRoles={['Student']} />}>
-            <Route path="/student/*" element={<StudentsRoute />} />
-          </Route>
-
-          <Route element={<PrivateRoute allowedRoles={['Mentor', 'Investor']} />}>
-            <Route path="/mi/*" element={<MiRoute />} />
-          </Route>
-
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-      </div>
-    </Router>
-  );
+    return (
+        <Router>
+            <div className="App">
+                {/* <Navbarr /> */}
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path='/student/*' element={<StudentsRoute />} />
+                    <Route path='/mi/*' element={<MiRoute />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/newReg" element={<SignUP />} />
+                    <Route path="/signUp" element={<SignupQuestions />} />
+                    <Route path="/blogs" element={<Blogs />} />
+                    <Route path="/blogs/:type/:id" element={<BlogDetail />} />
+                    <Route path="/adminblog" element={<AdminBlog />} />
+                    {/* <Route path="/dashboard" element={<Dashboard />} /> */}
+                     <Route path='*' element={<NotFoundPage />} />
+                </Routes> 
+            </div>
+        </Router>
+    );
 }
 
 export default App;

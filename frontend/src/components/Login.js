@@ -18,7 +18,6 @@ import { setItemWithExpiry } from "./localStorageWithExpiry"; // Import the util
 import { useNavigate } from "react-router-dom";
 
 function Copyright(props) {
-  
   return (
     <Typography
       variant="body2"
@@ -31,9 +30,9 @@ function Copyright(props) {
         color="inherit"
         href=""
         sx={{
-          textDecoration: 'none',
-          '&:hover': {
-            textDecoration: 'none',
+          textDecoration: "none",
+          "&:hover": {
+            textDecoration: "none",
           },
         }}
       >
@@ -52,20 +51,23 @@ const defaultTheme = createTheme({
 });
 
 export default function Login() {
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const email = data.get("email");
     const password = data.get("password");
     const backend = process.env.REACT_APP_BACKEND;
-    
+
     try {
-      const response = await axios.post(`${backend}/api/login`, { email, password });
+      const response = await axios.post(`${backend}/api/login`, {
+        email,
+        password,
+      });
       const userData = response.data;
 
       // Store user data in local storage with expiry (1 hour = 3600000 milliseconds)
-      setItemWithExpiry('user', userData, 3600000);
+      setItemWithExpiry("user", userData, 3600000);
 
       console.log(userData);
 
@@ -125,7 +127,7 @@ export default function Login() {
               <Typography component="h1" variant="h5">
                 Login
               </Typography>
-              <Typography component="p" variant="p">
+              <Typography component="p" variant="body1">
                 Please fill your information below
               </Typography>
               <Box
@@ -136,41 +138,97 @@ export default function Login() {
                 style={{ color: "white", width: "55%" }}
               >
                 <TextField
-  margin="normal"
-  required
-  fullWidth
-  id="email"
-  label="Email Address"
-  name="email"
-  autoComplete="email"
-  autoFocus
-  InputLabelProps={{
-    style: { color: "white" },
-  }}
-  
-  sx={{
-    borderRadius: "10px",
-  }}
-/>
-<TextField
-  margin="normal"
-  required
-  fullWidth
-  name="password"
-  label="Password"
-  type="password"
-  id="password"
-  autoComplete="current-password"
-  InputLabelProps={{
-    style: { color: "white" },
-  }}
-  InputProps={{
-    style: { color: "white", borderColor: "white" },
-  }}
-  sx={{
-    borderRadius: "10px",
-  }}
-/>
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  autoFocus
+                  InputLabelProps={{
+                    style: { color: "white" },
+                  }}
+                  InputProps={{
+                    style: {
+                      color: "white",
+                  
+                      borderColor: "white",
+                    },
+                  }}
+                  sx={{
+                    borderRadius: "10px",
+                    "& .MuiOutlinedInput-root": {
+                      "& fieldset": {
+                        borderColor: "white",
+                      },
+                      "&:hover fieldset": {
+                        borderColor: "white",
+                      },
+                      "&.Mui-focused fieldset": {
+                        borderColor: "white",
+                      },
+                    },
+                    "& input:-webkit-autofill": {
+                      WebkitBoxShadow: "0 0 0 1000px  inset",
+                      WebkitTextFillColor: "white",
+                    },
+                    "& input:-webkit-autofill:focus": {
+                      WebkitBoxShadow: "0 0 0 1000px  inset",
+                      WebkitTextFillColor: "white",
+                    },
+                    "& input:-webkit-autofill:hover": {
+                      WebkitBoxShadow: "0 0 0 1000px  inset",
+                      WebkitTextFillColor: "white",
+                    },
+                  }}
+                />
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                  InputLabelProps={{
+                    style: { color: "white" },
+                  }}
+                  InputProps={{
+                    style: {
+                      color: "white",
+                      
+                      borderColor: "white",
+                    },
+                  }}
+                  sx={{
+                    borderRadius: "10px",
+                    "& .MuiOutlinedInput-root": {
+                      "& fieldset": {
+                        borderColor: "white",
+                      },
+                      "&:hover fieldset": {
+                        borderColor: "white",
+                      },
+                      "&.Mui-focused fieldset": {
+                        borderColor: "white",
+                      },
+                    },
+                    "& input:-webkit-autofill": {
+                      WebkitBoxShadow: "0 0 0 1000px  inset",
+                      WebkitTextFillColor: "white",
+                    },
+                    "& input:-webkit-autofill:focus": {
+                      WebkitBoxShadow: "0 0 0 1000px  inset",
+                      WebkitTextFillColor: "white",
+                    },
+                    "& input:-webkit-autofill:hover": {
+                      WebkitBoxShadow: "0 0 0 1000px  inset",
+                      WebkitTextFillColor: "white",
+                    },
+                  }}
+                />
                 <Button
                   type="submit"
                   fullWidth
@@ -183,8 +241,11 @@ export default function Login() {
                   <Grid item xs={12} style={{ textAlign: "center" }}>
                     <Typography variant="body2" style={{ fontSize: "1.2rem" }}>
                       Don't have an account? No worries, we have got you covered
-                      <br></br>
-                      <RouterLink to="/signup" style={{ textDecoration: 'none' }}>
+                      <br />
+                      <RouterLink
+                        to="/signup"
+                        style={{ textDecoration: "none" }}
+                      >
                         <Button
                           fullWidth
                           variant="outlined"
@@ -205,6 +266,3 @@ export default function Login() {
     </ThemeProvider>
   );
 }
-
-
-

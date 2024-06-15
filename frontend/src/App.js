@@ -6,14 +6,15 @@ import SignUP from './components/SignUP';
 import Blogs from './components/blog/blog-cards';
 import BlogDetail from './components/blog/BlogDetails';
 import AdminBlog from './components/blog/AdminBlog';
-// import Dashboard from './pages/dashboard';
 import Navbarr from './components/nav';
 import SignupQuestions from './components/SignupQuestions';
 import StudentsRoute from './routes/studentsRoute';
-import './css/style.css';
 import MiRoute from './routes/mi';
 import NotFoundPage from './components/404';
-import LandingPage from './components/landingpage';
+import PrivateRoute from './routes/privateRoute/PrivateRoute';
+
+import './css/style.css';
+
 function App() {
     return (
         <Router>

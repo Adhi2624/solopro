@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, Container, Nav, NavLink } from 'react-bootstrap';
+import { Navbar, Container, Nav, NavLink, Button } from 'react-bootstrap'; // Import Button from react-bootstrap
 import soloLogo1 from '../images/image.svg';
 
 const Nav1 = () => {
@@ -11,8 +11,19 @@ const Nav1 = () => {
     console.log(lstorageparse.value.uid)
     const id=lstorageparse.value.uid;
 
+    // Function to handle logout
+    const handleLogout = () => {
+        // Remove items from localStorage
+        
+        localStorage.removeItem('user');
+
+        // Redirect to login or home page
+        // Example: Replace with your desired logout behavior
+        window.location.href = '/'; // Redirect to login page after logout
+    };
+
     return (
-        <Navbar expand="lg" className="nav1 ">
+        <Navbar expand="lg" className="nav1">
             <Container>
                 <Navbar.Brand href="/student/" className="d-flex align-items-center">
                     <img src={soloLogo1} height={50} alt='logo' />
@@ -31,6 +42,7 @@ const Nav1 = () => {
                                 {username}
                             </div>
                         </NavLink>
+                        <Button variant="outline-light" onClick={handleLogout}>Logout</Button>
                     </Nav>
                 </Navbar.Collapse>
             </Container>

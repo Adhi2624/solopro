@@ -70,7 +70,7 @@ export default function Login() {
       console.log(userData);
 
       if (userData.role==='Student'){
-        navigate('/student/mentorpage');
+        navigate('/student/');
       }
       else if (userData.role==='Mentor' || userData.role==='Investor'){}
         else if(userData.role==='Admin'){}

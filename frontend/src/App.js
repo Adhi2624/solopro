@@ -6,12 +6,11 @@ import SignUP from './components/SignUP';
 import Blogs from './components/blog/blog-cards';
 import BlogDetail from './components/blog/BlogDetails';
 import AdminBlog from './components/blog/AdminBlog';
-import Navbarr from './components/nav';
 import SignupQuestions from './components/SignupQuestions';
 import StudentsRoute from './routes/studentsRoute';
 import MiRoute from './routes/mi';
 import NotFoundPage from './components/404';
-import PrivateRoute from './routes/privateRoute/PrivateRoute';
+
 
 import './css/style.css';
 

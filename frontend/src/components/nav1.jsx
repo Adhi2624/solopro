@@ -11,7 +11,7 @@ const Nav1 = () => {
     return (
         <Navbar expand="lg" className="nav1 ">
             <Container>
-                <Navbar.Brand href="/" className="d-flex align-items-center">
+                <Navbar.Brand href="/student/" className="d-flex align-items-center">
                     <img src={soloLogo1} height={50} alt='logo' />
                     <span className="ms-2" style={{ color: "white", fontWeight: 500, fontSize: "1.75rem", textShadow: "1px 1px 2px rgba(0, 0, 0, 0.5)" }}>SOLOPRO</span>
                 </Navbar.Brand>

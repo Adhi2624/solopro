@@ -1,8 +1,14 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Player } from '@lottiefiles/react-lottie-player';
-
+import { useNavigate } from 'react-router-dom';
+/**
+ *
+ *
+ * @return {*} 
+ */
 const NotFoundPage = () => {
+  const navigate=useNavigate();
   return (
     <div style={{ backgroundColor: '#040F15', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <section className="bg-light">
@@ -27,7 +33,7 @@ const NotFoundPage = () => {
                 </p>
               </div>
               <div className="lc-block">
-                <a className="btn btn-lg btn-primary" href="#" role="button">
+                <a className="btn btn-lg btn-primary"  role="button" onClick={()=>navigate(-1)}>
                   Back to homepage
                 </a>
               </div>

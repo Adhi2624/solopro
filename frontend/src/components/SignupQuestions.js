@@ -194,6 +194,7 @@ export default function SignupQuestions() {
   };
 
   const handleSubmit = async (event) => {
+
     event.preventDefault();
     if (validateForm()) {
       console.log('Form submitted', userQuestions);
@@ -230,7 +231,7 @@ export default function SignupQuestions() {
       for (const [key, value] of formData.entries()) {
         console.log(key, value);
       }
-
+      console.log(formData)
       console.log(profileImageUrl);
 
       try {

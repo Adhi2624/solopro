@@ -1,56 +1,38 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../models/user');
-const Student = require('../models/student');
-const Mentor = require('../models/mentor');
-const Investor = require('../models/investor');
 const multer = require('multer');
+const { connectDB } = require('../config/db'); // Assuming you have a module to get the database instance
 
 const upload = multer();
-  
-router.post('/', upload.fields([
-  { name: 'profileImage', maxCount: 1 },
-  { name: 'collegeIdPhoto', maxCount: 1 },
-  { name: 'proofImage', maxCount: 1 },
-]), async (req, res) => {
-  console.log(req.body);
+
+router.post('/', async (req, res) => {
+  console.log(req);
+  const db = connectDB(); // Get the database instance
   const { email, password, userType, ...userData } = req.body;
-  console.log('request received');
-  console.log(req.body)
   try {
-let role=userType;
-    const user = new User({ email, password,role });
-    await user.save();
-    console.log("stored in user")
+    const user = { email, password, role: userType };
+    await (await db).collection('users').insertOne(user);
+    console.log("Stored in users collection");
+
     let profileData;
-    const {phone,linkedin,profileImage,institution,nativePlaceOrWork}=userData;
-    if (userType === 'Student')
-        {
-            const {git,collegeName,course,collegeLocation,collegeIdPhoto}=userData;
-            const student = new Student({phone,email, linkedin,git,collegeName,course,collegeLocation,collegeIdPhoto,profileImage,institution,nativePlaceOrWork});
-            await student.save();
-            console.log("stored in student")
-        }
-        else
-        {
-            const {areaOfExpertise, experience, proofImage}=userData;
-            if(userType === 'Mentor')
-            {
-                const {availableToMentor, mentorshipCount}=userData;
-                const mentor = new Mentor({phone, email, linkedin, areaOfExpertise, experience, profileImage, institution, nativePlaceOrWork, proofImage, availableToMentor, mentorshipCount});
-                await mentor.save();
-                console.log("stored in mentor")
-            }
-            else if(userType === "Investor")
-            {
-                const {availableToInvest, investmentCount, investmentAmount}=userData;
-                const investor = new Investor({phone, email, linkedin, areaOfExpertise, experience, profileImage, institution, nativePlaceOrWork, proofImage, availableToInvest, investmentCount, investmentAmount});
-                await investor.save();
-                 console.log("stored in investor")
-            }
-        }
-    // profileData.user = user._id;
-    // await profileData.save();
+    const { phone, linkedin, profileImage, institution, nativePlaceOrWork } = userData;
+
+    if (userType === 'Student') {
+      const { git, collegeName, course, collegeLocation, collegeIdPhoto } = userData;
+      profileData = { phone, email, linkedin, git, collegeName, course, collegeLocation, collegeIdPhoto, profileImage, institution, nativePlaceOrWork };
+      await (await db).collection('students').insertOne(profileData);
+      console.log("Stored in students collection");
+    } else if (userType === 'Mentor') {
+      const { areaOfExpertise, experience, proofImage, availableToMentor, mentorshipCount } = userData;
+      profileData = { phone, email, linkedin, areaOfExpertise, experience, profileImage, institution, nativePlaceOrWork, proofImage, availableToMentor, mentorshipCount };
+      await (await db).collection('mentors').insertOne(profileData);
+      console.log("Stored in mentors collection");
+    } else if (userType === 'Investor') {
+      const { areaOfExpertise, experience, proofImage, availableToInvest, investmentCount, investmentAmount } = userData;
+      profileData = { phone, email, linkedin, areaOfExpertise, experience, profileImage, institution, nativePlaceOrWork, proofImage, availableToInvest, investmentCount, investmentAmount };
+      await (await db).collection('investors').insertOne(profileData);
+      console.log("Stored in investors collection");
+    }
 
     res.status(201).json({ message: 'User created successfully' });
   } catch (error) {

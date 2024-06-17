@@ -18,7 +18,8 @@ const MentorProfile = () => {
     meetinglink:'',
     meetingStatus:'waiting',
     studentid:'',
-    mentorid:''
+    mentorid:'',
+    
   });
 
   const backend = process.env.REACT_APP_BACKEND;
@@ -38,7 +39,7 @@ const MentorProfile = () => {
 
   }, [_id]);
 
-  const isAvailable = mentorProfile.Status === "Available";
+  const isAvailable = mentorProfile.availableToMentor === "true";
   
   
   const handleShowModal = () => setShowModal(true);
@@ -99,9 +100,8 @@ const MentorProfile = () => {
                           </ListGroup.Item>
                           <ListGroup.Item>
                             <h6 className="mb-0">Status</h6>
-                            <span className={mentorProfile.Status === 'Available' ? 'badge text-bg-success' : 'badge text-bg-danger'}>
-                              {mentorProfile.Status || "Unavailable"}
-                            </span>
+                            <span className={mentorProfile.availableToMentor === 'true' ? 'badge text-bg-success' : 'badge text-bg-danger'}>{mentorProfile.availableToMentor === 'true' ? 'Available' : 'Not Available'}</span>
+                           
                           </ListGroup.Item>
                         </ListGroup>
                       </Col>
@@ -196,6 +196,16 @@ const MentorProfile = () => {
                 placeholder="Enter meeting title"
                 name="title"
                 value={meetingDetails.title}
+                onChange={handleInputChange}
+              />
+            </Form.Group>
+            <Form.Group controlId="formMeetingTitle">
+              <Form.Label>Meeting link</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter meeting title"
+                name="meetinglink"
+                value={meetingDetails.meetinglink}
                 onChange={handleInputChange}
               />
             </Form.Group>

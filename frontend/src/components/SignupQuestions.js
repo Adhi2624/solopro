@@ -4,7 +4,8 @@ import { styled } from '@mui/system';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
 import CssBaseline from '@mui/material/CssBaseline';
-
+import { useNavigate } from 'react-router-dom';
+import { setItemWithExpiry } from "./localStorageWithExpiry"; // Import the utility function
 const CustomTextField = styled(TextField)`
   & .MuiOutlinedInput-root {
     color: white;
@@ -118,7 +119,8 @@ export default function SignupQuestions() {
   const [git, setGit] = useState('');
   const [areaOfExpertise, setAreaOfExpertise] = useState('');
   const [experience, setExperience] = useState('');
-
+  const navigate=useNavigate();
+  
   const handleUserTypeChange = (event) => {
     setUserType(event.target.value);
   };
@@ -242,6 +244,19 @@ export default function SignupQuestions() {
         });
         console.log('Response:', response.data);
         alert('Submitted successfully');
+        const userData = {
+          email:formData.email,
+          role:userType,
+        };
+
+      // Store user data in local storage with expiry (1 hour = 3600000 milliseconds)
+      setItemWithExpiry("user", userData, 3600000);
+        if (userType==='Student'){
+          navigate('/student/');
+        }
+        else if (userType==='Mentor' || userType==='Investor'){
+          navigate('/mi/');
+        }
       } catch (error) {
         console.error('There was an error!', error.message);
         alert('An error occurred while submitting the form');

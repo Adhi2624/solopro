@@ -22,6 +22,14 @@ const StudentProfile = () => {
         console.log(res.data);
       })
       .catch((error) => alert(error));
+
+      axios
+      .post(`${backend}/getmeetingstu`, { _id: _id })
+      .then((res) => {
+        setscheduledAppointments(res.data)
+        console.log(res.data);
+      })
+      .catch((error) => alert(error));
   }, [_id, backend]);
 
   const handleEditClick = () => {
@@ -257,7 +265,7 @@ const StudentProfile = () => {
         <ListGroup>
           {}
           {scheduledAppointments.map((appointment, index) => (
-            <ListGroup.Item key={index}>
+            <ListGroup.Item key={index} className='d-flex'>
               <h6>Meeting Title: {appointment.title}</h6>
               <p>Start Date: {appointment.startDate}</p>
               <p>Start Time: {appointment.startTime}</p>

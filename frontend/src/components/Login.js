@@ -74,7 +74,9 @@ export default function Login() {
       if (userData.role==='Student'){
         navigate('/student/');
       }
-      else if (userData.role==='Mentor' || userData.role==='Investor'){}
+      else if (userData.role==='Mentor' || userData.role==='Investor'){
+        navigate('/mi/');
+      }
         else if(userData.role==='Admin'){}
     } catch (error) {
       console.error(error);

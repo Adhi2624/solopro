@@ -93,7 +93,7 @@ const MentorProfileE = () => {
                         )}
                       </p>
                       {!editMode && (
-                        <Button variant="outline-primary" disabled={mentorProfile.Status !== "Available"} className="mt-2">
+                        <Button variant="outline-primary" disabled={mentorProfile.availableToMentor !== "true"} className="mt-2">
                           Book an appointment
                         </Button>
                       )}
@@ -139,13 +139,11 @@ const MentorProfileE = () => {
                                 value={editedProfile.Status || ''}
                                 onChange={handleInputChange}
                               >
-                                <option value="Available">Available</option>
-                                <option value="Not available">Not available</option>
+                                <option value="true">Available</option>
+                                <option value="false">Not available</option>
                               </Form.Control>
                             ) : (
-                              <span className={mentorProfile.Status === 'Available' ? 'badge text-bg-success' : 'badge text-bg-danger'}>
-                                {mentorProfile.Status || 'Unavailable'}
-                              </span>
+                              <span className={mentorProfile.availableToMentor === 'true' ? 'badge text-bg-success' : 'badge text-bg-danger'}>{mentorProfile.availableToMentor === 'true' ? 'Available' : 'Not Available'}</span>
                             )}
                           </ListGroup.Item>
                         </ListGroup>

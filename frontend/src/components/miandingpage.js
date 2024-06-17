@@ -6,22 +6,22 @@ import BLOG from './BLOG.json'; // Import the Lottie animation JSON file
 import Investor from './investor.json'
 import mentor from './mentor.json'
 import logo from '../images/image.svg'
-const StudentLandingPage = () => {
+const MiLandingPage = () => {
   const services = [
     {
       title: 'Blog',
       animationUrl: BLOG, // Use the imported BLOG object directly
-      link: '/student/blogs'
+      link: '/mi/blogs'
     },
     {
       title: 'Find Investor',
       animationUrl: Investor,
-      link: '/student/investorpage'
+      link: '/mi/investorpage'
     },
     {
       title: 'Find Mentor',
       animationUrl: mentor,
-      link: '/student/mentorpage'
+      link: '/mi/mentorpage'
     },
   ];
 
@@ -79,4 +79,4 @@ const StudentLandingPage = () => {
   );
 };
 
-export default StudentLandingPage;
+export default MiLandingPage;

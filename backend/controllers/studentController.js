@@ -1,12 +1,12 @@
 const { ObjectId } = require("mongodb");
-const { getDB } = require('../config/db');
+const { connectDB } = require('../config/db');
 const student=require('../models/student');
 
 exports.getStudentById = async (req, res) => {
     const id = req.body._id;
     try {
-        const db = getDB(); // Get the database object
-        const user = await student.findOne({ _id: new ObjectId(id) });
+        const db = connectDB(); // Get the database object
+        const user = await (await db).collection('students').findOne({ _id: new ObjectId(id) });
         if (user) {
             res.json(user);
         } else {

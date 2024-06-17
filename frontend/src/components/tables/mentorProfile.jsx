@@ -18,7 +18,8 @@ const MentorProfile = () => {
     meetinglink:'',
     meetingStatus:'waiting',
     studentid:'',
-    mentorid:''
+    mentorid:'',
+    
   });
 
   const backend = process.env.REACT_APP_BACKEND;
@@ -38,7 +39,7 @@ const MentorProfile = () => {
 
   }, [_id]);
 
-  const isAvailable = mentorProfile.Status === "Available";
+  const isAvailable = mentorProfile.availableToMentor === "true";
   
   
   const handleShowModal = () => setShowModal(true);
@@ -73,12 +74,12 @@ const MentorProfile = () => {
                 <Row>
                   <Col md={4} className="mb-4 mb-md-0 text-center">
                     <div className="mentor-avatar">
-                      <img src={mentorProfile.imgurl || 'https://via.placeholder.com/150'} alt="Mentor" className="rounded-circle" width="150" />
+                      <img src={mentorProfile.proofImage} alt="Mentor" className="rounded-circle" width="150" />
                     </div>
                     <div className="mt-3">
                       <h4>{mentorProfile.name || 'Unavailable'}</h4>
                       <p className="mb-1">{mentorProfile.areaOfExpertise || 'Unavailable'}</p>
-                      <p className="font-size-sm">{mentorProfile.placeOfService || 'Unavailable'}</p>
+                      <p className="font-size-sm">{mentorProfile.nativePlaceOrWork || 'Unavailable'}</p>
                       <Button variant="outline-primary" disabled={!isAvailable} className="mt-2" onClick={handleShowModal}>
                         Book an appointment
                       </Button>
@@ -95,30 +96,30 @@ const MentorProfile = () => {
                           </ListGroup.Item>
                           <ListGroup.Item>
                             <h6 className="mb-0">No. of People Mentored</h6>
-                            <span className="">{mentorProfile.noOfPeopleMentored || 'Unavailable'}</span>
+                            <span className="">{mentorProfile.mentorshipCount || 'Unavailable'}</span>
                           </ListGroup.Item>
                           <ListGroup.Item>
                             <h6 className="mb-0">Status</h6>
-                            <span className={mentorProfile.Status === 'Available' ? 'badge text-bg-success' : 'badge text-bg-danger'}>
-                              {mentorProfile.Status || "Unavailable"}
-                            </span>
+                            <span className={mentorProfile.availableToMentor === 'true' ? 'badge text-bg-success' : 'badge text-bg-danger'}>{mentorProfile.availableToMentor === 'true' ? 'Available' : 'Not Available'}</span>
+                           
                           </ListGroup.Item>
                         </ListGroup>
                       </Col>
                       <Col sm={6}>
-                        <h5>About Me</h5>
+                        {/* <h5>About Me</h5>
                         <p className="">
                           {mentorProfile.about || 'Unavailable'}
-                        </p>
+                        </p> */}
                         <h5>Expertise</h5>
-                        <ul className="list-unstyled">
+                        <p>{mentorProfile.areaOfExpertise}</p>
+                        {/* <ul className="list-unstyled">
                           {mentorProfile.expertise &&
                             mentorProfile.expertise.map((item, index) => (
                               <li key={index} className="">
                                 {item}
                               </li>
                             ))}
-                        </ul>
+                        </ul> */}
                       </Col>
                     </Row>
                   </Col>
@@ -195,6 +196,16 @@ const MentorProfile = () => {
                 placeholder="Enter meeting title"
                 name="title"
                 value={meetingDetails.title}
+                onChange={handleInputChange}
+              />
+            </Form.Group>
+            <Form.Group controlId="formMeetingTitle">
+              <Form.Label>Meeting link</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter meeting title"
+                name="meetinglink"
+                value={meetingDetails.meetinglink}
                 onChange={handleInputChange}
               />
             </Form.Group>

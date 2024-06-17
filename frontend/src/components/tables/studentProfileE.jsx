@@ -11,7 +11,6 @@ const StudentProfile = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedProfile, setEditedProfile] = useState({});
   const [scheduledAppointments,setscheduledAppointments]=useState([]);
-  localStorage.setItem("studentid",_id);
   const backend = process.env.REACT_APP_BACKEND;
 
   useEffect(() => {
@@ -20,6 +19,15 @@ const StudentProfile = () => {
       .then((res) => {
         setStudentProfile(res.data);
         setEditedProfile(res.data);
+        console.log(res.data);
+      })
+      .catch((error) => alert(error));
+
+      axios
+      .post(`${backend}/getmeetingstu`, { _id: _id })
+      .then((res) => {
+        setscheduledAppointments(res.data)
+        console.log(res.data);
       })
       .catch((error) => alert(error));
   }, [_id, backend]);
@@ -60,12 +68,12 @@ const StudentProfile = () => {
                 <Row>
                   <Col md={4} className="mb-4 mb-md-0 text-center">
                     <div className="student-avatar">
-                      <img src={studentProfile.profile_img || 'https://via.placeholder.com/150'} alt="Student" className="rounded-circle" width="150" />
+                      <img src={studentProfile.profileImage } alt="Student" className="rounded-circle" width="150" />
                     </div>
                     <div className="mt-3">
                       <h4>{studentProfile.name || 'Unavailable'}</h4>
                       <p className="mb-1">{studentProfile.course || 'Unavailable'}</p>
-                      <p className="font-size-sm">{studentProfile.college_name || 'Unavailable'}</p>
+                      <p className="font-size-sm">{studentProfile.collegeName || 'Unavailable'}</p>
                       {!isEditing && (
                         <Button variant="outline-primary " className="mt-2 stu-btn" onClick={handleEditClick}>
                           Edit Profile
@@ -105,16 +113,16 @@ const StudentProfile = () => {
                             )}
                           </ListGroup.Item>
                           <ListGroup.Item>
-                            <h6 className="mb-0">University</h6>
+                            <h6 className="mb-0">institution</h6>
                             {isEditing ? (
                               <Form.Control
                                 type="text"
                                 name="college_name"
-                                value={editedProfile.college_name || ''}
+                                value={editedProfile.institution || ''}
                                 onChange={handleInputChange}
                               />
                             ) : (
-                              <span>{studentProfile.college_name || 'Unavailable'}</span>
+                              <span>{studentProfile.institution || 'Unavailable'}</span>
                             )}
                           </ListGroup.Item>
                           <ListGroup.Item>
@@ -167,11 +175,11 @@ const StudentProfile = () => {
                               <Form.Control
                                 type="text"
                                 name="college_location"
-                                value={editedProfile.college_location || ''}
+                                value={editedProfile.collegeLocation || ''}
                                 onChange={handleInputChange}
                               />
                             ) : (
-                              <span>{studentProfile.college_location || 'Unavailable'}</span>
+                              <span>{studentProfile.collegeLocation || 'Unavailable'}</span>
                             )}
                           </ListGroup.Item>
                           <ListGroup.Item>
@@ -180,11 +188,11 @@ const StudentProfile = () => {
                               <Form.Control
                                 type="text"
                                 name="native_place_of_work"
-                                value={editedProfile.native_place_of_work || ''}
+                                value={editedProfile.nativePlaceOrWork || ''}
                                 onChange={handleInputChange}
                               />
                             ) : (
-                              <span>{studentProfile.native_place_of_work || 'Unavailable'}</span>
+                              <span>{studentProfile.nativePlaceOrWork || 'Unavailable'}</span>
                             )}
                           </ListGroup.Item>
                           <ListGroup.Item>
@@ -257,7 +265,7 @@ const StudentProfile = () => {
         <ListGroup>
           {}
           {scheduledAppointments.map((appointment, index) => (
-            <ListGroup.Item key={index}>
+            <ListGroup.Item key={index} className='d-flex'>
               <h6>Meeting Title: {appointment.title}</h6>
               <p>Start Date: {appointment.startDate}</p>
               <p>Start Time: {appointment.startTime}</p>

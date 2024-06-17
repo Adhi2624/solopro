@@ -4,7 +4,8 @@ import { styled } from '@mui/system';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
 import CssBaseline from '@mui/material/CssBaseline';
-
+import { useNavigate } from 'react-router-dom';
+import { setItemWithExpiry } from "./localStorageWithExpiry"; // Import the utility function
 const CustomTextField = styled(TextField)`
   & .MuiOutlinedInput-root {
     color: white;
@@ -118,7 +119,8 @@ export default function SignupQuestions() {
   const [git, setGit] = useState('');
   const [areaOfExpertise, setAreaOfExpertise] = useState('');
   const [experience, setExperience] = useState('');
-
+  const navigate=useNavigate();
+  
   const handleUserTypeChange = (event) => {
     setUserType(event.target.value);
   };
@@ -201,53 +203,68 @@ export default function SignupQuestions() {
       userQuestions.forEach((question) => {
         formData.append(question.key, question.value);
       });
+      console.log(formData);
       formData.append('userType', userType); // Add userType to form data
+  
       // Append additional data based on user type
       if (userType === 'Student') {
         formData.append('collegeName', collegeName);
         formData.append('course', course);
         formData.append('collegeLocation', collegeLocation);
         formData.append('git', git);
-        formData.append('profileImage', profileImageUrl);
-        formData.append('collegeIdPhoto', collegeIdPhotoUrl);
+        if (profileImage) formData.append('profileImage', profileImageUrl);
+        if (collegeIdPhoto) formData.append('collegeIdPhoto', collegeIdPhotoUrl);
       } else if (userType === 'Mentor') {
         formData.append('areaOfExpertise', areaOfExpertise);
         formData.append('experience', experience);
-        formData.append('profileImage', profileImageUrl);
-        formData.append('proofImage', proofImageUrl);
+        if (profileImage) formData.append('profileImage', profileImageUrl);
+        if (proofImage) formData.append('proofImage', proofImageUrl);
         formData.append('availableToMentor', availableToMentor);
         formData.append('mentorshipCount', mentorshipCount);
       } else if (userType === 'Investor') {
         formData.append('areaOfExpertise', areaOfExpertise);
         formData.append('experience', experience);
-        formData.append('profileImage', profileImageUrl);
-        formData.append('proofImage', proofImageUrl);
+        if (profileImage) formData.append('profileImage', profileImageUrl);
+        if (proofImage) formData.append('proofImage', proofImageUrl);
         formData.append('availableToInvest', availableToInvest);
         formData.append('investmentCount', investmentCount);
         formData.append('investmentAmount', investmentAmount);
       }
-
+  
       for (const [key, value] of formData.entries()) {
         console.log(key, value);
       }
-
-      console.log(profileImageUrl);
-
+      console.log(formData);
       try {
+        
         const response = await axios.post(`${backend}/api/signup`, formData, {
           headers: {
-            'Content-Type': 'multipart/form-data'
+            'Content-Type': 'multipart/form-data',
           },
         });
         console.log('Response:', response.data);
         alert('Submitted successfully');
+        const userData = {
+          email:formData.email,
+          role:userType,
+        };
+
+      // Store user data in local storage with expiry (1 hour = 3600000 milliseconds)
+      setItemWithExpiry("user", userData, 3600000);
+        if (userType==='Student'){
+          navigate('/student/');
+        }
+        else if (userType==='Mentor' || userType==='Investor'){
+          navigate('/mi/');
+        }
       } catch (error) {
         console.error('There was an error!', error.message);
         alert('An error occurred while submitting the form');
       }
+      console.log(formData);
     }
   };
-
+  
   const renderUserQuestions = () => (
     <>
       <Typography variant="h6" sx={{ fontWeight: 'bold', display: 'flex', textAlign: 'center', alignContent: 'center' }}>

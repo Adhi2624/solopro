@@ -2,27 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-
-import { Auth0Provider } from '@auth0/auth0-react';
-import Stepper from './components/Timeline';
-import SignupQuestions from './components/SignupQuestions';
-
 import reportWebVitals from './reportWebVitals';
- import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+// Ensure the root element exists in your HTML file
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-   {/* <Auth0Provider
-    domain="dev-ibo1u4x8dizagzxx.us.auth0.com"
-    clientId="9StbMrWwMvRQGpMI0Jw8X803bTemP8ue"
-    authorizationParams={{
-      redirect_uri: window.location.origin
-    }}
-  > */}
     <App />
-    {/* <SignupQuestions/> */}
-    {/* <Stepper /> */}
-
   </React.StrictMode>
 );
 

@@ -101,15 +101,15 @@ const Home = () => {
                 <Col className="p-3">
                   <div className="text-start">
                     <img src={img2} alt="Image 2" height={30} className="mb-3" />
-                    <h4>Interactive Discussions</h4>
-                    <p>Interactive guidance and investors from diverse areas.</p>
+                    <h4>Educational Blogs</h4>
+                    <p>Enjoy and learn at your pace, anywhere, anytime.</p>
                   </div>
                 </Col>
                 <Col className="p-3">
                   <div className="text-start">
                     <img src={img3} alt="Image 3" height={30} className="mb-3" />
-                    <h4>Interactive Discussions</h4>
-                    <p>Interactive guidance and investors from diverse areas.</p>
+                    <h4>Diverse Community</h4>
+                    <p>Exchange, Learn and grow with your community.</p>
                   </div>
                 </Col>
               </Row>

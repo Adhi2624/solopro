@@ -38,9 +38,10 @@ exports.getMeetingByStudentId = async (req, res) => {
 
 exports.getAppointmentsByMentorId = async (req, res) => {
     try {
-       // const db = getDB();
+       
         const id = req.body.id;
-        const meetings = await meeting.find({ mentorid: id }).toArray();
+        console.log(id)
+        const meetings = await (await db).collection('meetings').find({ mentorid: id }).toArray();
         if (meetings.length > 0) {
             res.json(meetings);
         } else {

@@ -5,14 +5,19 @@ import Navinvmen from '../navinme';
 const Appointments = () => {
   const [appointments, setAppointments] = useState([]);
   const backend = process.env.REACT_APP_BACKEND;
-
+  const lstorage = localStorage.getItem('user');
+    const lstorageparse=JSON.parse(lstorage);
+    console.log(lstorageparse.value.uid)
+    const id=lstorageparse.value.uid;
+    let role = JSON.parse(localStorage.getItem('user')).value.role;
+role = role.toLowerCase();
   useEffect(() => {
     fetchAppointments();
   }, []);
 
   const fetchAppointments = async () => {
     try {
-      const response = await axios.post(`${backend}/getappointments`, { id: "664b5334c6c5200a857aae28" });
+      const response = await axios.post(`${backend}/getappointments`, { id:id });
       setAppointments(response.data);
     } catch (error) {
       console.error('Error fetching appointments:', error);

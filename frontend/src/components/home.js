@@ -63,12 +63,6 @@ const Home = () => {
           </Container>
         </div>
 
-        <div id="course" className="d-flex flex-column justify-content-center align-items-center py-5 text-light full-screen-section">
-          <h2>Your Journey</h2>
-          <div className="stepper-container">
-            <Stepper />
-          </div>
-        </div>
 
         <div id="expedition" className="p-3 d-flex justify-content-center align-items-center"
         // style={{ height: '100vh', width: '100vw' }}

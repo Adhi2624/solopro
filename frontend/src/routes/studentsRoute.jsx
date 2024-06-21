@@ -14,8 +14,7 @@ const StudentsRoute = () => {
       <Route path='/' element={<StudentLandingPage/>}/>
       <Route path='/mentorpage' element={<MentorList />} />
       <Route path='/investorpage' element={<InvestorList/>}/>
-      <Route path="/investor/:_id" element={<MentorProfile />} />
-      <Route path="/mentor/:_id" element={<MentorProfile />} />
+      <Route path="/:role/:id" element={<MentorProfile />} />
       <Route path="/studentprofile/:_id" element={<StudentProfileE />} />
       <Route path="/blogs" element={<Blogs />} />
           <Route path="/blogs/:type/:id" element={<BlogDetail />} />

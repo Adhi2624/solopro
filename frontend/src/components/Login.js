@@ -65,24 +65,22 @@ export default function Login() {
         password,
       });
       const userData = response.data;
-
+  
       // Store user data in local storage with expiry (1 hour = 3600000 milliseconds)
-      setItemWithExpiry("user", userData, 3600000);
-
+      setItemWithExpiry('user', userData, 3600000);
+  
       console.log(userData);
-
-      if (userData.role==='Student'){
+  
+      if (userData.role === 'Student') {
         navigate('/student/');
-      }
-      else if (userData.role==='Mentor' || userData.role==='Investor'){
+      } else if (userData.role === 'Mentor' || userData.role === 'Investor') {
         navigate('/mi/');
+      } else if (userData.role === 'Admin') {
+        navigate('/admin/');
       }
-        else if(userData.role==='Admin'){}
     } catch (error) {
-      console.error(error);
-    }
-  };
-
+      alert(`Login failed: ${error.response ? error.response.data.message : error.message}`);
+    }};
   return (
     <ThemeProvider theme={defaultTheme}>
       <>

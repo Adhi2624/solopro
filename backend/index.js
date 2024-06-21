@@ -12,7 +12,8 @@ const featuredStoryRoutes = require('./routes/featuredStories');
 const moreStoryRoutes = require('./routes/moreStories');
 const userRoutes = require('./routes/userRoutes');
 const loginRoutes = require('./routes/loginRoutes');
-const studentController=require('./controllers/studentController')
+const studentController=require('./controllers/studentController');
+const investorController =  require('./controllers/investorController');
 dotenv.config();
 const app = express();
 
@@ -27,14 +28,17 @@ connectDB()
 
         // Define Routes for first project
         app.get('/getmentors', mentorController.getAllMentors);
+        app.get('/getinvestors',investorController.getAllInvestors)
+        app.post('/getinvestor', investorController.getInvestorById);
         app.post('/getmentor', mentorController.getAppointmentById);
         app.post("/getstudent", studentController.getStudentById);
         app.post('/schedulemeeting', meetingController.scheduleMeeting);
         app.post('/getmeetingstu', meetingController.getMeetingByStudentId);
-
+        app.post('/updatestudent',studentController.updateStudent);
+        app.post('/student/getprofileimg',studentController.getprofileimg);
         app.post('/getappointments', meetingController.getAppointmentsByMentorId);
         app.post('/updatestatus', meetingController.updateAppointmentStatus);
-
+        
         // Define Routes for second project
         app.use('/api/blogs', blogRoutes);
         app.use('/api/featuredStories', featuredStoryRoutes);

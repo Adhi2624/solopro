@@ -11,7 +11,7 @@ const InvestorList = () => {
     console.log(backend);
     
     useEffect(() => {
-        axios.get(`${backend}/getmentors`)
+        axios.get(`${backend}/getinvestors`)
             .then(res => {
                 setMentorList(res.data);
                 console.log(res.data)

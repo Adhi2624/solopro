@@ -6,6 +6,7 @@ import axios from 'axios';
 import CssBaseline from '@mui/material/CssBaseline';
 import { useNavigate } from 'react-router-dom';
 import { setItemWithExpiry } from "./localStorageWithExpiry"; // Import the utility function
+import Navbarr from './nav';
 const CustomTextField = styled(TextField)`
   & .MuiOutlinedInput-root {
     color: white;
@@ -455,8 +456,9 @@ export default function SignupQuestions() {
 
   return (
     <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <div style={{ minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+      <Navbarr />
+      <CssBaseline/>
+      <div style={{ minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }} className='mt-3'>
         <Box
           component="form"
           sx={{

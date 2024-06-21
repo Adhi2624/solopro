@@ -6,15 +6,16 @@ import Nav1 from '../nav1';
 import '../../css/MentorProfile.css'; // Import CSS file
 
 const MentorProfileE = () => {
-  const { _id } = useParams();
+  const { role, _id } = useParams();
   const [mentorProfile, setMentorProfile] = useState({});
   const [editMode, setEditMode] = useState(false);
   const [editedProfile, setEditedProfile] = useState({});
   const backend = process.env.REACT_APP_BACKEND;
-
+  
   useEffect(() => {
+    console.log(role);
     axios
-      .post(`${backend}/getmentor`, { _id: _id })
+      .post(`${backend}/get ${role}`, { _id: _id })
       .then((res) => {
         setMentorProfile(res.data);
         setEditedProfile(res.data); // Initialize editedProfile with the fetched data

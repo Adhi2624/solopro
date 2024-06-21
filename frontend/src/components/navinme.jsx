@@ -34,7 +34,7 @@ const Navinvmen = () => {
           <Nav className='me-end'>
             <NavLink href="#blogs" className="nav-item text-white">Blogs</NavLink>
             <NavLink href="#about-us" className="nav-item text-white">About Us</NavLink>
-            <NavLink as={Link} to="appointment" className="nav-item text-white">
+            <NavLink as={Link} to="appointments" className="nav-item text-white">
               Appointments {appointmentCount > 0 && (<span className="badge bg-secondary">{appointmentCount}</span>)}
             </NavLink>
             <NavLink href={`/mi/miprofile/${id}`} className="profile-link nav-item">

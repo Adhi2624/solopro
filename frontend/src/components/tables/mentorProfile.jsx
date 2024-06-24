@@ -6,9 +6,14 @@ import Nav1 from '../nav1';
 import '../../css/MentorProfile.css'; // Import CSS file
 
 const MentorProfile = () => {
-  const { _id } = useParams();
+  const { role,id } = useParams();
   const [mentorProfile, setMentorProfile] = useState({});
   const [showModal, setShowModal] = useState(false);
+  const lstorage = localStorage.getItem('user');
+    const lstorageparse=JSON.parse(lstorage);
+    
+    const sid=lstorageparse.value.uid;
+    console.log(sid);
   const [meetingDetails, setMeetingDetails] = useState({
     title: '',
     startDate: '',
@@ -18,26 +23,33 @@ const MentorProfile = () => {
     meetinglink:'',
     meetingStatus:'waiting',
     studentid:'',
-    mentorid:'',
-    
+    mentorid:`${id}`,
+    mentorname:'',
+    studentname:''
   });
 
   const backend = process.env.REACT_APP_BACKEND;
 
   useEffect(() => {
+    console.log(id);
     axios
-      .post(`${backend}/getmentor`, { _id: _id })
+      .post(`${backend}/get${role}`, { _id: id })
       .then((res) => {
         setMentorProfile(res.data);
         console.log(mentorProfile);
         setMeetingDetails({
           ...meetingDetails,
-          studentid: localStorage.getItem('studentid') // Same here, use studentid as a string
+          studentid:`${sid}`,// Same here, use studentid as a string,
+          mentorname:mentorProfile.name
         });
       })
       .catch((error) => alert(error));
 
-  }, [_id]);
+      axios.post(`${backend}/student/getprofileimg`,{id:sid}).then((res)=>{
+        setMeetingDetails({...meetingDetails,studentname:res.data.name})
+    }).catch((err)=>alert(err));
+
+  }, [id]);
 
   const isAvailable = mentorProfile.availableToMentor === "true";
   
@@ -53,9 +65,9 @@ const MentorProfile = () => {
   const handleFormSubmit = () => {
     const data = {
       ...meetingDetails,
-      mentorId: _id
     };
-    axios.post(`${backend}/schedulemeeting`, data)
+    console.log(meetingDetails);
+    axios.post(`${backend}/schedulemeeting`, {meetingDetails})
       .then((res) => {
         alert('Meeting request you will receive a response via mail');
         handleCloseModal();

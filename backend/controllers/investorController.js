@@ -2,12 +2,11 @@ const { ObjectId } = require("mongodb");
 const { getDB } = require('../config/db');
 
 
-exports.getAllMentors = async (req, res) => {
+exports.getAllInvestors = async (req, res) => {
     console.log("cn")
     try {
         const db = getDB(); // Get the database object
-        
-        const mentors = await db.collection("mentors").find().toArray();
+        const mentors = await db.collection("investors").find().toArray();
         res.send(mentors);
     } catch (error) {
         console.error("Error fetching mentors:", error);
@@ -16,12 +15,13 @@ exports.getAllMentors = async (req, res) => {
 };
 ;
 
-exports.getmentortById = async (req, res) => {
-    
+exports.getInvestorById = async (req, res) => {
     try {
+        console.log(123);
         const db = getDB();
         const id = req.body._id;
-        const user = await db.collection("mentors").findOne({ _id: new ObjectId(id) });
+        console.log(req.body);
+        const user = await db.collection("investors").findOne({ _id: new ObjectId(id) });
         if (user) {
             res.json(user);
         } else {
@@ -36,9 +36,10 @@ exports.getmentortById = async (req, res) => {
 exports.getprofileimg=async(req,res)=>
     {
         const id=req.body.id;
+        console
         try{
         const db=getDB();
-        const profile= await (await db).collection('mentors').findOne({_id : new ObjectId(id)});
+        const profile= await (await db).collection('investors').findOne({_id : new ObjectId(id)});
         if (profile && profile.profileImage){
             res.json({ profileImage: profile.profileImage, name: profile.name });
         }
@@ -51,14 +52,14 @@ exports.getprofileimg=async(req,res)=>
         
     };
 
-    exports.updateMentor = async (req, res) => {
+    exports.updateInvestor = async (req, res) => {
         const id = req.body._id;
         const data = req.body;
         console.log(id);
         const { _id, ...dataup } = data;
         try {
             const db = await getDB();
-            await db.collection('mentors').updateOne(
+            await db.collection('investors').updateOne(
                 { _id: new ObjectId(id) }, // Filter to select the document by ID
                 { $set: dataup } // Update operation
             );

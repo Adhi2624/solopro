@@ -1,15 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Navbar, Container, Nav, NavLink, Button } from 'react-bootstrap'; // Import Button from react-bootstrap
 import soloLogo1 from '../images/image.svg';
+import axios from 'axios'
 
-const Nav1 = () => {
+const Nav1 = React.memo(() => {
     // Retrieving data from localStorage
-    const username = localStorage.getItem('username');
-    const profilePhoto = localStorage.getItem('profilePhoto');
+    
+    const [profilePhoto, setProfilePhoto] = useState('');
     const lstorage = localStorage.getItem('user');
     const lstorageparse=JSON.parse(lstorage);
     console.log(lstorageparse.value.uid)
     const id=lstorageparse.value.uid;
+    const [name,setName]=useState('')
+    const backend=process.env.REACT_APP_BACKEND;
+    useEffect(()=>{
+        axios.post(`${backend}/student/getprofileimg`,{id:id}).then((res)=>{
+            console.log(res.data)
+            setProfilePhoto(res.data.profileImage);
+            setName(res.data.name)
+        }).catch((err)=>alert(err));
+    },[id])
 
     // Function to handle logout
     const handleLogout = () => {
@@ -35,11 +45,11 @@ const Nav1 = () => {
                         <NavLink href="/student/blogs" className="nav-item text-white">Blogs</NavLink>
                         <NavLink href="/student/mentorpage" className="nav-item text-white">Mentors</NavLink>
                         <NavLink href="/student/investorpage" className="nav-item text-white">Investors</NavLink>
-                        <NavLink href="#about-us" className="nav-item text-white">About Us</NavLink>
+                        
                         <NavLink href={`/student/studentprofile/${id}`} className="profile-link nav-item">
                             <div className='d-flex align-items-center col'>
                                 <img src={profilePhoto} width="30" height="30" className="rounded-circle me-2" alt="profile" />
-                                {username}
+                                {name}
                             </div>
                         </NavLink>
                         <Button variant="outline-light" onClick={handleLogout}>Logout</Button>
@@ -48,6 +58,6 @@ const Nav1 = () => {
             </Container>
         </Navbar>
     );
-};
+});
 
 export default Nav1;

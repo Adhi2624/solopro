@@ -5,8 +5,13 @@ import { Player } from '@lottiefiles/react-lottie-player';
 import BLOG from './BLOG.json'; // Import the Lottie animation JSON file
 import Investor from './investor.json'
 import mentor from './mentor.json'
+import profile from'./profileAnimation.json'
 import logo from '../images/image.svg'
+import appoinmentss from './appoinmentAnimation.json'
 const MiLandingPage = () => {
+  const lstorage = localStorage.getItem('user');
+  const lstorageparse = JSON.parse(lstorage);
+  const id = lstorageparse.value.uid;
   const services = [
     {
       title: 'Blog',
@@ -14,14 +19,14 @@ const MiLandingPage = () => {
       link: '/mi/blogs'
     },
     {
-      title: 'Find Investor',
-      animationUrl: Investor,
-      link: '/mi/investorpage'
+      title: 'Appoinments',
+      animationUrl: appoinmentss,
+      link: '/mi/appoinments'
     },
     {
-      title: 'Find Mentor',
-      animationUrl: mentor,
-      link: '/mi/mentorpage'
+      title: 'go to profile',
+      animationUrl: profile,
+      link: `/mi/miprofile/${id}`
     },
   ];
 

@@ -40,14 +40,14 @@ connectDB()
         app.post('/updatestatus', meetingController.updateAppointmentStatus);
 
 
-        app.post('/updatementor',mentorController.updateMentor);
-        app.post('/updateinvestor',investorController.updateInvestor)
-        
         app.post('/Mentor/getprofileimg',mentorController.getprofileimg);
         app.post('/Investor/getprofileimg',investorController.getprofileimg);
         // Define Routes for second project
         app.use('/api/blogs', blogRoutes);
         app.use('/api/featuredStories', featuredStoryRoutes);
+  app.post('/updatementor',mentorController.updateMentor);
+        app.post('/updateinvestor',investorController.updateInvestor)
+        
         app.use('/api/moreStories', moreStoryRoutes);
 
         // Define Routes for users and login

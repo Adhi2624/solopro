@@ -4,35 +4,59 @@ import axios from 'axios';
 import Nav1 from '../nav1';
 
 const InvestorList = () => {
-    const [mentorList, setMentorList] = useState([]);
+    const [investorList, setInvestorList] = useState([]);
+    const [filteredInvestors, setFilteredInvestors] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [mentorsPerPage, setMentorsPerPage] = useState(10); // Default to 10 for this example
-    const backend=process.env.REACT_APP_BACKEND;
-    console.log(backend);
-    
+    const [investorsPerPage, setInvestorsPerPage] = useState(10);
+    const [searchTerm, setSearchTerm] = useState('');
+    const backend = process.env.REACT_APP_BACKEND;
+
     useEffect(() => {
         axios.get(`${backend}/getinvestors`)
             .then(res => {
-                setMentorList(res.data);
-                console.log(res.data)
+                setInvestorList(res.data);
+                setFilteredInvestors(res.data);
             })
             .catch(err => console.log(err));
     }, [backend]);
-    const indexOfLastMentor = currentPage * mentorsPerPage;
-    const indexOfFirstMentor = indexOfLastMentor - mentorsPerPage;
-    const currentMentors = mentorList.slice(indexOfFirstMentor, indexOfLastMentor);
+
+    useEffect(() => {
+        const results = investorList.filter(investor =>
+            investor.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            investor.areaOfExpertise.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        setFilteredInvestors(results);
+        setCurrentPage(1);
+    }, [searchTerm, investorList]);
+
+    const indexOfLastInvestor = currentPage * investorsPerPage;
+    const indexOfFirstInvestor = indexOfLastInvestor - investorsPerPage;
+    const currentInvestors = filteredInvestors.slice(indexOfFirstInvestor, indexOfLastInvestor);
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-    const handleMentorsPerPageChange = (event) => {
-        setMentorsPerPage(Number(event.target.value));
+    const handleInvestorsPerPageChange = (event) => {
+        setInvestorsPerPage(Number(event.target.value));
         setCurrentPage(1);
+    };
+
+    const handleSearch = (event) => {
+        setSearchTerm(event.target.value);
     };
 
     return (
         <div>
             <Nav1/>
             <div className='p-1 mt-3'>
+            <div className="d-flex justify-content-center mb-3">
+                    <input
+                        type="text"
+                        className="form-control w-50"
+                        placeholder="Search by name or area of expertise"
+                        value={searchTerm}
+                        onChange={handleSearch}
+                    />
+                </div>
                 <div className="table-responsive">
                     <table className="table text-light" id="mentor-table">
                         <thead>
@@ -47,74 +71,75 @@ const InvestorList = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {currentMentors.map((mentor, idx) => (
-                                <InvestorRow key={idx} mentor={mentor} />
+                            {currentInvestors.map((investor, idx) => (
+                                <InvestorRow key={idx} mentor={investor} />
                             ))}
                         </tbody>
                     </table>
                 </div>
-                <Pagination 
-                    mentorsPerPage={mentorsPerPage} 
-                    totalMentors={mentorList.length} 
-                    paginate={paginate} 
-                    currentPage={currentPage} 
-                    handleMentorsPerPageChange={handleMentorsPerPageChange}
-                    indexOfFirstMentor={indexOfFirstMentor}
-                    indexOfLastMentor={indexOfLastMentor}
-                />
+                {filteredInvestors.length >= 10 && (
+                    <Pagination 
+                        investorsPerPage={investorsPerPage} 
+                        totalInvestors={filteredInvestors.length} 
+                        paginate={paginate} 
+                        currentPage={currentPage} 
+                        handleInvestorsPerPageChange={handleInvestorsPerPageChange}
+                        indexOfFirstInvestor={indexOfFirstInvestor}
+                        indexOfLastInvestor={indexOfLastInvestor}
+                    />
+                )}
             </div>
         </div>
     );
 }
-const Pagination = ({ mentorsPerPage, totalMentors, paginate, currentPage, handleMentorsPerPageChange, indexOfFirstMentor, indexOfLastMentor }) => {
+
+const Pagination = ({ investorsPerPage, totalInvestors, paginate, currentPage, handleInvestorsPerPageChange, indexOfFirstInvestor, indexOfLastInvestor }) => {
     const pageNumbers = [];
-    for (let i = 1; i <= Math.ceil(totalMentors / mentorsPerPage); i++) {
+    for (let i = 1; i <= Math.ceil(totalInvestors / investorsPerPage); i++) {
         pageNumbers.push(i);
     }
 
-    const showingFrom = indexOfFirstMentor + 1;
-    const showingTo = Math.min(indexOfLastMentor, totalMentors);
+    const showingFrom = indexOfFirstInvestor + 1;
+    const showingTo = Math.min(indexOfLastInvestor, totalInvestors);
 
     return (
         <nav className='d-flex flex-column flex-md-row justify-content-between align-items-center p-3' id='pagebar'>
-        <div className='text-light mb-2 mb-md-0'>
-            {`Showing ${showingFrom} to ${showingTo} of ${totalMentors} entries`}
-        </div>
-        <div className='d-flex justify-content-end align-items-center'>
-            <div className='me-3 d-flex align-items-center'> 
-                <label htmlFor="mentorsPerPageSelect" className="ms-md-1 ms-sm-1 form-label text-light me-2 text-wrap row-label">Rows per page:</label>
-                <select id="mentorsPerPageSelect" className="form-select w-auto" value={mentorsPerPage} onChange={handleMentorsPerPageChange}>
-                    <option value="5">5</option>
-                    <option value="10">10</option>
-                    <option value="20">20</option>
-                    <option value="50">50</option>
-                </select>
+            <div className='text-light mb-2 mb-md-0'>
+                {`Showing ${showingFrom} to ${showingTo} of ${totalInvestors} entries`}
             </div>
-            <div className='pagination-container'>
-                <ul className='pagination mb-0'>
-                    <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
-                        <a onClick={(e) => { e.preventDefault(); if (currentPage > 1) paginate(currentPage - 1); }} href='!#' className='page-link'>
-                            Previous
-                        </a>
-                    </li>
-                    {pageNumbers.map(number => (
-                        <li key={number} className={`page-item ${currentPage === number ? 'active-page' : ''}`}>
-                            <a onClick={(e) => { e.preventDefault(); paginate(number); }} href='!#' className='page-link'>
-                                {number}
+            <div className='d-flex justify-content-end align-items-center'>
+                <div className='me-3 d-flex align-items-center'> 
+                    <label htmlFor="investorsPerPageSelect" className="ms-md-1 ms-sm-1 form-label text-light me-2 text-wrap row-label">Rows per page:</label>
+                    <select id="investorsPerPageSelect" className="form-select w-auto" value={investorsPerPage} onChange={handleInvestorsPerPageChange}>
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="50">50</option>
+                    </select>
+                </div>
+                <div className='pagination-container'>
+                    <ul className='pagination mb-0'>
+                        <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+                            <a onClick={(e) => { e.preventDefault(); if (currentPage > 1) paginate(currentPage - 1); }} href='!#' className='page-link'>
+                                Previous
                             </a>
                         </li>
-                    ))}
-                    <li className={`page-item ${currentPage === pageNumbers.length ? 'disabled' : ''}`}>
-                        <a onClick={(e) => { e.preventDefault(); if (currentPage < pageNumbers.length) paginate(currentPage + 1); }} href='!#' className='page-link'>
-                            Next
-                        </a>
-                    </li>
-                </ul>
+                        {pageNumbers.map(number => (
+                            <li key={number} className={`page-item ${currentPage === number ? 'active-page' : ''}`}>
+                                <a onClick={(e) => { e.preventDefault(); paginate(number); }} href='!#' className='page-link'>
+                                    {number}
+                                </a>
+                            </li>
+                        ))}
+                        <li className={`page-item ${currentPage === pageNumbers.length ? 'disabled' : ''}`}>
+                            <a onClick={(e) => { e.preventDefault(); if (currentPage < pageNumbers.length) paginate(currentPage + 1); }} href='!#' className='page-link'>
+                                Next
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
-    </nav>
-    
-
+        </nav>
     );
 }
 

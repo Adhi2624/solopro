@@ -2,26 +2,28 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Container, Row, Col, Card, Button, ListGroup, Form } from 'react-bootstrap';
-import Nav1 from '../nav1';
-import '../../css/MentorProfile.css'; // Import CSS file
+import Navimi from '../navinme';
+import '../../css/MentorProfile.css';
 
 const MentorProfileE = () => {
-  const { role, _id } = useParams();
-  const [mentorProfile, setMentorProfile] = useState({});
+  const { _id } = useParams();
+  const [profile, setProfile] = useState({});
   const [editMode, setEditMode] = useState(false);
   const [editedProfile, setEditedProfile] = useState({});
+
+  const localStorageUser = JSON.parse(localStorage.getItem('user'));
   const backend = process.env.REACT_APP_BACKEND;
-  
+  const role = localStorageUser.value.role;
+
   useEffect(() => {
-    console.log(role);
     axios
-      .post(`${backend}/get ${role}`, { _id: _id })
+      .post(`${backend}/get${role}`, { _id: _id })
       .then((res) => {
-        setMentorProfile(res.data);
-        setEditedProfile(res.data); // Initialize editedProfile with the fetched data
+        setProfile(res.data);
+        setEditedProfile(res.data);
       })
       .catch((error) => alert(error));
-  }, [_id, backend]);
+  }, [_id, backend, role]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -34,19 +36,85 @@ const MentorProfileE = () => {
 
   const handleSaveChanges = () => {
     axios
-      .post(`${backend}/updatementor`, editedProfile)
+      .post(`${backend}/update${role.toLowerCase()}`, editedProfile)
       .then((res) => {
-        setMentorProfile(editedProfile);
+        setProfile(editedProfile);
         setEditMode(false);
         alert('Profile updated successfully');
       })
       .catch((error) => alert(error));
   };
 
+  const handleStatusChange = (e) => {
+    const { value } = e.target;
+    const statusField = role === 'Mentor' ? 'availableToMentor' : 'availableToInvest';
+    const updatedProfile = { ...editedProfile, [statusField]: value };
+    setEditedProfile(updatedProfile);
+  
+    axios
+      .post(`${backend}/update${role.toLowerCase()}`, updatedProfile)
+      .then((res) => {
+        setProfile(updatedProfile);
+        alert('Status updated successfully');
+      })
+      .catch((error) => alert(error));
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+  
+    reader.onloadend = () => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Calculate new dimensions
+        let width = img.width;
+        let height = img.height;
+        const maxSize = 500;
+        
+        if (width > height && width > maxSize) {
+          height *= maxSize / width;
+          width = maxSize;
+        } else if (height > maxSize) {
+          width *= maxSize / height;
+          height = maxSize;
+        }
+        
+        canvas.width = width;
+        canvas.height = height;
+        
+        // Draw resized image to canvas
+        ctx.drawImage(img, 0, 0, width, height);
+        
+        // Convert canvas to base64
+        const resizedImage = canvas.toDataURL('image/jpeg', 0.7); // Adjust quality here (0.7 = 70% quality)
+        
+        const updatedProfile = { ...editedProfile, profileImage: resizedImage };
+        setEditedProfile(updatedProfile);
+        
+        axios
+          .post(`${backend}/update${role.toLowerCase()}`, updatedProfile)
+          .then((res) => {
+            setProfile(updatedProfile);
+            alert('Profile image updated successfully');
+          })
+          .catch((error) => alert(error));
+      };
+      img.src = reader.result;
+    };
+  
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
     <>
-      <Nav1 />
-      <Container fluid className="main-body mt-lg-3">
+      <Navimi />
+      <Container fluid className="main-body mt-4">
         <Row className="justify-content-center">
           <Col lg={8} md={10}>
             <Card className="mentor-card">
@@ -54,50 +122,35 @@ const MentorProfileE = () => {
                 <Row>
                   <Col md={4} className="mb-4 mb-md-0 text-center">
                     <div className="mentor-avatar">
-                      <img src={mentorProfile.imgurl || 'https://via.placeholder.com/150'} alt="Mentor" className="rounded-circle" width="150" />
+                      <img
+                        src={profile.profileImage || 'https://via.placeholder.com/150'}
+                        alt="Profile"
+                        className="rounded-circle img-fluid"
+                      />
+                      {editMode && (
+                        <Form.Group className="mt-3">
+                          <Form.Control
+                            type="file"
+                            id="profileImage"
+                            label="Change Profile Image"
+                            onChange={handleImageChange}
+                          />
+                        </Form.Group>
+                      )}
                     </div>
                     <div className="mt-3">
-                      <h4>
-                        {editMode ? (
-                          <Form.Control
-                            type="text"
-                            name="name"
-                            value={editedProfile.name || ''}
-                            onChange={handleInputChange}
-                          />
-                        ) : (
-                          mentorProfile.name || 'Unavailable'
-                        )}
-                      </h4>
-                      <p className="mb-1">
-                        {editMode ? (
-                          <Form.Control
-                            type="text"
-                            name="areaOfExpertise"
-                            value={editedProfile.areaOfExpertise || ''}
-                            onChange={handleInputChange}
-                          />
-                        ) : (
-                          mentorProfile.areaOfExpertise || 'Unavailable'
-                        )}
-                      </p>
-                      <p className="font-size-sm">
-                        {editMode ? (
-                          <Form.Control
-                            type="text"
-                            name="placeOfService"
-                            value={editedProfile.placeOfService || ''}
-                            onChange={handleInputChange}
-                          />
-                        ) : (
-                          mentorProfile.placeOfService || 'Unavailable'
-                        )}
-                      </p>
-                      {!editMode && (
-                        <Button variant="outline-primary" disabled={mentorProfile.availableToMentor !== "true"} className="mt-2">
-                          Book an appointment
+                      <h4>{profile.name || 'Unavailable'}</h4>
+                      <p className="mb-1">{profile.areaOfExpertise || 'Unavailable'}</p>
+                      <p className="font-size-sm">{profile.nativePlaceOrWork || 'Unavailable'}</p>
+                      {/* {!editMode && (
+                        <Button
+                          variant="outline-primary"
+                          disabled={profile.availableToMentor !== 'true' && profile.availableToInvest !== 'true'}
+                          className="mt-2"
+                        >
+                          {role === 'Mentor' ? 'Book an appointment' : 'Request Investment'}
                         </Button>
-                      )}
+                      )} */}
                     </div>
                   </Col>
                   <Col md={8}>
@@ -107,76 +160,63 @@ const MentorProfileE = () => {
                         <ListGroup variant="flush" className="personal-details">
                           <ListGroup.Item>
                             <h6 className="mb-0">Full Name</h6>
+                            <span>{profile.name || 'Unavailable'}</span>
+                          </ListGroup.Item>
+                          <ListGroup.Item>
+                            <h6 className="mb-0">Experience (years)</h6>
                             {editMode ? (
                               <Form.Control
                                 type="text"
-                                name="name"
-                                value={editedProfile.name || ''}
+                                name="experience"
+                                value={editedProfile.experience || ''}
                                 onChange={handleInputChange}
                               />
                             ) : (
-                              <span>{mentorProfile.name || 'Unavailable'}</span>
+                              <span>{profile.experience || 'Unavailable'}</span>
                             )}
                           </ListGroup.Item>
                           <ListGroup.Item>
-                            <h6 className="mb-0">No. of People Mentored</h6>
-                            {editMode ? (
-                              <Form.Control
-                                type="text"
-                                name="noOfPeopleMentored"
-                                value={editedProfile.noOfPeopleMentored || ''}
-                                onChange={handleInputChange}
-                              />
-                            ) : (
-                              <span>{mentorProfile.noOfPeopleMentored || 'Unavailable'}</span>
-                            )}
+                            <h6 className="mb-0">
+                              {role === 'Mentor' ? 'No. of People Mentored' : 'Investment Count'}
+                            </h6>
+                            <span>{profile.mentorshipCount || profile.investmentCount || 'Unavailable'}</span>
                           </ListGroup.Item>
+                          {role === 'Investor' && (
+                            <ListGroup.Item>
+                              <h6 className="mb-0">Investment Amount</h6>
+                              <span>{profile.investmentAmount || 'Unavailable'}</span>
+                            </ListGroup.Item>
+                          )}
                           <ListGroup.Item>
                             <h6 className="mb-0">Status</h6>
-                            {editMode ? (
-                              <Form.Control
-                                as="select"
-                                name="Status"
-                                value={editedProfile.Status || ''}
-                                onChange={handleInputChange}
-                              >
-                                <option value="true">Available</option>
-                                <option value="false">Not available</option>
-                              </Form.Control>
-                            ) : (
-                              <span className={mentorProfile.availableToMentor === 'true' ? 'badge text-bg-success' : 'badge text-bg-danger'}>{mentorProfile.availableToMentor === 'true' ? 'Available' : 'Not Available'}</span>
-                            )}
+                            <Form.Select
+                              name={role === 'Mentor' ? 'availableToMentor' : 'availableToInvest'}
+                              value={editedProfile.availableToMentor || editedProfile.availableToInvest || ''}
+                              onChange={handleStatusChange}
+                              className="mt-2"
+                            >
+                              <option value="true">Available</option>
+                              <option value="false">Not available</option>
+                            </Form.Select>
                           </ListGroup.Item>
                         </ListGroup>
                       </Col>
                       <Col sm={6}>
-                        <h5>About Me</h5>
-                        {editMode ? (
-                          <Form.Control
-                            as="textarea"
-                            name="about"
-                            value={editedProfile.about || ''}
-                            onChange={handleInputChange}
-                          />
-                        ) : (
-                          <p>{mentorProfile.about || 'Unavailable'}</p>
-                        )}
-                        <h5>Expertise</h5>
-                        {editMode ? (
-                          <Form.Control
-                            as="textarea"
-                            name="expertise"
-                            value={editedProfile.expertise || ''}
-                            onChange={handleInputChange}
-                          />
-                        ) : (
-                          <ul className="list-unstyled">
-                            {mentorProfile.expertise &&
-                              mentorProfile.expertise.map((item, index) => (
-                                <li key={index}>{item}</li>
-                              ))}
-                          </ul>
-                        )}
+                        <h5>Contact Details</h5>
+                        <ListGroup variant="flush" className="contact-details">
+                          <ListGroup.Item>
+                            <h6 className="mb-0">Email</h6>
+                            <span>{profile.email || 'Unavailable'}</span>
+                          </ListGroup.Item>
+                          <ListGroup.Item>
+                            <h6 className="mb-0">Phone</h6>
+                            <span>{profile.phone || 'Unavailable'}</span>
+                          </ListGroup.Item>
+                          <ListGroup.Item>
+                            <h6 className="mb-0">LinkedIn</h6>
+                            <span>{profile.linkedin || 'Unavailable'}</span>
+                          </ListGroup.Item>
+                        </ListGroup>
                       </Col>
                     </Row>
                   </Col>

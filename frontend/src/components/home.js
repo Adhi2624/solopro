@@ -25,6 +25,7 @@ const Home = () => {
     <>
       <div style={{ overflowX: 'hidden' }}>
         <Navbarr />
+        <section>
         <Container fluid style={{ height: '100vh', width: '100vw' }}>
           <div id="main" className="d-flex flex-column justify-content-center align-items-center h-100 w-100">
             <div className="title-text text-center">
@@ -45,7 +46,8 @@ const Home = () => {
             </div>
           </div>
         </Container>
-
+        </section>
+        <section>
         <div id="unleas" className="d-flex justify-content-center align-items-center py-3 mt-6"
         //  style={{ height: '100vh', width: '100vw' }}
         >
@@ -64,6 +66,9 @@ const Home = () => {
         </div>
 
 
+        </section>
+
+<section>
         <div id="expedition" className="p-3 d-flex justify-content-center align-items-center"
         // style={{ height: '100vh', width: '100vw' }}
         >
@@ -84,7 +89,9 @@ const Home = () => {
             </Row>
           </Container>
         </div>
+        </section>
 
+<section>
         <div id="envoffr" className="py-5 d-flex flex-column justify-content-center align-items-center"
         // style={{ height: '100vh', width: '100vw' }}
         >
@@ -117,7 +124,9 @@ const Home = () => {
             </Row>
           </Container>
         </div>
+        </section>
 
+        <section>
         <div id="prtteam" className="py-5 d-flex justify-content-center align-items-center"
         // style={{ height: '100vh', width: '100vw' }}
         >
@@ -138,7 +147,8 @@ const Home = () => {
             </Row>
           </Container>
         </div>
-
+        </section>
+        <section>
         <div id="services" className="d-flex flex-column justify-content-center align-items-start align-items-lg-center"
         // style={{ height: '100vh', width: '100vw' }}
         >
@@ -213,7 +223,7 @@ const Home = () => {
             </Container>
           </Container>
         </div>
-
+        </section>
         <footer className="bg-light text-center text-lg-start text-muted" style={{ width: '100vw' }}>
           <section className="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
             <div>

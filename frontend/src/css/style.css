@@ -158,6 +158,8 @@ nav, footer {
     font-size: clamp(8px, 2vw, 20px);
 }
 
+
+
 #mentor-nav {
     background-color: #040F15 !important;
 }
@@ -171,7 +173,7 @@ nav, footer {
 
 #mentor-table {
     border-collapse: separate;
-    border-spacing: 15px 0;
+    border-spacing: 10px 0;
     background-color: transparent !important;
     font-style: normal;
 }

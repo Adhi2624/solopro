@@ -29,8 +29,8 @@ connectDB()
         // Define Routes for first project
         app.get('/getmentors', mentorController.getAllMentors);
         app.get('/getinvestors',investorController.getAllInvestors)
-        app.post('/getinvestor', investorController.getInvestorById);
-        app.post('/getmentor', mentorController.getAppointmentById);
+        app.post('/getInvestor', investorController.getInvestorById);
+        app.post('/getMentor', mentorController.getmentortById);
         app.post("/getstudent", studentController.getStudentById);
         app.post('/schedulemeeting', meetingController.scheduleMeeting);
         app.post('/getmeetingstu', meetingController.getMeetingByStudentId);
@@ -38,7 +38,13 @@ connectDB()
         app.post('/student/getprofileimg',studentController.getprofileimg);
         app.post('/getappointments', meetingController.getAppointmentsByMentorId);
         app.post('/updatestatus', meetingController.updateAppointmentStatus);
+
+
+        app.post('/updatementor',mentorController.updateMentor);
+        app.post('/updateinvestor',investorController.updateInvestor)
         
+        app.post('/Mentor/getprofileimg',mentorController.getprofileimg);
+        app.post('/Investor/getprofileimg',investorController.getprofileimg);
         // Define Routes for second project
         app.use('/api/blogs', blogRoutes);
         app.use('/api/featuredStories', featuredStoryRoutes);

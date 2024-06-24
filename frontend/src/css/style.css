@@ -44,11 +44,18 @@ nav, footer {
     align-items: center;
 }
 
-#main .title-text {
+.main-section {
+    background: url('../images/bg1.png') no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+    width: 100vw;
+}
+
+.title-text {
     padding: 5%;
 }
 
-#main h1 {
+.title-text h1 {
     color: transparent;
     -webkit-background-clip: text;
     background-clip: text;
@@ -56,24 +63,23 @@ nav, footer {
     font-size: clamp(30px, 6vw, 120px);
 }
 
-#main p {
+.title-text p {
     color: white;
     font-size: clamp(10px, 2vw, 25px);
 }
 
-#main .helpbtn {
+.helpbtn {
     background-color: #008A90;
 }
 
-#unleas {
-    background-color: #222831;
+.unleash-section {
+    background: url('../images/bg2.png') no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+    width: 100vw;
 }
 
-#unleas1 {
-    padding: 5%;
-}
-
-#unleas1 h3 {
+.unleash-section h3 {
     color: transparent;
     -webkit-background-clip: text;
     background-clip: text;
@@ -81,79 +87,94 @@ nav, footer {
     font-size: clamp(20px, 4vw, 80px);
 }
 
-#unleas1 p {
+.unleash-section p {
     color: white;
     font-size: clamp(8px, 2vw, 20px);
 }
 
-#unleas1 .imapcttbn {
+.imapcttbn {
     background-color: violet;
     color: white;
 }
 
-#expedition h3 {
+.expedition-section {
+    background: url('../images/bg3.png') no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+    width: 100vw;
+}
+
+.expedition-section h3 {
     color: white;
     font-weight: 700;
     font-size: clamp(20px, 4vw, 50px);
 }
 
-#expedition p {
+.expedition-section p {
     color: white;
     font-size: clamp(8px, 2vw, 20px);
 }
 
-#expedition button {
+.expedition-section button {
     background-color: violet;
     color: white;
-
 }
 
-#envoffr {
-    background-color: #393E46;
-    padding: 2% 5%;
-    color: white;
+.environment-section {
+    background: url('../images/bg1.png') no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+    width: 100vw;
 }
 
-#envoffr h3 {
-    color: white;
-    font-weight: 700;
-    font-size: clamp(20px, 4vw, 50px);
-}
-
-#envoffr p {
-    color: white;
-    font-size: clamp(8px, 2vw, 20px);
-}
-
-#prtteam h3 {
+.environment-section h3 {
     color: white;
     font-weight: 700;
     font-size: clamp(20px, 4vw, 50px);
 }
 
-#prtteam p {
+.environment-section p {
     color: white;
     font-size: clamp(8px, 2vw, 20px);
 }
 
-#prtteam button {
+.team-section {
+    background: url('../images/bg2.png') no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+    width: 100vw;
+}
+
+.team-section h3 {
+    color: white;
+    font-weight: 700;
+    font-size: clamp(20px, 4vw, 50px);
+}
+
+.team-section p {
+    color: white;
+    font-size: clamp(8px, 2vw, 20px);
+}
+
+.team-section button {
     background-color: #008A90;
     color: white;
-    
 }
 
-#services {
-    padding: 2% 5%;
-    color: white;
+.services-section {
+    background: url('../images/bg3.png') no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+    width: 100vw;
 }
 
-#services h3 {
+.services-section h3 {
     color: white;
     font-weight: 700;
     font-size: clamp(20px, 4vw, 50px);
 }
 
-#services p {
+.services-section p {
     color: white;
     font-size: clamp(8px, 2vw, 20px);
 }

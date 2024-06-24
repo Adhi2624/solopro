@@ -14,6 +14,7 @@ import service3 from '../images/service3.png';
 import service4 from '../images/service4.png';
 import { CiHeart } from "react-icons/ci";
 import Stepper from './Timeline';
+
 const Home = () => {
   const navigate = useNavigate();
 
@@ -26,204 +27,195 @@ const Home = () => {
       <div style={{ overflowX: 'hidden' }}>
         <Navbarr />
         <section>
-        <Container fluid style={{ height: '100vh', width: '100vw' }}>
-          <div id="main" className="d-flex flex-column justify-content-center align-items-center h-100 w-100">
-            <div className="title-text text-center">
-              <h1>Simplify Your Startup Journey</h1>
-              <p className="mt-2">Your insightful expedition towards success starts here.</p>
-              <Row className="justify-content-center gap-2 mt-5">
-                <Col md={3} className="text-center">
-                  <Button className="px-4 helpbtn" size="lg" onClick={handleSignUpNavigation}>
-                    Help in!
-                  </Button>
-                </Col>
-                <Col md={3} className="text-center">
-                  <Button variant="outline-light" size="lg">
-                    Uncover More
-                  </Button>
-                </Col>
-              </Row>
-            </div>
-          </div>
-        </Container>
-        </section>
-        <section>
-        <div id="unleas" className="d-flex justify-content-center align-items-center py-3 mt-6"
-        //  style={{ height: '100vh', width: '100vw' }}
-        >
-          <Container>
-            <div id="unleas1" className="mx-auto text-center w-75">
-              <img src={soloLogo1} className="w-50" alt="logo"></img>
-              <h3 className="mt-2">Unleash Your Capability</h3>
-              <p className="mt-2">Become an integral part of our thriving and prosperous startup environment.</p>
-              <Link to="/signup" style={{ textDecoration: 'none' }}>
-                <Button className="px-4 imapcttbn mt-2" variant="outline" size="lg">
-                  Create an Impact
-                </Button>
-              </Link>
+          <Container fluid className="main-section">
+            <div className="d-flex flex-column justify-content-center align-items-center h-100 w-100">
+              <div className="title-text text-center">
+                <h1>Simplify Your Startup Journey</h1>
+                <p className="mt-2">Your insightful expedition towards success starts here.</p>
+                <Row className="justify-content-center gap-2 mt-5">
+                  <Col md={3} className="text-center">
+                    <Button className="px-4 helpbtn" size="lg" onClick={handleSignUpNavigation}>
+                      Help in!
+                    </Button>
+                  </Col>
+                  <Col md={3} className="text-center">
+                    <Button variant="outline-light" size="lg">
+                      Uncover More
+                    </Button>
+                  </Col>
+                </Row>
+              </div>
             </div>
           </Container>
-        </div>
-
-
-        </section>
-
-<section>
-        <div id="expedition" className="p-3 d-flex justify-content-center align-items-center"
-        // style={{ height: '100vh', width: '100vw' }}
-        >
-          <Container className="" style={{minWidth:'80%'}}>
-            <Row>
-              <Col>
-                <img src={Expedeimg} alt="exp img" className="bg-light w-100" style={{ height: '100%' }} />
-              </Col>
-              <Col className="my-auto">
-                <div>
-                  <h3>Begin Your Expedition</h3>
-                  <p className="mt-2">Leap into the future with VioletVanguard.</p>
-                  <Button className="px-4 imapcttbn mt-2" variant="outline" size="lg">
-                    Jump In
-                  </Button>
-                </div>
-              </Col>
-            </Row>
-          </Container>
-        </div>
-        </section>
-
-<section>
-        <div id="envoffr" className="py-5 d-flex flex-column justify-content-center align-items-center"
-        // style={{ height: '100vh', width: '100vw' }}
-        >
-          <div className="ms-5">
-            <h3>Our Carefully Selected Environment offers</h3>
-          </div>
-          <Container className="w-100">
-            <Row className="mt-5">
-              <Col className="p-3">
-                <div className="text-start">
-                  <img src={img1} height={30} className="ms-auto mb-3" alt="Image 1" />
-                  <h4>Interactive Discussions</h4>
-                  <p>Interactive guidance and investors from diverse areas.</p>
-                </div>
-              </Col>
-              <Col className="p-3">
-                <div className="text-start">
-                  <img src={img2} alt="Image 2" height={30} className="mb-3" />
-                  <h4>Educational Blogs</h4>
-                  <p>Enjoy and learn at your pace, anywhere, anytime.</p>
-                </div>
-              </Col>
-              <Col className="p-3">
-                <div className="text-start">
-                  <img src={img3} alt="Image 3" height={30} className="mb-3" />
-                  <h4>Diverse Community</h4>
-                  <p>Exchange, Learn and grow with your community.</p>
-                </div>
-              </Col>
-            </Row>
-          </Container>
-        </div>
         </section>
 
         <section>
-        <div id="prtteam" className="py-5 d-flex justify-content-center align-items-center"
-        // style={{ height: '100vh', width: '100vw' }}
-        >
-          <Container className="w-75">
-            <Row>
-              <Col>
-                <img src={tmimg} alt="exp img" className="bg-light rounded-circle w-75" />
-              </Col>
-              <Col className="my-auto">
-                <div>
-                  <h3>Become Part of Our Champion Team</h3>
-                  <p className="mt-2">Enhance your intellect and wisdom.</p>
+          <div className="unleash-section d-flex justify-content-center align-items-center py-3">
+            <Container>
+              <div className="mx-auto text-center w-75">
+                <img src={soloLogo1} className="w-50" alt="logo" />
+                <h3 className="mt-2">Unleash Your Capability</h3>
+                <p className="mt-2">Become an integral part of our thriving and prosperous startup environment.</p>
+                <Link to="/signup" style={{ textDecoration: 'none' }}>
                   <Button className="px-4 imapcttbn mt-2" variant="outline" size="lg">
-                    Progress With Us
+                    Create an Impact
                   </Button>
-                </div>
-              </Col>
-            </Row>
-          </Container>
-        </div>
-        </section>
-        <section>
-        <div id="services" className="d-flex flex-column justify-content-center align-items-start align-items-lg-center"
-        // style={{ height: '100vh', width: '100vw' }}
-        >
-          <div className="ms-5">
-            <h3>Services</h3>
-            <p>Choose the best service for your entrepreneurial voyage.</p>
+                </Link>
+              </div>
+            </Container>
           </div>
-          <Container fluid>
-            <Container className="mt-5">
-              <Row className="row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
+        </section>
+
+        <section>
+          <div className="expedition-section p-3 d-flex justify-content-center align-items-center">
+            <Container style={{ minWidth: '80%' }}>
+              <Row>
                 <Col>
-                  <div className="d-flex align-items-center justify-content-center h-100">
-                    {service1 ? (
-                      <img
-                        src={service1}
-                        alt="service1 img"
-                        className="img-fluid bg-light rounded-4 service-img"
-                      />
-                    ) : (
-                      <div className="bg-light rounded-4 service-img-placeholder d-flex align-items-center justify-content-center">
-                        <span>Image Unavailable</span>
-                      </div>
-                    )}
-                  </div>
+                  <img src={Expedeimg} alt="exp img" className="bg-light w-100" style={{ height: '100%' }} />
                 </Col>
-                <Col>
-                  <div className="d-flex align-items-center justify-content-center h-100">
-                    {service2 ? (
-                      <img
-                        src={service2}
-                        alt="service2 img"
-                        className="img-fluid bg-light rounded-4 service-img"
-                      />
-                    ) : (
-                      <div className="bg-light rounded-4 service-img-placeholder d-flex align-items-center justify-content-center">
-                        <span>Image Unavailable</span>
-                      </div>
-                    )}
-                  </div>
-                </Col>
-                <Col>
-                  <div className="d-flex align-items-center justify-content-center h-100">
-                    {service3 ? (
-                      <img
-                        src={service3}
-                        alt="service3 img"
-                        className="img-fluid bg-light rounded-4 service-img"
-                      />
-                    ) : (
-                      <div className="bg-light rounded-4 service-img-placeholder d-flex align-items-center justify-content-center">
-                        <span>Image Unavailable</span>
-                      </div>
-                    )}
-                  </div>
-                </Col>
-                <Col>
-                  <div className="d-flex align-items-center justify-content-center h-100">
-                    {service4 ? (
-                      <img
-                        src={service4}
-                        alt="service4 img"
-                        className="img-fluid bg-light rounded-4 service-img"
-                      />
-                    ) : (
-                      <div className="bg-light rounded-4 service-img-placeholder d-flex align-items-center justify-content-center">
-                        <span>Image Unavailable</span>
-                      </div>
-                    )}
+                <Col className="my-auto">
+                  <div>
+                    <h3>Begin Your Expedition</h3>
+                    <p className="mt-2">Leap into the future with VioletVanguard.</p>
+                    <Button className="px-4 imapcttbn mt-2" variant="outline" size="lg">
+                      Jump In
+                    </Button>
                   </div>
                 </Col>
               </Row>
             </Container>
-          </Container>
-        </div>
+          </div>
         </section>
+
+        <section>
+          <div className="environment-section py-5 d-flex flex-column justify-content-center align-items-center">
+            <div className="ms-5">
+              <h3>Our Carefully Selected Environment offers</h3>
+            </div>
+            <Container className="w-100">
+              <Row className="mt-5">
+                <Col className="p-3">
+                  <div className="text-start">
+                    <img src={img1} height={30} className="ms-auto mb-3" alt="Image 1" />
+                    <h4>Interactive Discussions</h4>
+                    <p>Interactive guidance and investors from diverse areas.</p>
+                  </div>
+                </Col>
+                <Col className="p-3">
+                  <div className="text-start">
+                    <img src={img2} alt="Image 2" height={30} className="mb-3" />
+                    <h4>Educational Blogs</h4>
+                    <p>Enjoy and learn at your pace, anywhere, anytime.</p>
+                  </div>
+                </Col>
+                <Col className="p-3">
+                  <div className="text-start">
+                    <img src={img3} alt="Image 3" height={30} className="mb-3" />
+                    <h4>Diverse Community</h4>
+                    <p>Exchange, Learn and grow with your community.</p>
+                  </div>
+                </Col>
+              </Row>
+            </Container>
+          </div>
+        </section>
+
+        <section>
+          <div className="team-section py-5 d-flex justify-content-center align-items-center">
+            <Container className="w-75">
+              <Row>
+                <Col>
+                  <img src={tmimg} alt="team img" className="bg-light rounded-circle w-75" />
+                </Col>
+                <Col className="my-auto">
+                  <div>
+                    <h3>Become Part of Our Champion Team</h3>
+                    <p className="mt-2">Enhance your intellect and wisdom.</p>
+                    <Button className="px-4 imapcttbn mt-2" variant="outline" size="lg">
+                      Progress With Us
+                    </Button>
+                  </div>
+                </Col>
+              </Row>
+            </Container>
+          </div>
+        </section>
+
+        <section>
+          <div className="services-section d-flex flex-column justify-content-center align-items-start align-items-lg-center">
+            <div className="ms-5">
+              <h3>Services</h3>
+              <p>Choose the best service for your entrepreneurial voyage.</p>
+            </div>
+            <Container fluid>
+              <Container className="mt-5">
+                <Row className="row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
+                  <Col>
+                    <div className="d-flex align-items-center justify-content-center h-100">
+                      {service1 ? (
+                        <img
+                          src={service1}
+                          alt="service1 img"
+                          className="img-fluid bg-light rounded-4 service-img"
+                        />
+                      ) : (
+                        <div className="bg-light rounded-4 service-img-placeholder d-flex align-items-center justify-content-center">
+                          <span>Image Unavailable</span>
+                        </div>
+                      )}
+                    </div>
+                  </Col>
+                  <Col>
+                    <div className="d-flex align-items-center justify-content-center h-100">
+                      {service2 ? (
+                        <img
+                          src={service2}
+                          alt="service2 img"
+                          className="img-fluid bg-light rounded-4 service-img"
+                        />
+                      ) : (
+                        <div className="bg-light rounded-4 service-img-placeholder d-flex align-items-center justify-content-center">
+                          <span>Image Unavailable</span>
+                        </div>
+                      )}
+                    </div>
+                  </Col>
+                  <Col>
+                    <div className="d-flex align-items-center justify-content-center h-100">
+                      {service3 ? (
+                        <img
+                          src={service3}
+                          alt="service3 img"
+                          className="img-fluid bg-light rounded-4 service-img"
+                        />
+                      ) : (
+                        <div className="bg-light rounded-4 service-img-placeholder d-flex align-items-center justify-content-center">
+                          <span>Image Unavailable</span>
+                        </div>
+                      )}
+                    </div>
+                  </Col>
+                  <Col>
+                    <div className="d-flex align-items-center justify-content-center h-100">
+                      {service4 ? (
+                        <img
+                          src={service4}
+                          alt="service4 img"
+                          className="img-fluid bg-light rounded-4 service-img"
+                        />
+                      ) : (
+                        <div className="bg-light rounded-4 service-img-placeholder d-flex align-items-center justify-content-center">
+                          <span>Image Unavailable</span>
+                        </div>
+                      )}
+                    </div>
+                  </Col>
+                </Row>
+              </Container>
+            </Container>
+          </div>
+        </section>
+
         <footer className="bg-light text-center text-lg-start text-muted" style={{ width: '100vw' }}>
           <section className="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
             <div>
@@ -323,4 +315,5 @@ const Home = () => {
     </>
   );
 };
+
 export default Home;

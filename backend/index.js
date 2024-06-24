@@ -35,6 +35,8 @@ connectDB()
         app.post('/getappointments', meetingController.getAppointmentsByMentorId);
         app.post('/updatestatus', meetingController.updateAppointmentStatus);
 
+        app.post('/Mentor/getprofileimg',mentorController.getprofileimg);
+        app.post('/Investor/getprofileimg',investorController.getprofileimg);
         // Define Routes for second project
         app.use('/api/blogs', blogRoutes);
         app.use('/api/featuredStories', featuredStoryRoutes);

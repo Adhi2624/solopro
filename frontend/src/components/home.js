@@ -141,7 +141,8 @@ const Home = () => {
           </div>
         </section>
 
-        <section>
+     
+  <section>
   <div className="services-section py-5">
     <Container>
       <Row className="mb-4">
@@ -154,19 +155,19 @@ const Home = () => {
         {[service1, service2, service3, service4].map((service, index) => (
           <Col key={index}>
             <div className="service-item">
-              {service ? (
-                <div className="service-img-wrapper">
+              <div className="ratio ratio-1x1">
+                {service ? (
                   <img
                     src={service}
                     alt={`service${index + 1} img`}
-                    className="img-fluid bg-light rounded-4 service-img"
+                    className="rounded-4 object-fit-cover"
                   />
-                </div>
-              ) : (
-                <div className="service-img-wrapper bg-light rounded-4 d-flex align-items-center justify-content-center">
-                  <span>Image Unavailable</span>
-                </div>
-              )}
+                ) : (
+                  <div className="bg-light rounded-4 d-flex align-items-center justify-content-center">
+                    <span>Image Unavailable</span>
+                  </div>
+                )}
+              </div>
             </div>
           </Col>
         ))}

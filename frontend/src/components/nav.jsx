@@ -17,29 +17,29 @@ const Navbarr = () => {
                 </div>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" className="ms-auto d-lg-none" />
                 <Navbar.Collapse id="basic-navbar-nav">
-                    <Nav className="me-auto">
+                    <Nav className="me-auto flex-column flex-lg-row">
                         <Nav.Link href="#our-storyline" className='text-nowrap'>Our Storyline</Nav.Link>
                         <Nav.Link href="#our-initiatives" className='text-nowrap'>Our Initiatives</Nav.Link>
                         <Nav.Link href="#join-our-tribe" className='text-nowrap'>Join our Tribe!</Nav.Link>
                     </Nav>
                     {/* Register and Login links for mobile */}
-                    <Nav className="ms-auto d-lg-none">
-                        <Nav.Link href="/signUp" className='text-nowrap'>Register Now</Nav.Link>
+                    <Nav className="ms-auto flex-column flex-lg-row d-lg-none">
+                        <Nav.Link href="/signUp" className='text-nowrap '>Register Now</Nav.Link>
                         <Nav.Link href="/login" className='text-nowrap'>Login</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
                 {/* Brand centered for large screens */}
                 <div className="d-none d-lg-flex w-100 justify-content-center">
                     <Navbar.Brand href="/" className="d-flex align-items-center">
-                        <img src={soloLogo1} height={30} alt='logo' />
+                        <img src={soloLogo1} height={40} alt='logo' />
                         <span className="align-self-center">SOLOPRO</span>
                     </Navbar.Brand>
                 </div>
                 {/* Register and Login links for large screens */}
                 <div className="d-none d-lg-flex">
                     <Nav className="ms-auto">
-                        <Nav.Link href="/signUp" className='text-nowrap'>Register Now</Nav.Link>
-                        <Nav.Link href="/login" className='text-nowrap'>Login</Nav.Link>
+                        <Nav.Link href="/signUp" className='text-nowrap custom-nav-link '>Register Now</Nav.Link>
+                        <Nav.Link href="/login" className='text-nowrap custom-nav-link'>Login</Nav.Link>
                     </Nav>
                 </div>
             </Container>
@@ -48,3 +48,4 @@ const Navbarr = () => {
 };
 
 export default Navbarr;
+    

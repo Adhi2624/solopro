@@ -11,7 +11,7 @@ import tmimg from '../images/team.png';
 import service1 from '../images/service1.png';
 import service2 from '../images/service2.png';
 import service3 from '../images/service3.png';
-import service4 from '../images/service4.png';
+import service4 from '../images/service5.png';
 import { CiHeart } from "react-icons/ci";
 import Stepper from './Timeline';
 
@@ -97,21 +97,21 @@ const Home = () => {
                 <Col className="p-3">
                   <div className="text-start">
                     <img src={img1} height={30} className="ms-auto mb-3" alt="Image 1" />
-                    <h4>Interactive Discussions</h4>
+                    <h4 style={{color:'white',fontWeight:'bold'}}>Interactive Discussions</h4>
                     <p>Interactive guidance and investors from diverse areas.</p>
                   </div>
                 </Col>
                 <Col className="p-3">
                   <div className="text-start">
                     <img src={img2} alt="Image 2" height={30} className="mb-3" />
-                    <h4>Educational Blogs</h4>
+                    <h4 style={{color:'white',fontWeight:'bold'}}>Educational Blogs</h4>
                     <p>Enjoy and learn at your pace, anywhere, anytime.</p>
                   </div>
                 </Col>
                 <Col className="p-3">
                   <div className="text-start">
                     <img src={img3} alt="Image 3" height={30} className="mb-3" />
-                    <h4>Diverse Community</h4>
+                    <h4 style={{color:'white',fontWeight:'bold'}}>Diverse Community</h4>
                     <p>Exchange, Learn and grow with your community.</p>
                   </div>
                 </Col>
@@ -141,81 +141,40 @@ const Home = () => {
           </div>
         </section>
 
-        <section>
-          <div className="services-section d-flex flex-column justify-content-center align-items-start align-items-lg-center">
-            <div className="ms-5">
-              <h3>Services</h3>
-              <p>Choose the best service for your entrepreneurial voyage.</p>
+     
+  <section>
+  <div className="services-section py-5">
+    <Container>
+      <Row className="mb-4">
+        <Col>
+          <h3 className="text-center text-light">Services</h3>
+          <p className="text-center text-light">Choose the best service for your entrepreneurial voyage.</p>
+        </Col>
+      </Row>
+      <Row xs={1} sm={2} md={2} lg={4} className="g-4">
+        {[service1, service2, service3, service4].map((service, index) => (
+          <Col key={index}>
+            <div className="service-item">
+              <div className="ratio ratio-1x1">
+                {service ? (
+                  <img
+                    src={service}
+                    alt={`service${index + 1} img`}
+                    className="rounded-4 object-fit-cover"
+                  />
+                ) : (
+                  <div className="bg-light rounded-4 d-flex align-items-center justify-content-center">
+                    <span>Image Unavailable</span>
+                  </div>
+                )}
+              </div>
             </div>
-            <Container fluid>
-              <Container className="mt-5">
-                <Row className="row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
-                  <Col>
-                    <div className="d-flex align-items-center justify-content-center h-100">
-                      {service1 ? (
-                        <img
-                          src={service1}
-                          alt="service1 img"
-                          className="img-fluid bg-light rounded-4 service-img"
-                        />
-                      ) : (
-                        <div className="bg-light rounded-4 service-img-placeholder d-flex align-items-center justify-content-center">
-                          <span>Image Unavailable</span>
-                        </div>
-                      )}
-                    </div>
-                  </Col>
-                  <Col>
-                    <div className="d-flex align-items-center justify-content-center h-100">
-                      {service2 ? (
-                        <img
-                          src={service2}
-                          alt="service2 img"
-                          className="img-fluid bg-light rounded-4 service-img"
-                        />
-                      ) : (
-                        <div className="bg-light rounded-4 service-img-placeholder d-flex align-items-center justify-content-center">
-                          <span>Image Unavailable</span>
-                        </div>
-                      )}
-                    </div>
-                  </Col>
-                  <Col>
-                    <div className="d-flex align-items-center justify-content-center h-100">
-                      {service3 ? (
-                        <img
-                          src={service3}
-                          alt="service3 img"
-                          className="img-fluid bg-light rounded-4 service-img"
-                        />
-                      ) : (
-                        <div className="bg-light rounded-4 service-img-placeholder d-flex align-items-center justify-content-center">
-                          <span>Image Unavailable</span>
-                        </div>
-                      )}
-                    </div>
-                  </Col>
-                  <Col>
-                    <div className="d-flex align-items-center justify-content-center h-100">
-                      {service4 ? (
-                        <img
-                          src={service4}
-                          alt="service4 img"
-                          className="img-fluid bg-light rounded-4 service-img"
-                        />
-                      ) : (
-                        <div className="bg-light rounded-4 service-img-placeholder d-flex align-items-center justify-content-center">
-                          <span>Image Unavailable</span>
-                        </div>
-                      )}
-                    </div>
-                  </Col>
-                </Row>
-              </Container>
-            </Container>
-          </div>
-        </section>
-
+          </Col>
+        ))}
+      </Row>
+    </Container>
+  </div>
+</section>
         <footer className="bg-light text-center text-lg-start text-muted" style={{ width: '100vw' }}>
           <section className="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
             <div>

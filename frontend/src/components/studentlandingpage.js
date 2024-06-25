@@ -1,39 +1,50 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Card, Container, Row, Col } from 'react-bootstrap';
+import { Card, Container, Row, Col,Navbar } from 'react-bootstrap';
 import { Player } from '@lottiefiles/react-lottie-player';
 import BLOG from './BLOG.json'; // Import the Lottie animation JSON file
 import Investor from './investor.json'
 import mentor from './mentor.json'
-import home from './home.json';
-const LandingPage = () => {
+import logo from '../images/image.svg'
+const StudentLandingPage = () => {
   const services = [
     {
       title: 'Blog',
       animationUrl: BLOG, // Use the imported BLOG object directly
-      link: '/blog'
+      link: '/student/blogs'
     },
     {
       title: 'Find Investor',
       animationUrl: Investor,
-      link: '/find-investor'
+      link: '/student/investorpage'
     },
     {
       title: 'Find Mentor',
       animationUrl: mentor,
-      link: '/find-mentor'
-    },
-    {
-      title: 'Home Page',
-      animationUrl: home,
-      link: '/'
+      link: '/student/mentorpage'
     },
   ];
 
   return (
+    <div>
+      <Navbar className=" nav1">
+        <Container>
+          <Navbar.Brand href="">
+            <img
+              src={logo}
+             
+              height="50"
+              className="d-inline-block align-top"
+              alt="React Bootstrap logo"
+            />
+            <span className="ms-2" style={{ color: "white", fontWeight: 500, fontSize: "1.75rem", textShadow: "1px 1px 2px rgba(0, 0, 0, 0.5)" }}>SOLOPRO</span>
+          </Navbar.Brand>
+        </Container>
+      </Navbar>
     <div style={{ backgroundColor: '#040F15', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      
       <Container>
-        <Row className="text-center">
+        <Row className="text-center" style={{justifyContent:'center'}}>
           {services.map((service, index) => (
             <Col key={index} xs={12} md={6} lg={3} className="mb-4">
               <Card className="h-100" style={{ backgroundColor: '#040F15', color: 'white', border:'groove' }}>
@@ -64,7 +75,8 @@ const LandingPage = () => {
         </Row>
       </Container>
     </div>
+    </div>
   );
 };
 
-export default LandingPage;
+export default StudentLandingPage;

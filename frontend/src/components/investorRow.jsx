@@ -5,12 +5,12 @@ const InvestorRow = ({ mentor }) => {
     console.log(mentor._id)
     return (
         <tr className='text-center'>
-            <td>{mentor.imgurl ? <img className='img-fluid rounded-circle' src={mentor.imgurl} alt="Mentor" width="50" height="50" /> : ""}</td>
+            <td>{mentor.profileImage ? <img className='img-fluid rounded-circle' src={mentor.profileImage} alt="Mentor" width="50" height="50" /> : ""}</td>
             <td>{mentor.name || ""}</td>
             <td>{mentor.areaOfExpertise || ""}</td>
-            <td>{mentor.placeOfService || ""}</td>
-            <td>{mentor.noOfPeopleMentored || ""}</td>
-            <td><span className={mentor.Status === 'Available' ? 'badge text-bg-success' : 'badge text-bg-danger'}>{mentor.Status || ""}</span></td>
+            <td>{mentor.nativePlaceOrWork || ""}</td>
+            <td>{mentor.mentorshipCount || ""}</td>
+            <td><span className={mentor.availableToMentor === 'true' ? 'badge text-bg-success' : 'badge text-bg-danger'}>{mentor.availableToMentor === 'true' ? 'Available' : 'Not Available'}</span></td>
             <td>
             <Link to={`/student/investor/${mentor._id}`}>
     <button className="btn btn-primary">View Profile</button>

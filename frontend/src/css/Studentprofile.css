@@ -9,7 +9,7 @@
 }
 
 .student-avatar img {
-    border:  solid #102836 !important;
+    border: solid #102836 !important;
     filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.3)) !important;
     padding: 5px;
 }
@@ -105,4 +105,55 @@ button.ms-2 {
         margin-top: 20px;
         padding: 10px;
     }
+}
+
+/* Table Styles */
+.appointment-table-container {
+    overflow-x: auto; /* Makes the table scrollable horizontally */
+}
+
+.appointment-table {
+    background-color: #102836;
+    color: white;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.appointment-table thead {
+    background-color: #1f3d51 !important;
+    color: white !important;
+}
+
+.appointment-table th,
+.appointment-table td {
+    border: 1px solid #495057;
+    color: white !important;
+    white-space: nowrap; /* Prevents table cells from wrapping */
+    padding: .5rem .5rem !important; /* Override padding */
+    background-color: inherit !important; /* Override background color */
+    box-shadow: inset 0 0 0 9999px inherit !important; /* Override box-shadow */
+}
+
+.appointment-table a {
+    color: #1e90ff;
+    text-decoration: none;
+}
+
+.appointment-table a:hover {
+    text-decoration: underline;
+}
+
+.appointment-table tbody tr:nth-child(even) {
+    background-color: #1f3d51;
+}
+
+.appointment-table tbody tr:nth-child(odd) {
+    background-color: #102836;
+}
+
+/* Centered text for no appointments message */
+.appointment-table tbody td[colspan="8"] {
+    text-align: center;
+    background-color: transparent;
+    color: white;
 }

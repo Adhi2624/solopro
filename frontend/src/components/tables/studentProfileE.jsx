@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { Container, Row, Col, Card, Button, Form, ListGroup } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button, Form, ListGroup, Table } from 'react-bootstrap';
 import Nav1 from '../nav1';
 import '../../css/Studentprofile.css'; // Import CSS file
 
@@ -10,8 +10,7 @@ const StudentProfile = () => {
   const [studentProfile, setStudentProfile] = useState({});
   const [isEditing, setIsEditing] = useState(false);
   const [editedProfile, setEditedProfile] = useState({});
-  const [scheduledAppointments,setscheduledAppointments]=useState([]);
-  localStorage.setItem("studentid",_id);
+  const [scheduledAppointments, setscheduledAppointments] = useState([]);
   const backend = process.env.REACT_APP_BACKEND;
 
   useEffect(() => {
@@ -20,6 +19,14 @@ const StudentProfile = () => {
       .then((res) => {
         setStudentProfile(res.data);
         setEditedProfile(res.data);
+      })
+      .catch((error) => alert(error));
+
+    axios
+      .post(`${backend}/getmeetingstu`, { _id: _id })
+      .then((res) => {
+        console.log(res.data)
+        setscheduledAppointments(res.data);
       })
       .catch((error) => alert(error));
   }, [_id, backend]);
@@ -37,6 +44,66 @@ const StudentProfile = () => {
     const { name, value } = e.target;
     setEditedProfile({ ...editedProfile, [name]: value });
   };
+
+  // const handleFileChange = (e) => {
+  //   const file = e.target.files[0];
+  //   const reader = new FileReader();
+
+  //   reader.onloadend = () => {
+  //     setEditedProfile({ ...editedProfile, profileImage: reader.result });
+  //   };
+
+  //   if (file) {
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      const img = new Image();
+      img.src = reader.result;
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+  
+        const maxWidth = 500; // Max width for the image
+        const maxHeight = 500; // Max height for the image
+        let width = img.width;
+        let height = img.height;
+  
+        // Calculate the new dimensions
+        if (width > height) {
+          if (width > maxWidth) {
+            height *= maxWidth / width;
+            width = maxWidth;
+          }
+        } else {
+          if (height > maxHeight) {
+            width *= maxHeight / height;
+            height = maxHeight;
+          }
+        }
+  
+        canvas.width = width;
+        canvas.height = height;
+        ctx.drawImage(img, 0, 0, width, height);
+  
+        const resizedDataUrl = canvas.toDataURL('image/jpeg', 0.7); // Adjust the quality as needed
+        setEditedProfile({ ...editedProfile, profileImage: resizedDataUrl });
+      };
+      img.onerror = (error) => {
+        console.error('Error loading image:', error);
+      };
+    };
+    reader.onerror = (error) => {
+      console.error('Error reading file:', error);
+    };
+  };
+  
+
 
   const handleFormSubmit = () => {
     axios
@@ -60,12 +127,12 @@ const StudentProfile = () => {
                 <Row>
                   <Col md={4} className="mb-4 mb-md-0 text-center">
                     <div className="student-avatar">
-                      <img src={studentProfile.profile_img || 'https://via.placeholder.com/150'} alt="Student" className="rounded-circle" width="150" />
+                      <img src={studentProfile.profileImage} alt="Student" className="rounded-circle" width="150" />
                     </div>
                     <div className="mt-3">
                       <h4>{studentProfile.name || 'Unavailable'}</h4>
                       <p className="mb-1">{studentProfile.course || 'Unavailable'}</p>
-                      <p className="font-size-sm">{studentProfile.college_name || 'Unavailable'}</p>
+                      <p className="font-size-sm">{studentProfile.collegeName || 'Unavailable'}</p>
                       {!isEditing && (
                         <Button variant="outline-primary " className="mt-2 stu-btn" onClick={handleEditClick}>
                           Edit Profile
@@ -105,16 +172,16 @@ const StudentProfile = () => {
                             )}
                           </ListGroup.Item>
                           <ListGroup.Item>
-                            <h6 className="mb-0">University</h6>
+                            <h6 className="mb-0">Institution</h6>
                             {isEditing ? (
                               <Form.Control
                                 type="text"
                                 name="college_name"
-                                value={editedProfile.college_name || ''}
+                                value={editedProfile.collegeName || ''}
                                 onChange={handleInputChange}
                               />
                             ) : (
-                              <span>{studentProfile.college_name || 'Unavailable'}</span>
+                              <span>{studentProfile.collegeName || 'Unavailable'}</span>
                             )}
                           </ListGroup.Item>
                           <ListGroup.Item>
@@ -166,12 +233,12 @@ const StudentProfile = () => {
                             {isEditing ? (
                               <Form.Control
                                 type="text"
-                                name="college_location"
-                                value={editedProfile.college_location || ''}
+                                name="collegeLocation"
+                                value={editedProfile.collegeLocation || ''}
                                 onChange={handleInputChange}
                               />
                             ) : (
-                              <span>{studentProfile.college_location || 'Unavailable'}</span>
+                              <span>{studentProfile.collegeLocation || 'Unavailable'}</span>
                             )}
                           </ListGroup.Item>
                           <ListGroup.Item>
@@ -179,12 +246,12 @@ const StudentProfile = () => {
                             {isEditing ? (
                               <Form.Control
                                 type="text"
-                                name="native_place_of_work"
-                                value={editedProfile.native_place_of_work || ''}
+                                name="nativePlaceOrWork"
+                                value={editedProfile.nativePlaceOrWork || ''}
                                 onChange={handleInputChange}
                               />
                             ) : (
-                              <span>{studentProfile.native_place_of_work || 'Unavailable'}</span>
+                              <span>{studentProfile.nativePlaceOrWork || 'Unavailable'}</span>
                             )}
                           </ListGroup.Item>
                           <ListGroup.Item>
@@ -217,14 +284,14 @@ const StudentProfile = () => {
                             <h6 className="mb-0">College ID Photo</h6>
                             {isEditing ? (
                               <Form.Control
-                                type="text"
-                                name="college_id_photo"
-                                value={editedProfile.college_id_photo || ''}
-                                onChange={handleInputChange}
+                                type="file"
+                                name="profileImage"
+                                onChange={handleImageChange}
                               />
                             ) : (
-                              <a href={studentProfile.college_id_photo} target="_blank" rel="noopener noreferrer">
-                                View College ID
+                              <a href={studentProfile.profileImage} target="_blank" rel="noopener noreferrer">
+                                <img src={studentProfile.profileImage} alt="College ID" style={{ maxWidth: '100px', maxHeight: '100px' }} />
+                                
                               </a>
                             )}
                           </ListGroup.Item>
@@ -250,36 +317,57 @@ const StudentProfile = () => {
           </Col>
         </Row>
         <Row className="justify-content-center mt-4">
-  <Col lg={8} md={10}>
-    <Card className="appointment-card student-card">
-      <Card.Body>
-        <h5 className="mb-3">Scheduled Appointments</h5>
-        <ListGroup>
-          {}
-          {scheduledAppointments.map((appointment, index) => (
-            <ListGroup.Item key={index}>
-              <h6>Meeting Title: {appointment.title}</h6>
-              <p>Start Date: {appointment.startDate}</p>
-              <p>Start Time: {appointment.startTime}</p>
-              <p>End Date: {appointment.endDate}</p>
-              <p>End Time: {appointment.endTime}</p>
-              <p>Description: {appointment.description}</p>
-              <p>Mentor name : {appointment.mentorname}</p>
-              <p>Meeting Link: <a>{appointment.meetinglink}</a></p>
-            </ListGroup.Item>
-          ))}
-          
-          {scheduledAppointments.length === 0 && (
-            <ListGroup.Item style={{backgroundColor:"transparent", color:"white"}}>
-              <p>No appointments scheduled</p>
-            </ListGroup.Item>
-          )}
-        </ListGroup>
-      </Card.Body>
-    </Card>
-  </Col>
-</Row>
+          <Col lg={10} md={12}>
+            <h5 className="mb-3 text-light">Scheduled Appointments</h5>
+            <div className="appointment-table-container">
+  <Table striped bordered hover className="appointment-table">
+    <thead style={{backgroundColor:"#102836"}}>
+      <tr>
+        <th>Meeting Title</th>
+        <th>Start Date</th>
+        <th>Start Time</th>
+        <th>End Date</th>
+        <th>End Time</th>
+        <th>Description</th>
+        <th>Mentor Name</th>
+        <th>Meeting Status</th>
+        <th>Meeting Link</th>
+      </tr>
+    </thead>
+    <tbody>
+      {scheduledAppointments.length > 0 ? (
+        scheduledAppointments.map((appointment, index) => (
+          <tr key={index}>
+            <td>{appointment.title}</td>
+            <td>{appointment.startDate}</td>
+            <td>{appointment.startTime}</td>
+            <td>{appointment.endDate}</td>
+            <td>{appointment.endTime}</td>
+            <td>{appointment.description}</td>
+            <td>{appointment.mentorname}</td>
+            <td style={{ backgroundColor: appointment.meetingStatus === 'approved' ? 'green' : appointment.meetingStatus === 'rejected' ? 'red' : appointment.meetingStatus === 'waiting' ? 'blue' : 'black', padding: '8px' }}>
+        {appointment.meetingStatus}
+    </td>
+            <td>
+              <a href={appointment.meetinglink} target="_blank" rel="noopener noreferrer">
+                {appointment.meetinglink}
+              </a>
+            </td>
+          </tr>
+        ))
+      ) : (
+        <tr>
+          <td colSpan="8" style={{ textAlign: 'center' }}>
+            No appointments scheduled
+          </td>
+        </tr>
+      )}
+    </tbody>
+  </Table>
+</div>
 
+          </Col>
+        </Row>
       </Container>
     </>
   );

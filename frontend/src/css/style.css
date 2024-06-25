@@ -44,11 +44,21 @@ nav, footer {
     align-items: center;
 }
 
-#main .title-text {
+
+
+
+.main-section {
+    background: url('../images/bg1.png') no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+    width: 100vw;
+}
+
+.title-text {
     padding: 5%;
 }
 
-#main h1 {
+.title-text h1 {
     color: transparent;
     -webkit-background-clip: text;
     background-clip: text;
@@ -56,24 +66,23 @@ nav, footer {
     font-size: clamp(30px, 6vw, 120px);
 }
 
-#main p {
+.title-text p {
     color: white;
     font-size: clamp(10px, 2vw, 25px);
 }
 
-#main .helpbtn {
+.helpbtn {
     background-color: #008A90;
 }
 
-#unleas {
-    background-color: #222831;
+.unleash-section {
+    background: url('../images/bg2.png') no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+    width: 100vw;
 }
 
-#unleas1 {
-    padding: 5%;
-}
-
-#unleas1 h3 {
+.unleash-section h3 {
     color: transparent;
     -webkit-background-clip: text;
     background-clip: text;
@@ -81,82 +90,188 @@ nav, footer {
     font-size: clamp(20px, 4vw, 80px);
 }
 
-#unleas1 p {
+.unleash-section p {
     color: white;
     font-size: clamp(8px, 2vw, 20px);
 }
 
-#unleas1 .imapcttbn {
+.imapcttbn {
     background-color: violet;
     color: white;
 }
 
-#expedition h3 {
+.expedition-section {
+    background: url('../images/bg3.png') no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+    width: 100vw;
+}
+
+.expedition-section h3 {
     color: white;
     font-weight: 700;
     font-size: clamp(20px, 4vw, 50px);
 }
 
-#expedition p {
+.expedition-section p {
     color: white;
     font-size: clamp(8px, 2vw, 20px);
 }
 
-#expedition button {
+.expedition-section button {
     background-color: violet;
     color: white;
-
 }
 
-#envoffr {
-    background-color: #393E46;
-    padding: 2% 5%;
-    color: white;
+.environment-section {
+    background: url('../images/bg1.png') no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+    width: 100vw;
 }
 
-#envoffr h3 {
-    color: white;
-    font-weight: 700;
-    font-size: clamp(20px, 4vw, 50px);
-}
-
-#envoffr p {
-    color: white;
-    font-size: clamp(8px, 2vw, 20px);
-}
-
-#prtteam h3 {
+.environment-section h3 {
     color: white;
     font-weight: 700;
     font-size: clamp(20px, 4vw, 50px);
 }
 
-#prtteam p {
+.environment-section p {
     color: white;
     font-size: clamp(8px, 2vw, 20px);
 }
 
-#prtteam button {
+.team-section {
+    background: url('../images/bg2.png') no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+    width: 100vw;
+}
+
+.team-section h3 {
+    color: white;
+    font-weight: 700;
+    font-size: clamp(20px, 4vw, 50px);
+}
+
+.team-section p {
+    color: white;
+    font-size: clamp(8px, 2vw, 20px);
+}
+
+.team-section button {
     background-color: #008A90;
     color: white;
-    
 }
 
-#services {
-    padding: 2% 5%;
-    color: white;
-}
+.services-section {
+    background: url('../images/bg3.png') no-repeat center center;
+    background-size: cover;
+    width: 100%;
+  }
+  
+  .service-item {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+  
+  .service-img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+  
+  .service-img-placeholder {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    color: #666;
+  }
+  
+  @media (max-width: 767px) {
+    .service-img,
+    .service-img-placeholder {
+      /* aspect-ratio: 16 / 9; */
+    }
+  }
+/* ... (keep existing styles) ... */
 
-#services h3 {
-    color: white;
-    font-weight: 700;
-    font-size: clamp(20px, 4vw, 50px);
-}
+/* Responsive typography adjustments */
+@media (max-width: 991px) {
+    .title-text h1 {
+      font-size: clamp(40px, 8vw, 80px);
+    }
+  
+    .title-text p {
+      font-size: clamp(16px, 3vw, 22px);
+    }
+  
+    .unleash-section h3 {
+      font-size: clamp(30px, 6vw, 60px);
+    }
+  
+    .unleash-section p {
+      font-size: clamp(14px, 2.5vw, 18px);
+    }
+  
+    .expedition-section h3,
+    .environment-section h3,
+    .team-section h3 {
+      font-size: clamp(28px, 5vw, 40px);
+    }
+  
+    .expedition-section p,
+    .environment-section p,
+    .team-section p {
+      font-size: clamp(14px, 2.5vw, 18px);
+    }
+  
+    .environment-section h4 {
+      font-size: clamp(20px, 4vw, 28px);
+    }
+  }
+  
+  @media (max-width: 767px) {
+    .title-text h1 {
+      font-size: clamp(36px, 10vw, 60px);
+    }
+  
+    .title-text p {
+      font-size: clamp(14px, 4vw, 20px);
+    }
+  
+    .unleash-section h3 {
+      font-size: clamp(28px, 8vw, 50px);
+    }
+  
+    .unleash-section p {
+      font-size: clamp(12px, 3vw, 16px);
+    }
+  
+    .expedition-section h3,
+    .environment-section h3,
+    .team-section h3 {
+      font-size: clamp(24px, 6vw, 36px);
+    }
+  
+    .expedition-section p,
+    .environment-section p,
+    .team-section p {
+      font-size: clamp(12px, 3vw, 16px);
+    }
+  
+    .environment-section h4 {
+      font-size: clamp(18px, 5vw, 24px);
+    }
+  }
+  
+  /* Adjust button sizes for better visibility on smaller screens */
+  @media (max-width: 767px) {
+    .btn-lg {
+      font-size: 1rem;
+      padding: 0.5rem 1rem;
+    }
+  }
 
-#services p {
-    color: white;
-    font-size: clamp(8px, 2vw, 20px);
-}
 
 #mentor-nav {
     background-color: #040F15 !important;
@@ -171,7 +286,7 @@ nav, footer {
 
 #mentor-table {
     border-collapse: separate;
-    border-spacing: 15px 0;
+    border-spacing: 10px 0;
     background-color: transparent !important;
     font-style: normal;
 }

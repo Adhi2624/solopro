@@ -6,14 +6,15 @@ import StudentProfileE from '../components/tables/studentProfileE';
 import InvestorList from '../components/tables/investorlist';
 import Blogs from '../components/blog/blog-cards';
 import BlogDetail from '../components/blog/BlogDetails';
+import StudentLandingPage from '../components/studentlandingpage';
 
 const StudentsRoute = () => {
   return (
     <Routes>
+      <Route path='/' element={<StudentLandingPage/>}/>
       <Route path='/mentorpage' element={<MentorList />} />
       <Route path='/investorpage' element={<InvestorList/>}/>
-      <Route path="/investor/:_id" element={<MentorProfile />} />
-      <Route path="/mentor/:_id" element={<MentorProfile />} />
+      <Route path="/:role/:id" element={<MentorProfile />} />
       <Route path="/studentprofile/:_id" element={<StudentProfileE />} />
       <Route path="/blogs" element={<Blogs />} />
           <Route path="/blogs/:type/:id" element={<BlogDetail />} />

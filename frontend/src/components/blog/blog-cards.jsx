@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './blog-cards.css';
 import axios from 'axios';
 import Nav1 from '../nav1';
+import Navmi from '../navinme';
 const Blogs = () => {
   const [blogs, setBlogs] = useState([]);
   const [featuredStories, setFeaturedStories] = useState([]);
@@ -11,6 +12,11 @@ const Blogs = () => {
   const [visibleStories, setVisibleStories] = useState(8); // Initial number of visible stories
   const navigate = useNavigate();
   const backend=process.env.REACT_APP_BACKEND;
+
+  const lstorage = localStorage.getItem('user');
+  const lstorageparse = JSON.parse(lstorage);
+  var role = lstorageparse.value.role;
+  const isStudent=role==='Student';
 
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -58,7 +64,7 @@ const Blogs = () => {
 
   return (
     <div>
-      <Nav1/>
+      {role === 'Student' ? <Nav1 /> : <Navmi />}
     <div className="blog-container">
       {/* <Link to="/adminblog" className="btn btn-outline-primary btn-sm admin-btn">Admin</Link> */}
 

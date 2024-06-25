@@ -1,16 +1,18 @@
 const { ObjectId } = require("mongodb");
-const { getDB } = require('../config/db');
+const { connectDB } = require('../config/db');
 const meeting=require("../models/meeting")
-
+const db=connectDB();
 exports.scheduleMeeting = async (req, res) => {
     try {
-        //const db = getDB();
-        const meetingData = req.body;
+        
+        const meetingData = req.body.meetingDetails;
+        console.log(meetingData)
         if (!meetingData) {
             return res.status(400).json({ error: 'Invalid meeting data' });
         }
-        delete meetingData._id;
-        await meeting.insertOne(meetingData);
+        //delete meetingData._id;
+        // await meeting.insertOne(meetingData);
+        await (await db).collection('meetings').insertOne(meetingData);
         res.status(201).json({ message: 'Meeting data inserted' });
     } catch (error) {
         console.error("Error scheduling meeting:", error);
@@ -20,9 +22,9 @@ exports.scheduleMeeting = async (req, res) => {
 
 exports.getMeetingByStudentId = async (req, res) => {
     try {
-        //const db = getDB();
-        const id = req.body.id;
-        const meeting = await meeting.findOne({ 'studentid': id });
+        const id = req.body._id;
+        console.log(id);
+        const meeting = await  (await db).collection('meetings').find({ 'studentid': id }).toArray();
         if (meeting) {
             res.json(meeting);
         } else {
@@ -36,9 +38,10 @@ exports.getMeetingByStudentId = async (req, res) => {
 
 exports.getAppointmentsByMentorId = async (req, res) => {
     try {
-       // const db = getDB();
+       
         const id = req.body.id;
-        const meetings = await meeting.find({ mentorid: id }).toArray();
+        console.log(id)
+        const meetings = await (await db).collection('meetings').find({ mentorid: id }).toArray();
         if (meetings.length > 0) {
             res.json(meetings);
         } else {

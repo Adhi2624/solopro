@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const bcrypt = require('bcrypt');
-const { connectDB } = require('../config/db'); // Import connectDB function
+const { getDB } = require('../config/db'); // Import connectDB function
 
 const upload = multer();
 
@@ -11,7 +11,7 @@ router.post('/', upload.none(), async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     try {
-        const db = await connectDB(); // Get the MongoDB database instance
+        const db = await getDB(); // Get the MongoDB database instance
 
         // Save the user to the 'users' collection
         await db.collection('users').insertOne({

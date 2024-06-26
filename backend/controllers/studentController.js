@@ -1,11 +1,11 @@
 const { ObjectId } = require("mongodb");
-const { connectDB } = require('../config/db');
+const { getDB } = require('../config/db');
 const student=require('../models/student');
 
 exports.getStudentById = async (req, res) => {
     const id = req.body._id;
     try {
-        const db = connectDB(); // Get the database object
+        const db = getDB(); // Get the database object
         const user = await (await db).collection('students').findOne({ _id: new ObjectId(id) });
         if (user) {
             res.json(user);
@@ -22,7 +22,7 @@ exports.getprofileimg=async(req,res)=>
 {
     const id=req.body.id;
     try{
-    const db=connectDB();
+    const db=getDB();
     const profile= await (await db).collection('students').findOne({_id : new ObjectId(id)});
     if (profile && profile.profileImage){
         res.json({ profileImage: profile.profileImage, name: profile.name });
@@ -42,7 +42,7 @@ exports.updateStudent = async (req, res) => {
     console.log(id);
     const { _id, ...dataup } = data;
     try {
-        const db = await connectDB();
+        const db = await getDB();
         await db.collection('students').updateOne(
             { _id: new ObjectId(id) }, // Filter to select the document by ID
             { $set: dataup } // Update operation

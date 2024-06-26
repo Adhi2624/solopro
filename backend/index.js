@@ -5,15 +5,7 @@ const { connectDB } = require('./config/db'); // Destructure to get connectDB fu
 const { errorHandler } = require('./middleware/errorHandler');
 
 // Import required route files
-const mentorController = require('./controllers/mentorController');
-const meetingController = require('./controllers/meetingController');
-const blogRoutes = require('./routes/blogs');
-const featuredStoryRoutes = require('./routes/featuredStories');
-const moreStoryRoutes = require('./routes/moreStories');
-const userRoutes = require('./routes/userRoutes');
-const loginRoutes = require('./routes/loginRoutes');
-const studentController=require('./controllers/studentController');
-const investorController =  require('./controllers/investorController');
+
 dotenv.config();
 const app = express();
 
@@ -25,7 +17,15 @@ app.use(cors()); // Enable CORS for all routes
 connectDB()
     .then(() => {
         console.log('MongoDB connection established');
-
+        const mentorController = require('./controllers/mentorController');
+        const meetingController = require('./controllers/meetingController');
+        const blogRoutes = require('./routes/blogs');
+        const featuredStoryRoutes = require('./routes/featuredStories');
+        const moreStoryRoutes = require('./routes/moreStories');
+        const userRoutes = require('./routes/userRoutes');
+        const loginRoutes = require('./routes/loginRoutes');
+        const studentController=require('./controllers/studentController');
+        const investorController =  require('./controllers/investorController');
         // Define Routes for first project
         app.get('/getmentors', mentorController.getAllMentors);
         app.get('/getinvestors',investorController.getAllInvestors)

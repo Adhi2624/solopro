@@ -5,7 +5,7 @@ const dbName = "solopro";
 
 let dbClient;
 
-const connectDB = async () => {
+const connectDB1 = async () => {
     try {
         const client = await MongoClient.connect(url, {
             useNewUrlParser: true,
@@ -32,4 +32,4 @@ const getDB = () => {
     }
 };
 
-module.exports = { connectDB, getDB };
+module.exports = { connectDB1, getDB };

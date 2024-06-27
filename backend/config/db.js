@@ -66,5 +66,5 @@ const getDB = () => {
 };
 
 
-module.exports = { connectDB1, getDB };
-module.exports = { connectDB, getDB };
+module.exports = { connectDB1, getDB,connectDB1 };
+

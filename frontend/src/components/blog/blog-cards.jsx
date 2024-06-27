@@ -66,17 +66,17 @@ const Blogs = () => {
     <div>
       {role === 'Student' ? <Nav1 /> : <Navmi />}
     <div className="blog-container">
-      {/* <Link to="/adminblog" className="btn btn-outline-primary btn-sm admin-btn">Admin</Link> */}
+      <Link to="/adminblog" className="btn btn-outline-primary btn-sm admin-btn">Manage</Link>
 
       <h1 className="blog-heading">Blogs</h1>
       <h2 className="latest-updates mt-4">Latest Updates</h2>
       <div className="row mt-4 justify-content-center">
         {blogs.map((blog, index) => (
-          <div className="col-md-4" key={index}>
+          <div className="col-md-4" key={index}  style={{marginBottom:'20px'}}>
             <div className="card bg-dark text-white h-100">
-              <img src={`data:image/png;base64,${blog.image}`} className="card-img-top" alt={`Blog ${index + 1}`} />
+              <img src={`data:image/png;base64,${blog.image}`} className="card-img-top-new" alt={`Blog ${index + 1}`} />
               <div className="card-body d-flex flex-column">
-                <h5 className="card-title">{blog.title}</h5>
+                <h5 className="card-title" style={{marginBottom:'25px'}}><u>{blog.title}</u></h5>
                 <p className="card-text flex-grow-1">
                   {blog.description.length > 100 ? (
                     <>
@@ -87,8 +87,11 @@ const Blogs = () => {
                   )}
                 </p>
                 <p className="card-text">
-                  <small className="text-muted">Posted on {new Date(blog.date).toLocaleDateString()}</small>
-                </p>
+                      <small className="text" style={{ color: 'teal' }}>
+                        Posted on {new Date(blog.date).toLocaleDateString()}
+                      </small>
+                    </p>
+
                 {/* <button className="btn btn-primary mt-auto" onClick={() => handleReadMore(blog._id)}>Read More</button> */}
                 <button className="btn btn-primary mt-auto" onClick={() => handleReadMore(blog._id, 'blogs')}>Read More</button>
               </div>
@@ -127,13 +130,12 @@ const Blogs = () => {
         <h2 className="text-center">More Stories from SoloPro</h2>
         <div className="row mt-4">
           {moreStories.slice(0, visibleStories).map((story, index) => (
-            <div className="col-12 mb-4" key={index}>
+            <div className="col-12 mb-4" key={index} >
               <div className="d-flex flex-column flex-md-row">
                 <div className="flex-shrink-0">
                   <img src={`data:image/png;base64,${story.image}`} className="img-fluid story-image" alt={`More Story ${index + 1}`} />
                 </div>
                 <div className="flex-grow-1 ms-3 p-3 bg-dark text-white">
-                  <h5 className="card-title">Story Title {index + 1}</h5>
                   <p className="card-text">{story.shortDescription}</p>
                   {/* <button className="btn btn-primary mt-auto" onClick={() => handleReadMore(story._id)}>Read More</button> */}
                   <button className="btn btn-primary mt-auto" onClick={() => handleReadMore(story._id, 'moreStories')}>Read More</button>

@@ -51,10 +51,11 @@ const BlogDetail = () => {
         </Zoom>
 
         <div className="content-container">
-          <h1 className="content-title">{content.title || 'Story'}</h1>
-          <p className="content-description">{content.description || content.shortDescription}</p>
-          <p className="content-date">Posted on {new Date(content.date).toLocaleDateString()}</p>
-        </div>
+  <h1 className="content-title" style={{ color: 'white' }}>{content.title || 'Story'}</h1>
+  <p className="content-description" style={{ color: 'white' }}>{content.description || content.shortDescription}</p>
+  <p className="content-date">Posted on {new Date(content.date).toLocaleDateString()}</p>
+</div>
+
       </div>
 
       <footer className="footer">

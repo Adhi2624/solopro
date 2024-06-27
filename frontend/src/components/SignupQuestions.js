@@ -3,13 +3,14 @@ import { TextField, Box, Typography, Select, MenuItem, Button, Switch, FormContr
 import { styled } from '@mui/system';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
-
 import CssBaseline from '@mui/material/CssBaseline';
-
+import { useNavigate } from 'react-router-dom';
+import { setItemWithExpiry } from "./localStorageWithExpiry"; // Import the utility function
+import Navbarr from './nav';
 const CustomTextField = styled(TextField)`
   & .MuiOutlinedInput-root {
     color: white;
-    
+
     & fieldset {
       border: 1px solid #fff;
     }
@@ -39,15 +40,12 @@ const CustomSelect = styled(Select)`
   & .MuiSelect-outlined {
     color: white;
   }
-
   & .MuiOutlinedInput-notchedOutline {
     border-color: white;
   }
-
   &:hover .MuiOutlinedInput-notchedOutline {
     border-color: white;
   }
-
   &.Mui-focused .MuiOutlinedInput-notchedOutline {
     border-color: white;
   }
@@ -62,10 +60,30 @@ const CustomMenuItem = styled(MenuItem)`
 const theme = createTheme({
   palette: {
     background: {
-      default: '#040F15',
+      default: "#040F15",
     },
     text: {
-      primary: '#fff',
+      primary: "#ffffff",
+    },
+  },
+  components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        '@global': {
+          'input:-webkit-autofill': {
+            WebkitBoxShadow: '0 0 0 1000px #333 inset !important',
+            WebkitTextFillColor: 'white !important',
+          },
+          'input:-webkit-autofill:focus': {
+            WebkitBoxShadow: '0 0 0 1000px #333 inset !important',
+            WebkitTextFillColor: 'white !important',
+          },
+          'input:-webkit-autofill:hover': {
+            WebkitBoxShadow: '0 0 0 1000px #333 inset !important',
+            WebkitTextFillColor: 'white !important',
+          },
+        },
+      },
     },
   },
 });
@@ -75,15 +93,16 @@ export default function SignupQuestions() {
   const [userQuestions, setUserQuestions] = useState([
     { label: 'Name', key: 'name', value: '', required: true, error: '' },
     { label: 'Email', key: 'email', value: '', required: true, error: '' },
-    { label: 'Password', key: 'password', value: '', required: true, error: '' ,type:"password"},
-    { label: 'Confirm Password', key: 'confirmpassword', value: '', required: true, error: '' ,type:"password"},
+    { label: 'Password', key: 'password', value: '', required: true, error: '', type: "password" },
+    { label: 'Confirm Password', key: 'confirmpassword', value: '', required: true, error: '', type: "password" },
     { label: 'Institution', key: 'institution', value: '', required: true, error: '' },
     { label: 'Native/Place of Work', key: 'nativePlaceOrWork', value: '', required: true, error: '' },
-    { label: 'Phone', key: 'phone', value: '', minLength: 10, maxLength: 10, required: true, error: '' },    
-    { label: 'LinkedIn', key: 'linkedin', value: '', required: true, error: '' },   
-    
+    { label: 'Phone', key: 'phone', value: '', minLength: 10, maxLength: 10, required: true, error: '' },
+    { label: 'LinkedIn', key: 'linkedin', value: '', required: true, error: '' },
   ]);
-
+  
+  const backend = process.env.REACT_APP_BACKEND;
+  
   const [profileImage, setProfileImage] = useState(null);
   const [profileImageUrl, setProfileImageUrl] = useState(null);
   const [collegeIdPhoto, setcollegeIdPhoto] = useState(null);
@@ -91,7 +110,7 @@ export default function SignupQuestions() {
   const [proofImage, setProofImage] = useState(null);
   const [proofImageUrl, setProofImageUrl] = useState(null);
   const [availableToMentor, setAvailableToMentor] = useState(false);
-const [availableToInvest, setAvailableToInvest] = useState(false);
+  const [availableToInvest, setAvailableToInvest] = useState(false);
   const [mentorshipCount, setMentorshipCount] = useState(0);
   const [investmentCount, setInvestmentCount] = useState(0);
   const [investmentAmount, setInvestmentAmount] = useState('');
@@ -101,7 +120,8 @@ const [availableToInvest, setAvailableToInvest] = useState(false);
   const [git, setGit] = useState('');
   const [areaOfExpertise, setAreaOfExpertise] = useState('');
   const [experience, setExperience] = useState('');
-
+  const navigate=useNavigate();
+  
   const handleUserTypeChange = (event) => {
     setUserType(event.target.value);
   };
@@ -117,11 +137,44 @@ const [availableToInvest, setAvailableToInvest] = useState(false);
   const handleFileChange = (event, setImage, setImageUrl) => {
     const file = event.target.files[0];
     if (file) {
-      setImage(file);
-      setImageUrl(URL.createObjectURL(file));
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          const MAX_WIDTH = 500; // Maximum width for resizing (adjust as needed)
+          const MAX_HEIGHT = 500; // Maximum height for resizing (adjust as needed)
+          let width = img.width;
+          let height = img.height;
+  
+          if (width > height) {
+            if (width > MAX_WIDTH) {
+              height *= MAX_WIDTH / width;
+              width = MAX_WIDTH;
+            }
+          } else {
+            if (height > MAX_HEIGHT) {
+              width *= MAX_HEIGHT / height;
+              height = MAX_HEIGHT;
+            }
+          }
+  
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+  
+          const dataUrl = canvas.toDataURL('image/jpeg'); // Convert to base64
+  
+          setImage(file); // Set the original file if needed
+          setImageUrl(dataUrl); // Set the base64 string as the URL
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
     }
   };
-  
+
   const validateForm = () => {
     let isValid = true;
     setUserQuestions((prevQuestions) =>
@@ -134,7 +187,7 @@ const [availableToInvest, setAvailableToInvest] = useState(false);
           error = `${question.label} should be at least ${question.minLength} characters`;
           isValid = false;
         } else if (question.maxLength && question.value.length > question.maxLength) {
-          error = `${question.label} should be at mo      st ${question.maxLength} characters`;
+          error = `${question.label} should be at most ${question.maxLength} characters`;
           isValid = false;
         }
         return { ...question, error };
@@ -142,6 +195,7 @@ const [availableToInvest, setAvailableToInvest] = useState(false);
     );
     return isValid;
   };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (validateForm()) {
@@ -150,53 +204,65 @@ const [availableToInvest, setAvailableToInvest] = useState(false);
       userQuestions.forEach((question) => {
         formData.append(question.key, question.value);
       });
-      
+      console.log(formData);
       formData.append('userType', userType); // Add userType to form data
+  
       // Append additional data based on user type
       if (userType === 'Student') {
         formData.append('collegeName', collegeName);
         formData.append('course', course);
         formData.append('collegeLocation', collegeLocation);
         formData.append('git', git);
-        formData.append('profileImage', profileImage);
-        formData.append('collegeIdPhoto', collegeIdPhoto);
+        if (profileImage) formData.append('profileImage', profileImageUrl);
+        if (collegeIdPhoto) formData.append('collegeIdPhoto', collegeIdPhotoUrl);
       } else if (userType === 'Mentor') {
         formData.append('areaOfExpertise', areaOfExpertise);
         formData.append('experience', experience);
-        formData.append('profileImage', profileImage);
-        formData.append('proofImage', proofImage);
+        if (profileImage) formData.append('profileImage', profileImageUrl);
+        if (proofImage) formData.append('proofImage', proofImageUrl);
         formData.append('availableToMentor', availableToMentor);
-
         formData.append('mentorshipCount', mentorshipCount);
       } else if (userType === 'Investor') {
         formData.append('areaOfExpertise', areaOfExpertise);
         formData.append('experience', experience);
-        formData.append('profileImage', profileImage);
-        formData.append('proofImage', proofImage);
+        if (profileImage) formData.append('profileImage', profileImageUrl);
+        if (proofImage) formData.append('proofImage', proofImageUrl);
         formData.append('availableToInvest', availableToInvest);
         formData.append('investmentCount', investmentCount);
         formData.append('investmentAmount', investmentAmount);
       }
-      for(const [key,value] of formData.entries()){
-        console.log(key,value)
+  
+      for (const [key, value] of formData.entries()) {
+        console.log(key, value);
       }
-      console.log(profileImage.name);
+      console.log(formData);
       try {
         
-        const response = await axios.post('http://localhost:5000/api/signup', formData, {
+        const response = await axios.post(`${backend}/api/signup`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
         });
-        
         console.log('Response:', response.data);
-      alert('Submitted successfully');alert("Submitted successfully")
-        // handle success (e.g., redirect to a new page)
+        alert('Submitted successfully');
+        const userData = {
+          email:formData.email,
+          role:userType,
+        };
+
+      // Store user data in local storage with expiry (1 hour = 3600000 milliseconds)
+      setItemWithExpiry("user", userData, 3600000);
+        if (userType==='Student'){
+          navigate('/student/');
+        }
+        else if (userType==='Mentor' || userType==='Investor'){
+          navigate('/mi/');
+        }
       } catch (error) {
         console.error('There was an error!', error.message);
-      alert('An error occurred while submitting the form');
+        alert('An error occurred while submitting the form');
       }
-      console.log(formData)
+      console.log(formData);
     }
   };
   
@@ -209,6 +275,7 @@ const [availableToInvest, setAvailableToInvest] = useState(false);
         <CustomTextField
           key={question.key}
           label={question.label}
+          type={question.type}
           variant="outlined"
           value={question.value}
           onChange={(e) => handleInputChange(question.key, e.target.value)}
@@ -222,19 +289,19 @@ const [availableToInvest, setAvailableToInvest] = useState(false);
         />
       ))}
       <CustomSelect
-            value={userType}
-            onChange={handleUserTypeChange}
-            displayEmpty
-            fullWidth
-            inputProps={{ 'aria-label': 'Without label' }}
-          >
-            <CustomMenuItem value="" disabled>
-              Select User Type
-            </CustomMenuItem>
-            <CustomMenuItem value="Student">Student</CustomMenuItem>
-            <CustomMenuItem value="Mentor">Mentor</CustomMenuItem>
-            <CustomMenuItem value="Investor">Investor</CustomMenuItem>
-          </CustomSelect>
+        value={userType}
+        onChange={handleUserTypeChange}
+        displayEmpty
+        fullWidth
+        inputProps={{ 'aria-label': 'Without label' }}
+      >
+        <CustomMenuItem value="" disabled>
+          Select User Type
+        </CustomMenuItem>
+        <CustomMenuItem value="Student">Student</CustomMenuItem>
+        <CustomMenuItem value="Mentor">Mentor</CustomMenuItem>
+        <CustomMenuItem value="Investor">Investor</CustomMenuItem>
+      </CustomSelect>
       {userType && renderAdditionalQuestions(userType)}
     </>
   );
@@ -257,36 +324,36 @@ const [availableToInvest, setAvailableToInvest] = useState(false);
         Student Model:
       </Typography>
       <CustomTextField
-          label="CollegeName"
-          variant="outlined"
-          fullWidth
-          sx={{ mb: 2 }}
-          value={collegeName}
-          onChange={(e) => setCollegeName(e.target.value)}
+        label="CollegeName"
+        variant="outlined"
+        fullWidth
+        sx={{ mb: 2 }}
+        value={collegeName}
+        onChange={(e) => setCollegeName(e.target.value)}
       />
       <CustomTextField
-          label="Course"
-          variant="outlined"
-          fullWidth
-          sx={{ mb: 2 }}
-          value={course}
-          onChange={(e) => setCourse(e.target.value)}
+        label="Course"
+        variant="outlined"
+        fullWidth
+        sx={{ mb: 2 }}
+        value={course}
+        onChange={(e) => setCourse(e.target.value)}
       />
       <CustomTextField
-          label="CollegeLocation"
-          variant="outlined"
-          fullWidth
-          sx={{ mb: 2 }}
-          value={collegeLocation}
-          onChange={(e) => setCollegeLocation(e.target.value)}
+        label="CollegeLocation"
+        variant="outlined"
+        fullWidth
+        sx={{ mb: 2 }}
+        value={collegeLocation}
+        onChange={(e) => setCollegeLocation(e.target.value)}
       />
       <CustomTextField
-          label="GitHub"
-          variant="outlined"
-          fullWidth
-          sx={{ mb: 2 }}
-          value={git}
-          onChange={(e) => setGit(e.target.value)}
+        label="GitHub"
+        variant="outlined"
+        fullWidth
+        sx={{ mb: 2 }}
+        value={git}
+        onChange={(e) => setGit(e.target.value)}
       />
       <input type="file" accept="image/*" id="college-id-image" style={{ display: 'none' }} onChange={(e) => handleFileChange(e, setcollegeIdPhoto, setcollegeIdPhotoUrl)} />
       <label htmlFor="college-id-image">
@@ -311,20 +378,20 @@ const [availableToInvest, setAvailableToInvest] = useState(false);
         {type} Model:
       </Typography>
       <CustomTextField
-          label="Area of Expertise"
-          variant="outlined"
-          fullWidth
-          sx={{ mb: 2 }}
-          value={areaOfExpertise}
-          onChange={(e) => setAreaOfExpertise(e.target.value)}
+        label="Area of Expertise"
+        variant="outlined"
+        fullWidth
+        sx={{ mb: 2 }}
+        value={areaOfExpertise}
+        onChange={(e) => setAreaOfExpertise(e.target.value)}
       />
       <CustomTextField
-          label="Experience"
-          variant="outlined"
-          fullWidth
-          sx={{ mb: 2 }}
-          value={experience}
-          onChange={(e) => setExperience(e.target.value)}
+        label="Experience"
+        variant="outlined"
+        fullWidth
+        sx={{ mb: 2 }}
+        value={experience}
+        onChange={(e) => setExperience(e.target.value)}
       />
       <input type="file" accept="image/*" id={`${type.toLowerCase()}-proof-image`} style={{ display: 'none' }} onChange={(e) => handleFileChange(e, setProofImage, setProofImageUrl)} />
       <label htmlFor={`${type.toLowerCase()}-proof-image`}>
@@ -336,10 +403,10 @@ const [availableToInvest, setAvailableToInvest] = useState(false);
       <FormControlLabel
         control={
           <Switch
-          checked={type === 'Mentor' ? availableToMentor : availableToInvest}
-          onChange={(e) => type === 'Mentor' ? setAvailableToMentor(e.target.checked) : setAvailableToInvest(e.target.checked)}
-          color="primary"
-        />
+            checked={type === 'Mentor' ? availableToMentor : availableToInvest}
+            onChange={(e) => type === 'Mentor' ? setAvailableToMentor(e.target.checked) : setAvailableToInvest(e.target.checked)}
+            color="primary"
+          />
         }
         label={`Available to ${type === 'Mentor' ? 'Mentor' : 'Invest'}`}
         sx={{ color: 'white', mb: 2 }}
@@ -389,8 +456,9 @@ const [availableToInvest, setAvailableToInvest] = useState(false);
 
   return (
     <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <div style={{ minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+      <Navbarr />
+      <CssBaseline/>
+      <div style={{ minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }} className='mt-3'>
         <Box
           component="form"
           sx={{

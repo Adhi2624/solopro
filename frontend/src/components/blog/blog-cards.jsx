@@ -3,18 +3,25 @@ import { Link, useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './blog-cards.css';
 import axios from 'axios';
-
+import Nav1 from '../nav1';
+import Navmi from '../navinme';
 const Blogs = () => {
   const [blogs, setBlogs] = useState([]);
   const [featuredStories, setFeaturedStories] = useState([]);
   const [moreStories, setMoreStories] = useState([]);
   const [visibleStories, setVisibleStories] = useState(8); // Initial number of visible stories
   const navigate = useNavigate();
+  const backend=process.env.REACT_APP_BACKEND;
+
+  const lstorage = localStorage.getItem('user');
+  const lstorageparse = JSON.parse(lstorage);
+  var role = lstorageparse.value.role;
+  const isStudent=role==='Student';
 
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const blogResponse = await axios.get('http://localhost:5000/api/blogs');
+        const blogResponse = await axios.get(`${backend}/api/blogs`);
         const nonArchivedBlogs = blogResponse.data.filter(blog => !blog.archived);
         setBlogs(nonArchivedBlogs);
       } catch (error) {
@@ -24,7 +31,7 @@ const Blogs = () => {
 
     const fetchFeaturedStories = async () => {
       try {
-        const featuredResponse = await axios.get('http://localhost:5000/api/featuredStories');
+        const featuredResponse = await axios.get(`${backend}/api/featuredStories`);
         const nonArchivedFeaturedStories = featuredResponse.data.filter(story => !story.archived);
         setFeaturedStories(nonArchivedFeaturedStories);
       } catch (error) {
@@ -34,7 +41,7 @@ const Blogs = () => {
 
     const fetchMoreStories = async () => {
       try {
-        const moreResponse = await axios.get('http://localhost:5000/api/moreStories');
+        const moreResponse = await axios.get(`${backend}/api/moreStories`);
         const nonArchivedMoreStories = moreResponse.data.filter(story => !story.archived);
         setMoreStories(nonArchivedMoreStories);
       } catch (error) {
@@ -56,8 +63,10 @@ const Blogs = () => {
   };
 
   return (
+    <div>
+      {role === 'Student' ? <Nav1 /> : <Navmi />}
     <div className="blog-container">
-      <Link to="/adminblog" className="btn btn-outline-primary btn-sm admin-btn">Admin</Link>
+      {/* <Link to="/adminblog" className="btn btn-outline-primary btn-sm admin-btn">Admin</Link> */}
 
       <h1 className="blog-heading">Blogs</h1>
       <h2 className="latest-updates mt-4">Latest Updates</h2>
@@ -141,6 +150,7 @@ const Blogs = () => {
           </div>
         )}
       </div>
+    </div>
     </div>
   );
 };

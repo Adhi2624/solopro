@@ -17,5 +17,6 @@ const studentSchema = new Schema({
     nativePlaceOrWork: { type: String },
 });
 
-const Student = mongoose.model('Student', studentSchema);
-module.exports = Student;
+// const Student = mongoose.model('Student', studentSchema);
+// module.exports = Student;
+module.exports = mongoose.models.Student || mongoose.model('Student', studentSchema);

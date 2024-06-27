@@ -4,6 +4,7 @@ const { Schema } = mongoose;
 // Mentor Schema
 const mentorSchema = new Schema({
   // userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+  name:{type:String},
   phone: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   linkedin: { type: String },
@@ -17,5 +18,5 @@ const mentorSchema = new Schema({
   mentorshipCount: { type: Number, default: 0 },
 });
 
-const Mentor = mongoose.model('Mentor', mentorSchema);
-module.exports = Mentor;
+
+module.exports = mongoose.models.Mentor || mongoose.model('Mentor', mentorSchema);

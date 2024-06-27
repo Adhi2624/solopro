@@ -4,20 +4,15 @@ body {
     background-color: #040F15 !important;
     font-family: "Montserrat", sans-serif;
     font-optical-sizing: auto;
-
 }
 
-
-nav,
-footer {
+nav, footer {
     background-color: #E1EBDC;
 }
 
 .nav-link {
     padding-left: 3%;
-
 }
-
 
 .nav1 {
     background-color: #040F15;
@@ -30,15 +25,15 @@ footer {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.nav1 .navbar-nav .nav-item:hover, 
-.nav1 .navbar-nav .nav-item:focus, 
+.nav1 .navbar-nav .nav-item:hover,
+.nav1 .navbar-nav .nav-item:focus,
 .nav1 .navbar-nav .nav-item:active {
     background-color: #343a40;
     color: #ffc107;
 }
 
-.nav1 .navbar-nav .profile-link:hover, 
-.nav1 .navbar-nav .profile-link:focus, 
+.nav1 .navbar-nav .profile-link:hover,
+.nav1 .navbar-nav .profile-link:focus,
 .nav1 .navbar-nav .profile-link:active {
     background-color: #343a40;
     color: #ffc107;
@@ -52,195 +47,262 @@ footer {
 
 
 
-
-
-#main .title-text {
-    padding: 5%;
-
+.main-section {
+    background: url('../images/bg1.png') no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+    width: 100vw;
 }
 
-#main h1 {
+.title-text {
+    padding: 5%;
+}
+
+.title-text h1 {
     color: transparent;
     -webkit-background-clip: text;
     background-clip: text;
     background-image: linear-gradient(135deg, #823D99, #CC2C5F);
-    font-size: clamp(120px, 20px, 30px);
+    font-size: clamp(30px, 6vw, 120px);
 }
 
-#main p {
+.title-text p {
     color: white;
-    font-size: clamp(25px, 10px, 8px);
+    font-size: clamp(10px, 2vw, 25px);
 }
 
-#main .helpbtn {
+.helpbtn {
     background-color: #008A90;
-
 }
 
-#unleas {
-    background-color: #222831;
+.unleash-section {
+    background: url('../images/bg2.png') no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+    width: 100vw;
 }
 
-#unleas1 {
-    padding: 5%;
-    /* width: 70%; */
-}
-
-#unleas1 h3 {
+.unleash-section h3 {
     color: transparent;
     -webkit-background-clip: text;
     background-clip: text;
     background-image: linear-gradient(135deg, #548279, #815CCE);
-    font-size: clamp(80px, 20px, 10px);
+    font-size: clamp(20px, 4vw, 80px);
 }
 
-#unleas1 p {
+.unleash-section p {
     color: white;
-    font-size: clamp(20px, 8px, 5px);
+    font-size: clamp(8px, 2vw, 20px);
 }
 
-#unleas1 .imapcttbn {
+.imapcttbn {
     background-color: violet;
     color: white;
 }
 
-
-#expedition {
-    h3 {
-        color: white;
-        font-weight: 700;
-        /* width: 70%; */
-        font-size: clamp(50px, 20px, 10px);
-    }
-
-    p {
-        color: white;
-        font-size: clamp(20px, 8px, 5px);
-    }
-
-    Button {
-        background-color: violet;
-        color: white;
-        width: 50%;
-    }
+.expedition-section {
+    background: url('../images/bg3.png') no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+    width: 100vw;
 }
 
-
-
-#envoffr {
-    background-color: #393E46;
-    padding: 2% 5% 2% 5%;
+.expedition-section h3 {
     color: white;
-
-
-
-    h3 {
-        color: white;
-        font-weight: 700;
-
-        font-size: clamp(50px, 20px, 10px);
-    }
-
-    h3 {
-        color: white;
-        font-weight: 700;
-        width: 70%;
-        font-size: clamp(50px, 20px, 10px);
-    }
-
-    p {
-        color: white;
-        font-size: clamp(20px, 8px, 5px);
-    }
+    font-weight: 700;
+    font-size: clamp(20px, 4vw, 50px);
 }
 
-
-#prtteam {
-    h3 {
-        color: white;
-        font-weight: 700;
-        /* width: 70%; */
-        font-size: clamp(50px, 20px, 10px);
-    }
-
-    p {
-        color: white;
-        font-size: clamp(20px, 8px, 5px);
-    }
-
-    Button {
-        background-color: #008A90;
-        color: white;
-        width: 50%;
-    }
-
-}
-
-
-#services {
-    padding: 2% 5% 2% 5%;
+.expedition-section p {
     color: white;
-
-    /* div {
-        width: 100%;
-
-    } */
-
-    h3 {
-        color: white;
-        font-weight: 700;
-
-        font-size: clamp(50px, 20px, 10px);
-    }
-
-    h3 {
-        color: white;
-        font-weight: 700;
-        width: 70%;
-        font-size: clamp(50px, 20px, 10px);
-    }
-
-    p {
-        color: white;
-        font-size: clamp(20px, 8px, 5px);
-    }
+    font-size: clamp(8px, 2vw, 20px);
 }
+
+.expedition-section button {
+    background-color: violet;
+    color: white;
+}
+
+.environment-section {
+    background: url('../images/bg1.png') no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+    width: 100vw;
+}
+
+.environment-section h3 {
+    color: white;
+    font-weight: 700;
+    font-size: clamp(20px, 4vw, 50px);
+}
+
+.environment-section p {
+    color: white;
+    font-size: clamp(8px, 2vw, 20px);
+}
+
+.team-section {
+    background: url('../images/bg2.png') no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+    width: 100vw;
+}
+
+.team-section h3 {
+    color: white;
+    font-weight: 700;
+    font-size: clamp(20px, 4vw, 50px);
+}
+
+.team-section p {
+    color: white;
+    font-size: clamp(8px, 2vw, 20px);
+}
+
+.team-section button {
+    background-color: #008A90;
+    color: white;
+}
+
+.services-section {
+    background: url('../images/bg3.png') no-repeat center center;
+    background-size: cover;
+    width: 100%;
+  }
+  
+  .service-item {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+  
+  .service-img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+  
+  .service-img-placeholder {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    color: #666;
+  }
+  
+  @media (max-width: 767px) {
+    .service-img,
+    .service-img-placeholder {
+      /* aspect-ratio: 16 / 9; */
+    }
+  }
+/* ... (keep existing styles) ... */
+
+/* Responsive typography adjustments */
+@media (max-width: 991px) {
+    .title-text h1 {
+      font-size: clamp(40px, 8vw, 80px);
+    }
+  
+    .title-text p {
+      font-size: clamp(16px, 3vw, 22px);
+    }
+  
+    .unleash-section h3 {
+      font-size: clamp(30px, 6vw, 60px);
+    }
+  
+    .unleash-section p {
+      font-size: clamp(14px, 2.5vw, 18px);
+    }
+  
+    .expedition-section h3,
+    .environment-section h3,
+    .team-section h3 {
+      font-size: clamp(28px, 5vw, 40px);
+    }
+  
+    .expedition-section p,
+    .environment-section p,
+    .team-section p {
+      font-size: clamp(14px, 2.5vw, 18px);
+    }
+  
+    .environment-section h4 {
+      font-size: clamp(20px, 4vw, 28px);
+    }
+  }
+  
+  @media (max-width: 767px) {
+    .title-text h1 {
+      font-size: clamp(36px, 10vw, 60px);
+    }
+  
+    .title-text p {
+      font-size: clamp(14px, 4vw, 20px);
+    }
+  
+    .unleash-section h3 {
+      font-size: clamp(28px, 8vw, 50px);
+    }
+  
+    .unleash-section p {
+      font-size: clamp(12px, 3vw, 16px);
+    }
+  
+    .expedition-section h3,
+    .environment-section h3,
+    .team-section h3 {
+      font-size: clamp(24px, 6vw, 36px);
+    }
+  
+    .expedition-section p,
+    .environment-section p,
+    .team-section p {
+      font-size: clamp(12px, 3vw, 16px);
+    }
+  
+    .environment-section h4 {
+      font-size: clamp(18px, 5vw, 24px);
+    }
+  }
+  
+  /* Adjust button sizes for better visibility on smaller screens */
+  @media (max-width: 767px) {
+    .btn-lg {
+      font-size: 1rem;
+      padding: 0.5rem 1rem;
+    }
+  }
+
 
 #mentor-nav {
-    
     background-color: #040F15 !important;
+}
 
-    span {
-        font-family: "Roboto", sans-serif;
-        font-weight: 400;
-        letter-spacing: 1px;
-        font-style:normal;
-    }
-    
+#mentor-nav span {
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    letter-spacing: 1px;
+    font-style: normal;
 }
 
 #mentor-table {
     border-collapse: separate;
-    border-spacing: 15px 0; /* Prevent any default spacing */
+    border-spacing: 10px 0;
     background-color: transparent !important;
-    
-    
-    
-    font-style:normal;
-    td{
-        font-weight: 300;
-    }
-    th{
-        font-weight: 500;
-    }
+    font-style: normal;
+}
+
+#mentor-table td {
+    font-weight: 300;
+}
+
+#mentor-table th {
+    font-weight: 500;
 }
 
 #mentor-table td, #mentor-table th {
- 
     position: relative;
     background-color: #102836 !important;
     color: white !important;
-    
 }
 
 .pagination, .pagination li, .pagination a {
@@ -272,7 +334,7 @@ footer {
 }
 
 #mentorsPerPageSelect option {
-    background-color: #000 !important; /* Change this to the desired color for the dropdown items */
+    background-color: #000 !important;
     color: white !important;
     border: none;
 }
@@ -286,12 +348,49 @@ footer {
     white-space: nowrap;
 }
 
-.row-label{
+.row-label {
     font-size: 1rem;
 }
 
 @media (max-width: 768px) {
     .row-label {
-        font-size: 0.875rem; /* Slightly smaller for mobile view */
+        font-size: 0.875rem;
     }
+}
+
+
+/* Appointments.css */
+
+/* Change the dropdown color to match the page background color */
+.dropdown {
+  background-color: #343a40; /* or whatever your page background color is */
+  color: #fff;
+}
+
+/* Change placeholder color in the search input */
+.search-input::placeholder {
+  color: #fff; /* Change this to your desired placeholder color */
+}
+
+/* Pagination styles */
+.pagination {
+  display: flex;
+  justify-content: center;
+  padding: 0;
+  list-style: none;
+}
+
+.page-item {
+  margin: 0 5px;
+}
+
+.page-link {
+  color: #007bff;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.page-link:hover {
+  color: #0056b3;
+  text-decoration: underline;
 }

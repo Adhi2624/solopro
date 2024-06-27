@@ -5,18 +5,19 @@ import './blog-cards.css';
 import axios from 'axios';
 import Nav1 from '../nav1';
 import Navmi from '../navinme';
+
 const Blogs = () => {
   const [blogs, setBlogs] = useState([]);
   const [featuredStories, setFeaturedStories] = useState([]);
   const [moreStories, setMoreStories] = useState([]);
   const [visibleStories, setVisibleStories] = useState(8); // Initial number of visible stories
   const navigate = useNavigate();
-  const backend=process.env.REACT_APP_BACKEND;
+  const backend = process.env.REACT_APP_BACKEND;
 
   const lstorage = localStorage.getItem('user');
   const lstorageparse = JSON.parse(lstorage);
   var role = lstorageparse.value.role;
-  const isStudent=role==='Student';
+  const isStudent = role === 'Student';
 
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -65,97 +66,97 @@ const Blogs = () => {
   return (
     <div>
       {role === 'Student' ? <Nav1 /> : <Navmi />}
-    <div className="blog-container">
-      <Link to="/adminblog" className="btn btn-outline-primary btn-sm admin-btn">Manage</Link>
+      <div className="blog-container">
+        <Link to="/adminblog" className="btn btn-outline-primary btn-sm admin-btn">Manage</Link>
 
-      <h1 className="blog-heading">Blogs</h1>
-      <h2 className="latest-updates mt-4">Latest Updates</h2>
-      <div className="row mt-4 justify-content-center">
-        {blogs.map((blog, index) => (
-          <div className="col-md-4" key={index}  style={{marginBottom:'20px'}}>
-            <div className="card bg-dark text-white h-100">
-              <img src={`data:image/png;base64,${blog.image}`} className="card-img-top-new" alt={`Blog ${index + 1}`} />
-              <div className="card-body d-flex flex-column">
-                <h5 className="card-title" style={{marginBottom:'25px'}}><u>{blog.title}</u></h5>
-                <p className="card-text flex-grow-1">
-                  {blog.description.length > 100 ? (
-                    <>
-                      {blog.description.substring(0, 100)}...
-                    </>
-                  ) : (
-                    blog.description
-                  )}
-                </p>
-                <p className="card-text">
-                      <small className="text" style={{ color: 'teal' }}>
-                        Posted on {new Date(blog.date).toLocaleDateString()}
-                      </small>
-                    </p>
-
-                {/* <button className="btn btn-primary mt-auto" onClick={() => handleReadMore(blog._id)}>Read More</button> */}
-                <button className="btn btn-primary mt-auto" onClick={() => handleReadMore(blog._id, 'blogs')}>Read More</button>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-      
-      <div className="container mt-5">
-        <div className="row">
-          <div className="col-md-6 offset-md-3 text-center">
-            <button className="btn btn-outline-primary btn-rectangle" onClick={handleLoadMore}>LOAD MORE STORIES</button>
-          </div>
-        </div>
-      </div>
-
-      <div className="container mt-5">
-        <h2 className="text-center">Featured Stories</h2>
-        <div className="row mt-4">
-          {featuredStories.map((story, index) => (
-            <div className="col-12 mb-4" key={index}>
-              <div className="text-center">
-                <img src={`data:image/png;base64,${story.image}`} className="img-fluid" alt={`Featured Story ${index + 1}`} />
-              </div>
-              <p className="mt-3 text-center">{story.description}</p>
-              <div className="text-center">
-                {/* <button className="btn btn-primary" onClick={() => handleReadMore(story._id)}>Read More</button> */}
-                <button className="btn btn-primary" onClick={() => handleReadMore(story._id, 'featuredStories')}>Read More</button>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="container mt-5">
-        <h2 className="text-center">More Stories from SoloPro</h2>
-        <div className="row mt-4">
-          {moreStories.slice(0, visibleStories).map((story, index) => (
-            <div className="col-12 mb-4" key={index} >
-              <div className="d-flex flex-column flex-md-row">
-                <div className="flex-shrink-0">
-                  <img src={`data:image/png;base64,${story.image}`} className="img-fluid story-image" alt={`More Story ${index + 1}`} />
-                </div>
-                <div className="flex-grow-1 ms-3 p-3 bg-dark text-white">
-                  <p className="card-text">{story.shortDescription}</p>
-                  {/* <button className="btn btn-primary mt-auto" onClick={() => handleReadMore(story._id)}>Read More</button> */}
-                  <button className="btn btn-primary mt-auto" onClick={() => handleReadMore(story._id, 'moreStories')}>Read More</button>
+        <h1 className="blog-heading">Blogs</h1>
+        <h2 className="latest-updates mt-4">Latest Updates</h2>
+        <div className="row mt-4 justify-content-center">
+          {blogs.map((blog, index) => (
+            <div className="col-md-4" key={index} style={{ marginBottom: '20px' }}>
+              <div className="card bg-dark text-white h-100">
+                <img src={`data:image/png;base64,${blog.image}`} className="card-img-top-new" alt={`Blog ${index + 1}`} />
+                <div className="card-body d-flex flex-column">
+                  <h5 className="card-title" style={{ marginBottom: '25px' }}><u>{blog.title}</u></h5>
+                  <p className="card-text flex-grow-1">
+                    {blog.description.length > 100 ? (
+                      <>
+                        {blog.description.substring(0, 100)}...
+                      </>
+                    ) : (
+                      blog.description
+                    )}
+                  </p>
+                  <p className="card-text">
+                    <small className="text" style={{ color: 'teal' }}>
+                      Posted on {new Date(blog.date).toLocaleDateString()}
+                    </small>
+                  </p>
+                  <p className="card-text">
+                    <small className="text" style={{ color: 'teal' }}>
+                      By {blog.authorName} - {blog.authorRole}
+                    </small>
+                  </p>
+                  <button className="btn btn-primary mt-auto" onClick={() => handleReadMore(blog._id, 'blogs')}>Read More</button>
                 </div>
               </div>
             </div>
           ))}
         </div>
-        {moreStories.length > visibleStories && (
+        
+        <div className="container mt-5">
           <div className="row">
             <div className="col-md-6 offset-md-3 text-center">
               <button className="btn btn-outline-primary btn-rectangle" onClick={handleLoadMore}>LOAD MORE STORIES</button>
             </div>
           </div>
-        )}
+        </div>
+
+        <div className="container mt-5">
+          <h2 className="text-center">Featured Stories</h2>
+          <div className="row mt-4">
+            {featuredStories.map((story, index) => (
+              <div className="col-12 mb-4" key={index}>
+                <div className="text-center">
+                  <img src={`data:image/png;base64,${story.image}`} className="img-fluid" alt={`Featured Story ${index + 1}`} />
+                </div>
+                <p className="mt-3 text-center">{story.description}</p>
+                <div className="text-center">
+                  <button className="btn btn-primary" onClick={() => handleReadMore(story._id, 'featuredStories')}>Read More</button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="container mt-5">
+          <h2 className="text-center">More Stories from SoloPro</h2>
+          <div className="row mt-4">
+            {moreStories.slice(0, visibleStories).map((story, index) => (
+              <div className="col-12 mb-4" key={index}>
+                <div className="d-flex flex-column flex-md-row">
+                  <div className="flex-shrink-0">
+                    <img src={`data:image/png;base64,${story.image}`} className="img-fluid story-image" alt={`More Story ${index + 1}`} />
+                  </div>
+                  <div className="flex-grow-1 ms-3 p-3 bg-dark text-white">
+                    <p className="card-text">{story.shortDescription}</p>
+                    <button className="btn btn-primary mt-auto" onClick={() => handleReadMore(story._id, 'moreStories')}>Read More</button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          {moreStories.length > visibleStories && (
+            <div className="row">
+              <div className="col-md-6 offset-md-3 text-center">
+                <button className="btn btn-outline-primary btn-rectangle" onClick={handleLoadMore}>LOAD MORE STORIES</button>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
-    </div>
     </div>
   );
 };
 
 export default Blogs;
-

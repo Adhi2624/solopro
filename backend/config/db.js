@@ -36,6 +36,27 @@ const connectDB = async () => {
   }
 };
 
+
+// __________________________________________________________________________
+
+const connectDB1 = async () => {
+  try {
+      const client = await MongoClient.connect(url, {
+          useNewUrlParser: true,
+          useUnifiedTopology: true,
+          serverSelectionTimeoutMS: 5000, // Example: Timeout after 5 seconds for server selection
+          socketTimeoutMS: 4500, // Example: Timeout after 4.5 seconds for socket operations
+          maxPoolSize:10
+      });
+
+      console.log("MongoDB connected successfully");
+      dbClient = client;
+      return client.db(dbName);
+  } catch (error) {
+      console.error("Error connecting to MongoDB:", error);
+      throw error;
+  }
+};
 const getDB = () => {
   if (db) {
     return db;
@@ -44,4 +65,6 @@ const getDB = () => {
   }
 };
 
+
+module.exports = { connectDB1, getDB };
 module.exports = { connectDB, getDB };

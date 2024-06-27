@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
-const { connectDB1 } = require('./config/db'); // Destructure to get connectDB function
+const { connectDB1,connectDB } = require('./config/db'); // Destructure to get connectDB function
 const { errorHandler } = require('./middleware/errorHandler');
 
 // Import required route files
@@ -15,6 +15,7 @@ app.use(cors()); // Enable CORS for all routes
 
 // Connect to MongoDB before setting up routes
 connectDB1()
+connectDB()
     .then(() => {
         console.log('MongoDB connection established');
         const mentorController = require('./controllers/mentorController');

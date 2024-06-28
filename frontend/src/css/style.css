@@ -394,3 +394,9 @@ nav, footer {
   color: #0056b3;
   text-decoration: underline;
 }
+
+/* If you want to target labels within a specific class or section */
+.specific-section label,.css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root,.MuiBox-root label {
+  color: white !important;
+}
+

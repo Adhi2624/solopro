@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const MongoClient=require('mongodb').MongoClient;
 const url = 'mongodb://localhost:27017';
 const dbName = 'solopro';
 
@@ -66,5 +66,5 @@ const getDB = () => {
 };
 
 
-module.exports = { connectDB1, getDB,connectDB1 };
+module.exports = { connectDB, getDB,connectDB1 };
 

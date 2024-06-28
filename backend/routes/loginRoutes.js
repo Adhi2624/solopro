@@ -19,7 +19,7 @@ router.post('/', async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const db = await connectDB();
+    const db = await getDB();
     const user = await db.collection('users').findOne({ email });
 
     if (!user) {

@@ -1,15 +1,11 @@
-
-
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const AdminBlog = require('../models/Blog');
 
-// Multer setup for file uploads
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
-// Get all blogs
 router.get('/', async (req, res) => {
   try {
     const blogs = await AdminBlog.find().sort({ order: 1 });
@@ -20,7 +16,6 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Get a single blog by ID
 router.get('/:id', async (req, res) => {
   try {
     const blog = await AdminBlog.findById(req.params.id);
@@ -37,7 +32,6 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// Add a new blog
 router.post('/', upload.single('image'), async (req, res) => {
   const { title, description, order, archived } = req.body;
   const image = req.file ? req.file.buffer.toString('base64') : '';
@@ -59,7 +53,6 @@ router.post('/', upload.single('image'), async (req, res) => {
   }
 });
 
-// Update a blog
 router.put('/:id', upload.single('image'), async (req, res) => {
   const { title, description, order, archived } = req.body;
   const image = req.file ? req.file.buffer.toString('base64') : '';
@@ -84,7 +77,6 @@ router.put('/:id', upload.single('image'), async (req, res) => {
   }
 });
 
-// Delete a blog
 router.delete('/:id', async (req, res) => {
   try {
     const blog = await AdminBlog.findById(req.params.id);

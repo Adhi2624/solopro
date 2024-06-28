@@ -245,13 +245,18 @@ export default function SignupQuestions() {
         });
         console.log('Response:', response.data);
         alert('Submitted successfully');
-        const userData = {
-          email:formData.email,
-          role:userType,
-        };
+        
 
-      // Store user data in local storage with expiry (1 hour = 3600000 milliseconds)
-      setItemWithExpiry("user", userData, 3600000);
+        const response1 = await axios.post(`${backend}/api/login`, {
+          email:formData.email,
+          password:formData.password,
+        });
+        const userData = response1.data;
+    
+        // Store user data in local storage with expiry (1 hour = 3600000 milliseconds)
+        setItemWithExpiry('user', userData, 3600000);
+        
+      
         if (userType==='Student'){
           navigate('/student/');
         }

@@ -32,13 +32,15 @@ body {
   margin-bottom: 20px;
 }
 
-.card-img-top {
+.card-img-top-new {
   height: 200px;
-  object-fit: cover;
+ object-fit: cover;
+ 
 }
 
 .card-body {
   padding: 15px;
+  
 }
 
 .row {
@@ -77,11 +79,6 @@ body {
   margin-bottom: 20px;
 }
 
-.card-body {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
 
 .card-text {
   overflow: hidden;
@@ -100,10 +97,6 @@ body {
   text-decoration: underline;
 }
 
-.card-img-top {
-  height: 200px; /* Adjust as needed */
-  object-fit: cover;
-}
 
 .story-image {
   max-width: 250px; /* Adjust the width of the story images */

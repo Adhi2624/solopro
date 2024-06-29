@@ -12,7 +12,7 @@ const Navbarr = () => {
                 <div className="d-lg-none w-100 text-center">
                     <Navbar.Brand href="/" className="mx-auto d-inline-flex align-items-center">
                         <img src={soloLogo1} height={30} alt='logo' />
-                        <span className="align-self-center">SOLOPRO</span>
+                        <span className="align-self-center" style={{color:'black'}}>SOLOPRO</span>
                     </Navbar.Brand>
                 </div>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" className="ms-auto d-lg-none" />

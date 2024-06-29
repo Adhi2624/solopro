@@ -1,0 +1,52 @@
+.lottie-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .animated, .text-content-animated {
+    flex: 1 1 50%;
+    box-sizing: border-box;
+    padding: 20px;
+  }
+  
+  .text-content-animated {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    color: #ffffff; 
+  }
+  
+  .headline {
+    font-size: 3em; 
+    font-weight: bold;
+    margin: 0;
+    color: #C0D2FB;
+  }
+  
+  .subheadline {
+    font-size: 1.5em; 
+    margin: 0;
+    color: #C0D2FB;
+  }
+  
+  .jump {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    cursor: pointer;
+    background-color: #C52E65;
+    border-radius: 10px;
+  }
+  .jump:hover{
+    color: black;
+  }
+  @media (max-width: 768px) {
+    .animated, .text-content-animated {
+      flex: 1 1 100%;
+    }
+  }
+  

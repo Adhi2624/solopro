@@ -1,7 +1,7 @@
 const { ObjectId } = require("mongodb");
-const { connectDB } = require('../config/db');
+const {getDB } = require('../config/db');
 const meeting=require("../models/meeting")
-const db=connectDB();
+const db=getDB();
 exports.scheduleMeeting = async (req, res) => {
     try {
         
@@ -56,10 +56,11 @@ exports.getAppointmentsByMentorId = async (req, res) => {
 exports.updateAppointmentStatus = async (req, res) => {
     try {
      //   const db = getDB();
-        const { appointmentId, newStatus } = req.body;
-        const updatedAppointment = await meeting.findOneAndUpdate(
+        const { appointmentId, meetingStatus } = req.body;
+        
+        const updatedAppointment =await (await db).collection('meetings').updateOne(
             { _id: new ObjectId(appointmentId) },
-            { $set: { meetingStatus: newStatus } },
+            { $set: { meetingStatus: meetingStatus } },
             { returnOriginal: false }
         );
         if (updatedAppointment.value) {

@@ -12,32 +12,33 @@ import NotFoundPage from './components/404';
 import './css/style.css';
 import GOOGLR from './components/GOOGLR';
 import PrivateRoute from'./routes/privateRoute/PrivateRoute';
+import FirstPage from './components/homepage/LandingPage/FirstPage';
 
 function App() {
   return (
-  //   <Router>
-  //   <div className="App">
-  //     <Routes>
-  //       <Route path="/" element={<Home />} />
-  //       <Route path="/login" element={<Login />} />
-  //       <Route path="/signUp" element={<SignupQuestions />} />
-  //       <Route path="/blogs" element={<Blogs />} />
-  //       <Route path="/blogs/:type/:id" element={<BlogDetail />} />
-  //       <Route path="/adminblog" element={<AdminBlog />} />
+    <Router>
+    <div className="App">
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signUp" element={<SignupQuestions />} />
+        <Route path="/blogs" element={<Blogs />} />
+        <Route path="/blogs/:type/:id" element={<BlogDetail />} />
+        <Route path="/adminblog" element={<AdminBlog />} />
 
-  //       <Route element={<PrivateRoute allowedRoles={['Student']} />}>
-  //         <Route path="/student/*" element={<StudentsRoute />} />
-  //       </Route>
+        <Route element={<PrivateRoute allowedRoles={['Student']} />}>
+          <Route path="/student/*" element={<StudentsRoute />} />
+        </Route>
 
-  //       <Route element={<PrivateRoute allowedRoles={['Mentor', 'Investor']} />}>
-  //         <Route path="/mi/*" element={<MiRoute />} />
-  //       </Route>
+        <Route element={<PrivateRoute allowedRoles={['Mentor', 'Investor']} />}>
+          <Route path="/mi/*" element={<MiRoute />} />
+        </Route>
 
-  //       <Route path="*" element={<NotFoundPage />} />
-  //     </Routes>
-  //   </div>
-  // </Router>
-<GOOGLR />
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </div>
+  </Router>
+
   );
 }
 

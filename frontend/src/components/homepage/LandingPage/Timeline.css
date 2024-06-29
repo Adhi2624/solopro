@@ -1,0 +1,64 @@
+.horizontal-timeline .items {
+  border-top: 3px solid #0fb0aa;
+  color: #AB3379;
+}
+
+.horizontal-timeline .items .items-list {
+  display: block;
+  position: relative;
+  text-align: center;
+  padding-top: 70px;
+  margin-right: 0;
+}
+
+.horizontal-timeline .items .items-list:before {
+  content: "";
+  position: absolute;
+  height: 36px;
+  border-right: 2px dashed #30fff8;
+  top: 0;
+}
+
+.horizontal-timeline .items .items-list .event-date {
+  position: absolute;
+  top: 36px;
+  left: 0;
+  right: 0;
+  width: 75px;
+  margin: 0 auto;
+  font-size: 0.9rem;
+  padding-top: 8px;
+  color: black;
+}
+
+@media (min-width: 1140px) {
+  .horizontal-timeline .items .items-list {
+    display: inline-block;
+    width: 24%;
+    padding-top: 45px;
+  }
+
+  .horizontal-timeline .items .items-list .event-date {
+    top: -40px;
+  }
+}
+
+.badge {
+  background-color: #0fb0aa;
+}
+.badge:hover{
+  background-color: #30fff8;
+}
+.text {
+  border-style: solid;
+  border-radius: 10px;
+  border-color: #30fff8;
+  padding: 5px;
+  border-width: 2px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.text:hover {
+  background-image: linear-gradient(135deg, #34fbd3, #7d4ce7);
+  color: black;
+}

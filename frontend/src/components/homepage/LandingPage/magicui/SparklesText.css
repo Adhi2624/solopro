@@ -1,0 +1,43 @@
+
+.text-6xl {
+    font-size: 6rem;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+  
+  .relative {
+    position: relative;
+  }
+  
+  .inline-block {
+    display: inline-block;
+  }
+  
+  .pointer-events-none {
+    pointer-events: none;
+  }
+  
+  .absolute {
+    position: absolute;
+  }
+  
+  .z-20 {
+    z-index: 20;
+  }
+  
+  .bg-clip-text {
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+  
+  .text-transparent {
+    color: transparent;
+  }
+  
+  .bg-gradient-to-r {
+    background-image: linear-gradient(to right, var(--sparkles-first-color), var(--sparkles-second-color));
+  }
+  

@@ -44,6 +44,9 @@ nav, footer {
     align-items: center;
 }
 
+
+
+
 .main-section {
     background: url('../images/bg1.png') no-repeat center center fixed;
     background-size: cover;
@@ -162,23 +165,112 @@ nav, footer {
 }
 
 .services-section {
-    background: url('../images/bg3.png') no-repeat center center fixed;
+    background: url('../images/bg3.png') no-repeat center center;
     background-size: cover;
-    height: 100vh;
-    width: 100vw;
-}
+    width: 100%;
+  }
+  
+  .service-item {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+  
+  .service-img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+  
+  .service-img-placeholder {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    color: #666;
+  }
+  
+  @media (max-width: 767px) {
+    .service-img,
+    .service-img-placeholder {
+      /* aspect-ratio: 16 / 9; */
+    }
+  }
+/* ... (keep existing styles) ... */
 
-.services-section h3 {
-    color: white;
-    font-weight: 700;
-    font-size: clamp(20px, 4vw, 50px);
-}
-
-.services-section p {
-    color: white;
-    font-size: clamp(8px, 2vw, 20px);
-}
-
+/* Responsive typography adjustments */
+@media (max-width: 991px) {
+    .title-text h1 {
+      font-size: clamp(40px, 8vw, 80px);
+    }
+  
+    .title-text p {
+      font-size: clamp(16px, 3vw, 22px);
+    }
+  
+    .unleash-section h3 {
+      font-size: clamp(30px, 6vw, 60px);
+    }
+  
+    .unleash-section p {
+      font-size: clamp(14px, 2.5vw, 18px);
+    }
+  
+    .expedition-section h3,
+    .environment-section h3,
+    .team-section h3 {
+      font-size: clamp(28px, 5vw, 40px);
+    }
+  
+    .expedition-section p,
+    .environment-section p,
+    .team-section p {
+      font-size: clamp(14px, 2.5vw, 18px);
+    }
+  
+    .environment-section h4 {
+      font-size: clamp(20px, 4vw, 28px);
+    }
+  }
+  
+  @media (max-width: 767px) {
+    .title-text h1 {
+      font-size: clamp(36px, 10vw, 60px);
+    }
+  
+    .title-text p {
+      font-size: clamp(14px, 4vw, 20px);
+    }
+  
+    .unleash-section h3 {
+      font-size: clamp(28px, 8vw, 50px);
+    }
+  
+    .unleash-section p {
+      font-size: clamp(12px, 3vw, 16px);
+    }
+  
+    .expedition-section h3,
+    .environment-section h3,
+    .team-section h3 {
+      font-size: clamp(24px, 6vw, 36px);
+    }
+  
+    .expedition-section p,
+    .environment-section p,
+    .team-section p {
+      font-size: clamp(12px, 3vw, 16px);
+    }
+  
+    .environment-section h4 {
+      font-size: clamp(18px, 5vw, 24px);
+    }
+  }
+  
+  /* Adjust button sizes for better visibility on smaller screens */
+  @media (max-width: 767px) {
+    .btn-lg {
+      font-size: 1rem;
+      padding: 0.5rem 1rem;
+    }
+  }
 
 
 #mentor-nav {
@@ -265,3 +357,46 @@ nav, footer {
         font-size: 0.875rem;
     }
 }
+
+
+/* Appointments.css */
+
+/* Change the dropdown color to match the page background color */
+.dropdown {
+  background-color: #343a40; /* or whatever your page background color is */
+  color: #fff;
+}
+
+/* Change placeholder color in the search input */
+.search-input::placeholder {
+  color: #fff; /* Change this to your desired placeholder color */
+}
+
+/* Pagination styles */
+.pagination {
+  display: flex;
+  justify-content: center;
+  padding: 0;
+  list-style: none;
+}
+
+.page-item {
+  margin: 0 5px;
+}
+
+.page-link {
+  color: #007bff;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.page-link:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
+
+/* If you want to target labels within a specific class or section */
+.specific-section label,.css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root,.MuiBox-root label {
+  color: white !important;
+}
+

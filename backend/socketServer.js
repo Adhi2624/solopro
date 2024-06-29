@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const Mentor = require('./models/Mentor');
 const Student = require('./models/Student');
 const Investor = require('./models/Investor');
+const organization = require('./models/organization');
+const entrepeneur=require('./models/Entrepreneur');
 
 const authSocket = async (socket, next) => {
   const { userId, role } = socket.handshake.auth;
@@ -16,6 +18,14 @@ const authSocket = async (socket, next) => {
     } else if (role === 'investor') {
       user = await Investor.findOne({ userId });
     }
+    else if(role=== 'organization'){
+      user = await organization.findOne({ userId });
+    }
+    else if(role=== 'entrepreneur'){
+      user = await entrepeneur.findOne({ userId });
+    }
+
+    
 
     if (user) {
       socket.decoded = { userId, role };

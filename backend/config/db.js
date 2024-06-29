@@ -1,19 +1,18 @@
+// config/db.js
 const mongoose = require('mongoose');
-const MongoClient=require('mongodb').MongoClient;
+const MongoClient = require('mongodb').MongoClient;
 const url = 'mongodb://localhost:27017';
 const dbName = 'solopro';
 
 let db;
+let dbClient;
 
 const connectDB = async () => {
   try {
     // Connect to MongoDB using Mongoose
-    mongoose.connect(`${url}/${dbName}`, {
+    await mongoose.connect(`${url}/${dbName}`, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-    //   serverSelectionTimeoutMS: 5000,
-    //   socketTimeoutMS: 4500,
-    //   poolSize: 10
     });
 
     // Get Mongoose to use the global promise library
@@ -27,44 +26,48 @@ const connectDB = async () => {
 
     // Connection successful message
     db.once('open', () => {
-      console.log('MongoDB connected successfully');
+      console.log('MongoDB connected successfully via Mongoose');
     });
 
   } catch (error) {
-    console.error('Error connecting to MongoDB:', error);
+    console.error('Error connecting to MongoDB via Mongoose:', error);
     throw error;
   }
 };
 
-
-// __________________________________________________________________________
-
 const connectDB1 = async () => {
   try {
-      const client = await MongoClient.connect(url, {
-          useNewUrlParser: true,
-          useUnifiedTopology: true,
-          serverSelectionTimeoutMS: 5000, // Example: Timeout after 5 seconds for server selection
-          socketTimeoutMS: 4500, // Example: Timeout after 4.5 seconds for socket operations
-          maxPoolSize:10
-      });
+    const client = await MongoClient.connect(url, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      serverSelectionTimeoutMS: 5000,
+      socketTimeoutMS: 4500,
+      maxPoolSize: 10
+    });
 
-      console.log("MongoDB connected successfully");
-      dbClient = client;
-      return client.db(dbName);
+    console.log("MongoDB connected successfully via MongoDB driver");
+    dbClient = client;
+    return client.db(dbName);
   } catch (error) {
-      console.error("Error connecting to MongoDB:", error);
-      throw error;
+    console.error("Error connecting to MongoDB via MongoDB driver:", error);
+    throw error;
   }
 };
+
 const getDB = () => {
   if (db) {
     return db;
   } else {
-    throw new Error('Database connection not established');
+    throw new Error('Mongoose connection not established');
   }
 };
 
+const getMongoClient = () => {
+  if (dbClient) {
+    return dbClient.db(dbName);
+  } else {
+    throw new Error('MongoDB driver connection not established');
+  }
+};
 
-module.exports = { connectDB, getDB,connectDB1 };
-
+module.exports = { connectDB, getDB, connectDB1, getMongoClient };

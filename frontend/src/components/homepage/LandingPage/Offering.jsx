@@ -65,6 +65,7 @@ const StickyImage = ({ imgUrl }) => {
     <motion.div
       style={{
         backgroundImage: `url(${imgUrl})`,
+        fontSize:'60px',
         backgroundSize: "contain",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",

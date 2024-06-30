@@ -74,11 +74,11 @@ const FirstPage = () => {
       <Lotie />
       <BoxReveal />
       <AnimatedShinyText />
-      <div className="card-css" style={{ marginBottom: "200px" }} ><PricingCards /></div>
+      <div className="card-css  " style={{ marginBottom: "200px" }} ><PricingCards /></div>
 
       <h1 style={{  background: 'linear-gradient(45deg, #883B94, #C52E65)', WebkitBackgroundClip: 'text',WebkitTextFillColor: 'transparent',marginBottom: '50px',fontSize: '70px',fontWeight: '100',textAlign: 'center'}}>
         Our Carefully Selected Environment offers</h1>
-      <TextParallaxContentExample />
+      {/* <TextParallaxContentExample /> */}
       <div className="timeline">
         <h1 style={{  background: 'linear-gradient(45deg, #883B94, #C52E65)', WebkitBackgroundClip: 'text',WebkitTextFillColor: 'transparent',marginBottom: '50px',fontSize: '70px',fontWeight: '100',textAlign: 'center'}}>
           Your Journey

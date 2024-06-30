@@ -1,7 +1,7 @@
 // socketServer.js
 function authSocket(socket, next) {
     const { userId, role } = socket.handshake.auth;
-  
+  console.log(userId)
     if (!userId || !role) {
       return next(new Error('Authentication error'));
     }

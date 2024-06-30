@@ -11,7 +11,7 @@ const Navbarr = () => {
                 {/* Brand centered for mobile */}
                 <div className="d-lg-none w-100 text-center">
                     <Navbar.Brand href="/" className="mx-auto d-inline-flex align-items-center">
-                        <img src={soloLogo1} height={30} alt='logo' />
+                        <img src={soloLogo1} alt='logo' style={{height:'50px'}}/>
                         <span className="align-self-center" style={{color:'black'}}>SOLOPRO</span>
                     </Navbar.Brand>
                 </div>
@@ -31,7 +31,7 @@ const Navbarr = () => {
                 {/* Brand centered for large screens */}
                 <div className="d-none d-lg-flex w-100 justify-content-center">
                     <Navbar.Brand href="/" className="d-flex align-items-center">
-                        <img src={soloLogo1} height={40} alt='logo' />
+                        <img src={soloLogo1}  alt='logo' style={{height:'50px'}}  />
                         <span className="align-self-center">SOLOPRO</span>
                     </Navbar.Brand>
                 </div>

@@ -41,9 +41,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  font-family: 'monteserrat';
 }
 
 #unleas h3 {
+  font-family: 'monteserrat';
   color: transparent;
   -webkit-background-clip: text;
   background-clip: text;
@@ -92,10 +94,12 @@ footer .text-reset {
   padding: 0;
   box-sizing: border-box; 
   overflow-x: hidden; 
+  font-family: 'monteserrat';
 }
 
 .solopro-text {
-  font-size: 20vw; 
+  font-size: 10vw; 
+  font-family: 'monteserrat';
   color: #2d303e;
   line-height: 1;
   margin: 0;

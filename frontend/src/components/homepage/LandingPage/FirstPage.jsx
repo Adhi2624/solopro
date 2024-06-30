@@ -6,6 +6,7 @@ import image from '../images/image.svg';
 import Timeline from "./Timeline";
 import { motion, useScroll } from "framer-motion";
 import Navbar from "./Navbar";
+
 import SparklesText from "./magicui/sparkle-text";
 import BoxReveal from './Box'
 import AnimatedShinyText from './magicui/animatedShinyText'

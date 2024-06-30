@@ -1,11 +1,11 @@
 import { CiHeart } from "react-icons/ci";
 import { Row, Col, Container } from 'react-bootstrap';
-import { Link } from "react-router-dom"; 
+import { Link } from "react-router-dom";
 import './FirstPage.css';
 
 function Footer() {
   return (
-    <footer className="foot text-center text-lg-start">
+    <footer className="foot text-center text-lg-start bg-black text-white">
       <section className="foot d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
         <div>
           <Link to="#!" className="me-4 text-reset">
@@ -40,49 +40,26 @@ function Footer() {
             </Col>
 
             <Col md="2" lg="2" xl="2" className="mx-auto mb-4">
-              <h6 className="text-uppercase fw-bold mb-4">Background</h6>
+              <h6 className="text-uppercase fw-bold mb-4">Services</h6>
+
               <p>
-                <Link to="#!" className="text-reset">
-                  Our history
+                <Link to="/signup" className="text-reset">
+                  Mentors
                 </Link>
               </p>
               <p>
-                <Link to="#!" className="text-reset">
-                  Job Opportunities
-                </Link>
-              </p>
-              <p>
-                <Link to="#!" className="text-reset">
-                  Vendors
-                </Link>
-              </p>
-              <p>
-                <Link to="#!" className="text-reset">
+                <Link to="/signup" className="text-reset">
                   Investors
                 </Link>
               </p>
-            </Col>
-
-            <Col md="3" lg="2" xl="2" className="mx-auto mb-4">
-              <h6 className="text-uppercase fw-bold mb-4">Affiliate</h6>
               <p>
-                <Link to="#!" className="text-reset">
-                  Become a Partner
+                <Link to="/signup" className="text-reset">
+                  community
                 </Link>
               </p>
               <p>
-                <Link to="#!" className="text-reset">
-                  Lead Generator
-                </Link>
-              </p>
-              <p>
-                <Link to="#!" className="text-reset">
-                  Press Media
-                </Link>
-              </p>
-              <p>
-                <Link to="#!" className="text-reset">
-                  Ambassadors
+                <Link to="/signup" className="text-reset">
+                  Blog
                 </Link>
               </p>
             </Col>
@@ -94,22 +71,24 @@ function Footer() {
               </p>
               <p>
                 <i className="icon-envelope me-3" />
-                info@example.com
+                <a href="mailto:soloprobusiness@gmail.com">soloprobusiness@gmail.com</a>
               </p>
               <p>
-                <i className="icon-phone me-3" /> + 01 234 567 88
+                <i className="icon-phone me-3" />
+                <a href="tel:+0123456788">+ 01 234 567 88</a>
               </p>
               <p>
-                <i className="icon-print me-3" /> + 01 234 567 89
+                <i className="icon-print me-3" />
+                <a href="tel:+0123456789">+ 01 234 567 89</a>
               </p>
             </Col>
+
           </Row>
         </Container>
       </section>
 
       <div className="text-center p-4" >
-        © 2021 Copyright:
-        <Link className="text-reset fw-bold" to="https://solopro.com/">Solopro.com</Link>
+        © 2021 Solopro.com
       </div>
     </footer>
   );

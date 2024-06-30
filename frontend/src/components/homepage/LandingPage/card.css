@@ -4,7 +4,7 @@
   font-family: 'Monospace', sans-serif;
   position: relative;
   display: inline-block;
-  overflow: hidden; 
+  overflow: hidden;
   margin: 10px;
   min-width: 230px;
   max-width: 315px;
@@ -20,19 +20,19 @@
 }
 
 .snip1584:before {
-  position:absolute;
-  top: 100%; 
+  position: absolute;
+  top: 100%;
   bottom: 10px;
   left: 10px;
-  right: 10px; 
+  right: 10px;
   content: '';
-   backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
   transition: all 0.25s ease;
-  transition-delay: 0.25s; 
-  height:'100px';
-  width: '200px';
+  transition-delay: 0.25s;
+  height: 100px; /* Check if this height is necessary */
+  width: 200px; /* Check if this width is necessary */
   background-size: contain;
-  }
+}
 
 .snip1584 img {
   vertical-align: top;
@@ -83,9 +83,6 @@
   margin: 0;
   opacity: 0;
   letter-spacing: 1px;
-}
-
-.snip1584 h5 {
   font-weight: normal;
   background-color: #0D4270;
   padding: 3px 10px;
@@ -104,7 +101,7 @@
 
 .snip1584:hover:before,
 .snip1584.hover:before {
-  top: 10px; 
+  top: 10px;
   bottom: 10px;
   left: 10px;
   right: 10px;
@@ -116,7 +113,6 @@
   transform: translateY(0);
   opacity: 1;
 }
-
 
 .snip1584.hover h5 {
   transition-delay: 0.2s;
@@ -130,4 +126,5 @@
   margin: auto;
   font-family: 'Raleway';
   font-size: 14px;
+  
 }

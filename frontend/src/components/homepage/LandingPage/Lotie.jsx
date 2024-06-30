@@ -12,7 +12,9 @@ const Lotie = () => {
       <div className="text-content-animated">
         <p className="headline">Begin Your Expedition</p>
         <p className="subheadline">Leap into the future with VioletVanguard.</p>
-        <button className='jump'>Jump In</button>
+        <a href="/signup" style={{ textDecoration: 'none' }}>
+          <button className='jump' >Jump In</button>
+        </a>
       </div>
     </div>
   );

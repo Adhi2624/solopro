@@ -41,8 +41,9 @@ const TextParallaxContent = ({ imgUrl, subheading, heading, children }) => {
         paddingLeft: IMG_PADDING,
         paddingRight: IMG_PADDING,
       }}
+      className="responsive-container"
     >
-      <div className="relative h-[150vh]">
+      <div className="relative h-[150vh] mobile:h-[100vh]">
         <StickyImage imgUrl={imgUrl} />
         <OverlayCopy heading={heading} subheading={subheading} />
       </div>
@@ -50,7 +51,6 @@ const TextParallaxContent = ({ imgUrl, subheading, heading, children }) => {
     </div>
   );
 };
-
 const StickyImage = ({ imgUrl }) => {
   const targetRef = useRef(null);
   const { scrollYProgress } = useScroll({

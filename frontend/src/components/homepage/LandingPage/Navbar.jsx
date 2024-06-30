@@ -29,10 +29,10 @@ const Navbar = () => {
 
 const NeumorphismButton = () => {
   return (
-    <button className="neumorphism-button">
-      <FiSend />
-      <span><b>Join Now</b></span>
-    </button>
+    <Link to="/signUp"  className="neumorphism-button">
+    <FiSend />
+    <span><b>Join Now</b></span>
+  </Link>
   );
 };
 

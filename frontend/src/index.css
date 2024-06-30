@@ -11,3 +11,21 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.responsive-container {
+  padding-left: var(--img-padding);
+  padding-right: var(--img-padding);
+}
+
+@media (max-width: 768px) {
+  .responsive-container {
+    padding-left: 1rem; 
+    padding-right: 1rem;
+  }
+
+  .relative {
+    height: 100vh; 
+  }
+}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

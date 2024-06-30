@@ -5,24 +5,24 @@ const Student = require('./models/Student');
 const Investor = require('./models/Investor');
 const organization = require('./models/organization');
 const entrepeneur=require('./models/Entrepreneur');
-
+const { ObjectId } = require('mongodb');
 const authSocket = async (socket, next) => {
   const { userId, role } = socket.handshake.auth;
-
+  console.log(userId);
   let user;
   try {
     if (role === 'mentor') {
-      user = await Mentor.findOne({ userId });
+      user = await Mentor.findOne({_id:new ObjectId(userId) });
     } else if (role === 'student') {
-      user = await Student.findOne({ userId });
+      user = await Student.findOne({_id:new ObjectId(userId) });
     } else if (role === 'investor') {
-      user = await Investor.findOne({ userId });
+      user = await Investor.findOne({_id:new ObjectId(userId) });
     }
     else if(role=== 'organization'){
-      user = await organization.findOne({ userId });
+      user = await organization.findOne({_id:new ObjectId(userId) });
     }
     else if(role=== 'entrepreneur'){
-      user = await entrepeneur.findOne({ userId });
+      user = await entrepeneur.findOne({_id:new ObjectId(userId) });
     }
 
     

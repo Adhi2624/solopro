@@ -68,7 +68,7 @@ const theme = createTheme({
 const steps = ['Email Verification', 'Common Questions', 'Select User Type', 'Specific Questions', 'Review and Submit'];
 
 function SignupQuestions() {
-  const [activeStep, setActiveStep] = useState(4);
+  const [activeStep, setActiveStep] = useState(1);
   const [email, setEmail] = useState('');
   const [userType, setUserType] = useState('');
   const [userQuestions, setUserQuestions] = useState([
@@ -264,14 +264,16 @@ function SignupQuestions() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      
       <Box sx={{ width: '100%' }}>
-        <Stepper activeStep={activeStep} alternativeLabel>
+        <Stepper activeStep={activeStep} style={{color:'white'}} alternativeLabel>
           {steps.map((label) => (
             <Step key={label}>
               <StepLabel sx={{ color: 'white' }}>{label}</StepLabel>
             </Step>
           ))}
         </Stepper>
+   
         <Box sx={{ marginTop: 3 }}>
           <Transition in={true} timeout={300}>
             {(state) => (

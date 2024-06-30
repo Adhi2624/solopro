@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Box from '@mui/joy/Box';
-import Button from '@mui/joy/Button';
 import Card from '@mui/joy/Card';
 import CardActions from '@mui/joy/CardActions';
 import Chip from '@mui/joy/Chip';
@@ -12,6 +11,7 @@ import ListItemDecorator from '@mui/joy/ListItemDecorator';
 import Typography from '@mui/joy/Typography';
 import Check from '@mui/icons-material/Check';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
+import Button from '@mui/joy/Button';
 
 export default function PricingCards() {
   return (
@@ -23,6 +23,7 @@ export default function PricingCards() {
         gap: 2,
       }}
     >
+      {/* Card 1: Find Investors */}
       <Card size="lg" variant="outlined" sx={{ backgroundColor: '#040F15', color: 'white' }}>
         <Chip size="sm" variant="outlined" color="neutral">
           Service
@@ -62,12 +63,16 @@ export default function PricingCards() {
           <Button
             variant="soft"
             color="neutral"
+            component={Link}
+            to="/signUp"
             endDecorator={<KeyboardArrowRight />}
           >
             Start now
           </Button>
         </CardActions>
       </Card>
+
+      {/* Card 2: Find Mentors */}
       <Card size="lg" variant="outlined" sx={{ backgroundColor: '#040F15', color: 'white' }}>
         <Chip size="sm" variant="outlined" color="neutral">
           Service
@@ -107,12 +112,16 @@ export default function PricingCards() {
           <Button
             variant="soft"
             color="neutral"
+            component={Link}
+            to="/signUp"
             endDecorator={<KeyboardArrowRight />}
           >
             Start now
           </Button>
         </CardActions>
       </Card>
+
+      {/* Card 3: Blogs */}
       <Card size="lg" variant="outlined" sx={{ backgroundColor: '#040F15', color: 'white' }}>
         <Chip size="sm" variant="outlined" color="neutral">
           Service
@@ -152,12 +161,16 @@ export default function PricingCards() {
           <Button
             variant="soft"
             color="neutral"
+            component={Link}
+            to="/signUp"
             endDecorator={<KeyboardArrowRight />}
           >
             Start now
           </Button>
         </CardActions>
       </Card>
+
+      {/* Card 4: Communities */}
       <Card size="lg" variant="outlined" sx={{ backgroundColor: '#040F15', color: 'white' }}>
         <Chip size="sm" variant="outlined" color="neutral">
           Service
@@ -183,7 +196,7 @@ export default function PricingCards() {
             <ListItemDecorator>
               <Check />
             </ListItemDecorator>
-            Connect , Inspire and get Inspired
+            Connect, Inspire and get Inspired
           </ListItem>
           <ListItem sx={{ color: 'white' }}>
             <ListItemDecorator>
@@ -197,15 +210,14 @@ export default function PricingCards() {
           <Button
             variant="soft"
             color="neutral"
-            Link to="/signUp"
+            component={Link}
+            to="/signUp"
             endDecorator={<KeyboardArrowRight />}
           >
             Start now
           </Button>
         </CardActions>
       </Card>
-
-
     </Box>
   );
-}  
+}

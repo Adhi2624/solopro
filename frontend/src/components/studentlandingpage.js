@@ -33,9 +33,10 @@ const StudentLandingPage = () => {
             <img
               src={logo}
              
-              height="50"
+              
               className="d-inline-block align-top"
               alt="React Bootstrap logo"
+              style={{height:'40px !important'}} 
             />
             <span className="ms-2" style={{ color: "white", fontWeight: 500, fontSize: "1.75rem", textShadow: "1px 1px 2px rgba(0, 0, 0, 0.5)" }}>SOLOPRO</span>
           </Navbar.Brand>

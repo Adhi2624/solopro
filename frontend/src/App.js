@@ -13,13 +13,12 @@ import './css/style.css';
 import GOOGLR from './components/GOOGLR';
 import PrivateRoute from'./routes/privateRoute/PrivateRoute';
 import FirstPage from './components/homepage/LandingPage/FirstPage';
-
 function App() {
   return (
     <Router>
     <div className="App">
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<FirstPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signUp" element={<SignupQuestions />} />
         <Route path="/blogs" element={<Blogs />} />

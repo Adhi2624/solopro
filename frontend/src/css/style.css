@@ -357,3 +357,46 @@ nav, footer {
         font-size: 0.875rem;
     }
 }
+
+
+/* Appointments.css */
+
+/* Change the dropdown color to match the page background color */
+.dropdown {
+  background-color: #343a40; /* or whatever your page background color is */
+  color: #fff;
+}
+
+/* Change placeholder color in the search input */
+.search-input::placeholder {
+  color: #fff; /* Change this to your desired placeholder color */
+}
+
+/* Pagination styles */
+.pagination {
+  display: flex;
+  justify-content: center;
+  padding: 0;
+  list-style: none;
+}
+
+.page-item {
+  margin: 0 5px;
+}
+
+.page-link {
+  color: #007bff;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.page-link:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
+
+/* If you want to target labels within a specific class or section */
+.specific-section label,.css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root,.MuiBox-root label {
+  color: white !important;
+}
+

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Navinvmen from '../navinme';
 import { FaSort, FaSortUp, FaSortDown } from 'react-icons/fa';
+// import './Appointments.css'; // Import custom CSS
 
 const Appointments = () => {
   const [appointments, setAppointments] = useState([]);
@@ -9,10 +10,13 @@ const Appointments = () => {
   const [filterDate, setFilterDate] = useState('');
   const [sortColumn, setSortColumn] = useState('');
   const [sortDirection, setSortDirection] = useState('asc');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [appointmentsPerPage] = useState(20);
   const backend = process.env.REACT_APP_BACKEND;
   const lstorage = localStorage.getItem('user');
   const lstorageparse = JSON.parse(lstorage);
   const id = lstorageparse.value.uid;
+  const useremail=JSON.parse(localStorage.getItem('user')).value.email;
   let role = JSON.parse(localStorage.getItem('user')).value.role;
   role = role.toLowerCase();
 
@@ -30,13 +34,17 @@ const Appointments = () => {
   };
 
   const handleStatusChange = async (appointmentId, newStatus) => {
+    const confirmChange = window.confirm("Are you sure you want to change the meeting status?");
+    if (!confirmChange) return;
+  
     try {
-      await axios.post(`${backend}/updatestatus`, { appointmentId: appointmentId, meetingStatus: newStatus });
+      await axios.post(`${backend}/updatestatus`, { appointmentId: appointmentId, meetingStatus: newStatus,email:useremail });
       fetchAppointments();
     } catch (error) {
       console.error('Error updating meeting status:', error);
     }
   };
+  
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
@@ -74,13 +82,43 @@ const Appointments = () => {
     }
   };
 
-  const upcomingAppointments = sortAppointments(filterAppointments(appointments.filter(app => app.meetingStatus === 'accepted')));
-  const toBeApprovedAppointments = sortAppointments(filterAppointments(appointments.filter(app => app.meetingStatus === "waiting")));
-
   const renderSortIcon = (column) => {
     if (column !== sortColumn) return <FaSort />;
     return sortDirection === 'asc' ? <FaSortUp /> : <FaSortDown />;
   };
+
+  const currentAppointments = (appointments) => {
+    const indexOfLastAppointment = currentPage * appointmentsPerPage;
+    const indexOfFirstAppointment = indexOfLastAppointment - appointmentsPerPage;
+    return appointments.slice(indexOfFirstAppointment, indexOfLastAppointment);
+  };
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const Pagination = ({ appointmentsPerPage, totalAppointments, paginate }) => {
+    const pageNumbers = [];
+
+    for (let i = 1; i <= Math.ceil(totalAppointments / appointmentsPerPage); i++) {
+      pageNumbers.push(i);
+    }
+
+    return (
+      <nav>
+        <ul className="pagination">
+          {pageNumbers.map(number => (
+            <li key={number} className="page-item">
+              <a onClick={() => paginate(number)} href="#" className="page-link">
+                {number}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    );
+  };
+
+  const upcomingAppointments = sortAppointments(filterAppointments(appointments.filter(app => app.meetingStatus === 'accepted')));
+  const toBeApprovedAppointments = sortAppointments(filterAppointments(appointments.filter(app => app.meetingStatus === "waiting")));
 
   const renderTable = (appointments, showStatusColumn = false) => (
     <div className="table-responsive">
@@ -96,7 +134,7 @@ const Appointments = () => {
           </tr>
         </thead>
         <tbody>
-          {appointments.map((appointment) => (
+          {currentAppointments(appointments).map((appointment) => (
             <tr key={appointment._id}>
               <td>{appointment.title}</td>
               <td>{appointment.startDate}</td>
@@ -110,7 +148,7 @@ const Appointments = () => {
                   <select
                     value={appointment.meetingStatus}
                     onChange={(e) => handleStatusChange(appointment._id, e.target.value)}
-                    className="form-control"
+                    className="form-control dropdown"
                   >
                     <option value="waiting">Waiting</option>
                     <option value="accepted">Accepted</option>
@@ -122,6 +160,13 @@ const Appointments = () => {
           ))}
         </tbody>
       </table>
+      {appointments.length > 20 && (
+        <Pagination
+          appointmentsPerPage={appointmentsPerPage}
+          totalAppointments={appointments.length}
+          paginate={paginate}
+        />
+      )}
     </div>
   );
 
@@ -133,7 +178,7 @@ const Appointments = () => {
           <div className="col-md-6 col-lg-3 mb-2">
             <input
               type="text"
-              className="form-control"
+              className="form-control search-input"
               placeholder="Search by student name"
               value={searchTerm}
               onChange={handleSearch}

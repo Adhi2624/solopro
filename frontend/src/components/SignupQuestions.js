@@ -126,7 +126,7 @@ const SignupQuestions = () => {
       }
     } catch (error) {
       console.error('Error checking email:', error);
-      alert('Error checking email.');
+      // alert('Error checking email.');
     }
   };
 

@@ -6,6 +6,7 @@ import BLOG from './BLOG.json'; // Import the Lottie animation JSON file
 import Investor from './investor.json'
 import mentor from './mentor.json'
 import logo from '../images/image.svg'
+import community from '../images/community.json'
 const StudentLandingPage = () => {
   const services = [
     {
@@ -23,6 +24,11 @@ const StudentLandingPage = () => {
       animationUrl: mentor,
       link: '/student/mentorpage'
     },
+    {
+      title: 'Community',
+      animationUrl:community,
+      link:'/student/community'
+    }
   ];
 
   return (
@@ -31,9 +37,7 @@ const StudentLandingPage = () => {
         <Container>
           <Navbar.Brand href="">
             <img
-              src={logo}
-             
-              
+              src={logo} 
               className="d-inline-block align-top"
               alt="React Bootstrap logo"
               style={{height:'40px !important'}} 

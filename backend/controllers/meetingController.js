@@ -2,6 +2,7 @@ const { ObjectId } = require("mongodb");
 const {getDB } = require('../config/db');
 const meeting=require("../models/meeting")
 const db=getDB();
+const meetingconf=require('../mailtemplates/meetingconfirm')
 exports.scheduleMeeting = async (req, res) => {
     try {
         
@@ -13,6 +14,7 @@ exports.scheduleMeeting = async (req, res) => {
         //delete meetingData._id;
         // await meeting.insertOne(meetingData);
         await (await db).collection('meetings').insertOne(meetingData);
+        meetingconf(req.body.email)
         res.status(201).json({ message: 'Meeting data inserted' });
     } catch (error) {
         console.error("Error scheduling meeting:", error);

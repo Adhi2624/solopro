@@ -7,6 +7,7 @@ const Student = require('../models/Student');
 const Investor = require('../models/Investor');
 const User = require('../models/User'); // Assuming you have a User model for basic user info
 const sendWelcomeEmail = require('../mailtemplates/registerMail');
+const sendmetingemail = require('../mailtemplates/meetingconfirm')
 const upload = multer();
 
 router.post('/', upload.none(), async (req, res) => {
@@ -82,6 +83,7 @@ router.post('/', upload.none(), async (req, res) => {
     }
     sendWelcomeEmail(req.body.name, req.body.email);
     res.status(201).json({ message: 'User created successfully' });
+    // sendmetingemail(req.body.)
   } catch (error) {
     console.error("Server error:", error);
     res.status(500).json({ message: 'Server error', error: error.message });

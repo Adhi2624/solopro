@@ -7,7 +7,15 @@ import InvestorList from '../components/tables/investorlist';
 import Blogs from '../components/blog/blog-cards';
 import BlogDetail from '../components/blog/BlogDetails';
 import StudentLandingPage from '../components/studentlandingpage';
+const handleLogout = () => {
+  // Remove items from localStorage
+  
+  localStorage.removeItem('user');
 
+  // Redirect to login or home page
+  // Example: Replace with your desired logout behavior
+  window.location.href = '/'; // Redirect to login page after logout
+};
 const StudentsRoute = () => {
   return (
     <Routes>

@@ -3,6 +3,7 @@ const { Schema } = mongoose;
 
 // User Schema
 const userSchema = new Schema({
+  userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
@@ -12,4 +13,4 @@ const userSchema = new Schema({
   profileImage: { type: String }
 });
 
-module.exports = mongoose.models.User || mongoose.model('Entrepreneur', userSchema);
+module.exports = mongoose.models.Entrepreneur || mongoose.model('Entrepreneur', userSchema);

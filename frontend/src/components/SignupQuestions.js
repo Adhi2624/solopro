@@ -116,12 +116,11 @@ const SignupQuestions = () => {
     );
   };
 
-  const checkEmail = async (email) => {
-    setEmail(email);
+  const checkEmail = async () => {
+    
     try {
       const response = await axios.post(`${backend}/api/check-email`, { email });
       if (response.data.exists) {
-        alert('Email already exists. Redirecting to login page...');
         history('/login'); // Redirect to login page
       }
     } catch (error) {
@@ -183,10 +182,14 @@ const SignupQuestions = () => {
   const validateCurrentStep = () => {
     let isValid = true;
     if (activeStep === 0) {
+      checkEmail();
       if (!email) {
         isValid = false;
         alert('Email is required');
       }
+      
+        
+      
     } else if (activeStep === 1) {
       const updatedQuestions = userQuestions.map((question) => {
         if (!question.value) {
@@ -316,7 +319,7 @@ const SignupQuestions = () => {
                     fullWidth
                     label="Email"
                     value={email}
-                    onChange={(e) => checkEmail(e.target.value)}
+                    onChange={(e) => setEmail(e.target.value)}
                     required
                   />
                 )}

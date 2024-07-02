@@ -1,0 +1,29 @@
+@media (max-width: 768px) {
+    .text-xl {
+        font-size: 1rem;
+    }
+
+    .text-3xl {
+        font-size: 1.5rem;
+    }
+
+    .text-4xl {
+        font-size: 2rem;
+    }
+
+    .md\:text-7xl {
+        font-size: 3rem;
+    }
+
+    .pt-12 {
+        padding-top: 1rem;
+    }
+
+    .pb-24 {
+        padding-bottom: 1rem;
+    }
+
+    .grid-cols-12 {
+        grid-template-columns: 1fr;
+    }
+}

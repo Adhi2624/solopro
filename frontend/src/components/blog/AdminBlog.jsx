@@ -198,7 +198,7 @@ const AdminBlog = () => {
   };
 
   return (
-    <div className="container mt-5">
+    <div className="container mt-5" style={{color:'white'}}>
       <h2 className="text-center">Admin Panel</h2>
       <form onSubmit={handleAddOrUpdateBlog} className="mb-5">
         <h3>{editMode ? 'Update Blog Post' : 'Add New Blog Post'}</h3>

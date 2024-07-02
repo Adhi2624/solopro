@@ -1,0 +1,173 @@
+.entirePage {
+  background-color: black;
+  min-height: 100vh; /* Ensure it takes at least the full viewport height */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 0;
+  padding: 0;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  box-sizing: border-box;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background-image: linear-gradient(135deg, #0fd2ab, #783ff5);
+  transform-origin: 0%;
+  z-index: 1000;
+}
+
+.ball {
+  position: fixed;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #1ff6fa;
+  opacity: 0.5;
+  pointer-events: none; 
+  z-index: 0; 
+}
+
+#unleas {
+  text-align: center;
+  color: rgb(16, 194, 194);
+  margin-top: 5%;
+  margin-bottom: 10%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'monteserrat';
+}
+
+#unleas h3 {
+  font-family: 'monteserrat';
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  background-image: linear-gradient(135deg, #0fd2ab, #783ff5);
+  font-size: clamp(30px, 80px, 100px); 
+}
+
+#unleas p {
+  color: white;
+  font-size: clamp(10px, 20px, 30px); 
+}
+
+#unleas img {
+  width: 100%; 
+  max-width: 500px; 
+  height: auto; 
+  margin-bottom: 20px;
+  margin-top: 20px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.foot {
+  color: white;
+}
+
+footer a {
+  color: white; 
+}
+
+footer .text-reset {
+  color: inherit;
+}
+
+.footer-icon {
+  color: white;
+}
+
+.solopro-section {
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; 
+  overflow-x: hidden; 
+  font-family: 'monteserrat';
+}
+
+.solopro-text {
+  font-size: 10vw; 
+  font-family: 'monteserrat';
+  color: #2d303e;
+  line-height: 1;
+  margin: 0;
+  padding: 0;
+  white-space: nowrap; 
+}
+
+@media (max-width: 768px) {
+  #unleas h3 {
+    font-size: clamp(20px, 60px, 80px);
+  }
+
+  #unleas p {
+    font-size: clamp(8px, 16px, 24px);
+  }
+
+  .solopro-text {
+    font-size: 15vw; 
+  }
+}
+
+.service-image {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.service-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: auto;
+  background-color: #E1EEFF;
+  color: #000;
+  padding: 10px;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+  z-index: 1;
+}
+
+.service-image:hover .service-overlay {
+  transform: translateY(0%);
+}
+
+.timeline{
+  margin-bottom: 100px;
+}
+
+.animation-container {
+  width: 100%;
+  max-width: 500px; /* Adjust as necessary */
+  margin: auto;
+}
+
+.animation-container > div {
+  position: relative;
+  padding-bottom: 100%; /* Maintain aspect ratio */
+  height: 0;
+}
+
+.animation-container > div > svg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+
+.text-content-animated{
+  color:white
+}

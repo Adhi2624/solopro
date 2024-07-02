@@ -1,0 +1,38 @@
+
+  .text-gold {
+    color: transparent;
+    background: linear-gradient(
+      90deg,
+      rgba(11, 135, 184, 0.1),
+      rgb(0, 242, 255),
+      rgba(11, 155, 184, 0.1)
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    font-size: 55px; 
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: 100;
+  }
+  .text-gold:hover {
+    color: #00F0FC !important;  
+}
+  .animate-shimmer {
+    animation: shimmer 2s infinite linear;
+    background-size: 200% auto;
+    background-image: linear-gradient(
+      to left,
+      rgba(11, 135, 184, 0.1),
+      rgb(0, 242, 255),
+      rgba(11, 155, 184, 0.1)
+    );
+  }
+  
+  @keyframes shimmer {
+    0% {
+      background-position: 100% 0;
+    }
+    100% {
+      background-position: -100% 0;
+    }
+  }
+  

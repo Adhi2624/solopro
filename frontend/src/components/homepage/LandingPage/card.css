@@ -1,0 +1,130 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+
+.snip1584 {
+  font-family: 'Monospace', sans-serif;
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  margin: 10px;
+  min-width: 230px;
+  max-width: 315px;
+  width: 100%;
+  color: #ffffff;
+  font-size: 10px;
+  text-align: left;
+}
+
+.snip1584 * {
+  box-sizing: border-box;
+  transition: all 0.25s ease;
+}
+
+.snip1584:before {
+  position: absolute;
+  top: 100%;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;
+  content: '';
+  backdrop-filter: blur(5px);
+  transition: all 0.25s ease;
+  transition-delay: 0.25s;
+  height: 100px; /* Check if this height is necessary */
+  width: 200px; /* Check if this width is necessary */
+  background-size: contain;
+}
+
+.snip1584 img {
+  vertical-align: top;
+  max-width: 100%;
+  backface-visibility: hidden;
+}
+
+.slick-dots {
+  position: absolute;
+  bottom: -25px;
+  display: block;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  color: #ffffff;
+  text-align: center;
+}
+
+.slick-dots li button:before {
+  font-family: slick;
+  font-size: 6px;
+  line-height: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  content: '•';
+  text-align: center;
+  color: #ffffff;
+}
+
+.snip1584 figcaption {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.snip1584 h5 {
+  margin: 0;
+  opacity: 0;
+  letter-spacing: 1px;
+  font-weight: normal;
+  background-color: #0D4270;
+  padding: 3px 10px;
+  transform: translateY(-100%);
+  transition-delay: 0s;
+}
+
+.snip1584 a {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+}
+
+.snip1584:hover:before,
+.snip1584.hover:before {
+  top: 10px;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;
+  transition-delay: 0s;
+}
+
+.snip1584:hover h5,
+.snip1584.hover h5 {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.snip1584.hover h5 {
+  transition-delay: 0.2s;
+}
+
+.app {
+  text-align: center;
+  color: white;
+  width: 100%;
+  max-width: 1200px;
+  margin: auto;
+  font-family: 'Raleway';
+  font-size: 14px;
+  
+}

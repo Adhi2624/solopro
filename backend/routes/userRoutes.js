@@ -1,23 +1,22 @@
 const express = require('express');
 const router = express.Router();
-const multer = require('multer');
 const bcrypt = require('bcrypt');
 const Mentor = require('../models/Mentor');
 const Student = require('../models/Student');
 const Investor = require('../models/Investor');
 const User = require('../models/User'); // Assuming you have a User model for basic user info
 const sendWelcomeEmail = require('../mailtemplates/registerMail');
-const sendmetingemail = require('../mailtemplates/meetingconfirm')
-const upload = multer();
+const sendMeetingEmail = require('../mailtemplates/meetingconfirm');
 
-router.post('/', upload.none(), async (req, res) => {
+router.post('/', async (req, res) => {
   const { email, password, userType, ...userData } = req.body;
-  
+  console.log(req.body);
 
   try {
+    const hashedPassword = await bcrypt.hash(password, 10);
     const user = new User({
       email,
-      password: password,
+      password: hashedPassword,
       role: userType
     });
     await user.save();
@@ -81,9 +80,10 @@ router.post('/', upload.none(), async (req, res) => {
       const investor = new Investor(profileData);
       await investor.save();
     }
+    
     sendWelcomeEmail(req.body.name, req.body.email);
     res.status(201).json({ message: 'User created successfully' });
-    // sendmetingemail(req.body.)
+    // sendMeetingEmail(req.body.)
   } catch (error) {
     console.error("Server error:", error);
     res.status(500).json({ message: 'Server error', error: error.message });

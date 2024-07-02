@@ -5,14 +5,10 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const cors = require("cors");
 const path = require("path");
-const { authSocket, socketServer } = require("./socketServer");
 const { connectDB, connectDB1 } = require("./config/db");
 const { errorHandler } = require("./middleware/errorHandler");
 
-// Import routes
-const posts = require("./routes/posts");
-const users = require("./routes/users");
-const comments = require("./routes/comments");
+
 const blogRoutes = require("./routes/blogs");
 const featuredStoryRoutes = require("./routes/featuredStories");
 const moreStoryRoutes = require("./routes/moreStories");
@@ -39,30 +35,15 @@ const startServer = async () => {
     const studentController = require("./controllers/studentController");
     const investorController = require("./controllers/investorController");
     // Socket.io Setup
-    const httpServer = require("http").createServer(app);
-    const io = require("socket.io")(httpServer, {
-      cors: {
-        origin: ["http://localhost:3000"],
-      },
-    });
-    io.use(authSocket);
-    io.on("connection", (socket) => socketServer(socket));
-
-    // Routes
-    app.use("/api/posts", posts);
-    app.use("/api/users", users);
-    app.use("/api/comments", comments);
+    
+    
     app.use("/api/blogs", blogRoutes);
     app.use("/api/featuredStories", featuredStoryRoutes);
     app.use("/api/moreStories", moreStoryRoutes);
     app.use("/api/signup", userRoutes);
     app.use("/api/login", loginRoutes);
     app.use("/api/check-email", email);
-    // Serve React App
-    app.use(express.static(path.join(__dirname, '../frontend', 'public')));
-    app.get("*", (req, res) => {
-      app.use(express.static(path.join(__dirname, '../frontend', 'public')));
-    });
+    
 
     // Define API Endpoints
     app.get("/getmentors", mentorController.getAllMentors);
@@ -86,7 +67,7 @@ const startServer = async () => {
 
     // Start Server
     const PORT = process.env.PORT || 4000;
-    httpServer.listen(PORT, () => {
+    app.listen(PORT, () => {
       console.log(`Server started on port ${PORT}`);
     });
   } catch (error) {

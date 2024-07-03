@@ -35,12 +35,9 @@ const PostForm = () => {
         for (let i = 0; i < videos.length; i++) {
             formData.append('videos', videos[i]);
         }
-        await axios.post('http://localhost:3001/posts', formData, {
-            headers: {
-                Authorization: token,
-                'Content-Type': 'multipart/form-data',
-            },
-        });
+        formData.append('uid',token.value.uid);
+        formData.append('role',token.value.role);
+        await axios.post('http://localhost:3001/posts', formData);
         setContent('');
         setTitle('');
         setShortDesc('');

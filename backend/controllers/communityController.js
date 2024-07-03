@@ -1,10 +1,10 @@
 const sharp = require('sharp');
 const Post = require('../models/communitypost');
+const objectId=require('mongodb').ObjectId
 
 exports.createPost = async (req, res) => {
     const { title, content, shortDesc } = req.body;
-    const head=req.headers;
-    console.log(head);
+    
     const images = await Promise.all(
         (req.files.images || []).map(async (file) => {
             const buffer = await sharp(file.buffer).resize(500).toBuffer();
@@ -13,13 +13,16 @@ exports.createPost = async (req, res) => {
     );
 
     const videos = (req.files.videos || []).map((file) => file.buffer.toString('base64'));
-
+    console.log(req.body);
     try {
-        const post = new Post({ title, content, shortDesc, images, videos, author: head.id,role:head.role });
+        console.log(1);
+        const post = new Post({ title, content, shortDesc, images, videos, author: new objectId(req.body.id),role:req.body.role });
+        console.log(2);
         await post.save();
         res.status(201).send(post);
     } catch (error) {
         res.status(500).send({ error: 'Failed to create post. Please try again.' });
+    console.log(error.message)
     }
 };
 

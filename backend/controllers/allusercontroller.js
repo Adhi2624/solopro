@@ -19,7 +19,7 @@ exports.getAllData = async (req, res) => {
             ...investors,
             ...entrepreneurs,
         ];
-
+        console.log(Object.keys(combinedData).length);
         res.send(combinedData);
     } catch (error) {
         console.error("Error fetching data:", error);
@@ -47,7 +47,7 @@ exports.getDataByName = async (req, res) => {
             investor,
             entrepreneur,
         };
-
+        
         res.json(combinedData);
         console.log(combinedData);
     } catch (error) {

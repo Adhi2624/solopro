@@ -3,10 +3,11 @@ const bcrypt = require('bcrypt');
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-    username: { type: String, required: true, unique: true },
+    email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     role: { type: String, required: true, enum: ["Student", "Mentor", "Admin", "Investor","Organization","Entrepreneur"] },
-    jwtToken: { type: String }
+    time : { type : Date, default: Date.now }
+
 });
 
 // Pre-save hook to hash the password before saving

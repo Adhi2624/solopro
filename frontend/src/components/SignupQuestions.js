@@ -226,8 +226,21 @@ const SignupQuestions = () => {
     }
     return isValid;
   };
-
-  const handleSubmit = async (e) => {
+  const senddata = async (formData) => {
+    try {
+      const response = await axios.post(`${backend}/api/signup`, formData);
+      if (response.status === 200) {
+        alert('Signup successful');
+      } else {
+        alert('Signup failed');
+      }
+    } catch (error) {
+      console.error('Signup error:', error);
+      alert('Signup failed');
+    }
+  };
+  
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (!validateCurrentStep()) {
       return;
@@ -238,7 +251,7 @@ const SignupQuestions = () => {
       userQuestions.forEach((question) => {
         formData.append(question.key, question.value);
       });
-
+  
       if (userType === 'Student') {
         formData.append('collegeName', collegeName);
         formData.append('course', course);
@@ -274,20 +287,13 @@ const SignupQuestions = () => {
           formData.append('profileImage', profileImage);
         }
       }
-
-      try {
-        const response = await axios.post(`${backend}/api/signup`, formData);
-        if (response.status === 200) {
-          alert('Signup successful');
-        } else {
-          alert('Signup failed');
-        }
-      } catch (error) {
-        console.error('Signup error:', error);
-        alert('Signup failed');
-      }
+  
+      console.log('Form data before submission:', Array.from(formData.entries()));
+      senddata(formData); // Call senddata with formData
     }
   };
+        
+  
 
   return (
     <ThemeProvider theme={theme}>
@@ -306,7 +312,7 @@ const SignupQuestions = () => {
         <Box sx={{ mt: 3 }}>
           {activeStep === steps.length ? (
             <Box>
-              <Typography>All steps completed - you&apos;re finished</Typography>
+              <Typography sx={{color:'white'}}>All steps completed - you&apos;re finished</Typography>
             </Box>
           ) : (
             <>

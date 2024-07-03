@@ -7,6 +7,8 @@ const cors = require("cors");
 const path = require("path");
 const { connectDB, connectDB1 } = require("./config/db");
 const { errorHandler } = require("./middleware/errorHandler");
+const multer = require('multer');
+const sharp = require('sharp');
 
 const { getAllData, getDataByName } = require('../controllers/dataController');
 
@@ -24,6 +26,8 @@ const app = express();
 // Middleware
 app.use(express.json());
 app.use(cors());
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
 
 // Establish database connections before starting the server
 const startServer = async () => {
@@ -35,6 +39,7 @@ const startServer = async () => {
     const meetingController = require("./controllers/meetingController");
     const studentController = require("./controllers/studentController");
     const investorController = require("./controllers/investorController");
+    const postControllers=require("./controllers/communityController");
     // Socket.io Setup
     
     
@@ -64,6 +69,16 @@ const startServer = async () => {
     app.post("/Investor/getprofileimg", investorController.getprofileimg);
     app.post("/updatementor", mentorController.updateMentor);
     app.post("/updateinvestor", investorController.updateInvestor);
+
+
+    //community
+    app.post('/posts', upload.fields([{ name: 'images' }, { name: 'videos' }]), postControllers.createPost);
+    app.put('/posts/:id', postControllers.updatePost);
+    app.get('/posts', postControllers.getPosts);
+    app.put('/posts/:id/like', postControllers.likePost);
+    app.post('/posts/:id/comments', postControllers.addComment);
+    app.delete('/posts/:id', postControllers.deletePost);
+
 
     // Error Handler Middleware
     app.use(errorHandler);

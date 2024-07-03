@@ -3,6 +3,8 @@ const Post = require('../models/communitypost');
 
 exports.createPost = async (req, res) => {
     const { title, content, shortDesc } = req.body;
+    const head=req.headers;
+    console.log(head);
     const images = await Promise.all(
         (req.files.images || []).map(async (file) => {
             const buffer = await sharp(file.buffer).resize(500).toBuffer();
@@ -13,7 +15,7 @@ exports.createPost = async (req, res) => {
     const videos = (req.files.videos || []).map((file) => file.buffer.toString('base64'));
 
     try {
-        const post = new Post({ title, content, shortDesc, images, videos, author: req.userId });
+        const post = new Post({ title, content, shortDesc, images, videos, author: head.id,role:head.role });
         await post.save();
         res.status(201).send(post);
     } catch (error) {

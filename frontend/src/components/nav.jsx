@@ -6,7 +6,7 @@ import '../css/style.css';
 
 
     const Navbarr = () => {
-        const userData = localStorage.getItem('userData');
+        
 
         return (
             <Navbar expand="lg" className="rounded-4 mt-lg-2 mx-lg-1 rounded-sm-0 mt-md-1 mx-sm-0 flex-nowrap">
@@ -20,19 +20,13 @@ import '../css/style.css';
                     </div>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" className="ms-auto d-lg-none" />
                     <Navbar.Collapse id="basic-navbar-nav">
-                        {userData ? (
+                     
                             <Nav className="me-auto flex-column flex-lg-row">
                                 <Nav.Link href="#our-storyline" className='text-nowrap'>Our Storyline</Nav.Link>
                                 <Nav.Link href="#our-initiatives" className='text-nowrap'>Our Initiatives</Nav.Link>
                                 <Nav.Link href="#join-our-tribe" className='text-nowrap'>Join our Tribe!</Nav.Link>
                             </Nav>
-                        ) : (
-                            <Nav className="me-auto flex-column flex-lg-row" style={{ visibility: 'hidden' }}>
-                                <Nav.Link href="#our-storyline" className='text-nowrap'>Our Storyline</Nav.Link>
-                                <Nav.Link href="#our-initiatives" className='text-nowrap'>Our Initiatives</Nav.Link>
-                                <Nav.Link href="#join-our-tribe" className='text-nowrap'>Join our Tribe!</Nav.Link>
-                            </Nav>
-                        )}
+                            
                         {/* Register and Login links for mobile */}
                         <Nav className="ms-auto flex-column flex-lg-row d-lg-none">
                             <Nav.Link href="/signUp" className='text-nowrap '>Register Now</Nav.Link>

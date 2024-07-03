@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from 'react';
+// import { useHistory } from "react-router-dom";
+// import GoBackButton from './GoBackButton';
+import { useNavigate } from 'react-router-dom';
+
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
+import Button from '@mui/joy/Button'; 
 
 const AdminBlog = () => {
   const [title, setTitle] = useState('');
@@ -196,10 +202,22 @@ const AdminBlog = () => {
     setEditMode(false);
     setCurrentId(null);
   };
+  // const history = useHistory()
+  const navigate = useNavigate();
 
+const handleback= ()=>{
+  // const history = useHistory();
+
+  navigate(-1); 
+
+
+}
   return (
     <div className="container mt-5" style={{color:'white'}}>
       <h2 className="text-center">Admin Panel</h2>
+      <div className="pb-4">
+      <Button onClick={handleback}>Back to posts</Button></div>
+      {/* <GoBackButton /></div> */}
       <form onSubmit={handleAddOrUpdateBlog} className="mb-5">
         <h3>{editMode ? 'Update Blog Post' : 'Add New Blog Post'}</h3>
         <div className="mb-3">

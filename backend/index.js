@@ -10,6 +10,7 @@ const { errorHandler } = require("./middleware/errorHandler");
 const multer = require('multer');
 const sharp = require('sharp');
 
+const { getAllData, getDataByName } = require('../controllers/dataController');
 
 const blogRoutes = require("./routes/blogs");
 const featuredStoryRoutes = require("./routes/featuredStories");
@@ -51,6 +52,8 @@ const startServer = async () => {
     
 
     // Define API Endpoints
+    router.get('/totaldata', getAllData);
+    router.get('/:name', getDataByName);
     app.get("/getmentors", mentorController.getAllMentors);
     app.get("/getinvestors", investorController.getAllInvestors);
     app.post("/getInvestor", investorController.getInvestorById);

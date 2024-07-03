@@ -2,6 +2,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'Manrope', sans-serif;
+  border: #007bff;
 }
 
 .blog-container {
@@ -11,6 +12,7 @@ body {
   font-family: 'Manrope', sans-serif;
   width: 100%;
   min-height: 100vh;
+  
 }
 
 .blog-heading {
@@ -30,6 +32,7 @@ body {
 
 .card {
   margin-bottom: 20px;
+  border: #007bff;
 }
 
 .card-img-top-new {

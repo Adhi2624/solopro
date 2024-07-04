@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import InvestorRow from '../investorRow'
+import InvestorRow from '../investorRow';
 import axios from 'axios';
 import Nav1 from '../nav1';
 
@@ -9,6 +9,7 @@ const InvestorList = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [investorsPerPage, setInvestorsPerPage] = useState(10);
     const [searchTerm, setSearchTerm] = useState('');
+    const [searchField, setSearchField] = useState('name');
     const backend = process.env.REACT_APP_BACKEND;
 
     useEffect(() => {
@@ -22,12 +23,11 @@ const InvestorList = () => {
 
     useEffect(() => {
         const results = investorList.filter(investor =>
-            investor.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            investor.areaOfExpertise.toLowerCase().includes(searchTerm.toLowerCase())
+            investor[searchField].toLowerCase().includes(searchTerm.toLowerCase())
         );
         setFilteredInvestors(results);
         setCurrentPage(1);
-    }, [searchTerm, investorList]);
+    }, [searchTerm, searchField, investorList]);
 
     const indexOfLastInvestor = currentPage * investorsPerPage;
     const indexOfFirstInvestor = indexOfLastInvestor - investorsPerPage;
@@ -44,18 +44,33 @@ const InvestorList = () => {
         setSearchTerm(event.target.value);
     };
 
+    const handleSearchFieldChange = (event) => {
+        setSearchField(event.target.value);
+    };
+
     return (
         <div>
             <Nav1/>
             <div className='p-1 mt-3'>
-            <div className="d-flex justify-content-center mb-3">
+                <div className="d-flex justify-content-center mb-3">
                     <input
                         type="text"
-                        className="form-control w-50"
-                        placeholder="Search by name or area of expertise"
+                        className="form-control w-50 me-2"
+                        placeholder="Search 🔍"
                         value={searchTerm}
                         onChange={handleSearch}
                     />
+                    <select
+                        className="form-select w-auto"
+                        value={searchField}
+                        onChange={handleSearchFieldChange}
+                    >
+                        <option value="name">Name</option>
+                        <option value="areaOfExpertise">Area of Expertise</option>
+                        <option value="placeOfService">Place of Service</option>
+                        <option value="peopleMentored">Number of People Mentored</option>
+                        <option value="status">Status</option>
+                    </select>
                 </div>
                 <div className="table-responsive">
                     <table className="table text-light" id="mentor-table">

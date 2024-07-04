@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"; 
-import lottie from './BLOG.json'
+import { useNavigate } from "react-router-dom";
+import lottie from "./BLOG.json";
 import {
   TextField,
   Button,
@@ -184,10 +184,14 @@ const SignupQuestions = () => {
         alert("Please enter your email.");
       } else {
         try {
-          const response = await axios.post(`${backend}/api/check-email`, { email });
+          const response = await axios.post(`${backend}/api/check-email`, {
+            email,
+          });
           if (response.data.exists) {
-            alert("This email is already in use. Redirecting to the login page.");
-            navigate('/login');
+            alert(
+              "This email is already in use. Redirecting to the login page."
+            );
+            navigate("/login");
             isValid = false;
           }
         } catch (error) {
@@ -217,22 +221,41 @@ const SignupQuestions = () => {
       }
     } else if (activeStep === 4) {
       if (userType === "Student") {
-        if (!collegeName || !course || !collegeLocation || !git || !collegeIdPhotoUrl) {
+        if (
+          !collegeName ||
+          !course ||
+          !collegeLocation ||
+          !git ||
+          !collegeIdPhotoUrl
+        ) {
           isValid = false;
           alert("All fields are required for students.");
         }
       } else if (userType === "Mentor") {
-        if (!areaOfExpertise || !experience || (availableToMentor && !mentorshipCount)) {
+        if (
+          !areaOfExpertise ||
+          !experience ||
+          (availableToMentor && !mentorshipCount)
+        ) {
           isValid = false;
           alert("All fields are required for mentors.");
         }
       } else if (userType === "Investor") {
-        if ((availableToInvest && (!investmentCount || !investmentAmount)) || !proofImageUrl) {
+        if (
+          (availableToInvest && (!investmentCount || !investmentAmount)) ||
+          !proofImageUrl
+        ) {
           isValid = false;
           alert("All fields are required for investors.");
         }
       } else if (userType === "Organization") {
-        if (!orgnName || !orgnHead || !orgnLocation || !orgnType || !orgnProofPhotoUrl) {
+        if (
+          !orgnName ||
+          !orgnHead ||
+          !orgnLocation ||
+          !orgnType ||
+          !orgnProofPhotoUrl
+        ) {
           isValid = false;
           alert("All fields are required for organizations.");
         }
@@ -323,7 +346,9 @@ const SignupQuestions = () => {
         return (
           <Box>
             <Lottie options={defaultOptions} height={400} width={400} />
-            <Typography variant="h6">Lets Proceed with User Specific Questions</Typography>
+            <Typography variant="h6">
+              Lets Proceed with User Specific Questions
+            </Typography>
             {userQuestions.map((question, index) => (
               <CustomTextField
                 key={index}
@@ -331,7 +356,9 @@ const SignupQuestions = () => {
                 variant="outlined"
                 fullWidth
                 value={question.value}
-                onChange={(e) => handleInputChange(question.key, e.target.value)}
+                onChange={(e) =>
+                  handleInputChange(question.key, e.target.value)
+                }
               />
             ))}
           </Box>
@@ -402,7 +429,11 @@ const SignupQuestions = () => {
                     type="file"
                     hidden
                     onChange={(e) =>
-                      handleFileChange(e, setCollegeIdPhoto, setCollegeIdPhotoUrl)
+                      handleFileChange(
+                        e,
+                        setCollegeIdPhoto,
+                        setCollegeIdPhotoUrl
+                      )
                     }
                   />
                 </Button>
@@ -490,7 +521,9 @@ const SignupQuestions = () => {
                   <input
                     type="file"
                     hidden
-                    onChange={(e) => handleFileChange(e, setProofImage, setProofImageUrl)}
+                    onChange={(e) =>
+                      handleFileChange(e, setProofImage, setProofImageUrl)
+                    }
                   />
                 </Button>
                 {proofImageUrl && (
@@ -543,7 +576,11 @@ const SignupQuestions = () => {
                     type="file"
                     hidden
                     onChange={(e) =>
-                      handleFileChange(e, setOrgnProofPhoto, setOrgnProofPhotoUrl)
+                      handleFileChange(
+                        e,
+                        setOrgnProofPhoto,
+                        setOrgnProofPhotoUrl
+                      )
                     }
                   />
                 </Button>
@@ -563,8 +600,12 @@ const SignupQuestions = () => {
           <Box>
             <Lottie options={defaultOptions} height={400} width={400} />
             <Typography variant="h6">Review & Submit</Typography>
-            <Typography variant="body1"><strong>Email:</strong> {email}</Typography>
-            <Typography variant="body1"><strong>User Type:</strong> {userType}</Typography>
+            <Typography variant="body1">
+              <strong>Email:</strong> {email}
+            </Typography>
+            <Typography variant="body1">
+              <strong>User Type:</strong> {userType}
+            </Typography>
             {userQuestions.map((question, index) => (
               <Typography key={index} variant="body1">
                 <strong>{question.question}:</strong> {question.value}
@@ -572,47 +613,93 @@ const SignupQuestions = () => {
             ))}
             {userType === "Student" && (
               <>
-                <Typography variant="body1"><strong>College Name:</strong> {collegeName}</Typography>
-                <Typography variant="body1"><strong>Course:</strong> {course}</Typography>
-                <Typography variant="body1"><strong>College Location:</strong> {collegeLocation}</Typography>
-                <Typography variant="body1"><strong>GitHub Profile:</strong> {git}</Typography>
+                <Typography variant="body1">
+                  <strong>College Name:</strong> {collegeName}
+                </Typography>
+                <Typography variant="body1">
+                  <strong>Course:</strong> {course}
+                </Typography>
+                <Typography variant="body1">
+                  <strong>College Location:</strong> {collegeLocation}
+                </Typography>
+                <Typography variant="body1">
+                  <strong>GitHub Profile:</strong> {git}
+                </Typography>
                 {collegeIdPhotoUrl && (
-                  <img src={collegeIdPhotoUrl} alt="College ID" style={{ width: "100%", marginTop: "10px" }} />
+                  <img
+                    src={collegeIdPhotoUrl}
+                    alt="College ID"
+                    style={{ width: "100%", marginTop: "10px" }}
+                  />
                 )}
               </>
             )}
             {userType === "Mentor" && (
               <>
-                <Typography variant="body1"><strong>Area of Expertise:</strong> {areaOfExpertise}</Typography>
-                <Typography variant="body1"><strong>Years of Experience:</strong> {experience}</Typography>
-                <Typography variant="body1"><strong>Available to Mentor:</strong> {availableToMentor ? "Yes" : "No"}</Typography>
+                <Typography variant="body1">
+                  <strong>Area of Expertise:</strong> {areaOfExpertise}
+                </Typography>
+                <Typography variant="body1">
+                  <strong>Years of Experience:</strong> {experience}
+                </Typography>
+                <Typography variant="body1">
+                  <strong>Available to Mentor:</strong>{" "}
+                  {availableToMentor ? "Yes" : "No"}
+                </Typography>
                 {availableToMentor && (
-                  <Typography variant="body1"><strong>Number of People Mentored:</strong> {mentorshipCount}</Typography>
+                  <Typography variant="body1">
+                    <strong>Number of People Mentored:</strong>{" "}
+                    {mentorshipCount}
+                  </Typography>
                 )}
               </>
             )}
             {userType === "Investor" && (
               <>
-                <Typography variant="body1"><strong>Available to Invest:</strong> {availableToInvest ? "Yes" : "No"}</Typography>
+                <Typography variant="body1">
+                  <strong>Available to Invest:</strong>{" "}
+                  {availableToInvest ? "Yes" : "No"}
+                </Typography>
                 {availableToInvest && (
                   <>
-                    <Typography variant="body1"><strong>Number of Investments:</strong> {investmentCount}</Typography>
-                    <Typography variant="body1"><strong>Total Investment Amount:</strong> {investmentAmount}</Typography>
+                    <Typography variant="body1">
+                      <strong>Number of Investments:</strong> {investmentCount}
+                    </Typography>
+                    <Typography variant="body1">
+                      <strong>Total Investment Amount:</strong>{" "}
+                      {investmentAmount}
+                    </Typography>
                   </>
                 )}
                 {proofImageUrl && (
-                  <img src={proofImageUrl} alt="Proof of Investment" style={{ width: "100%", marginTop: "10px" }} />
+                  <img
+                    src={proofImageUrl}
+                    alt="Proof of Investment"
+                    style={{ width: "100%", marginTop: "10px" }}
+                  />
                 )}
               </>
             )}
             {userType === "Organization" && (
               <>
-                <Typography variant="body1"><strong>Organization Name:</strong> {orgnName}</Typography>
-                <Typography variant="body1"><strong>Organization Head:</strong> {orgnHead}</Typography>
-                <Typography variant="body1"><strong>Organization Location:</strong> {orgnLocation}</Typography>
-                <Typography variant="body1"><strong>Organization Type:</strong> {orgnType}</Typography>
+                <Typography variant="body1">
+                  <strong>Organization Name:</strong> {orgnName}
+                </Typography>
+                <Typography variant="body1">
+                  <strong>Organization Head:</strong> {orgnHead}
+                </Typography>
+                <Typography variant="body1">
+                  <strong>Organization Location:</strong> {orgnLocation}
+                </Typography>
+                <Typography variant="body1">
+                  <strong>Organization Type:</strong> {orgnType}
+                </Typography>
                 {orgnProofPhotoUrl && (
-                  <img src={orgnProofPhotoUrl} alt="Proof of Organization" style={{ width: "100%", marginTop: "10px" }} />
+                  <img
+                    src={orgnProofPhotoUrl}
+                    alt="Proof of Organization"
+                    style={{ width: "100%", marginTop: "10px" }}
+                  />
                 )}
               </>
             )}
@@ -645,7 +732,9 @@ const SignupQuestions = () => {
         ) : (
           <Box>
             {renderStepContent(activeStep)}
-            <Box sx={{ display: "flex", justifyContent: "space-between", mt: 2 }}>
+            <Box
+              sx={{ display: "flex", justifyContent: "space-between", mt: 2 }}
+            >
               <Button disabled={activeStep === 0} onClick={handleBack}>
                 Back
               </Button>

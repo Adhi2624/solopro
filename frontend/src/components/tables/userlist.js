@@ -9,6 +9,7 @@ const UserList = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [usersPerPage, setUsersPerPage] = useState(10);
     const [searchTerm, setSearchTerm] = useState('');
+    const [searchField, setSearchField] = useState('name');
     const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' });
     const backend = process.env.REACT_APP_BACKEND;
 
@@ -24,13 +25,12 @@ const UserList = () => {
 
     useEffect(() => {
         const results = userList.filter(user =>
-            user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            user.email.toLowerCase().includes(searchTerm.toLowerCase())
+            user[searchField].toLowerCase().includes(searchTerm.toLowerCase())
         );
         console.log("Filtered results:", results);
         setFilteredUsers(results);
         setCurrentPage(1);
-    }, [searchTerm, userList]);
+    }, [searchTerm, searchField, userList]);
 
     const sortData = (key) => {
         let direction = 'ascending';
@@ -70,27 +70,36 @@ const UserList = () => {
         setSearchTerm(event.target.value);
     };
 
+    const handleSearchFieldChange = (event) => {
+        setSearchField(event.target.value);
+    };
+
     return (
         <div>
-            <Nav1/>
+            <Nav1 />
             <div className='p-1 mt-3'>
-                <div className="d-flex justify-content-center mb-3">
+                <div className="d-flex justify-content-center mb-3" style={{ color: 'white' }}>
                     <input
                         type="text"
                         className="form-control w-50"
-                        placeholder="Search 🔍"
+                        placeholder="Search among all users"
                         value={searchTerm}
                         onChange={handleSearch}
+                        style={{ color: 'white' }}
                     />
+                    <select className="form-select w-auto ms-2" value={searchField} onChange={handleSearchFieldChange}>
+                        <option value="name">Name</option>
+                        <option value="email">Email</option>
+                        <option value="role">Role</option>
+                    </select>
                 </div>
                 <div className="table-responsive">
-                    <table className="table text-light" id="user-table">
+                    <table className="table table-dark table-hover" id="mentor-table" style={{ backgroundColor: '#343a40' }}>
                         <thead>
                             <tr className='text-center'>
-                                <th scope="col">Name {getSortIcon('name')}</th>
-                                <th scope="col">Email {getSortIcon('email')}</th>
-                                <th scope="col">Role {getSortIcon('role')}</th>
-                                <th scope="col">Status {getSortIcon('status')}</th>
+                                <th scope="col" onClick={() => sortData('name')}>Name {getSortIcon('name')}</th>
+                                <th scope="col" onClick={() => sortData('email')}>Email {getSortIcon('email')}</th>
+                                <th scope="col" onClick={() => sortData('role')}>Role {getSortIcon('role')}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -99,18 +108,17 @@ const UserList = () => {
                                     <td>{user.name}</td>
                                     <td>{user.email}</td>
                                     <td>{user.role}</td>
-                                    <td>{user.status}</td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
                 </div>
                 {filteredUsers.length >= 10 && (
-                    <Pagination 
-                        itemsPerPage={usersPerPage} 
-                        totalItems={filteredUsers.length} 
-                        paginate={paginate} 
-                        currentPage={currentPage} 
+                    <Pagination
+                        itemsPerPage={usersPerPage}
+                        totalItems={filteredUsers.length}
+                        paginate={paginate}
+                        currentPage={currentPage}
                         handleItemsPerPageChange={handleUsersPerPageChange}
                         indexOfFirstItem={indexOfFirstUser}
                         indexOfLastItem={indexOfLastUser}
@@ -136,7 +144,7 @@ const Pagination = ({ itemsPerPage, totalItems, paginate, currentPage, handleIte
                 {`Showing ${showingFrom} to ${showingTo} of ${totalItems} entries`}
             </div>
             <div className='d-flex justify-content-end align-items-center'>
-                <div className='me-3 d-flex align-items-center'> 
+                <div className='me-3 d-flex align-items-center'>
                     <label htmlFor="itemsPerPageSelect" className="ms-md-1 ms-sm-1 form-label text-light me-2 text-wrap row-label">Rows per page:</label>
                     <select id="itemsPerPageSelect" className="form-select w-auto" value={itemsPerPage} onChange={handleItemsPerPageChange}>
                         <option value="5">5</option>

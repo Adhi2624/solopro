@@ -9,7 +9,7 @@ const PostForm = () => {
     const [shortDesc, setShortDesc] = useState('');
     const [images, setImages] = useState([]);
     const [videos, setVideos] = useState([]);
-
+    const backend=process.env.REACT_APP_BACKEND;
     const handleFileChange = (e) => {
         const { files, name } = e.target;
         if (name === 'images') {
@@ -35,9 +35,9 @@ const PostForm = () => {
         for (let i = 0; i < videos.length; i++) {
             formData.append('videos', videos[i]);
         }
-        formData.append('uid',token.value.uid);
+        formData.append('uid',token.value.id);
         formData.append('role',token.value.role);
-        await axios.post('http://localhost:3001/posts', formData);
+        await axios.post(`${backend}/posts`, formData);
         setContent('');
         setTitle('');
         setShortDesc('');

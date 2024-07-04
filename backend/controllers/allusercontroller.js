@@ -1,4 +1,4 @@
-const getAllData = async (req, res) => {
+exports.getAllData = async (req, res) => {
     try {
         const db = getDB(); // Get the database object
 

@@ -1,7 +1,7 @@
 const sharp = require('sharp');
 const Post = require('../models/communitypost');
 const objectId=require('mongodb').ObjectId
-
+const {getDB}=require('../config/db')
 exports.createPost = async (req, res) => {
     const { title, content, shortDesc } = req.body;
     
@@ -16,7 +16,7 @@ exports.createPost = async (req, res) => {
     console.log(req.body);
     try {
         console.log(1);
-        const post = new Post({ title, content, shortDesc, images, videos, author: new objectId(req.body.id),role:req.body.role });
+        const post = new Post({ title, content, shortDesc, images, videos, author: new objectId(req.body.uid),role:req.body.role });
         console.log(2);
         await post.save();
         res.status(201).send(post);
@@ -44,21 +44,27 @@ exports.updatePost = async (req, res) => {
     }
 };
 
-exports.getPosts = async (req, res) => {
-    const { search, filter } = req.query;
-    let query = {};
 
-    if (search && filter) {
-        query[filter] = { $regex: search, $options: 'i' }; // Case insensitive search
-    }
+    exports.getPosts = async (req, res) => {
+        try {
+            // Fetch posts from the database and populate the author field
+            const posts = await Post.find().pretty();
 
-    try {
-        const posts = await Post.find(query).populate('author', 'name role photo');
-        res.status(200).send(posts);
-    } catch (error) {
-        res.status(500).send({ error: 'Failed to retrieve posts. Please try again.' });
-    }
-};
+            // Log the retrieved posts
+            console.log('Populated Posts:', JSON.stringify(posts, null, 2));
+
+            // Send the posts as a JSON response
+            res.status(200).json(posts);
+        } catch (error) {
+            // Log the error
+            console.error('Error:', error);
+
+            // Send an error response
+            res.status(500).json({ error: 'Failed to retrieve posts. Please try again.' });
+        }
+    };
+
+
 
 exports.likePost = async (req, res) => {
     const { id } = req.params;

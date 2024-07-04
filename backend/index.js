@@ -19,8 +19,18 @@ const loginRoutes = require("./routes/loginRoutes");
 
 const email = require("./controllers/emailverify");
 
+
+const totalCountRoutes = require('./routes/totalCountRoutes'); 
+const usersRouter = require('./routes/users');
+const investorRoutes = require('./routes/investorRoutes'); // Adjust the path as necessary
+const MentorRoutes = require('./routes/mentorRoutes'); // Adjust the path as necessary
+const studentRoutes = require('./routes/studentRoutes');
+
+
 dotenv.config();
 const app = express();
+
+
 
 // Middleware
 app.use(express.json());
@@ -41,7 +51,7 @@ const startServer = async () => {
     const postControllers=require("./controllers/communityController");
     // Socket.io Setup
     
-    
+    app.get('/getstudents',studentController.getallstudents)
     app.use("/api/blogs", blogRoutes);
     app.use("/api/featuredStories", featuredStoryRoutes);
     app.use("/api/moreStories", moreStoryRoutes);
@@ -49,6 +59,11 @@ const startServer = async () => {
     app.use("/api/login", loginRoutes);
     app.use("/api/check-email", email);
     
+
+    app.use('/api', investorRoutes); // Use the new routes
+    app.use('/api', MentorRoutes);
+    app.use('/api', studentRoutes);
+
 
     // Define API Endpoints
     app.get("/getmentors", mentorController.getAllMentors);
@@ -67,6 +82,12 @@ const startServer = async () => {
     app.post("/updatementor", mentorController.updateMentor);
     app.post("/updateinvestor", investorController.updateInvestor);
 
+
+    //totalCount
+    
+    app.use('/api/total', totalCountRoutes); // Use the new routes
+
+    app.use('/', usersRouter); // Use the new routes  
 
     //community
     app.post('/posts', upload.fields([{ name: 'images' }, { name: 'videos' }]), postControllers.createPost);

@@ -7,30 +7,34 @@ const CommunityHome = () => {
     const [filter, setFilter] = useState('content');
     const [sortBy, setSortBy] = useState('date');
     const [sortOrder, setSortOrder] = useState('desc');
+    const backend = process.env.REACT_APP_BACKEND;
 
     useEffect(() => {
         fetchPosts();
     }, []);
 
     const fetchPosts = async () => {
-        const res = await axios.get('http://localhost:3001/posts');
-        setPosts(res.data);
-        console.log(res.data)
+        try {
+            const res = await axios.get(`${backend}/posts`);
+            setPosts(res.data);
+            console.log(res.data);
+        } catch (err) {
+            console.error("Error fetching posts:", err);
+        }
     };
 
     const handleSearch = () => {
-        const filteredPosts = posts.filter(post => {
-            const searchTerm = search.toLowerCase();
+        const searchTerm = search.toLowerCase();
+        return posts.filter(post => {
             if (filter === 'content') return post.content.toLowerCase().includes(searchTerm);
             if (filter === 'title') return post.title.toLowerCase().includes(searchTerm);
             if (filter === 'author') return post.author.name.toLowerCase().includes(searchTerm);
             return true;
         });
-        return filteredPosts;
     };
 
-    const handleSort = (posts) => {
-        return posts.sort((a, b) => {
+    const handleSort = (filteredPosts) => {
+        return filteredPosts.sort((a, b) => {
             if (sortBy === 'date') {
                 return sortOrder === 'asc' ? new Date(a.createdAt) - new Date(b.createdAt) : new Date(b.createdAt) - new Date(a.createdAt);
             } else if (sortBy === 'title') {
@@ -67,15 +71,19 @@ const CommunityHome = () => {
                 </select>
             </div>
             <div>
-                {displayPosts.map((post) => (
-                    <div key={post._id} style={{ border: '1px solid black', margin: '10px', padding: '10px' }}>
-                        <img src={post.author.photo} alt={post.author.name} width="50" height="50" />
-                        <h3>{post.title}</h3>
-                        <p>{post.shortDesc}</p>
-                        <p>Posted by: {post.author.name} ({post.author.role})</p>
-                        <p>Date: {new Date(post.createdAt).toLocaleDateString()}</p>
-                    </div>
-                ))}
+                {displayPosts.length === 0 ? (
+                    <p>There are currently no community posts available.</p>
+                ) : (
+                    displayPosts.map((post) => (
+                        <div key={post._id} style={{ border: '1px solid black', margin: '10px', padding: '10px' }}>
+                            <img src={post.author.photo} alt={post.author.name} width="50" height="50" />
+                            <h3>{post.title}</h3>
+                            <p>{post.shortDesc}</p>
+                            <p>Posted by: {post.author.name} ({post.author.role})</p>
+                            <p>Date: {new Date(post.createdAt).toLocaleDateString()}</p>
+                        </div>
+                    ))
+                )}
             </div>
         </div>
     );

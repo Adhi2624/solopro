@@ -45,24 +45,20 @@ exports.updatePost = async (req, res) => {
 };
 
 
-    exports.getPosts = async (req, res) => {
-        try {
-            // Fetch posts from the database and populate the author field
-            const posts = await Post.find().pretty();
+exports.getPosts = async (req, res) => {
+    try {
+        // Fetch raw posts from the database
+        const rawPosts = await Post.find();
+        console.log('Raw Posts:', JSON.stringify(rawPosts, null, 2));
+        
+        // Send the populated posts as a JSON response
+        res.status(200).json(rawPosts);
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ error: 'Failed to retrieve posts. Please try again.' });
+    }
+};
 
-            // Log the retrieved posts
-            console.log('Populated Posts:', JSON.stringify(posts, null, 2));
-
-            // Send the posts as a JSON response
-            res.status(200).json(posts);
-        } catch (error) {
-            // Log the error
-            console.error('Error:', error);
-
-            // Send an error response
-            res.status(500).json({ error: 'Failed to retrieve posts. Please try again.' });
-        }
-    };
 
 
 

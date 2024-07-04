@@ -50,7 +50,7 @@ const startServer = async () => {
     app.use("/api/login", loginRoutes);
     app.use("/api/check-email", email);
     
-    app.post('/createMeet', createMeet);
+    // app.post('/createMeet', createMeet);
 
     // Define API Endpoints
     app.get('/totaldata', getAllData);

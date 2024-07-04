@@ -1,3 +1,6 @@
+const {getDB} = require('../config/db');
+const User=require('../models/user');
+
 exports.getAllData = async (req, res) => {
     try {
         const db = getDB(); // Get the database object

@@ -26,18 +26,17 @@ const StudentsRoute = () => {
       <Route path='/' element={<StudentLandingPage />} />
       <Route path='/mentorpage' element={<MentorList />} />
       <Route path='/investorpage' element={<InvestorList />} />
-      <Route path="/:role/:id" element={<MentorProfile />} />
-      <Route path="/studentprofile/:_id" element={<StudentProfileE />} />
-      <Route path='/alluser' element={<UserList />}/>
-      <Route path="/blogs" element={<Blogs />} />
-      <Route path="/blogs/:type/:id" element={<BlogDetail />} />
-      <Route path="/community" >
-      <Route index element={<CommunityHome />} />
-      <Route path='post' element={<PostForm/>}/>
+      <Route path='/:role/:id' element={<MentorProfile />} />
+      <Route path='/studentprofile/:_id' element={<StudentProfileE />} />
+      <Route path='/alluser' element={<UserList />} />
+      <Route path='/blogs' element={<Blogs />} />
+      <Route path='/blogs/:type/:id' element={<BlogDetail />} />
+      <Route path='/community'>
+        <Route index element={<CommunityHome />} />
+        <Route path='post' element={<PostForm />} />
       </Route>
-
-      
     </Routes>
+
   );
 };
 

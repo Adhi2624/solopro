@@ -53,7 +53,7 @@ const startServer = async () => {
 
     // Define API Endpoints
     app.get('/totaldata', getAllData);
-    app.get('/:name', getDataByName);
+    //app.get('/:name', getDataByName);
     app.get("/getmentors", mentorController.getAllMentors);
     app.get("/getinvestors", investorController.getAllInvestors);
     app.post("/getInvestor", investorController.getInvestorById);

@@ -1,6 +1,4 @@
-const { getDB } = require('../config/db');
-
-exports.getAllData = async (req, res) => {
+const getAllData = async (req, res) => {
     try {
         const db = getDB(); // Get the database object
 
@@ -11,6 +9,12 @@ exports.getAllData = async (req, res) => {
         const investors = await db.collection("investors").find().toArray();
         const entrepreneurs = await db.collection("entrepreneurs").find().toArray();
 
+        console.log("Fetched students:", students.length);
+        console.log("Fetched organizations:", organizations.length);
+        console.log("Fetched mentors:", mentors.length);
+        console.log("Fetched investors:", investors.length);
+        console.log("Fetched entrepreneurs:", entrepreneurs.length);
+
         // Combine the results into a single array
         const combinedData = [
             ...students,
@@ -20,7 +24,24 @@ exports.getAllData = async (req, res) => {
             ...entrepreneurs,
         ];
         console.log(Object.keys(combinedData).length);
-        res.send(combinedData);
+        console.log("Combined data length:", combinedData.length);
+
+        // Fetch user roles
+        const userRoles = await User.find({}, 'email role').exec();
+        console.log("Fetched user roles:", userRoles.length);
+
+        // Combine user roles with existing data
+        const dataWithRoles = combinedData.map(item => {
+            const user = userRoles.find(user => user.email === item.email);
+            if (user) {
+                return { ...item, role: user.role };
+            }
+            return item;
+        });
+
+        console.log("Data with roles length:", dataWithRoles.length);
+
+        res.send(dataWithRoles);
     } catch (error) {
         console.error("Error fetching data:", error);
         res.status(500).send("Internal Server Error");

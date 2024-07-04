@@ -13,7 +13,7 @@ import './css/style.css';
 import GOOGLR from './components/GOOGLR';
 import PrivateRoute from './routes/privateRoute/PrivateRoute';
 import FirstPage from './components/homepage/LandingPage/FirstPage';
-
+import CreateMeet from './components/GOOGLR';
 function App() {
   return (
     <Router>
@@ -38,6 +38,7 @@ function App() {
         </Routes>
       </div>
     </Router>
+    // <CreateMeet />
   );
 }
 

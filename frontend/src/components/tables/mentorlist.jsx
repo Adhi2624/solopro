@@ -1,8 +1,56 @@
 import React, { useEffect, useState } from 'react';
+import MentorRow from '../mentorRow'; // Assuming this component exists
 import axios from 'axios';
 import Nav1 from '../nav1';
-import { FaSort, FaSortUp, FaSortDown } from 'react-icons/fa';
-import MentorTableRow from '../mentorRow';
+import { TextField, Select, MenuItem } from '@mui/material';
+import { styled } from '@mui/system';
+
+const CustomTextField = styled(TextField)({
+    "& .MuiInputBase-root": {
+        color: "white",
+    },
+    "& .MuiOutlinedInput-root": {
+        "& fieldset": {
+            borderColor: "white",
+        },
+        "&:hover fieldset": {
+            borderColor: "white",
+        },
+        "&.Mui-focused fieldset": {
+            borderColor: "white",
+        },
+    },
+    "& input:-webkit-autofill": {
+        "-webkit-box-shadow": "0 0 0 1000px #000 inset",
+        "-webkit-text-fill-color": "white",
+        "caret-color": "white",
+    },
+});
+
+const CustomSelect = styled(Select)({
+    color: "white",
+    borderColor: "white !important", // Ensure border color is white
+    "& .MuiOutlinedInput-root": {
+        "& fieldset": {
+            borderColor: "white !important", // Ensure border color is white
+        },
+        "&:hover fieldset": {
+            borderColor: "white !important", // Ensure border color is white on hover
+        },
+        "&.Mui-focused fieldset": {
+            borderColor: "white !important", // Ensure border color is white when focused
+        },
+    },
+    "& .MuiSelect-select": {
+        backgroundColor: "transparent",
+    },
+    "& input:-webkit-autofill": {
+        "-webkit-box-shadow": "0 0 0 1000px #000 inset",
+        "-webkit-text-fill-color": "white",
+        "caret-color": "white",
+    },
+});
+
 
 const MentorList = () => {
     const [mentorList, setMentorList] = useState([]);
@@ -10,8 +58,7 @@ const MentorList = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [mentorsPerPage, setMentorsPerPage] = useState(10);
     const [searchTerm, setSearchTerm] = useState('');
-    const [searchField, setSearchField] = useState('name');
-    const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' });
+    const [searchField, setSearchField] = useState('name'); // Default search field
     const backend = process.env.REACT_APP_BACKEND;
 
     useEffect(() => {
@@ -31,29 +78,6 @@ const MentorList = () => {
         setCurrentPage(1);
     }, [searchTerm, searchField, mentorList]);
 
-    const sortData = (key) => {
-        let direction = 'ascending';
-        if (sortConfig.key === key && sortConfig.direction === 'ascending') {
-            direction = 'descending';
-        }
-        setSortConfig({ key, direction });
-
-        const sortedData = [...filteredMentors].sort((a, b) => {
-            if (a[key] < b[key]) return direction === 'ascending' ? -1 : 1;
-            if (a[key] > b[key]) return direction === 'ascending' ? 1 : -1;
-            return 0;
-        });
-
-        setFilteredMentors(sortedData);
-    };
-
-    const getSortIcon = (columnName) => {
-        if (sortConfig.key === columnName) {
-            return sortConfig.direction === 'ascending' ? <FaSortUp /> : <FaSortDown />;
-        }
-        return <FaSort />;
-    };
-
     const indexOfLastMentor = currentPage * mentorsPerPage;
     const indexOfFirstMentor = indexOfLastMentor - mentorsPerPage;
     const currentMentors = filteredMentors.slice(indexOfFirstMentor, indexOfLastMentor);
@@ -71,6 +95,7 @@ const MentorList = () => {
 
     const handleSearchFieldChange = (event) => {
         setSearchField(event.target.value);
+        setSearchTerm(''); // Clear search term when changing search field
     };
 
     return (
@@ -78,41 +103,48 @@ const MentorList = () => {
             <Nav1 />
             <div className='p-1 mt-3'>
                 <div className="d-flex justify-content-center mb-3">
-                    <input
-                        type="text"
-                        className="form-control w-50 me-2"
-                        placeholder="Search 🔍"
+                    <CustomTextField
+                        label="Search"
+                        variant="outlined"
+                        fullWidth
                         value={searchTerm}
                         onChange={handleSearch}
+                        InputProps={{
+                            className: 'custom-input',
+                        }}
                     />
-                    <select
-                        className="form-select w-auto"
+                    <CustomSelect
                         value={searchField}
                         onChange={handleSearchFieldChange}
+                        variant="outlined"
+                        fullWidth
                     >
-                        <option value="name">Name</option>
-                        <option value="areaOfExpertise">Area of Expertise</option>
-                        <option value="placeOfService">Place of Service</option>
-                        <option value="peopleMentored">Number of People Mentored</option>
-                        <option value="status">Status</option>
-                    </select>
+                        <MenuItem value="name">Name</MenuItem>
+                        <MenuItem value="areaOfExpertise">Area of Expertise</MenuItem>
+                        <MenuItem value="placeOfService">Place of Service</MenuItem>
+                        <MenuItem value="numberOfPeopleMentored">Number of People Mentored</MenuItem>
+                        <MenuItem value="status">Status</MenuItem>
+                    </CustomSelect>
+                </div>
+                <div className="d-flex justify-content-center mb-3">
+                    
                 </div>
                 <div className="table-responsive">
                     <table className="table text-light" id="mentor-table">
                         <thead>
                             <tr className='text-center'>
                                 <th scope="col">Image</th>
-                                <th scope="col" onClick={() => sortData('name')}>Name {getSortIcon('name')}</th>
-                                <th scope="col" onClick={() => sortData('areaOfExpertise')}>Area of Expertise {getSortIcon('areaOfExpertise')}</th>
-                                <th scope="col" onClick={() => sortData('placeOfService')}>Place of Service {getSortIcon('placeOfService')}</th>
-                                <th scope="col" onClick={() => sortData('peopleMentored')}>Number of People Mentored {getSortIcon('peopleMentored')}</th>
-                                <th scope="col" onClick={() => sortData('status')}>Status {getSortIcon('status')}</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Area of Expertise</th>
+                                <th scope="col">Place of Service</th>
+                                <th scope="col">Number of People Mentored</th>
+                                <th scope="col">Status</th>
                                 <th scope="col">Profile</th>
                             </tr>
                         </thead>
                         <tbody>
                             {currentMentors.map((mentor, idx) => (
-                                <MentorTableRow key={idx} mentor={mentor} />
+                                <MentorRow key={idx} mentor={mentor} />
                             ))}
                         </tbody>
                     </table>

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '../../css/postFrom.css'; // We'll use this for custom styles
 
 const PostForm = () => {
     const [content, setContent] = useState('');
@@ -7,7 +9,7 @@ const PostForm = () => {
     const [shortDesc, setShortDesc] = useState('');
     const [images, setImages] = useState([]);
     const [videos, setVideos] = useState([]);
-
+    const backend=process.env.REACT_APP_BACKEND;
     const handleFileChange = (e) => {
         const { files, name } = e.target;
         if (name === 'images') {
@@ -19,23 +21,23 @@ const PostForm = () => {
 
     const submitPost = async (e) => {
         e.preventDefault();
-        const token = localStorage.getItem('token');
+        const lstorage = localStorage.getItem('user');
+        const lstorageparse = JSON.parse(lstorage);
+        const token = lstorageparse;
         const formData = new FormData();
         formData.append('content', content);
         formData.append('title', title);
         formData.append('shortDesc', shortDesc);
+        console.log(token.value.uid)
         for (let i = 0; i < images.length; i++) {
             formData.append('images', images[i]);
         }
         for (let i = 0; i < videos.length; i++) {
             formData.append('videos', videos[i]);
         }
-        await axios.post('http://localhost:5000/posts', formData, {
-            headers: {
-                Authorization: token,
-                'Content-Type': 'multipart/form-data',
-            },
-        });
+        formData.append('uid',token.value.id);
+        formData.append('role',token.value.role);
+        await axios.post(`${backend}/posts`, formData);
         setContent('');
         setTitle('');
         setShortDesc('');
@@ -44,26 +46,61 @@ const PostForm = () => {
     };
 
     return (
-        <form onSubmit={submitPost}>
-            <input
-                type="text"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                placeholder="Title"
-            />
-            <textarea
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-                placeholder="Content"
-            />
-            <textarea
-                value={shortDesc}
-                onChange={(e) => setShortDesc(e.target.value)}
-                placeholder="Short Description"
-            />
-            <input type="file" name="images" multiple onChange={handleFileChange} />
-            <input type="file" name="videos" multiple onChange={handleFileChange} />
-            <button type="submit">Post</button>
+        <form className="post-form container" onSubmit={submitPost}>
+            <div className="form-group">
+                <label htmlFor="title">Title</label>
+                <input
+                    id="title"
+                    className="form-control text-white bg-dark"
+                    type="text"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    placeholder="Title"
+                />
+            </div>
+            <div className="form-group">
+                <label htmlFor="content">Content</label>
+                <textarea
+                    id="content"
+                    className="form-control text-white bg-dark"
+                    value={content}
+                    onChange={(e) => setContent(e.target.value)}
+                    placeholder="Content"
+                />
+            </div>
+            <div className="form-group">
+                <label htmlFor="shortDesc">Short Description</label>
+                <textarea
+                    id="shortDesc"
+                    className="form-control text-white bg-dark"
+                    value={shortDesc}
+                    onChange={(e) => setShortDesc(e.target.value)}
+                    placeholder="Short Description"
+                />
+            </div>
+            <div className="form-group">
+                <label htmlFor="images">Images</label>
+                <input
+                    id="images"
+                    className="form-control-file"
+                    type="file"
+                    name="images"
+                    multiple
+                    onChange={handleFileChange}
+                />
+            </div>
+            <div className="form-group">
+                <label htmlFor="videos">Videos</label>
+                <input
+                    id="videos"
+                    className="form-control-file"
+                    type="file"
+                    name="videos"
+                    multiple
+                    onChange={handleFileChange}
+                />
+            </div>
+            <button className="btn btn-primary" type="submit">Post</button>
         </form>
     );
 };

@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 // User Schema
-const userSchema = new Schema({userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+const OrganizationSchema = new Schema({userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
 
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
@@ -15,4 +15,4 @@ const userSchema = new Schema({userId: { type: Schema.Types.ObjectId, ref: 'User
   profileImage: { type: String }
 });
 
-module.exports = mongoose.models.User || mongoose.model('Organization', userSchema);
+module.exports = mongoose.models.Organization || mongoose.model('Organization', OrganizationSchema);

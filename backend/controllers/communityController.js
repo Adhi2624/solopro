@@ -1,8 +1,10 @@
 const sharp = require('sharp');
 const Post = require('../models/communitypost');
-
+const objectId=require('mongodb').ObjectId
+const {getDB}=require('../config/db')
 exports.createPost = async (req, res) => {
     const { title, content, shortDesc } = req.body;
+    
     const images = await Promise.all(
         (req.files.images || []).map(async (file) => {
             const buffer = await sharp(file.buffer).resize(500).toBuffer();
@@ -11,13 +13,16 @@ exports.createPost = async (req, res) => {
     );
 
     const videos = (req.files.videos || []).map((file) => file.buffer.toString('base64'));
-
+    console.log(req.body);
     try {
-        const post = new Post({ title, content, shortDesc, images, videos, author: req.userId });
+        console.log(1);
+        const post = new Post({ title, content, shortDesc, images, videos, author: new objectId(req.body.uid),role:req.body.role });
+        console.log(2);
         await post.save();
         res.status(201).send(post);
     } catch (error) {
         res.status(500).send({ error: 'Failed to create post. Please try again.' });
+    console.log(error.message)
     }
 };
 
@@ -39,21 +44,23 @@ exports.updatePost = async (req, res) => {
     }
 };
 
+
 exports.getPosts = async (req, res) => {
-    const { search, filter } = req.query;
-    let query = {};
-
-    if (search && filter) {
-        query[filter] = { $regex: search, $options: 'i' }; // Case insensitive search
-    }
-
     try {
-        const posts = await Post.find(query).populate('author', 'name role photo');
-        res.status(200).send(posts);
+        // Fetch raw posts from the database
+        const rawPosts = await Post.find();
+        console.log('Raw Posts:', JSON.stringify(rawPosts, null, 2));
+        
+        // Send the populated posts as a JSON response
+        res.status(200).json(rawPosts);
     } catch (error) {
-        res.status(500).send({ error: 'Failed to retrieve posts. Please try again.' });
+        console.error('Error:', error);
+        res.status(500).json({ error: 'Failed to retrieve posts. Please try again.' });
     }
 };
+
+
+
 
 exports.likePost = async (req, res) => {
     const { id } = req.params;

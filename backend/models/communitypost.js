@@ -12,9 +12,10 @@ const postSchema = new mongoose.Schema({
     shortDesc: { type: String, required: true },
     likes: { type: Number, default: 0 },
     comments: [commentSchema],
-    author: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    author: { type: mongoose.Schema.Types.ObjectId, required: true },
     images: [String],
     videos: [String],
+    role: { type: String }
 });
 
 const Post = mongoose.model('Post', postSchema);

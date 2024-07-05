@@ -10,6 +10,7 @@ const { errorHandler } = require("./middleware/errorHandler");
 const multer = require('multer');
 const sharp = require('sharp');
 
+const { getAllData, getDataByName } = require('./controllers/allusercontroller');
 
 const blogRoutes = require("./routes/blogs");
 const featuredStoryRoutes = require("./routes/featuredStories");
@@ -59,6 +60,7 @@ const startServer = async () => {
     app.use("/api/login", loginRoutes);
     app.use("/api/check-email", email);
     
+    // app.post('/createMeet', createMeet);
 
     app.use('/api', investorRoutes); // Use the new routes
     app.use('/api', MentorRoutes);
@@ -66,6 +68,8 @@ const startServer = async () => {
 
 
     // Define API Endpoints
+    app.get('/totaldata', getAllData);
+    //app.get('/:name', getDataByName);
     app.get("/getmentors", mentorController.getAllMentors);
     app.get("/getinvestors", investorController.getAllInvestors);
     app.post("/getInvestor", investorController.getInvestorById);

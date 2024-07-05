@@ -87,7 +87,7 @@ const FirstPage = () => {
         <Timeline />
       </div>   
       <Footer/>
-      <div className={`solopro-section ${scrolled ? 'scrolled' : ''}`}>
+      <div className="solopro-section">
         <h1 className="solopro-text">SOLOPRO</h1>
       </div>
     </div>

@@ -2,9 +2,9 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/User'); // Correct path to your User model
 
-router.get('/', async (req, res) => {
+router.post('/', async (req, res) => {
   const { email } = req.body; // Extract email from query parameters
-
+console.log(email)
   try {
     // Check if user exists with the provided email
     const user = await User.findOne({ email });

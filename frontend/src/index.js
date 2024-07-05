@@ -4,12 +4,17 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import { DarkModeContextProvider } from "./context/darkModeContext";
 // Ensure the root element exists in your HTML file
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
 
-    <App />
+    <React.StrictMode>
+    <DarkModeContextProvider>
+      <App />
+    </DarkModeContextProvider>
+  </React.StrictMode>,
+  document.getElementById("root")
  
 );
 

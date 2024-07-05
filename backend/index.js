@@ -5,14 +5,13 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const cors = require("cors");
 const path = require("path");
-const { authSocket, socketServer } = require("./socketServer");
 const { connectDB, connectDB1 } = require("./config/db");
 const { errorHandler } = require("./middleware/errorHandler");
+const multer = require('multer');
+const sharp = require('sharp');
 
-// Import routes
-const posts = require("./routes/posts");
-const users = require("./routes/users");
-const comments = require("./routes/comments");
+const { getAllData, getDataByName } = require('./controllers/allusercontroller');
+
 const blogRoutes = require("./routes/blogs");
 const featuredStoryRoutes = require("./routes/featuredStories");
 const moreStoryRoutes = require("./routes/moreStories");
@@ -21,12 +20,24 @@ const loginRoutes = require("./routes/loginRoutes");
 
 const email = require("./controllers/emailverify");
 
+
+const totalCountRoutes = require('./routes/totalCountRoutes'); 
+const usersRouter = require('./routes/users');
+const investorRoutes = require('./routes/investorRoutes'); // Adjust the path as necessary
+const MentorRoutes = require('./routes/mentorRoutes'); // Adjust the path as necessary
+const studentRoutes = require('./routes/studentRoutes');
+
+
 dotenv.config();
 const app = express();
+
+
 
 // Middleware
 app.use(express.json());
 app.use(cors());
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
 
 // Establish database connections before starting the server
 const startServer = async () => {
@@ -38,33 +49,27 @@ const startServer = async () => {
     const meetingController = require("./controllers/meetingController");
     const studentController = require("./controllers/studentController");
     const investorController = require("./controllers/investorController");
+    const postControllers=require("./controllers/communityController");
     // Socket.io Setup
-    const httpServer = require("http").createServer(app);
-    const io = require("socket.io")(httpServer, {
-      cors: {
-        origin: ["http://localhost:3000"],
-      },
-    });
-    io.use(authSocket);
-    io.on("connection", (socket) => socketServer(socket));
-
-    // Routes
-    app.use("/api/posts", posts);
-    app.use("/api/users", users);
-    app.use("/api/comments", comments);
+    
+    app.get('/getstudents',studentController.getallstudents)
     app.use("/api/blogs", blogRoutes);
     app.use("/api/featuredStories", featuredStoryRoutes);
     app.use("/api/moreStories", moreStoryRoutes);
     app.use("/api/signup", userRoutes);
     app.use("/api/login", loginRoutes);
     app.use("/api/check-email", email);
-    // Serve React App
-    app.use(express.static(path.join(__dirname, '../frontend', 'public')));
-    app.get("*", (req, res) => {
-      app.use(express.static(path.join(__dirname, '../frontend', 'public')));
-    });
+    
+    // app.post('/createMeet', createMeet);
+
+    app.use('/api', investorRoutes); // Use the new routes
+    app.use('/api', MentorRoutes);
+    app.use('/api', studentRoutes);
+
 
     // Define API Endpoints
+    app.get('/totaldata', getAllData);
+    //app.get('/:name', getDataByName);
     app.get("/getmentors", mentorController.getAllMentors);
     app.get("/getinvestors", investorController.getAllInvestors);
     app.post("/getInvestor", investorController.getInvestorById);
@@ -81,12 +86,28 @@ const startServer = async () => {
     app.post("/updatementor", mentorController.updateMentor);
     app.post("/updateinvestor", investorController.updateInvestor);
 
+
+    //totalCount
+    
+    app.use('/api/total', totalCountRoutes); // Use the new routes
+
+    app.use('/', usersRouter); // Use the new routes  
+
+    //community
+    app.post('/posts', upload.fields([{ name: 'images' }, { name: 'videos' }]), postControllers.createPost);
+    app.put('/posts/:id', postControllers.updatePost);
+    app.get('/posts', postControllers.getPosts);
+    app.put('/posts/:id/like', postControllers.likePost);
+    app.post('/posts/:id/comments', postControllers.addComment);
+    app.delete('/posts/:id', postControllers.deletePost);
+
+
     // Error Handler Middleware
     app.use(errorHandler);
 
     // Start Server
     const PORT = process.env.PORT || 4000;
-    httpServer.listen(PORT, () => {
+    app.listen(PORT, () => {
       console.log(`Server started on port ${PORT}`);
     });
   } catch (error) {

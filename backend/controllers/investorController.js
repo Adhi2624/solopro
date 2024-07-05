@@ -15,6 +15,7 @@ exports.getAllInvestors = async (req, res) => {
 };
 ;
 
+
 exports.getInvestorById = async (req, res) => {
     try {
         console.log(123);

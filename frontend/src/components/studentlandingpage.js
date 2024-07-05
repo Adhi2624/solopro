@@ -5,7 +5,7 @@ import { Player } from '@lottiefiles/react-lottie-player';
 import BLOG from './BLOG.json'; // Import the Lottie animation JSON file
 import Investor from './investor.json'
 import mentor from './mentor.json'
-import Navbar from './nav';
+import Navbar from './nav1';
 import logo from '../images/image.svg'
 import community from '../images/community.json'
 const StudentLandingPage = () => {

@@ -13,7 +13,6 @@ import GOOGLR from './components/GOOGLR';
 import PrivateRoute from './routes/privateRoute/PrivateRoute';
 import FirstPage from './components/homepage/LandingPage/FirstPage';
 import HomePage from "./pages/home/Home";
-
 import Single from "./pages/single/Single";
 import New from "./pages/new/New";
 import { productInputs, userInputs } from "./formSource";
@@ -23,14 +22,13 @@ import CreateMeet from './components/GOOGLR';
 import List from "./pages/list/List";
 import ListMentors from "./pages/list/List-mentors";
 import ListStudents from "./pages/list/List-students";
+
 function App() {
   const { darkMode } = useContext(DarkModeContext);
 
   return (
     <div className={darkMode ? "app dark" : "app"}>
       <Router>
-    <Router>
-      <div className="App">
         <Routes>
           <Route path="/" element={<FirstPage />} />
           <Route path="/login" element={<Login />} />
@@ -38,13 +36,15 @@ function App() {
           <Route path="/blogs" element={<Blogs />} />
           <Route path="/blogs/:type/:id" element={<BlogDetail />} />
           <Route path="/adminblog" element={<AdminBlog />} />
-
+          
           <Route element={<PrivateRoute allowedRoles={['Student']} />}>
             <Route path="/student/*" element={<StudentsRoute />} />
           </Route>
+          
           <Route element={<PrivateRoute allowedRoles={['Mentor', 'Investor']} />}>
             <Route path="/mi/*" element={<MiRoute />} />
           </Route>
+          
           <Route path="/dashboard" element={<HomePage />} />
           <Route path="/users">
             <Route index element={<List />} />
@@ -58,24 +58,7 @@ function App() {
         </Routes>
       </Router>
     </div>
-
-          
-          <Route element={<PrivateRoute allowedRoles={['Student']} />}>
-            <Route path="/student/*" element={<StudentsRoute />} />
-          </Route>
-
-          <Route element={<PrivateRoute allowedRoles={['Mentor', 'Investor']} />}>
-            <Route path="/mi/*" element={<MiRoute />} />
-          </Route>
-
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-      </div>
-    </Router>
-    // <CreateMeet />
-
   );
 }
 
 export default App;
-

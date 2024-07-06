@@ -13,7 +13,6 @@ import GOOGLR from "./components/GOOGLR";
 import PrivateRoute from "./routes/privateRoute/PrivateRoute";
 import FirstPage from "./components/homepage/LandingPage/FirstPage";
 import HomePage from "./pages/home/Home";
-
 import Single from "./pages/single/Single";
 import New from "./pages/new/New";
 import { productInputs, userInputs } from "./formSource";
@@ -23,6 +22,7 @@ import CreateMeet from "./components/GOOGLR";
 import List from "./pages/list/List";
 import ListMentors from "./pages/list/List-mentors";
 import ListStudents from "./pages/list/List-students";
+
 function App() {
   const { darkMode } = useContext(DarkModeContext);
 
@@ -46,6 +46,7 @@ function App() {
           >
             <Route path="/mi/*" element={<MiRoute />} />
           </Route>
+          
           <Route path="/dashboard" element={<HomePage />} />
           <Route path="/users">
             <Route index element={<List />} />

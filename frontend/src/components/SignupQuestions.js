@@ -19,6 +19,7 @@ import {
 import { styled, ThemeProvider, createTheme } from "@mui/material/styles";
 import Lottie from "react-lottie";
 import axios from "axios";
+import Nav from './nav';
 
 const CustomTextField = styled(TextField)({
   "& .MuiInputBase-root": {
@@ -744,7 +745,9 @@ const SignupQuestions = () => {
 
   return (
     <ThemeProvider theme={theme}>
+      
       <Box sx={{ width: "100%", color: "white" }}>
+      <Nav/>
         <Stepper activeStep={activeStep} alternativeLabel>
           {steps.map((label) => (
             <Step key={label}>

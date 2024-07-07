@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
+import Nav1 from '../nav1';
+import 'bootstrap/dist/css/bootstrap.min.css';
+//import './CommunityHome.css'; // Assuming you have custom CSS for additional styles
 
 const CommunityHome = () => {
     const [posts, setPosts] = useState([]);
@@ -17,7 +21,6 @@ const CommunityHome = () => {
         try {
             const res = await axios.get(`${backend}/posts`);
             setPosts(res.data);
-            console.log(res.data);
         } catch (err) {
             console.error("Error fetching posts:", err);
         }
@@ -48,42 +51,53 @@ const CommunityHome = () => {
 
     return (
         <div>
-            <h1>Community Posts</h1>
-            <div>
-                <input
-                    type="text"
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                    placeholder="Search"
-                />
-                <select value={filter} onChange={(e) => setFilter(e.target.value)}>
-                    <option value="content">Content</option>
-                    <option value="title">Title</option>
-                    <option value="author">Author</option>
-                </select>
-                <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
-                    <option value="date">Date</option>
-                    <option value="title">Title</option>
-                </select>
-                <select value={sortOrder} onChange={(e) => setSortOrder(e.target.value)}>
-                    <option value="asc">Ascending</option>
-                    <option value="desc">Descending</option>
-                </select>
-            </div>
-            <div>
-                {displayPosts.length === 0 ? (
-                    <p>There are currently no community posts available.</p>
-                ) : (
-                    displayPosts.map((post) => (
-                        <div key={post._id} style={{ border: '1px solid black', margin: '10px', padding: '10px' }}>
-                            <img src={post.author.photo} alt={post.author.name} width="50" height="50" />
-                            <h3>{post.title}</h3>
-                            <p>{post.shortDesc}</p>
-                            <p>Posted by: {post.author.name} ({post.author.role})</p>
-                            <p>Date: {new Date(post.createdAt).toLocaleDateString()}</p>
-                        </div>
-                    ))
-                )}
+            <Nav1 />
+            <div className="container mt-5">
+                <h1 className="text-white">Community Posts</h1>
+                <div className="input-group mb-3">
+                    <input
+                        type="text"
+                        className="form-control"
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                        placeholder="Search"
+                    />
+                    <div className="input-group-append">
+                        <select className="form-control" value={filter} onChange={(e) => setFilter(e.target.value)}>
+                            <option value="content">Content</option>
+                            <option value="title">Title</option>
+                            <option value="author">Author</option>
+                        </select>
+                        <select className="form-control" value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+                            <option value="date">Date</option>
+                            <option value="title">Title</option>
+                        </select>
+                        <select className="form-control" value={sortOrder} onChange={(e) => setSortOrder(e.target.value)}>
+                            <option value="asc">Ascending</option>
+                            <option value="desc">Descending</option>
+                        </select>
+                    </div>
+                </div>
+                <div className="row">
+                    {displayPosts.length === 0 ? (
+                        <p className="text-white">There are currently no community posts available.</p>
+                    ) : (
+                        displayPosts.map((post) => (
+                            <div key={post._id} className="col-md-4">
+                                <div className="card mb-4">
+                                    <img src={post.author.photo} alt={post.author.name} className="card-img-top" />
+                                    <div className="card-body">
+                                        <h5 className="card-title">{post.title}</h5>
+                                        <p className="card-text">{post.shortDesc}</p>
+                                        <p className="card-text">Posted by: {post.author.name} ({post.author.role})</p>
+                                        <p className="card-text">Date: {new Date(post.createdAt).toLocaleDateString()}</p>
+                                        <Link to={`posts/${post._id}`} className="btn btn-primary">View Post</Link>
+                                    </div>
+                                </div>
+                            </div>
+                        ))
+                    )}
+                </div>
             </div>
         </div>
     );

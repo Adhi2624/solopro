@@ -44,6 +44,23 @@ exports.updatePost = async (req, res) => {
     }
 };
 
+exports.getPost = async (req, res) => {
+    const { id } = req.params;
+    console.log(id)
+    try {
+        const post = await Post.findById(id);
+        // if (!post) {
+        //     return res.status(404).send({ error: 'Post not found' });
+        // }
+        // if (post.author.toString() !== req.userId) {
+        //     return res.status(403).send({ error: 'Forbidden' });
+        // }
+        
+        res.status(200).send(post);
+    } catch (error) {
+        res.status(500).send({ error: 'Failed to update post. Please try again.' });
+    }
+};
 
 exports.getPosts = async (req, res) => {
     try {
@@ -60,22 +77,33 @@ exports.getPosts = async (req, res) => {
 };
 
 
-
-
 exports.likePost = async (req, res) => {
     const { id } = req.params;
+    const userId = req.headers['user-id']; // Assuming the user ID is passed in the headers
+
     try {
         const post = await Post.findById(id);
+
         if (!post) {
             return res.status(404).send({ error: 'Post not found' });
         }
+
+        // Check if the user has already liked the post
+        if (post.likedBy.includes(userId)) {
+            return res.status(400).send({ error: 'User has already liked this post' });
+        }
+
+        // Add the user's ID to the likedBy array and increment the like count
+        post.likedBy.push(userId);
         post.likes += 1;
+
         await post.save();
         res.status(200).send(post);
     } catch (error) {
         res.status(500).send({ error: 'Failed to like post. Please try again.' });
     }
 };
+
 
 exports.addComment = async (req, res) => {
     const { id } = req.params;
@@ -86,10 +114,13 @@ exports.addComment = async (req, res) => {
             return res.status(404).send({ error: 'Post not found' });
         }
         post.comments.push({ content, author: req.userId });
+        
         await post.save();
+        console.log(234)
         res.status(201).send(post);
     } catch (error) {
         res.status(500).send({ error: 'Failed to add comment. Please try again.' });
+        console.log(error.message);
     }
 };
 

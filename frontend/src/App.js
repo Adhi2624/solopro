@@ -30,7 +30,7 @@ function App() {
             <Route path="/student/*" element={<StudentsRoute />} />
           </Route>
 
-          <Route element={<PrivateRoute allowedRoles={['Mentor', 'Investor']} />}>
+          <Route element={<PrivateRoute allowedRoles={['Mentor', 'Investor','entrepreneurs']} />}>
             <Route path="/mi/*" element={<MiRoute />} />
           </Route>
 

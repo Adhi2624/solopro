@@ -75,6 +75,7 @@ const startServer = async () => {
     //community
     app.post('/posts', upload.fields([{ name: 'images' }, { name: 'videos' }]), postControllers.createPost);
     app.put('/posts/:id', postControllers.updatePost);
+    app.get('/posts/:id', postControllers.getPost);
     app.get('/posts', postControllers.getPosts);
     app.put('/posts/:id/like', postControllers.likePost);
     app.post('/posts/:id/comments', postControllers.addComment);

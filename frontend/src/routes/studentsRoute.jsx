@@ -11,6 +11,7 @@ import Community from '../components/community/communityHome'
 import CommunityHome from '../components/community/communityHome';
 import PostForm from '../components/community/postCommunity';
 import UserList from '../components/tables/userlist'
+import PostDetail from '../components/community/postDetails';
 const handleLogout = () => {
   // Remove items from localStorage
 
@@ -34,6 +35,7 @@ const StudentsRoute = () => {
       <Route path='/community'>
         <Route index element={<CommunityHome />} />
         <Route path='post' element={<PostForm />} />
+        <Route path='posts/:id' element={<PostDetail/>}/>
       </Route>
     </Routes>
 

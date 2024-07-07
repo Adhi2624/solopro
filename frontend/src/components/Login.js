@@ -10,7 +10,7 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import testImage from "./login.png";
+import loginimage from "./login.png";
 import Navbarr from "./nav";
 import { Link as RouterLink } from "react-router-dom";
 import axios from "axios";
@@ -65,42 +65,48 @@ export default function Login() {
         password,
       });
       const userData = response.data;
-  
+
       // Store user data in local storage with expiry (1 hour = 3600000 milliseconds)
-      setItemWithExpiry('user', userData, 3600000);
-  
+      setItemWithExpiry("user", userData, 3600000);
+
       console.log(userData);
-  
-      if (userData.role === 'Student') {
-        navigate('/student/');
-      } else if (userData.role === 'Mentor' || userData.role === 'Investor') {
-        navigate('/mi/');
-      } else if (userData.role === 'Admin') {
-        navigate('/admin/');
+
+      if (userData.role === "Student") {
+        navigate("/student/");
+      } else if (userData.role === "Mentor" || userData.role === "Investor") {
+        navigate("/mi/");
+      } else if (userData.role === "Admin") {
+        navigate("/admin/");
       }
     } catch (error) {
-      alert(`Login failed: ${error.response ? error.response.data.message : error.message}`);
-    }};
+      alert(
+        `Login failed: ${
+          error.response ? error.response.data.message : error.message
+        }`
+      );
+    }
+  };
   return (
     <ThemeProvider theme={defaultTheme}>
       <>
         <Navbarr />
-        <Grid container component="main" sx={{ height: "100vh" }}>
+        <Grid container component="main" sx={{ height: "100vh" ,backgroundColor:"#040F15"}}>
           <CssBaseline />
-          <Grid
-            item
-            xs={false}
-            sm={4}
-            md={7}
-            sx={{
-              backgroundImage: `url(${testImage})`,
-              backgroundRepeat: "no-repeat",
-              backgroundColor: "#040F15",
-              backgroundSize: "contain",
-              backgroundPosition: "center",
-              backgroundSize: "60%",
-            }}
-          />
+          {/* <Grid
+              item
+              xs={false}
+              sm={4}
+              md={7}
+              sx={{
+                backgroundImage: `url(${loginimage})`,
+                backgroundRepeat: "no-repeat",
+                backgroundColor: "#040F15",
+                backgroundSize: "cover",  // Adjusted from "contain" to "cover"
+                backgroundPosition: "center",
+                backgroundAttachment: "fixed" // Optional, depends on your design needs
+              }}
+            /> */}
+
           <Grid
             item
             xs={12}
@@ -108,7 +114,7 @@ export default function Login() {
             md={5}
             component={Paper}
             elevation={6}
-            square
+            fullWidth
             style={{ backgroundColor: "#040F15", color: "white" }}
           >
             <Box
@@ -152,7 +158,7 @@ export default function Login() {
                   InputProps={{
                     style: {
                       color: "white",
-                  
+
                       borderColor: "white",
                     },
                   }}
@@ -198,7 +204,7 @@ export default function Login() {
                   InputProps={{
                     style: {
                       color: "white",
-                      
+
                       borderColor: "white",
                     },
                   }}
@@ -252,6 +258,17 @@ export default function Login() {
                           sx={{ mt: 3, mb: 2 }}
                         >
                           Sign up
+                        </Button>
+                      </RouterLink>
+                      <RouterLink
+                        to="/password-reset"
+                        style={{ textDecoration: "none" }}
+                      >
+                        <Button
+                          fullWidth
+                          variant="outlined"
+                          sx={{ mt: 3, mb: 2 }}
+                        >Forgot password?
                         </Button>
                       </RouterLink>
                     </Typography>

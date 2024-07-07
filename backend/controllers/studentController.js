@@ -1,6 +1,6 @@
 const { ObjectId } = require("mongodb");
 const { getDB } = require('../config/db');
-const student=require('../models/student');
+const student=require('../models/Student');
 
 exports.getStudentById = async (req, res) => {
     const id = req.body._id;
@@ -17,7 +17,18 @@ exports.getStudentById = async (req, res) => {
         res.status(500).send("Internal Server Error");
     }
 };
-
+exports.getallstudents = async (req, res) => {
+    console.log("cn")
+    try {
+        const db = getDB(); // Get the database object
+        const students = await db.collection("students").find().toArray();
+        res.send(students);
+    } catch (error) {
+        console.error("Error fetching Students:", error);
+        res.status(500).send("Internal Server Error");
+    }
+};
+;
 exports.getprofileimg=async(req,res)=>
 {
     const id=req.body.id;

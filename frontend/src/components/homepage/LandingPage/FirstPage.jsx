@@ -17,8 +17,6 @@ import Lotie from './Lotie';
 
 
 const FirstPage = () => {
-  const [scrolled, setScrolled] = useState(false);
-
   useEffect(() => {
     const targets = gsap.utils.toArray(".ball");
     const onMouseMove = (e) => {
@@ -39,25 +37,7 @@ const FirstPage = () => {
     };
   }, []);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      const sectionHeight = document.querySelector('.solopro-section').offsetHeight;
-
-      if (scrollPosition > sectionHeight / 2) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
+  
   const { scrollYProgress } = useScroll();
 
   return (
@@ -87,7 +67,7 @@ const FirstPage = () => {
         <Timeline />
       </div>   
       <Footer/>
-      <div className={`solopro-section `}>
+      <div className="solopro-section">
         <h1 className="solopro-text">SOLOPRO</h1>
       </div>
     </div>

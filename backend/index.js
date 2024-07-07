@@ -27,6 +27,7 @@ const investorRoutes = require('./routes/investorRoutes'); // Adjust the path as
 const MentorRoutes = require('./routes/mentorRoutes'); // Adjust the path as necessary
 const studentRoutes = require('./routes/studentRoutes');
 
+const passwordRoutes = require('./routes/passwordRoutes');
 
 dotenv.config();
 const app = express();
@@ -59,7 +60,7 @@ const startServer = async () => {
     app.use("/api/signup", userRoutes);
     app.use("/api/login", loginRoutes);
     app.use("/api/check-email", email);
-    
+    app.use('/password', passwordRoutes);
     // app.post('/createMeet', createMeet);
 
     app.use('/api', investorRoutes); // Use the new routes

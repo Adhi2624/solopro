@@ -22,14 +22,17 @@ import CreateMeet from "./components/GOOGLR";
 import List from "./pages/list/List";
 import ListMentors from "./pages/list/List-mentors";
 import ListStudents from "./pages/list/List-students";
-
+import ForgotPassword from "./components/forgotpassword";
 function App() {
   const { darkMode } = useContext(DarkModeContext);
 
   return (
+    
     <Router>
       <div className={darkMode ? "app dark" : "app"}>
         <Routes>
+        <Route path="/password-reset" element={<ForgotPassword />} />
+
           <Route path="/" element={<FirstPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signUp" element={<SignupQuestions />} />

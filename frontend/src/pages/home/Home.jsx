@@ -19,8 +19,6 @@ const Home = () => {
     <div className="home">
       <Sidebar isOpen={isOpen} handleToggle={handleToggle} />
       <div className={`homeContainer ${isOpen ? "sidebar-open" : ""}`}>
-      <Sidebar />
-      <div className="homeContainer">
         <div className="widgets">
           <Widget type="students" />
           <Widget type="mentors" />

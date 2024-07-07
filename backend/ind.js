@@ -1,32 +1,35 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const { createMeet } = require('./controllers/automeeting');
-
-const app = express();
-app.use(bodyParser.json());
-// const express = require('express');
-const router = express.Router();
 const bcrypt = require('bcrypt');
-const Mentor = require('../models/Mentor');
-const Student = require('../models/Student');
-const Investor = require('../models/Investor');
-const Entrepreneur = require('../models/Entrepreneur');
-const User = require('../models/User'); 
-const sendWelcomeEmail = require('../mailtemplates/registerMail');
-const sendMeetingEmail = require('../mailtemplates/meetingconfirm');
+const multer = require('multer');
+const Mentor = require('./models/mentor');
+const Student = require('./models/Student');
+const Investor = require('./models/Investor');
+const Entrepreneur = require('./models/Entrepreneur');
+const User = require('./models/User');
+const sendWelcomeEmail = require('./mailtemplates/registerMail');
+const passwordRoutes = require('./routes/passwordRoutes');
 
-app.post('/api/signup', (req,res)=>{
+const sendMeetingEmail = require('./mailtemplates/meetingconfirm');
+const cors=require('cors');
+const app = express();
+const upload = multer();
+app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.post('/api/signup', upload.none(), async (req, res) => {
   const { email, password, userType, ...userData } = req.body;
   console.log(req.body);
 
   try {
-    const hashedPassword =  bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password, 10);
     const user = new User({
       email,
       password: hashedPassword,
       role: userType
     });
-    console.log(user)
+    console.log(user);
 
     const { phone, linkedin, profileImage, institution, nativePlaceOrWork, name } = userData;
     const profileData = {
@@ -49,7 +52,7 @@ app.post('/api/signup', (req,res)=>{
         collegeLocation,
         collegeIdPhoto
       });
-      console.log(profileData)
+      console.log(profileData);
     } else if (userType === 'Mentor') {
       const { areaOfExpertise, experience, proofImage, availableToMentor, mentorshipCount } = userData;
       Object.assign(profileData, {
@@ -59,7 +62,7 @@ app.post('/api/signup', (req,res)=>{
         availableToMentor,
         mentorshipCount
       });
-      console.log(profileData)
+      console.log(profileData);
     } else if (userType === 'Investor') {
       const { areaOfExpertise, experience, proofImage, availableToInvest, investmentCount, investmentAmount } = userData;
       Object.assign(profileData, {
@@ -70,7 +73,7 @@ app.post('/api/signup', (req,res)=>{
         investmentCount,
         investmentAmount
       });
-      console.log(profileData)
+      console.log(profileData);
     } else if (userType === 'Entrepreneur') {
       const { areaOfExpertise, experience, proofImage, availableToMentor, mentorshipCount } = userData;
       Object.assign(profileData, {
@@ -80,14 +83,12 @@ app.post('/api/signup', (req,res)=>{
         availableToMentor,
         mentorshipCount
       });
-      console.log(profileData)
-      // const entrepreneur = new Entrepreneur(profileData);
-      // await entrepreneur.save();
+      console.log(profileData);
     }
-    
+
     //sendWelcomeEmail(req.body.name, req.body.email);
-    res.status(201).json({ message: 'User created successfully' });
-    // sendMeetingEmail(req.body.)
+    // res.status(201).json({ message: 'User created successfully' });
+    // sendMeetingEmail(req.body.);
   } catch (error) {
     console.error("Server error:", error);
     res.status(500).json({ message: 'Server error', error: error.message });

@@ -6,12 +6,14 @@ const User = require('../models/User');
 const Student = require('../models/Student');
 const Mentor = require('../models/mentor');
 const Investor = require('../models/investor');
+const Entrepreneur=require('../models/Entrepreneur');
 const { getDB, connectDB } = require('../config/db');
 
 // Mapping user roles to their respective Mongoose models
 const roleModels = {
   Student: Student,
   Mentor: Mentor,
+  Entrepreneur:Entrepreneur,
   Investor: Investor,
 };
 

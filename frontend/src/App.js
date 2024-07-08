@@ -45,7 +45,7 @@ function App() {
           </Route>
 
           <Route
-            element={<PrivateRoute allowedRoles={["Mentor", "Investor",'entrepreneurs']} />}
+            element={<PrivateRoute allowedRoles={["Mentor", "Investor",'Entrepreneur']} />}
           >
             <Route path="/mi/*" element={<MiRoute />} />
           </Route>

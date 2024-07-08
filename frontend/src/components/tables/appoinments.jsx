@@ -40,9 +40,12 @@ const Appointments = () => {
     try {
       await axios.post(`${backend}/updatestatus`, { appointmentId: appointmentId, meetingStatus: newStatus,email:useremail });
       fetchAppointments();
+      
+
     } catch (error) {
       console.error('Error updating meeting status:', error);
     }
+    window.location.reload(); // Refresh the page
   };
   
 

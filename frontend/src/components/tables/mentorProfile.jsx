@@ -69,7 +69,8 @@ const MentorProfile = () => {
     console.log(meetingDetails);
     axios.post(`${backend}/schedulemeeting`, {meetingDetails})
       .then((res) => {
-        alert('Meeting request you will receive a response via mail');
+        alert('Meeting request raised successfully.');
+        // alert('Meeting request raised successfully. you will receive the response via mail');
         handleCloseModal();
       })
       .catch((error) => alert(error));

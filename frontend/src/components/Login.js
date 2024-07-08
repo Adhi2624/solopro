@@ -102,11 +102,12 @@ export default function Login() {
 
       if (userData.role === "Student") {
         navigate("/student/");
-      } else if (userData.role === "Mentor" || userData.role === "Investor") {
+      } else if (userData.role === "Mentor" || userData.role === "Investor" ||userData.role === "Entrepreneur" ) {
         navigate("/mi/");
       } else if (userData.role === "Admin") {
         navigate("/admin/");
       }
+      
     } catch (error) {
       alert(
         `Login failed: ${

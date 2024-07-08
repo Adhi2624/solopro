@@ -107,13 +107,14 @@ exports.likePost = async (req, res) => {
 
 exports.addComment = async (req, res) => {
     const { id } = req.params;
-    const { content } = req.body;
+    //const { content } = req.body.text;
+    console.log(req.body.text);
     try {
         const post = await Post.findById(id);
         if (!post) {
             return res.status(404).send({ error: 'Post not found' });
         }
-        post.comments.push({ content, author: req.userId });
+        post.comments.push({ content:req.body.text, author: req.body.id });
         
         await post.save();
         console.log(234)

@@ -51,8 +51,9 @@ const startServer = async () => {
     const studentController = require("./controllers/studentController");
     const investorController = require("./controllers/investorController");
     const postControllers=require("./controllers/communityController");
+    const allusercontroller=require("./controllers/allusercontroller")
     // Socket.io Setup
-    
+    app.get('/users/:id',allusercontroller.getUserById)
     app.get('/getstudents',studentController.getallstudents)
     app.use("/api/blogs", blogRoutes);
     app.use("/api/featuredStories", featuredStoryRoutes);

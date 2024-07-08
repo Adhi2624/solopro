@@ -2,7 +2,7 @@ import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import firebaseConfig from "./firebaseconfig";
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+//import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import Link from "@mui/material/Link";
@@ -21,7 +21,7 @@ import { useNavigate } from "react-router-dom";
 const backend = process.env.REACT_APP_BACKEND;
 
 // Initialize Firebase Auth
-const auth = getAuth();
+//const auth = getAuth();
 
 function Copyright(props) {
   return (
@@ -51,22 +51,22 @@ function Copyright(props) {
 }
 
 const handleGoogleSignIn = async () => {
-  const provider = new GoogleAuthProvider();
+  //const provider = new GoogleAuthProvider();
   try {
-    const result = await signInWithPopup(auth, provider);
-    const token = await result.user.getIdToken();
+    // const result = await signInWithPopup(auth, provider);
+    // const token = await result.user.getIdToken();
 
-    // Log the authentication data from Google
-    console.log("Google Sign-In Result:", result);
-    console.log("Google Auth Token:", token);
-    console.log("Google User Info:", result.user);
+    // // Log the authentication data from Google
+    // console.log("Google Sign-In Result:", result);
+    // console.log("Google Auth Token:", token);
+    // console.log("Google User Info:", result.user);
 
     // Send token to backend
     await fetch(`${backend}/api/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`
+        //Authorization: `Bearer ${token}`
       }
     });
   } catch (error) {

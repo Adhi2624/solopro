@@ -12,6 +12,8 @@ import CommunityHome from '../components/community/communityHome';
 import PostForm from '../components/community/postCommunity';
 import UserList from '../components/tables/userlist'
 import PostDetail from '../components/community/postDetails';
+
+import MentorentrepenureList from '../components/tables/Entrepreneurtable';
 const handleLogout = () => {
   // Remove items from localStorage
 
@@ -27,6 +29,7 @@ const StudentsRoute = () => {
       <Route path='/' element={<StudentLandingPage />} />
       <Route path='/mentorpage' element={<MentorList />} />
       <Route path='/investorpage' element={<InvestorList />} />
+      <Route path='/Entrepreneur' element={<MentorentrepenureList />} />
       <Route path='/:role/:id' element={<MentorProfile />} />
       <Route path='/studentprofile/:_id' element={<StudentProfileE />} />
       <Route path='/alluser' element={<UserList />} />

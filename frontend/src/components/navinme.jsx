@@ -46,24 +46,8 @@ const Navinvmen = React.memo(() => {
     <Navbar expand="lg" className="nav1 ">
       <Container>
         <Navbar.Brand href="/" className="d-flex align-items-center">
-        <img 
-
-src={soloLogo1} 
-
-style={{
-
-  height: '10px !important',
-
-  width: 'auto !important',
-
-  maxWidth: 'none !important'
-
-}} 
-
-alt='logo' 
-
-/>
-          <span className="ms-2" style={{ color: "white", fontWeight: 500, fontSize: "1.95rem", textShadow: "1px 1px 2px rgba(0, 0, 0, 0.5)" }}>SOLOPRO</span>
+          <img src={soloLogo1} height={50} alt='logo' />
+          <span className="ms-2" style={{ color: "white", fontWeight: 500, fontSize: "1.75rem", textShadow: "1px 1px 2px rgba(0, 0, 0, 0.5)" }}>SOLOPRO</span>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
@@ -72,7 +56,6 @@ alt='logo'
             <NavLink as={Link} to="appointments" className="nav-item text-white">
               Appointments {appointmentCount > 0 && (<span className="badge bg-secondary">{appointmentCount}</span>)}
             </NavLink>
-            <NavLink href="/mi/alluser" className="nav-item text-white">All Users</NavLink>
             <NavLink href={`/mi/miprofile/${id}`} className="profile-link nav-item">
               <div className='d-flex align-items-center col'>
                 <img src={profilePhoto} width="30" height="30" className="rounded-circle me-2" alt="profile" />

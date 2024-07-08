@@ -16,7 +16,7 @@ const Blogs = () => {
 
   const lstorage = localStorage.getItem('user');
   const lstorageparse = JSON.parse(lstorage);
-  var role = lstorageparse.value.role;
+  const role = lstorageparse.value.role;
   const isStudent = role === 'Student';
 
   useEffect(() => {

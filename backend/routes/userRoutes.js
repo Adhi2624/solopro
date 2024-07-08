@@ -80,7 +80,7 @@ router.post('/', async (req, res) => {
       const entrepreneur = new Entrepreneur(profileData);
       await entrepreneur.save();
     }
-
+    
     sendWelcomeEmail(req.body.name, req.body.email);
     res.status(201).json({ message: 'User created successfully' });
     // sendMeetingEmail(req.body.)

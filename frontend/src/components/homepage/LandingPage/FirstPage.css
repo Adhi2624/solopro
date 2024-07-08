@@ -93,19 +93,18 @@ footer .text-reset {
   margin: 0;
   padding: 0;
   box-sizing: border-box; 
-  overflow-x: hidden; 
-  font-family: 'monteserrat';
+  overflow: hidden; 
 }
 
 .solopro-text {
-  font-size: 10vw; 
-  font-family: 'monteserrat';
+  font-size: 20vw; 
   color: #2d303e;
   line-height: 1;
   margin: 0;
   padding: 0;
   white-space: nowrap; 
 }
+
 
 @media (max-width: 768px) {
   #unleas h3 {

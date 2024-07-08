@@ -1,5 +1,5 @@
 const {getDB} = require('../config/db');
-const User=require('../models/user');
+const User=require('../models/User');
 
 exports.getAllData = async (req, res) => {
     try {

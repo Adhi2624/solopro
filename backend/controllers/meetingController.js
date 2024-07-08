@@ -67,7 +67,7 @@ exports.updateAppointmentStatus = async (req, res) => {
             { returnOriginal: false }
         );
         if (updatedAppointment.value) {
-            await sendMail(_id);
+           // await sendMail(_id);
             res.json(updatedAppointment.value);
             
         } else {

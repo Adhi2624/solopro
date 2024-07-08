@@ -28,6 +28,7 @@
     "core-js": "^3.37.1",
     "crypto-js": "^4.2.0",
     "express": "^4.19.2",
+    "firebase": "^10.12.3",
     "framer-motion": "^11.2.11",
     "googleapis": "^140.0.1",
     "gsap": "^3.12.5",

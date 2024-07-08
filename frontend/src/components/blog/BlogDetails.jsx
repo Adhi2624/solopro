@@ -5,12 +5,19 @@ import axios from 'axios';
 import Zoom from 'react-medium-image-zoom';
 import 'react-medium-image-zoom/dist/styles.css';
 import './BlogDetails.css';
-
+import { useNavigate } from 'react-router-dom';
+import Button from '@mui/joy/Button'; 
 const BlogDetail = () => {
   const { id, type } = useParams();
   const [content, setContent] = useState(null);
   const backend = process.env.REACT_APP_BACKEND;
-
+  const handleback= ()=>{
+    // const history = useHistory();
+  
+    navigate(-1); 
+  
+  
+  }
   useEffect(() => {
     const fetchContent = async () => {
       try {
@@ -22,7 +29,7 @@ const BlogDetail = () => {
     };
     fetchContent();
   }, [id, type]);
-
+  const navigate = useNavigate();
   if (!content) {
     return (
       <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
@@ -36,7 +43,11 @@ const BlogDetail = () => {
   return (
     <div>
       <header className="bg-dark text-white py-3 mb-4">
+      <div style={{padding:'10px',border:'10px'}}>
+      <Button onClick={handleback}>Back to posts</Button>
+      </div>
         <div className="container">
+
           <h1 className="mb-0">Content Detail</h1>
         </div>
       </header>

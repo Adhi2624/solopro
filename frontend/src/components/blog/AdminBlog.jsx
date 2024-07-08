@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 // import { useHistory } from "react-router-dom";
 // import GoBackButton from './GoBackButton';
 import { useNavigate } from 'react-router-dom';
-
-
+import { styled, ThemeProvider, createTheme } from "@mui/material/styles";
+import { TextField } from '@mui/material';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import Button from '@mui/joy/Button'; 
@@ -31,7 +31,27 @@ const AdminBlog = () => {
   useEffect(() => {
     fetchData();
   }, []);
-
+  const CustomTextField = styled(TextField)({
+    "& .MuiInputBase-root": {
+      color: "white",
+    },
+    "& .MuiOutlinedInput-root": {
+      "& fieldset": {
+        borderColor: "white",
+      },
+      "&:hover fieldset": {
+        borderColor: "white",
+      },
+      "&.Mui-focused fieldset": {
+        borderColor: "white",
+      },
+    },
+    "& input:-webkit-autofill": {
+      "-webkit-box-shadow": "0 0 0 1000px #000 inset",
+      "-webkit-text-fill-color": "white",
+      "caret-color": "white",
+    },
+  });
   const fetchData = async () => {
     try {
       const blogsResponse = await axios.get(`${backend}/api/blogs`);
@@ -225,6 +245,7 @@ const handleback= ()=>{
           <input
             type="text"
             className="form-control"
+            style={{color:"white"}}
             id="title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
@@ -244,6 +265,7 @@ const handleback= ()=>{
           <label htmlFor="description" className="form-label">Description</label>
           <textarea
             className="form-control"
+            style={{color:"white"}}
             id="description"
             rows="3"
             value={description}
@@ -255,6 +277,7 @@ const handleback= ()=>{
           <label htmlFor="order" className="form-label">Order</label>
           <input
             type="number"
+            style={{color:"white"}}
             className="form-control"
             id="order"
             value={order}
@@ -320,6 +343,7 @@ const handleback= ()=>{
           <label htmlFor="featuredDescription" className="form-label">Description</label>
           <textarea
             className="form-control"
+            style={{color:"white"}}
             id="featuredDescription"
             rows="3"
             value={featuredDescription}
@@ -395,6 +419,7 @@ const handleback= ()=>{
           <textarea
             className="form-control"
             id="moreShortDescription"
+            style={{color:"white"}}
             rows="3"
             value={moreShortDescription}
             onChange={(e) => setMoreShortDescription(e.target.value)}

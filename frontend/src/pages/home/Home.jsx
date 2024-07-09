@@ -23,6 +23,7 @@ const Home = () => {
           <Widget type="students" />
           <Widget type="mentors" />
           <Widget type="investors" />
+          <Widget type="entrepreneurs" />
         </div>
         <div className="charts">
           <Featured />

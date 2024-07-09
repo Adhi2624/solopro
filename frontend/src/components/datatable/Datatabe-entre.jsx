@@ -7,7 +7,7 @@ import { CircularProgress } from '@mui/material';
 
 const backend = process.env.REACT_APP_BACKEND;
 
-const DatatableEntrepreneur = () => {
+const DatatableEntrepreneurs = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -15,17 +15,18 @@ const DatatableEntrepreneur = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${backend}/getEntrepreneur`);
-        const mentorData = response.data.map((mentor) => ({
-          id: mentor._id, 
-          name: mentor.name,
-          email: mentor.email,
-          areaOfExpertise: mentor.areaOfExpertise,
-          status: mentor.status ? 'Active' : 'Inactive',
+        const response = await axios.get(`${backend}/api/getEntrepreneurs`);
+        const entrepreneurData = response.data.map((entrepreneur) => ({
+          id: entrepreneur._id,
+          name: entrepreneur.name,
+          email: entrepreneur.email,
+          expertise: entrepreneur.expertise,
+          status: entrepreneur.status ? 'Active' : 'Inactive',
         }));
-        setData(mentorData);
+        setData(entrepreneurData);
       } catch (error) {
         console.error('Error fetching data:', error);
+        setError('Error fetching data');
       }
     };
 
@@ -33,29 +34,29 @@ const DatatableEntrepreneur = () => {
   }, []);
 
   const handleDelete = async (id) => {
-    console.log('Deleting mentor with ID:', id);
+    console.log('Deleting entrepreneur with ID:', id);
     try {
       setLoading(true);
-      await axios.delete(`${backend}/api/Entrepreneur/${id}`);
+      await axios.delete(`${backend}/api/entrepreneurs/${id}`);
       setData(data.filter((item) => item.id !== id));
       setLoading(false);
     } catch (error) {
-      console.error('Error deleting mentor:', error);
-      setError('Error deleting mentor');
+      console.error('Error deleting entrepreneur:', error);
+      setError('Error deleting entrepreneur');
       setLoading(false);
     }
   };
 
-  const handleEdit = async (updatedMentor) => {
-    console.log('Editing mentor:', updatedMentor);
+  const handleEdit = async (updatedEntrepreneur) => {
+    console.log('Editing entrepreneur:', updatedEntrepreneur);
     try {
       setLoading(true);
-      await axios.put(`${backend}/api/Entrepreneur/${updatedMentor.id}`, updatedMentor);
-      setData(data.map((item) => (item.id === updatedMentor.id ? updatedMentor : item)));
+      await axios.put(`${backend}/api/entrepreneurs/${updatedEntrepreneur.id}`, updatedEntrepreneur);
+      setData(data.map((item) => (item.id === updatedEntrepreneur.id ? updatedEntrepreneur : item)));
       setLoading(false);
     } catch (error) {
-      console.error('Error updating mentor:', error);
-      setError('Error updating mentor');
+      console.error('Error updating entrepreneur:', error);
+      setError('Error updating entrepreneur');
       setLoading(false);
     }
   };
@@ -72,44 +73,44 @@ const DatatableEntrepreneur = () => {
     return null;
   };
 
-  const mentorColumns = [
+  const entrepreneurColumns = [
     { field: "id", headerName: "ID", width: 70, editable: false },
     { field: "name", headerName: "Name", width: 200, editable: true },
     { field: "email", headerName: "Email", width: 230, editable: true },
-    { field: "areaOfExpertise", headerName: "Area of Expertise", width: 200, editable: true },
+    { field: "expertise", headerName: "Expertise", width: 200, editable: true },
     { field: "status", headerName: "Status", width: 120, editable: true },
   ];
 
-  // const actionColumn = [
-  //   {
-  //     field: "action",
-  //     headerName: "Action",
-  //     width: 200,
-  //     renderCell: (params) => (
-  //       <div className="cellAction">
-  //         <Link to={`/Entrepreneur/${params.row.id}`} style={{ textDecoration: "none" }}>
-  //           <div className="viewButton">View</div>
-  //         </Link>
-  //         <div className="deleteButton" onClick={() => handleDelete(params.row.id)}>Delete</div>
-  //       </div>
-  //     ),
-  //   },
-  // ];
+  const actionColumn = [
+    {
+      field: "action",
+      headerName: "Action",
+      width: 200,
+      renderCell: (params) => (
+        <div className="cellAction">
+          <Link to={`/entrepreneurs/${params.row.id}`} style={{ textDecoration: "none" }}>
+            <div className="viewButton">View</div>
+          </Link>
+          <div className="deleteButton" onClick={() => handleDelete(params.row.id)}>Delete</div>
+        </div>
+      ),
+    },
+  ];
 
   return (
     <div className="datatable">
       <div className="datatableTitle">
-        Mentor List
-        {/* <Link to="/Entrepreneur/new" className="link">
+        Entrepreneur List
+        <Link to="/entrepreneurs/new" className="link">
           Add New
-        </Link> */}
+        </Link>
       </div>
       {renderLoading()}
       {error && <div className="errorMessage">{error}</div>}
       <DataGrid
         className="datagrid"
         rows={data}
-        columns={mentorColumns}
+        columns={entrepreneurColumns.concat(actionColumn)}
         pageSize={9}
         rowsPerPageOptions={[9]}
         checkboxSelection
@@ -121,4 +122,4 @@ const DatatableEntrepreneur = () => {
   );
 };
 
-export default DatatableEntrepreneur;
+export default DatatableEntrepreneurs;

@@ -81,4 +81,17 @@ router.get('/api/investors/count', dbMiddleware, async (req, res) => {
   }
 });
 
+//get entrepreneur count
+router.get('/api/entrepreneurs/count', dbMiddleware, async (req, res) => {
+  try {
+    const db = req.db;
+    const count = await db.collection('entrepreneurs').countDocuments();
+    res.json({ count, diff: 0 }); // Replace 0 with actual diff if applicable
+  } catch (error) {
+    console.error('Error fetching entrepreneur count:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+
 module.exports = router;

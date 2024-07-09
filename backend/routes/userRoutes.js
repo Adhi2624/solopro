@@ -7,6 +7,9 @@ const User = require('../models/User'); // Assuming you have a User model for ba
 const Mentor = require('../models/Mentor');
 const Student = require('../models/Student');
 const Investor = require('../models/Investor');
+
+const Entrepreneur = require('../models/entrepreneur');
+const User = require('../models/User'); 
 const sendWelcomeEmail = require('../mailtemplates/registerMail');
 const sendMeetingEmail = require('../mailtemplates/meetingconfirm');
 

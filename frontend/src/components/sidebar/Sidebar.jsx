@@ -16,6 +16,15 @@ import { useContext, useState } from "react";
 
 const Sidebar = ({ isOpen, handleToggle }) => {
   const { dispatch } = useContext(DarkModeContext);
+  const handleLogout = () => {
+    // Remove items from localStorage
+    
+    localStorage.removeItem('user');
+
+    // Redirect to login or home page
+    // Example: Replace with your desired logout behavior
+    window.location.href = '/'; // Redirect to login page after logout
+};
 
   return (
     <div>
@@ -68,14 +77,12 @@ const Sidebar = ({ isOpen, handleToggle }) => {
                 <span>Entrepreneur</span>
               </li>
             </Link>
-            <p className="title">USER</p>
-            <li>
-              <AccountCircleOutlinedIcon className="icon" />
-              <span>Profile</span>
-            </li>
+            <p className="title">USER ACTION</p>
+
             <li>
               <ExitToAppIcon className="icon" />
-              <span>Logout</span>
+              
+              <span onClick={{handleLogout}}>Logout</span>
             </li>
           </ul>
         </div>

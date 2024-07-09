@@ -1,11 +1,11 @@
 import { CiHeart } from "react-icons/ci";
 import { Row, Col, Container } from 'react-bootstrap';
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"; 
 import './FirstPage.css';
 
 function Footer() {
   return (
-    <footer className="foot text-center text-lg-start bg-black text-white">
+    <footer className="foot text-center text-lg-start">
       <section className="foot d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
         <div>
           <Link to="#!" className="me-4 text-reset">
@@ -39,29 +39,26 @@ function Footer() {
               <p>Elevating Startups</p>
             </Col>
 
-            <Col md="2" lg="2" xl="2" className="mx-auto mb-4">
-              <h6 className="text-uppercase fw-bold mb-4">Services</h6>
+            
 
+            <Col md="3" lg="2" xl="2" className="mx-auto mb-4">
+              <h6 className="text-uppercase fw-bold mb-4">Services</h6>
               <p>
-                <Link to="/signup" className="text-reset">
-                  Mentors
+                <Link to="/login" className="text-reset">
+                  Find Investors
                 </Link>
               </p>
               <p>
-                <Link to="/signup" className="text-reset">
-                  Investors
+                <Link to="/login" className="text-reset">
+                  Find Mentors
                 </Link>
               </p>
               <p>
-                <Link to="/signup" className="text-reset">
-                  community
+                <Link to="/login" className="text-reset">
+                  Network!
                 </Link>
               </p>
-              <p>
-                <Link to="/signup" className="text-reset">
-                  Blog
-                </Link>
-              </p>
+              
             </Col>
 
             <Col md="4" lg="3" xl="3" className="mx-auto mb-md-0 mb-4">
@@ -71,24 +68,22 @@ function Footer() {
               </p>
               <p>
                 <i className="icon-envelope me-3" />
-                <a href="mailto:soloprobusiness@gmail.com">soloprobusiness@gmail.com</a>
+                soloprobusiness@gmail.com
               </p>
               <p>
-                <i className="icon-phone me-3" />
-                <a href="tel:+0123456788">+ 01 234 567 88</a>
+                <i className="icon-phone me-3" /> + 01 234 567 88
               </p>
               <p>
-                <i className="icon-print me-3" />
-                <a href="tel:+0123456789">+ 01 234 567 89</a>
+                <i className="icon-print me-3" /> + 01 234 567 89
               </p>
             </Col>
-
           </Row>
         </Container>
       </section>
 
       <div className="text-center p-4" >
-        © 2021 Solopro.com
+        © 2021 Copyright:
+        <Link className="text-reset fw-bold" to="https://solopro.com/">Solopro.com</Link>
       </div>
     </footer>
   );

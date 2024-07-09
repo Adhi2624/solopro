@@ -6,9 +6,22 @@ body {
     font-optical-sizing: auto;
 }
 
-nav, footer {
+nav {
     background-color: #E1EBDC;
 }
+/* Custom CSS (style.css) */
+.navbar-brand img {
+  height: auto; /* Ensure the logo scales naturally */
+}
+
+.navbar-nav .nav-link {
+  padding: 0.5rem 1rem; /* Adjust padding as necessary */
+}
+
+.navbar {
+  padding: 1rem 0; /* Adjust padding as necessary */
+}
+
 
 .nav-link {
     padding-left: 3%;

@@ -1,6 +1,8 @@
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
+import firebaseConfig from "./firebaseconfig";
+//import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import Link from "@mui/material/Link";
@@ -10,12 +12,16 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import testImage from "./login.png";
+import loginimage from "./login.png";
 import Navbarr from "./nav";
 import { Link as RouterLink } from "react-router-dom";
 import axios from "axios";
-import { setItemWithExpiry } from "./localStorageWithExpiry"; // Import the utility function
+import { setItemWithExpiry } from "./localStorageWithExpiry";
 import { useNavigate } from "react-router-dom";
+const backend = process.env.REACT_APP_BACKEND;
+
+// Initialize Firebase Auth
+//const auth = getAuth();
 
 function Copyright(props) {
   return (
@@ -44,6 +50,30 @@ function Copyright(props) {
   );
 }
 
+const handleGoogleSignIn = async () => {
+  //const provider = new GoogleAuthProvider();
+  try {
+    // const result = await signInWithPopup(auth, provider);
+    // const token = await result.user.getIdToken();
+
+    // // Log the authentication data from Google
+    // console.log("Google Sign-In Result:", result);
+    // console.log("Google Auth Token:", token);
+    // console.log("Google User Info:", result.user);
+
+    // Send token to backend
+    await fetch(`${backend}/api/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        //Authorization: `Bearer ${token}`
+      }
+    });
+  } catch (error) {
+    console.error("Error signing in with Google:", error);
+  }
+};
+
 const defaultTheme = createTheme({
   typography: {
     fontFamily: "Montserrat, Arial, sans-serif",
@@ -57,7 +87,6 @@ export default function Login() {
     const data = new FormData(event.currentTarget);
     const email = data.get("email");
     const password = data.get("password");
-    const backend = process.env.REACT_APP_BACKEND;
 
     try {
       const response = await axios.post(`${backend}/api/login`, {
@@ -65,42 +94,50 @@ export default function Login() {
         password,
       });
       const userData = response.data;
-  
+
       // Store user data in local storage with expiry (1 hour = 3600000 milliseconds)
-      setItemWithExpiry('user', userData, 3600000);
-  
+      setItemWithExpiry("user", userData, 3600000);
+
       console.log(userData);
-  
-      if (userData.role === 'Student') {
-        navigate('/student/');
-      } else if (userData.role === 'Mentor' || userData.role === 'Investor') {
-        navigate('/mi/');
-      } else if (userData.role === 'Admin') {
-        navigate('/admin/');
+
+      if (userData.role === "Student") {
+        navigate("/student/");
+      } else if (userData.role === "Mentor" || userData.role === "Investor" ||userData.role === "Entrepreneur" ) {
+        navigate("/mi/");
+      } else if (userData.role === "Admin") {
+        navigate("/admin/");
       }
+      
     } catch (error) {
-      alert(`Login failed: ${error.response ? error.response.data.message : error.message}`);
-    }};
+      alert(
+        `Login failed: ${
+          error.response ? error.response.data.message : error.message
+        }`
+      );
+    }
+  };
+
   return (
     <ThemeProvider theme={defaultTheme}>
       <>
         <Navbarr />
-        <Grid container component="main" sx={{ height: "100vh" }}>
+        <Grid container component="main" sx={{ height: "100vh", backgroundColor: "#040F15" }}>
           <CssBaseline />
-          <Grid
-            item
-            xs={false}
-            sm={4}
-            md={7}
-            sx={{
-              backgroundImage: `url(${testImage})`,
-              backgroundRepeat: "no-repeat",
-              backgroundColor: "#040F15",
-              backgroundSize: "contain",
-              backgroundPosition: "center",
-              backgroundSize: "60%",
-            }}
-          />
+          {/* <Grid
+              item
+              xs={false}
+              sm={4}
+              md={7}
+              sx={{
+                backgroundImage: `url(${loginimage})`,
+                backgroundRepeat: "no-repeat",
+                backgroundColor: "#040F15",
+                backgroundSize: "cover",  // Adjusted from "contain" to "cover"
+                backgroundPosition: "center",
+                backgroundAttachment: "fixed" // Optional, depends on your design needs
+              }}
+            /> */}
+
           <Grid
             item
             xs={12}
@@ -108,7 +145,7 @@ export default function Login() {
             md={5}
             component={Paper}
             elevation={6}
-            square
+            fullWidth
             style={{ backgroundColor: "#040F15", color: "white" }}
           >
             <Box
@@ -152,7 +189,7 @@ export default function Login() {
                   InputProps={{
                     style: {
                       color: "white",
-                  
+
                       borderColor: "white",
                     },
                   }}
@@ -198,7 +235,7 @@ export default function Login() {
                   InputProps={{
                     style: {
                       color: "white",
-                      
+
                       borderColor: "white",
                     },
                   }}
@@ -237,6 +274,14 @@ export default function Login() {
                 >
                   Log in
                 </Button>
+                {/* <Button
+                  onClick={handleGoogleSignIn}
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                >
+                  Sign in with Google
+                </Button> */}
                 <Grid container>
                   <Grid item xs={12} style={{ textAlign: "center" }}>
                     <Typography variant="body2" style={{ fontSize: "1.2rem" }}>
@@ -252,6 +297,18 @@ export default function Login() {
                           sx={{ mt: 3, mb: 2 }}
                         >
                           Sign up
+                        </Button>
+                      </RouterLink>
+                      <RouterLink
+                        to="/password-reset"
+                        style={{ textDecoration: "none" }}
+                      >
+                        <Button
+                          fullWidth
+                          variant="outlined"
+                          sx={{ mt: 3, mb: 2 }}
+                        >
+                          Forgot password?
                         </Button>
                       </RouterLink>
                     </Typography>

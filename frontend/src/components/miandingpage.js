@@ -6,6 +6,7 @@ import BLOG from './BLOG.json'; // Import the Lottie animation JSON file
 import Investor from './investor.json'
 import mentor from './mentor.json'
 import profile from'./profileAnimation.json'
+import Navmi from './navinme';
 import logo from '../images/image.svg'
 import appoinmentss from './appoinmentAnimation.json'
 const MiLandingPage = () => {
@@ -32,20 +33,22 @@ const MiLandingPage = () => {
 
   return (
     <div>
-      <Navbar className=" nav1">
+      <Navmi />
+      {/* <Navbar className=" nav1">
         <Container>
           <Navbar.Brand href="">
             <img
               src={logo}
              
-              height="50"
+              // height="60"
               className="d-inline-block align-top"
               alt="React Bootstrap logo"
+              style={{height:'60px !important'}} 
             />
             <span className="ms-2" style={{ color: "white", fontWeight: 500, fontSize: "1.75rem", textShadow: "1px 1px 2px rgba(0, 0, 0, 0.5)" }}>SOLOPRO</span>
           </Navbar.Brand>
         </Container>
-      </Navbar>
+      </Navbar> */}
     <div style={{ backgroundColor: '#040F15', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       
       <Container>

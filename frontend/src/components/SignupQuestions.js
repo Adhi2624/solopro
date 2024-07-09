@@ -233,430 +233,217 @@ function SignupQuestions() {
   const getAnimationData = (step) => {
     switch (step) {
       case 0:
-        return emailAnimation;
+        return (
+          <CustomTextField
+            label="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            fullWidth
+            variant="outlined"
+          />
+        );
       case 1:
-        return commonQuestionsAnimation;
+        return (
+          <>
+            <CustomTextField
+              label="Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              fullWidth
+              variant="outlined"
+              sx={{ marginBottom: "20px" }}
+            />
+            <CustomTextField
+              label="Phone Number"
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
+              fullWidth
+              variant="outlined"
+              sx={{ marginBottom: "20px" }}
+            />
+            <CustomTextField
+              label="LinkedIn Profile"
+              value={linkedinProfile}
+              onChange={(e) => setLinkedinProfile(e.target.value)}
+              fullWidth
+              variant="outlined"
+              sx={{ marginBottom: "20px" }}
+            />
+            <CustomTextField
+              label="Password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              fullWidth
+              variant="outlined"
+              sx={{ marginBottom: "20px" }}
+            />
+            <CustomTextField
+              label="Confirm Password"
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              fullWidth
+              variant="outlined"
+              sx={{ marginBottom: "20px" }}
+            />
+            <Button
+              variant="contained"
+              component="label"
+              sx={{ marginBottom: "20px" }}
+            >
+              Upload Profile Image
+              <input
+                type="file"
+                accept="image/*"
+                hidden
+                onChange={(e) =>
+                  handleFileChange(e, setProfileImage, setProfileImageUrl)
+                }
+              />
+            </Button>
+            {profileImageUrl && (
+              <img
+                src={profileImageUrl}
+                alt="Profile"
+                style={{
+                  maxWidth: "100px",
+                  maxHeight: "100px",
+                  marginBottom: "20px",
+                }}
+              />
+            )}
+          </>
+        );
       case 2:
-        return userTypeAnimation;
+        return (
+          <FormControl fullWidth style={{ backgroundColor: 'transparent' }}>
+  <InputLabel style={{ color: 'white' }}>User Type</InputLabel>
+  <CustomSelect
+    value={userType}
+    onChange={(e) => setUserType(e.target.value)}
+    label="User Type"
+    style={{ color: 'white' }}
+    MenuProps={{ PaperProps: { style: { backgroundColor: 'transparent' } } }} // Ensure menu background is transparent
+  >
+    {Object.keys(questions).map((type) => (
+      <MenuItem key={type} value={type} style={{ color: 'white' }}>
+        {type}
+      </MenuItem>
+    ))}
+  </CustomSelect>
+</FormControl>
+
+
+        );
       case 3:
-        return specificQuestionsAnimation;
+        return renderUserQuestions();
       case 4:
-        return reviewAnimation;
-      default:
-        return emailAnimation;
+        return (
+          <>
+            <Typography variant="h6">Review your details:</Typography>
+            <TableContainer component={Paper}>
+              <Table style={{backgroundColor:"transparent"}}>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Field</TableCell>
+                    <TableCell>Value</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  <TableRow>
+                    <TableCell>Email</TableCell>
+                    <TableCell>{email}</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>Name</TableCell>
+                    <TableCell>{name}</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>Phone Number</TableCell>
+                    <TableCell>{phoneNumber}</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>LinkedIn Profile</TableCell>
+                    <TableCell>{linkedinProfile}</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>User Type</TableCell>
+                    <TableCell>{userType}</TableCell>
+                  </TableRow>
+                  {userQuestions.map((question) => (
+                    <TableRow key={question.questionName}>
+                      <TableCell>{question.label}</TableCell>
+                      <TableCell>{formData[question.questionName]}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </>
+        );
+      
+      
     }
-  };
-
-  const AnimatedBox = animated(Box);
-
-  const pageTransitions = {
-    entering: { opacity: 1 },
-    entered: { opacity: 1 },
-    exiting: { opacity: 0 },
-    exited: { opacity: 0 },
-  };
-
-  // Function to render image preview
-  const renderImagePreview = (imageUrl) => {
-    return imageUrl ? <img src={imageUrl} alt="Preview" style={{ maxWidth: '100%', maxHeight: '200px', marginTop: '10px' }} /> : null;
   };
 
   return (
     <ThemeProvider theme={theme}>
-      <CssBaseline />
-      
-      <Box sx={{ width: '100%' }}>
-        <Stepper activeStep={activeStep} style={{color:'white'}} alternativeLabel>
+      <Nav />
+      <Box
+       
+        sx={{
+          backgroundColor: theme.palette.background.default,
+          minHeight: "100vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "column",
+          padding: "20px",
+        }}
+      >
+       
+        <Lottie
+          options={{
+            loop: true,
+            autoplay: true,
+            animationData: signUpLottie,
+            rendererSettings: {
+              preserveAspectRatio: "xMidYMid slice",
+            },
+          }}
+          height={200}
+          width={200}
+        />
+        <Typography variant="h4" sx={{ marginBottom: "20px" }}>
+          Signup
+        </Typography>
+        <Stepper activeStep={activeStep} alternativeLabel>
           {steps.map((label) => (
             <Step key={label}>
-              <StepLabel sx={{ color: 'white' }}>{label}</StepLabel>
+              <CustomStepLabel>{label}</CustomStepLabel>
             </Step>
           ))}
         </Stepper>
-   
-        <Box sx={{ marginTop: 3 }}>
-          <Transition in={true} timeout={300}>
-            {(state) => (
-              <AnimatedBox style={{ ...pageTransitions[state] }}>
-                <Lottie animationData={getAnimationData(activeStep)} style={{ height: 500, marginBottom: 10 }} />
-                {activeStep === 0 && (
-                  <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-                    <Typography variant="h6" gutterBottom color="white" mt={10} sx={{alignContent:'center',textAlign:'center'}}>Enter your email to get started:</Typography>
-                    <CustomTextField
-                      margin="normal"
-                      required
-                      fullWidth
-                      id="email"
-                      label="Email Address"
-                      name="email"
-                      autoComplete="email"
-                      autoFocus
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      error={!email}
-                      helperText={!email ? 'Email is required' : ''}
-                    />
-                    <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                      <Button
-                        type="button"
-                        fullWidth
-                        variant="contained"
-                        sx={{ mt: 3, mb: 2 }}
-                        onClick={handleNext}
-                      >
-                        Next
-                      </Button>
-                    </Box>
-                  </Box>
-                )}
-                {activeStep === 1 && (
-                  <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-                    <Typography variant="h6" gutterBottom color="white">Tell us about yourself:</Typography>
-                    {userQuestions.map((question, index) => (
-                      <CustomTextField
-                        key={index}
-                        margin="normal"
-                        required
-                        fullWidth
-                        label={question.label}
-                        value={question.value}
-                        onChange={(e) => handleInputChange(question.key, e.target.value)}
-                        error={!!question.error}
-                        helperText={question.error}
-                      />
-                    ))}
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <Button
-                        type="button"
-                        variant="contained"
-                        sx={{ mt: 3, mb: 2 }}
-                        onClick={handleBack}
-                      >
-                        Back
-                      </Button>
-                      <Button
-                        type="button"
-                        variant="contained"
-                        sx={{ mt: 3, mb: 2 }}
-                        onClick={handleNext}
-                      >
-                        Next
-                      </Button>
-                    </Box>
-                  </Box>
-                )}
-                {activeStep === 2 && (
-                  <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-                    <Typography variant="h6" gutterBottom color="white">Select your user type:</Typography>
-                    <FormControl fullWidth sx={{ mt: 2 }}>
-                      <InputLabel id="userTypeLabel" sx={{ color: 'white' }}>User Type</InputLabel>
-                      <CustomSelect
-                        labelId="userTypeLabel"
-                        id="userType"
-                        value={userType}
-                        label="User Type"
-                        onChange={handleUserTypeChange}
-                      >
-                        <MenuItem value="Student">Student</MenuItem>
-                        <MenuItem value="Mentor">Mentor</MenuItem>
-                        <MenuItem value="Investor">Investor</MenuItem>
-                      </CustomSelect>
-                    </FormControl>
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <Button
-                        type="button"
-                        variant="contained"
-                        sx={{ mt: 3, mb: 2 }}
-                        onClick={handleBack}
-                      >
-                        Back
-                      </Button>
-                      <Button
-                        type="button"
-                        variant="contained"
-                        sx={{ mt: 3, mb: 2 }}
-                        onClick={handleNext}
-                      >
-                        Next
-                      </Button>
-                    </Box>
-                  </Box>
-                )}
-                {activeStep === 3 && (
-                  <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-                    <Typography variant="h6" gutterBottom color="white">
-                      Please provide more details based on your selected user type:
-                    </Typography>
-                    {userType === 'Student' && (
-                      <>
-                        <CustomTextField
-                          margin="normal"
-                          required
-                          fullWidth
-                          id="collegeName"
-                          label="College Name"
-                          value={collegeName}
-                          onChange={(e) => setCollegeName(e.target.value)}
-                        />
-                        <CustomTextField
-                          margin="normal"
-                          required
-                          fullWidth
-                          id="course"
-                          label="Course"
-                          value={course}
-                          onChange={(e) => setCourse(e.target.value)}
-                        />
-                        <CustomTextField
-                          margin="normal"
-                          required
-                          fullWidth
-                          id="collegeLocation"
-                          label="College Location"
-                          value={collegeLocation}
-                          onChange={(e) => setCollegeLocation(e.target.value)}
-                        />
-                        <CustomTextField
-                          margin="normal"
-                          required
-                          fullWidth
-                          id="git"
-                          label="GitHub URL"
-                          value={git}
-                          onChange={(e) => setGit(e.target.value)}
-                        />
-                        <Box>
-                          <Typography variant="body1" color="white">Upload College ID Photo:</Typography>
-                          <input type="file" onChange={(e) => handleFileChange(e, setCollegeIdPhoto, setCollegeIdPhotoUrl)} />
-                          {renderImagePreview(collegeIdPhotoUrl)}
-                        </Box>
-                      </>
-                    )}
-                    {userType === 'Mentor' && (
-                      <>
-                        <CustomTextField
-                          margin="normal"
-                          required
-                          fullWidth
-                          id="areaOfExpertise"
-                          label="Area of Expertise"
-                          value={areaOfExpertise}
-                          onChange={(e) => setAreaOfExpertise(e.target.value)}
-                        />
-                        <CustomTextField
-                          margin="normal"
-                          required
-                          fullWidth
-                          id="experience"
-                          label="Years of Experience"
-                          value={experience}
-                          onChange={(e) => setExperience(e.target.value)}
-                        />
-                        <FormControlLabel
-                          control={
-                            <Switch
-                              checked={availableToMentor}
-                              onChange={(e) => setAvailableToMentor(e.target.checked)}
-                              name="availableToMentor"
-                              color="primary"
-                            />
-                          }
-                          label="Available to Mentor"
-                        />
-                        {availableToMentor && (
-                          <CustomTextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="mentorshipCount"
-                            label="Number of Mentorships"
-                            value={mentorshipCount}
-                            onChange={(e) => setMentorshipCount(e.target.value)}
-                          />
-                        )}
-                      </>
-                    )}
-                    {userType === 'Investor' && (
-                      <>
-                        <FormControlLabel
-                          control={
-                            <Switch
-                              checked={availableToInvest}
-                              onChange={(e) => setAvailableToInvest(e.target.checked)}
-                              name="availableToInvest"
-                              color="primary"
-                            />
-                          }
-                          label="Available to Invest"
-                        />
-                        {availableToInvest && (
-                          <>
-                            <CustomTextField
-                              margin="normal"
-                              required
-                              fullWidth
-                              id="investmentCount"
-                              label="Number of Investments"
-                              value={investmentCount}
-                              onChange={(e) => setInvestmentCount(e.target.value)}
-                            />
-                            <CustomTextField
-                              margin="normal"
-                              required
-                              fullWidth
-                              id="investmentAmount"
-                              label="Total Investment Amount"
-                              value={investmentAmount}
-                              onChange={(e) => setInvestmentAmount(e.target.value)}
-                            />
-                            <Box>
-                              <Typography variant="body1" color="white">Upload Proof of Investment:</Typography>
-                              <input type="file" onChange={(e) => handleFileChange(e, setProofImage, setProofImageUrl)} />
-                              {renderImagePreview(proofImageUrl)}
-                            </Box>
-                          </>
-                        )}
-                      </>
-                    )}
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <Button
-                        type="button"
-                        variant="contained"
-                        sx={{ mt: 3, mb: 2 }}
-                        onClick={handleBack}
-                      >
-                        Back
-                      </Button>
-                      <Button
-                        type="button"
-                        variant="contained"
-                        sx={{ mt: 3, mb: 2 }}
-                        onClick={handleNext}
-                      >
-                        Next
-                      </Button>
-                    </Box>
-                  </Box>
-                )}
-                {activeStep === 4 && (
-                  <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 4 ,  padding:'30px'}}>
-                    <Typography variant="h6" gutterBottom color="white">Review your details:</Typography>
-                    <Table >
-                      <TableHead>
-                        <TableRow>
-                          <TableCell sx={{ color: 'white' }}>Field</TableCell>
-                          <TableCell sx={{ color: 'white' }}>Value</TableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        <TableRow>
-                          <TableCell sx={{ color: 'white' }}>Email</TableCell>
-                          <TableCell sx={{ color: 'white' }}>{email}</TableCell>
-                        </TableRow>
-                        {userQuestions.map((question, index) => (
-                          <TableRow key={index}>
-                            <TableCell sx={{ color: 'white' }}>{question.label}</TableCell>
-                            <TableCell sx={{ color: 'white' }}>{question.value}</TableCell>
-                          </TableRow>
-                        ))}
-                        {userType === 'Student' && (
-                          <>
-                            <TableRow>
-                              <TableCell sx={{ color: 'white' }}>College Name</TableCell>
-                              <TableCell sx={{ color: 'white' }}>{collegeName}</TableCell>
-                            </TableRow>
-                            <TableRow>
-                              <TableCell sx={{ color: 'white' }}>Course</TableCell>
-                              <TableCell sx={{ color: 'white' }}>{course}</TableCell>
-                            </TableRow>
-                            <TableRow>
-                              <TableCell sx={{ color: 'white' }}>College Location</TableCell>
-                              <TableCell sx={{ color: 'white' }}>{collegeLocation}</TableCell>
-                            </TableRow>
-                            <TableRow>
-                              <TableCell sx={{ color: 'white' }}>GitHub URL</TableCell>
-                              <TableCell sx={{ color: 'white' }}>{git}</TableCell>
-                            </TableRow>
-                            <TableRow>
-                              <TableCell sx={{ color: 'white' }}>College ID Photo</TableCell>
-                              <TableCell sx={{ color: 'white' }}>
-                                {renderImagePreview(collegeIdPhotoUrl)}
-                              </TableCell>
-                            </TableRow>
-                          </>
-                        )}
-                        {userType === 'Mentor' && (
-                          <>
-                            <TableRow>
-                              <TableCell sx={{ color: 'white' }}>Area of Expertise</TableCell>
-                              <TableCell sx={{ color: 'white' }}>{areaOfExpertise}</TableCell>
-                            </TableRow>
-                            <TableRow>
-                              <TableCell sx={{ color: 'white' }}>Years of Experience</TableCell>
-                              <TableCell sx={{ color: 'white' }}>{experience}</TableCell>
-                            </TableRow>
-                            <TableRow>
-                              <TableCell sx={{ color: 'white' }}>Available to Mentor</TableCell>
-                              <TableCell sx={{ color: 'white' }}>{availableToMentor ? 'Yes' : 'No'}</TableCell>
-                            </TableRow>
-                            {availableToMentor && (
-                              <TableRow>
-                                <TableCell sx={{ color: 'white' }}>Number of Mentorships</TableCell>
-                                <TableCell sx={{ color: 'white' }}>{mentorshipCount}</TableCell>
-                              </TableRow>
-                            )}
-                          </>
-                        )}
-                        {userType === 'Investor' && (
-                          <>
-                            <TableRow>
-                              <TableCell sx={{ color: 'white' }}>Available to Invest</TableCell>
-                              <TableCell sx={{ color: 'white' }}>{availableToInvest ? 'Yes' : 'No'}</TableCell>
-                            </TableRow>
-                            {availableToInvest && (
-                              <>
-                                <TableRow>
-                                  <TableCell sx={{ color: 'white' }}>Number of Investments</TableCell>
-                                  <TableCell sx={{ color: 'white' }}>{investmentCount}</TableCell>
-                                </TableRow>
-                                <TableRow>
-                                  <TableCell sx={{ color: 'white' }}>Total Investment Amount</TableCell>
-                                  <TableCell sx={{ color: 'white' }}>{investmentAmount}</TableCell>
-                                </TableRow>
-                                <TableRow>
-                                  <TableCell sx={{ color: 'white' }}>Proof of Investment</TableCell>
-                                  <TableCell sx={{ color: 'white' }}>
-                                    {renderImagePreview(proofImageUrl)}
-                                  </TableCell>
-                                </TableRow>
-                              </>
-                            )}
-                          </>
-                        )}
-                      </TableBody>
-                    </Table>
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <Button
-                        type="button"
-                        variant="contained"
-                        sx={{ mt: 3, mb: 2 }}
-                        onClick={handleBack}
-                      >
-                        Back
-                      </Button>
-                      <Button
-                        type="submit"
-                        variant="contained"
-                        sx={{ mt: 3, mb: 2 }}
-                      >
-                        Submit
-                      </Button>
-                    </Box>
-                  </Box>
-                )}
-              </AnimatedBox>
-            )}
-          </Transition>
+        <Box sx={{ width: "100%", marginTop: "20px" }}>
+          {renderStepContent(activeStep)}
+          <Box sx={{ display: "flex", justifyContent: "space-between", marginTop: "20px" }}>
+            <Button
+              disabled={activeStep === 0}
+              onClick={handleBack}
+            >
+              Back
+            </Button>
+            <Button
+  variant="contained"
+  color="primary"
+  onClick={activeStep === steps.length - 2 ? handleSubmit : handleNext}
+  sx={{ marginLeft: "auto" }}
+>
+  {activeStep === steps.length - 2  ? "Review and Submit" : "Next"}
+</Button>
+
+          </Box>
         </Box>
       </Box>
     </ThemeProvider>

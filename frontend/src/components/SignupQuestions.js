@@ -157,8 +157,8 @@ const SignupQuestions = () => {
         const img = new Image();
         img.onload = () => {
           const canvas = document.createElement("canvas");
-          const MAX_WIDTH = 500;
-          const MAX_HEIGHT = 500;
+          const MAX_WIDTH = 800;
+          const MAX_HEIGHT = 800;
           let width = img.width;
           let height = img.height;
 
@@ -336,26 +336,34 @@ const SignupQuestions = () => {
     const formDataToSend = new FormData();
     formDataToSend.append("email", email);
     formDataToSend.append("name", name);
-    formDataToSend.append("phoneNumber", phoneNumber);
+    formDataToSend.append("phone", phoneNumber);
     formDataToSend.append("password", password);
     formDataToSend.append("linkedinProfile", linkedinProfile);
     formDataToSend.append("userType", userType);
+  
     if (profileImage) {
-      formDataToSend.append("profileImage", profileImage);
+      formDataToSend.append("profileImage", profileImageUrl);
     }
     if (proofImage) {
-      formDataToSend.append("proofImage", proofImage);
+      formDataToSend.append("proofImage", proofImageUrl);
     }
+  
     userQuestions.forEach((question) => {
       formDataToSend.append(question.questionName, formData[question.questionName]);
     });
 
+    const data = {};
+    for (let pair of formDataToSend.entries()) {
+      console.log(`${pair[0]}: ${pair[1]}`);
+      data[pair[0]] = pair[1]; 
+    }
+    
+    console.log(formDataToSend,data)
+
+   
+
     try {
-      await axios.post(`${backend}/api/signup`, formDataToSend, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      await axios.post(`${backend}/api/signup`, data);
       alert("Signup successful!");
       navigate("/login");
     } catch (error) {
@@ -363,7 +371,7 @@ const SignupQuestions = () => {
       alert("An error occurred during signup. Please try again.");
     }
   };
-
+  
   // Render the content for each step
   const renderStepContent = (step) => {
     switch (step) {
@@ -452,20 +460,24 @@ const SignupQuestions = () => {
         );
       case 2:
         return (
-          <FormControl fullWidth>
-            <InputLabel>User Type</InputLabel>
-            <CustomSelect
-              value={userType}
-              onChange={(e) => setUserType(e.target.value)}
-              label="User Type"
-            >
-              {Object.keys(questions).map((type) => (
-                <MenuItem key={type} value={type}>
-                  {type}
-                </MenuItem>
-              ))}
-            </CustomSelect>
-          </FormControl>
+          <FormControl fullWidth style={{ backgroundColor: 'transparent' }}>
+  <InputLabel style={{ color: 'white' }}>User Type</InputLabel>
+  <CustomSelect
+    value={userType}
+    onChange={(e) => setUserType(e.target.value)}
+    label="User Type"
+    style={{ color: 'white' }}
+    MenuProps={{ PaperProps: { style: { backgroundColor: 'transparent' } } }} // Ensure menu background is transparent
+  >
+    {Object.keys(questions).map((type) => (
+      <MenuItem key={type} value={type} style={{ color: 'white' }}>
+        {type}
+      </MenuItem>
+    ))}
+  </CustomSelect>
+</FormControl>
+
+
         );
       case 3:
         return renderUserQuestions();
@@ -474,7 +486,7 @@ const SignupQuestions = () => {
           <>
             <Typography variant="h6">Review your details:</Typography>
             <TableContainer component={Paper}>
-              <Table>
+              <Table style={{backgroundColor:"transparent"}}>
                 <TableHead>
                   <TableRow>
                     <TableCell>Field</TableCell>

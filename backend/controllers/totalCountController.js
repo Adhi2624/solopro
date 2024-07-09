@@ -9,6 +9,7 @@ exports.getTotalCount = async (req, res) => {
 
         // Get the count of mentors
         const mentorCount = await db.collection('mentors').countDocuments();
+        const EntrepreneurCount = await db.collection('Entrepreneur').countDocuments();
 
         // Get the count of investors
         const investorCount = await db.collection('investors').countDocuments();
@@ -17,6 +18,7 @@ exports.getTotalCount = async (req, res) => {
             studentCount,
             mentorCount,
             investorCount,
+            EntrepreneurCount,
         });
     } catch (error) {
         console.error("Error fetching counts:", error);

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Link  } from "react-router-dom";
 import { MD5 } from "crypto-js";
 import {
   Avatar,
@@ -16,6 +17,7 @@ import {
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import axios from "axios";
 
+
 const theme = createTheme({
   typography: {
     fontFamily: "Montserrat, Arial, sans-serif",
@@ -23,7 +25,33 @@ const theme = createTheme({
 });
 
 const backendUrl = `${process.env.REACT_APP_BACKEND}`;
-
+function Copyright(props) {
+  return (
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
+      {"Copyright © "}
+      <Link
+        color="inherit"
+        href=""
+        sx={{
+          textDecoration: "none",
+          "&:hover": {
+            textDecoration: "none",
+          
+          },
+        }}
+      >
+        SOLOPRO
+      </Link>{" "}
+      {new Date().getFullYear()}
+      {"."}
+    </Typography>
+  );
+}
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
@@ -229,9 +257,13 @@ export default function ForgotPassword() {
             <Button fullWidth variant="contained" onClick={handleBack} sx={{ mt: 3, mb: 2 }}>
               Back
             </Button>
+            <Copyright sx={{ mt: 5, color: "white" ,textDecoration:'none'}} />
           </Box>
         </Grid>
+        
       </Grid>
+        
     </ThemeProvider>
+    
   );
 }

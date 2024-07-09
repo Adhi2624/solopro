@@ -9,6 +9,9 @@ const PostDetail = () => {
     const [post, setPost] = useState(null);
     const [comment, setComment] = useState('');
     const backend = process.env.REACT_APP_BACKEND;
+    const lstorage = localStorage.getItem('user');
+    const lstorageparse = JSON.parse(lstorage);
+    const token = lstorageparse;
 
     useEffect(() => {
         fetchPost();
@@ -17,7 +20,15 @@ const PostDetail = () => {
     const fetchPost = async () => {
         try {
             const res = await axios.get(`${backend}/posts/${id}`);
-            setPost(res.data);
+            console.log(comment.author)
+            const postWithAuthors = await Promise.all(
+                res.data.comments.map(async (comment) => {
+                    const author = await axios.get(`${backend}/users/${comment.author}`);
+                    return { ...comment, author: author.data };
+                })
+            );
+            setPost({ ...res.data, comments: postWithAuthors });
+            console.log(post)
         } catch (err) {
             console.error("Error fetching post:", err);
         }
@@ -35,7 +46,7 @@ const PostDetail = () => {
     const handleCommentSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post(`${backend}/posts/${id}/comments`, { text: comment });
+            await axios.post(`${backend}/posts/${id}/comments`, { text: comment, id: lstorageparse.value.id });
             setComment('');
             fetchPost(); // Refresh post data
         } catch (err) {
@@ -43,12 +54,12 @@ const PostDetail = () => {
         }
     };
 
-    if (!post) return <p className="text-white">Loading...</p>;
+    if (!post) return <p style={{ color: 'white' }}>Loading...</p>;
 
     return (
         <div>
             <Nav1 />
-            <div className="container mt-5 text-white">
+            <div className="container mt-5" style={{ color: 'white' }}>
                 <h1>{post.title}</h1>
                 <p>{post.content}</p>
                 <div>
@@ -60,6 +71,14 @@ const PostDetail = () => {
                         <div className="form-group">
                             <textarea
                                 className="form-control"
+                                style={{
+                                    color: 'white',
+                                    backgroundColor: '#333',
+                                    border: '1px solid #555',
+                                    padding: '10px',
+                                    borderRadius: '5px',
+                                    resize: 'none'
+                                }}
                                 value={comment}
                                 onChange={(e) => setComment(e.target.value)}
                                 placeholder="Add a comment"
@@ -69,8 +88,9 @@ const PostDetail = () => {
                     </form>
                     <div className="mt-4">
                         {post.comments.map((comment) => (
-                            <div key={comment._id} className="mb-2">
-                                <strong>{comment.author.name}</strong>: {comment.text}
+                            <div key={comment._id} className="mb-2" style={{ color: 'white' }}>
+                                <img src={comment.author.profileImage} alt={comment.author.name} width="30" height="30" />
+                                <strong>{comment.author.name} ({comment.author.role})</strong>: {comment.content}
                             </div>
                         ))}
                     </div>

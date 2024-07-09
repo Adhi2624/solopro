@@ -1,6 +1,8 @@
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
+import firebaseConfig from "./firebaseconfig";
+//import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import Link from "@mui/material/Link";
@@ -14,8 +16,12 @@ import loginimage from "./login.png";
 import Navbarr from "./nav";
 import { Link as RouterLink } from "react-router-dom";
 import axios from "axios";
-import { setItemWithExpiry } from "./localStorageWithExpiry"; // Import the utility function
+import { setItemWithExpiry } from "./localStorageWithExpiry";
 import { useNavigate } from "react-router-dom";
+const backend = process.env.REACT_APP_BACKEND;
+
+// Initialize Firebase Auth
+//const auth = getAuth();
 
 function Copyright(props) {
   return (
@@ -44,6 +50,30 @@ function Copyright(props) {
   );
 }
 
+const handleGoogleSignIn = async () => {
+  //const provider = new GoogleAuthProvider();
+  try {
+    // const result = await signInWithPopup(auth, provider);
+    // const token = await result.user.getIdToken();
+
+    // // Log the authentication data from Google
+    // console.log("Google Sign-In Result:", result);
+    // console.log("Google Auth Token:", token);
+    // console.log("Google User Info:", result.user);
+
+    // Send token to backend
+    await fetch(`${backend}/api/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        //Authorization: `Bearer ${token}`
+      }
+    });
+  } catch (error) {
+    console.error("Error signing in with Google:", error);
+  }
+};
+
 const defaultTheme = createTheme({
   typography: {
     fontFamily: "Montserrat, Arial, sans-serif",
@@ -57,7 +87,6 @@ export default function Login() {
     const data = new FormData(event.currentTarget);
     const email = data.get("email");
     const password = data.get("password");
-    const backend = process.env.REACT_APP_BACKEND;
 
     try {
       const response = await axios.post(`${backend}/api/login`, {
@@ -73,11 +102,12 @@ export default function Login() {
 
       if (userData.role === "Student") {
         navigate("/student/");
-      } else if (userData.role === "Mentor" || userData.role === "Investor") {
+      } else if (userData.role === "Mentor" || userData.role === "Investor" ||userData.role === "Entrepreneur" ) {
         navigate("/mi/");
       } else if (userData.role === "Admin") {
         navigate("/admin/");
       }
+      
     } catch (error) {
       alert(
         `Login failed: ${
@@ -86,11 +116,12 @@ export default function Login() {
       );
     }
   };
+
   return (
     <ThemeProvider theme={defaultTheme}>
       <>
         <Navbarr />
-        <Grid container component="main" sx={{ height: "100vh" ,backgroundColor:"#040F15"}}>
+        <Grid container component="main" sx={{ height: "100vh", backgroundColor: "#040F15" }}>
           <CssBaseline />
           {/* <Grid
               item
@@ -243,6 +274,14 @@ export default function Login() {
                 >
                   Log in
                 </Button>
+                {/* <Button
+                  onClick={handleGoogleSignIn}
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                >
+                  Sign in with Google
+                </Button> */}
                 <Grid container>
                   <Grid item xs={12} style={{ textAlign: "center" }}>
                     <Typography variant="body2" style={{ fontSize: "1.2rem" }}>
@@ -268,7 +307,8 @@ export default function Login() {
                           fullWidth
                           variant="outlined"
                           sx={{ mt: 3, mb: 2 }}
-                        >Forgot password?
+                        >
+                          Forgot password?
                         </Button>
                       </RouterLink>
                     </Typography>

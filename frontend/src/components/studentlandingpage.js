@@ -29,6 +29,11 @@ const StudentLandingPage = () => {
       title: 'Community',
       animationUrl:community,
       link:'/student/community'
+    },
+    {
+      title: 'Find Entrepreneur',
+      animationUrl: BLOG, // Use the imported BLOG object directly
+      link: '/student/Entrepreneur'
     }
   ];
 
@@ -57,7 +62,7 @@ const StudentLandingPage = () => {
       <Container>
         <Row className="text-center" style={{justifyContent:'center'}}>
           {services.map((service, index) => (
-            <Col key={index} xs={12} md={6} lg={3} className="mb-4">
+            <Col key={index} xs={16} md={6} lg={3} className="mb-4">
               <Card className="h-100" style={{ backgroundColor: '#040F15', color: 'white', border:'groove' }}>
                 <Card.Body>
                   <Player

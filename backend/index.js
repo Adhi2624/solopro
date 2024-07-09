@@ -51,8 +51,10 @@ const startServer = async () => {
     const studentController = require("./controllers/studentController");
     const investorController = require("./controllers/investorController");
     const postControllers=require("./controllers/communityController");
+    const allusercontroller=require("./controllers/allusercontroller")
+    const entrepreneurcontroller=require('./controllers/entrepreneurcontroller');
     // Socket.io Setup
-    
+    app.get('/users/:id',allusercontroller.getUserById)
     app.get('/getstudents',studentController.getallstudents)
     app.use("/api/blogs", blogRoutes);
     app.use("/api/featuredStories", featuredStoryRoutes);
@@ -72,8 +74,10 @@ const startServer = async () => {
     app.get('/totaldata', getAllData);
     //app.get('/:name', getDataByName);
     app.get("/getmentors", mentorController.getAllMentors);
+    app.get("/getentrepreneur",entrepreneurcontroller.getAllEntrepreneur);
     app.get("/getinvestors", investorController.getAllInvestors);
     app.post("/getInvestor", investorController.getInvestorById);
+    app.get("/getentrepreneur",entrepreneurcontroller.getentrepreneurById);
     app.post("/getMentor", mentorController.getmentortById);
     app.post("/getstudent", studentController.getStudentById);
     app.post("/schedulemeeting", meetingController.scheduleMeeting);
@@ -83,8 +87,10 @@ const startServer = async () => {
     app.post("/getappointments", meetingController.getAppointmentsByMentorId);
     app.post("/updatestatus", meetingController.updateAppointmentStatus);
     app.post("/Mentor/getprofileimg", mentorController.getprofileimg);
+    app.post("/entrepreneur/getprogileimg",entrepreneurcontroller.getprofileimg);
     app.post("/Investor/getprofileimg", investorController.getprofileimg);
     app.post("/updatementor", mentorController.updateMentor);
+    app.post("/updateentrepreneur",entrepreneurcontroller.updateentrepreneur);
     app.post("/updateinvestor", investorController.updateInvestor);
 
 

@@ -9,7 +9,9 @@ import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { Link } from "react-router-dom";
+import CastForEducationIcon from '@mui/icons-material/CastForEducation';
 import { DarkModeContext } from "../../context/darkModeContext";
+import SchoolIcon from '@mui/icons-material/School';
 import { useContext, useState } from "react";
 
 const Sidebar = ({ isOpen, handleToggle }) => {
@@ -44,13 +46,13 @@ const Sidebar = ({ isOpen, handleToggle }) => {
             <p className="title">LISTS</p>
             <Link to="/students" style={{ textDecoration: "none" }}>
               <li>
-                <StoreIcon className="icon" />
+                <CastForEducationIcon className="icon" />
                 <span>Students</span>
               </li>
             </Link>
             <Link to="/mentors" style={{ textDecoration: "none" }}>
               <li>
-                <CreditCardIcon className="icon" />
+                <SchoolIcon className="icon" />
                 <span>Mentors</span>
               </li>
             </Link>
@@ -58,6 +60,12 @@ const Sidebar = ({ isOpen, handleToggle }) => {
               <li>
                 <LocalShippingIcon className="icon" />
                 <span>Investors</span>
+              </li>
+            </Link>
+            <Link to="/Entrepreneur" style={{ textDecoration: "none" }}>
+              <li>
+                <SchoolIcon className="icon" />
+                <span>Entrepreneur</span>
               </li>
             </Link>
             <p className="title">USER</p>

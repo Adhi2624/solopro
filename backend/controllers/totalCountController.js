@@ -9,10 +9,13 @@ exports.getTotalCount = async (req, res) => {
 
         // Get the count of mentors
         const mentorCount = await db.collection('mentors').countDocuments();
-        const EntrepreneurCount = await db.collection('Entrepreneur').countDocuments();
+        const EntrepreneurCount = await db.collection('entrepreneur').countDocuments();
 
         // Get the count of investors
         const investorCount = await db.collection('investors').countDocuments();
+
+        // Get the count of Entrepreneurs
+        
 
         res.json({
             studentCount,

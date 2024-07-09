@@ -26,6 +26,7 @@ const usersRouter = require('./routes/users');
 const investorRoutes = require('./routes/investorRoutes'); // Adjust the path as necessary
 const MentorRoutes = require('./routes/mentorRoutes'); // Adjust the path as necessary
 const studentRoutes = require('./routes/studentRoutes');
+const entrepreneurRoutes = require('./routes/entrepreneurRoutes');
 
 const passwordRoutes = require('./routes/passwordRoutes');
 
@@ -68,6 +69,8 @@ const startServer = async () => {
     app.use('/api', investorRoutes); // Use the new routes
     app.use('/api', MentorRoutes);
     app.use('/api', studentRoutes);
+
+    app.use('/api', entrepreneurRoutes);
 
 
     // Define API Endpoints

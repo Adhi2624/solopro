@@ -1,17 +1,22 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
+
+const Entrepreneur = require('../models/Entrepreneur');
+const User = require('../models/User'); // Assuming you have a User model for basic user info
 const Mentor = require('../models/Mentor');
 const Student = require('../models/Student');
 const Investor = require('../models/Investor');
+
 const Entrepreneur = require('../models/entrepreneur');
-const User = require('../models/User'); // Assuming you have a User model for basic user info
+const User = require('../models/User'); 
 const sendWelcomeEmail = require('../mailtemplates/registerMail');
 const sendMeetingEmail = require('../mailtemplates/meetingconfirm');
 
 router.post('/', async (req, res) => {
-  const { email, password, userType, ...userData } = req.body;
   console.log(req.body);
+  const { email, password, userType, ...userData } = req.body;
+  
 
   try {
     const hashedPassword = await bcrypt.hash(password, 10);

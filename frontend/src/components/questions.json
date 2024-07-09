@@ -101,30 +101,29 @@
         "required": true
       }
     ],
-    "Organization": [
+    "Entrepreneur": [
       {
-        "questionName": "orgName",
+        "questionName": "areaOfExpertise",
         "inputType": "text",
-        "label": "Organization Name",
+        "label": "Area of Expertise",
         "required": true
       },
       {
-        "questionName": "Orgnization's Primary Domain",
-        "inputType": "text",
-        "label": "Orgnization's Primary Domain",
+        "questionName": "numberOfPreviousMentorships",
+        "inputType": "number",
+        "label": "Number of Previous Mentorships",
         "required": true
       },
       {
-        "questionName": "adminOrPersonRepresenting",
-        "inputType": "text",
-        "label": "Admin/Person Representing",
-        "required": true
+        "questionName": "availableToMentor",
+        "inputType": "checkbox",
+        "label": "Available to Mentor",
+        "required": false
       },
-      
       {
-        "questionName": "orgRegProof",
-        "inputType": "file",
-        "label": "Organization Registration Proof",
+        "questionName": "linkedin",
+        "inputType": "text",
+        "label": "LinkedIn Profile",
         "required": true
       }
     ]

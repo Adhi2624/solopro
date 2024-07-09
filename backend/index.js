@@ -36,7 +36,7 @@ const app = express();
 
 
 // Middleware
-app.use(express.json());
+app.use(express.json({ limit: '5mb' }));
 app.use(cors());
 const storage = multer.memoryStorage();
 const upload = multer({ storage });

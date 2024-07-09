@@ -5,7 +5,7 @@ import './FirstPage.css';
 import image from '../images/image.svg';
 import Timeline from "./Timeline";
 import { motion, useScroll } from "framer-motion";
-import Navbar from "./Navbar";
+import Navbar from "../../nav";
 import SparklesText from "./magicui/sparkle-text";
 import BoxReveal from './Box'
 import AnimatedShinyText from './magicui/animatedShinyText'
@@ -17,8 +17,6 @@ import Lotie from './Lotie';
 
 
 const FirstPage = () => {
-  const [scrolled, setScrolled] = useState(false);
-
   useEffect(() => {
     const targets = gsap.utils.toArray(".ball");
     const onMouseMove = (e) => {
@@ -39,25 +37,7 @@ const FirstPage = () => {
     };
   }, []);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      const sectionHeight = document.querySelector('.solopro-section').offsetHeight;
-
-      if (scrollPosition > sectionHeight / 2) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
+  
   const { scrollYProgress } = useScroll();
 
   return (
@@ -76,17 +56,18 @@ const FirstPage = () => {
       <AnimatedShinyText />
       <div className="card-css  " style={{ marginBottom: "200px" }} ><PricingCards /></div>
 
-      <h1 style={{  background: 'linear-gradient(45deg, #883B94, #C52E65)', WebkitBackgroundClip: 'text',WebkitTextFillColor: 'transparent',marginBottom: '50px',fontSize: '70px',fontWeight: '100',textAlign: 'center'}}>
+      <h1 style={{  background: 'linear-gradient(45deg, #883B94, #C52E65)', WebkitBackgroundClip: 'text',WebkitTextFillColor: 'transparent',marginBottom: '50px',fontSize: '40px',fontWeight: '100',textAlign: 'center',fontStyle:'montserrat'
+      }}>
         Our Carefully Selected Environment offers</h1>
       {/* <TextParallaxContentExample /> */}
       <div className="timeline">
-        <h1 style={{  background: 'linear-gradient(45deg, #883B94, #C52E65)', WebkitBackgroundClip: 'text',WebkitTextFillColor: 'transparent',marginBottom: '50px',fontSize: '70px',fontWeight: '100',textAlign: 'center'}}>
+        <h1 style={{  background: 'linear-gradient(45deg, #883B94, #C52E65)', WebkitBackgroundClip: 'text',WebkitTextFillColor: 'transparent',marginBottom: '50px',fontSize: '40px',fontWeight: '100',textAlign: 'center',fontStyle:'montserrat'}}>
           Your Journey
         </h1>
         <Timeline />
       </div>   
       <Footer/>
-      <div className={`solopro-section ${scrolled ? 'scrolled' : ''}`}>
+      <div className="solopro-section">
         <h1 className="solopro-text">SOLOPRO</h1>
       </div>
     </div>

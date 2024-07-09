@@ -42,7 +42,7 @@ const Scrambles = ({ text }) => {
     if (play && activeText < textArray.length - 1) {
       interval = setInterval(() => {
         setActiveText((prevActiveText) => prevActiveText + 1);
-      }, 90);
+      }, 60);
     } else if (!play) {
       click();
     }

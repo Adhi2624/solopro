@@ -16,6 +16,7 @@ const Appointments = () => {
   const lstorage = localStorage.getItem('user');
   const lstorageparse = JSON.parse(lstorage);
   const id = lstorageparse.value.uid;
+  const useremail=JSON.parse(localStorage.getItem('user')).value.email;
   let role = JSON.parse(localStorage.getItem('user')).value.role;
   role = role.toLowerCase();
 
@@ -37,11 +38,14 @@ const Appointments = () => {
     if (!confirmChange) return;
   
     try {
-      await axios.post(`${backend}/updatestatus`, { appointmentId: appointmentId, meetingStatus: newStatus });
+      await axios.post(`${backend}/updatestatus`, { appointmentId: appointmentId, meetingStatus: newStatus,email:useremail });
       fetchAppointments();
+      
+
     } catch (error) {
       console.error('Error updating meeting status:', error);
     }
+    window.location.reload(); // Refresh the page
   };
   
 

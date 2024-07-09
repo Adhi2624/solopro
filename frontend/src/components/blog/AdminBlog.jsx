@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from 'react';
+// import { useHistory } from "react-router-dom";
+// import GoBackButton from './GoBackButton';
+import { useNavigate } from 'react-router-dom';
+import { styled, ThemeProvider, createTheme } from "@mui/material/styles";
+import { TextField } from '@mui/material';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
+import Button from '@mui/joy/Button'; 
 
 const AdminBlog = () => {
   const [title, setTitle] = useState('');
@@ -25,7 +31,27 @@ const AdminBlog = () => {
   useEffect(() => {
     fetchData();
   }, []);
-
+  const CustomTextField = styled(TextField)({
+    "& .MuiInputBase-root": {
+      color: "white",
+    },
+    "& .MuiOutlinedInput-root": {
+      "& fieldset": {
+        borderColor: "white",
+      },
+      "&:hover fieldset": {
+        borderColor: "white",
+      },
+      "&.Mui-focused fieldset": {
+        borderColor: "white",
+      },
+    },
+    "& input:-webkit-autofill": {
+      "-webkit-box-shadow": "0 0 0 1000px #000 inset",
+      "-webkit-text-fill-color": "white",
+      "caret-color": "white",
+    },
+  });
   const fetchData = async () => {
     try {
       const blogsResponse = await axios.get(`${backend}/api/blogs`);
@@ -196,10 +222,22 @@ const AdminBlog = () => {
     setEditMode(false);
     setCurrentId(null);
   };
+  // const history = useHistory()
+  const navigate = useNavigate();
 
+const handleback= ()=>{
+  // const history = useHistory();
+
+  navigate(-1); 
+
+
+}
   return (
-    <div className="container mt-5">
+    <div className="container mt-5" style={{color:'white'}}>
       <h2 className="text-center">Admin Panel</h2>
+      <div className="pb-4">
+      <Button onClick={handleback}>Back to posts</Button></div>
+      {/* <GoBackButton /></div> */}
       <form onSubmit={handleAddOrUpdateBlog} className="mb-5">
         <h3>{editMode ? 'Update Blog Post' : 'Add New Blog Post'}</h3>
         <div className="mb-3">
@@ -207,6 +245,7 @@ const AdminBlog = () => {
           <input
             type="text"
             className="form-control"
+            style={{color:"white"}}
             id="title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
@@ -226,6 +265,7 @@ const AdminBlog = () => {
           <label htmlFor="description" className="form-label">Description</label>
           <textarea
             className="form-control"
+            style={{color:"white"}}
             id="description"
             rows="3"
             value={description}
@@ -237,6 +277,7 @@ const AdminBlog = () => {
           <label htmlFor="order" className="form-label">Order</label>
           <input
             type="number"
+            style={{color:"white"}}
             className="form-control"
             id="order"
             value={order}
@@ -302,6 +343,7 @@ const AdminBlog = () => {
           <label htmlFor="featuredDescription" className="form-label">Description</label>
           <textarea
             className="form-control"
+            style={{color:"white"}}
             id="featuredDescription"
             rows="3"
             value={featuredDescription}
@@ -377,6 +419,7 @@ const AdminBlog = () => {
           <textarea
             className="form-control"
             id="moreShortDescription"
+            style={{color:"white"}}
             rows="3"
             value={moreShortDescription}
             onChange={(e) => setMoreShortDescription(e.target.value)}

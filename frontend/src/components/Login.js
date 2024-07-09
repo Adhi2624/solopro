@@ -274,14 +274,14 @@ export default function Login() {
                 >
                   Log in
                 </Button>
-                <Button
+                {/* <Button
                   onClick={handleGoogleSignIn}
                   fullWidth
                   variant="contained"
                   sx={{ mt: 3, mb: 2 }}
                 >
                   Sign in with Google
-                </Button>
+                </Button> */}
                 <Grid container>
                   <Grid item xs={12} style={{ textAlign: "center" }}>
                     <Typography variant="body2" style={{ fontSize: "1.2rem" }}>

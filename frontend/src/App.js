@@ -22,6 +22,7 @@ import CreateMeet from "./components/GOOGLR";
 import List from "./pages/list/List";
 import ListMentors from "./pages/list/List-mentors";
 import ListStudents from "./pages/list/List-students";
+import ListEntrepreneur from "./pages/list/List-entre"; 
 import ForgotPassword from "./components/forgotpassword";
 function App() {
   const { darkMode } = useContext(DarkModeContext);
@@ -62,6 +63,7 @@ function App() {
           <Route path="/students" element={<ListStudents />} />
           <Route path="/mentors" element={<ListMentors />} />
           <Route path="/investors" element={<List />} />
+          <Route path="/Entrepreneur" element={<ListEntrepreneur />} />
 
           <Route path="*" element={<NotFoundPage />} />
         </Routes>

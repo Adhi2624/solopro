@@ -7,7 +7,7 @@ import { CircularProgress } from '@mui/material';
 
 const backend = process.env.REACT_APP_BACKEND;
 
-const DatatableMentors = () => {
+const DatatableEntrepreneur = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -15,7 +15,7 @@ const DatatableMentors = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${backend}/getmentors`);
+        const response = await axios.get(`${backend}/getEntrepreneur`);
         const mentorData = response.data.map((mentor) => ({
           id: mentor._id, 
           name: mentor.name,
@@ -36,7 +36,7 @@ const DatatableMentors = () => {
     console.log('Deleting mentor with ID:', id);
     try {
       setLoading(true);
-      await axios.delete(`${backend}/api/mentors/${id}`);
+      await axios.delete(`${backend}/api/Entrepreneur/${id}`);
       setData(data.filter((item) => item.id !== id));
       setLoading(false);
     } catch (error) {
@@ -50,7 +50,7 @@ const DatatableMentors = () => {
     console.log('Editing mentor:', updatedMentor);
     try {
       setLoading(true);
-      await axios.put(`${backend}/api/mentors/${updatedMentor.id}`, updatedMentor);
+      await axios.put(`${backend}/api/Entrepreneur/${updatedMentor.id}`, updatedMentor);
       setData(data.map((item) => (item.id === updatedMentor.id ? updatedMentor : item)));
       setLoading(false);
     } catch (error) {
@@ -87,7 +87,7 @@ const DatatableMentors = () => {
   //     width: 200,
   //     renderCell: (params) => (
   //       <div className="cellAction">
-  //         <Link to={`/mentors/${params.row.id}`} style={{ textDecoration: "none" }}>
+  //         <Link to={`/Entrepreneur/${params.row.id}`} style={{ textDecoration: "none" }}>
   //           <div className="viewButton">View</div>
   //         </Link>
   //         <div className="deleteButton" onClick={() => handleDelete(params.row.id)}>Delete</div>
@@ -100,7 +100,7 @@ const DatatableMentors = () => {
     <div className="datatable">
       <div className="datatableTitle">
         Mentor List
-        {/* <Link to="/mentors/new" className="link">
+        {/* <Link to="/Entrepreneur/new" className="link">
           Add New
         </Link> */}
       </div>
@@ -121,4 +121,4 @@ const DatatableMentors = () => {
   );
 };
 
-export default DatatableMentors;
+export default DatatableEntrepreneur;

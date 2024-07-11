@@ -4,8 +4,8 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const User = require('../models/User');
 const Student = require('../models/Student');
-const Mentor = require('../models/mentor');
-const Investor = require('../models/investor');
+const Mentor = require('../models/Mentor');
+const Investor = require('../models/Investor');
 const Entrepreneur=require('../models/Entrepreneur');
 const { getDB, connectDB } = require('../config/db');
 

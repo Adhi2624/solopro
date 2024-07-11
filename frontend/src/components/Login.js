@@ -14,6 +14,7 @@ import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import loginimage from "./login.png";
 import Navbarr from "./nav";
+// import Navbar from "./homepage/LandingPage/Navbarbri";
 import { Link as RouterLink } from "react-router-dom";
 import axios from "axios";
 import { setItemWithExpiry } from "./localStorageWithExpiry";
@@ -120,7 +121,9 @@ export default function Login() {
   return (
     <ThemeProvider theme={defaultTheme}>
       <>
-        <Navbarr />
+        {/* <Navbarr /> */}
+        
+{/* <Navbar /> */}
         <Grid container component="main" sx={{ height: "100vh", backgroundColor: "#040F15" }}>
           <CssBaseline />
           {/* <Grid

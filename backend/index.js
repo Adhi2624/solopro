@@ -43,9 +43,14 @@ const upload = multer({ storage });
 
 // Establish database connections before starting the server
 const startServer = async () => {
+  
   try {
     await connectDB();
     await connectDB1();
+    console.log('MongoDB connection established');
+        app.get('/', (req, res) => {
+            res.send('Welcome to the API');
+        });
     // Import controllers
     const mentorController = require("./controllers/mentorController");
     const meetingController = require("./controllers/meetingController");

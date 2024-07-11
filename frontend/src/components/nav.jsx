@@ -6,7 +6,7 @@ import '../css/style.css';
 
 const Navbarr = () => {
     return (
-        <Navbar expand="lg" className="rounded-4 mt-lg-2 mx-lg-1 rounded-sm-0 mt-md-1 mx-sm-0 flex-nowrap">
+        <Navbar expand="lg" className="rounded-4 mt-lg-1 mx-lg-1 rounded-sm-0 mt-md-1 mx-sm-0 flex-nowrap">
             <Container fluid>
                 {/* Brand centered for mobile */}
                 <div className="d-lg-none w-100 text-center mb-3">

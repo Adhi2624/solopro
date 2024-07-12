@@ -22,7 +22,7 @@
         "questionName": "linkedin",
         "inputType": "text",
         "label": "LinkedIn Profile",
-        "required": true
+        "required": false
       },
       {
         "questionName": "course",
@@ -34,7 +34,7 @@
         "questionName": "githubId",
         "inputType": "text",
         "label": "GitHub ID",
-        "required": true
+        "required": false
       },
       {
         "questionName": "collegeIdCardImage",
@@ -85,7 +85,7 @@
       {
         "questionName": "previousInvestmentAmount",
         "inputType": "number",
-        "label": "Previous Investment Amount",
+        "label": "Total number Previous Investments",
         "required": true
       },
       {
@@ -103,6 +103,12 @@
     ],
     "Entrepreneur": [
       {
+        "questionName": "NameoftheBusiness",
+        "inputType": "text",
+        "label": "Name of the Business",
+        "required": true
+      },
+      {
         "questionName": "areaOfExpertise",
         "inputType": "text",
         "label": "Area of Expertise",
@@ -112,7 +118,7 @@
         "questionName": "numberOfPreviousMentorships",
         "inputType": "number",
         "label": "Number of Previous Mentorships",
-        "required": true
+        "required": false
       },
       {
         "questionName": "availableToMentor",

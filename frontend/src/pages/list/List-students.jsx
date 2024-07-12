@@ -1,6 +1,6 @@
 import "./list.scss"
 import Sidebar from "../../components/sidebar/Sidebar"
-import Navbar from "../../components/navbar/Navbar"
+import Navbar from "../../components/homepage/LandingPage/Navbarbri";
 import { useState } from "react";
 
 import DatatableStudents from "../../components/datatable/Datatabe-Students"
@@ -15,7 +15,7 @@ const ListStudents = () => {
     <div className="list">
       <Sidebar isOpen={isOpen} handleToggle={handleToggle} />
       <div className={`listContainer ${isOpen ? "sidebar-open" : ""}`}>
-        <Navbar/>
+        {/* <Navbar/> */}
         
         <DatatableStudents/>
       </div>

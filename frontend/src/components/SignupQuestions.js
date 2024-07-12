@@ -538,7 +538,7 @@ const SignupQuestions = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Nav />
+      {/* <Nav /> */}
       <Box
        
         sx={{

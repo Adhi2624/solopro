@@ -1,0 +1,42 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "index.js",
+        "use": "@vercel/node"
+      }
+    ],
+    "routes": [
+      { "src": "/getmentors", "dest": "/index.js" },
+      { "src": "/getinvestors", "dest": "/index.js" },
+      { "src": "/getInvestor", "dest": "/index.js" },
+      { "src": "/getMentor", "dest": "/index.js" },
+      { "src": "/getstudent", "dest": "/index.js" },
+      { "src": "/schedulemeeting", "dest": "/index.js" },
+      { "src": "/getmeetingstu", "dest": "/index.js" },
+      { "src": "/updatestudent", "dest": "/index.js" },
+      { "src": "/student/getprofileimg", "dest": "/index.js" },
+      { "src": "/getappointments", "dest": "/index.js" },
+      { "src": "/updatestatus", "dest": "/index.js" },
+      { "src": "/Mentor/getprofileimg", "dest": "/index.js" },
+      { "src": "/Investor/getprofileimg", "dest": "/index.js" },
+      { "src": "/api/blogs/(.*)", "dest": "/index.js" },
+      { "src": "/api/featuredStories/(.*)", "dest": "/index.js" },
+      { "src": "/updatementor", "dest": "/index.js" },
+      { "src": "/updateinvestor", "dest": "/index.js" },
+      { "src": "/api/moreStories/(.*)", "dest": "/index.js" },
+      { "src": "/api/signup/(.*)", "dest": "/index.js" },
+      { "src": "/api/login/(.*)", "dest": "/index.js" },
+      { "src": "/api/check-email", "dest": "/index.js" },
+      { "src": "/password/(.*)", "dest": "/index.js" },
+      { "src": "/api/total/(.*)", "dest": "/index.js" },
+      { "src": "/api/(.*)", "dest": "/index.js" },
+      { "src": "/posts", "dest": "/index.js" },
+      { "src": "/users/(.*)", "dest": "/index.js" },
+      { "src": "/totaldata", "dest": "/index.js" },
+      { "src": "/getentrepreneur", "dest": "/index.js" },
+      { "src": "/entrepreneur/getprogileimg", "dest": "/index.js" },
+      { "src": "/updateentrepreneur", "dest": "/index.js" }
+    ]
+  }
+  

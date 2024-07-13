@@ -11,7 +11,7 @@ nav {
 }
 /* Custom CSS (style.css) */
 .navbar-brand img {
-  height: auto; /* Ensure the logo scales naturally */
+  height: 40px; /* Ensure the logo scales naturally */
 }
 
 .navbar-nav .nav-link {

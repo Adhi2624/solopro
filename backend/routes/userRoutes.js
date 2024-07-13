@@ -91,6 +91,10 @@ router.post('/', async (req, res) => {
     // sendMeetingEmail(req.body.)
   } catch (error) {
     console.error("Server error:", error);
+    if (user && user._id) {
+      // Delete the user if created
+      await User.findByIdAndDelete(user._id);
+    }
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 });

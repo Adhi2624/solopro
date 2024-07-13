@@ -15,7 +15,7 @@ exports.scheduleMeeting = async (req, res) => {
         //delete meetingData._id;
         // await meeting.insertOne(meetingData);
         await (await db).collection('meetings').insertOne(meetingData);
-        meetingconf(req.body.email)
+        //meetingconf(req.body.email);
         res.status(201).json({ message: 'Meeting data inserted' });
     } catch (error) {
         console.error("Error scheduling meeting:", error);
@@ -60,16 +60,18 @@ exports.updateAppointmentStatus = async (req, res) => {
     try {
      //   const db = getDB();
         const { appointmentId, meetingStatus } = req.body;
-        
+        console.log(req.body)
         const updatedAppointment =await (await db).collection('meetings').updateOne(
             { _id: new ObjectId(appointmentId) },
             { $set: { meetingStatus: meetingStatus } },
             { returnOriginal: false }
         );
+        await sendMail(appointmentId);
+        console.log(updatedAppointment.value)
         if (updatedAppointment.value) {
-           // await sendMail(_id);
+           
             res.json(updatedAppointment.value);
-            
+            console.log(12)
         } else {
             res.status(404).json({ error: 'Appointment not found' });
         }
@@ -82,22 +84,42 @@ exports.updateAppointmentStatus = async (req, res) => {
 
 const sendMail = async (_id) => {
     try {
-      const meetdetails = await (await db).collection('meetings').findOne({ _id: new ObjectId(_id) });
-  
-      if (!meetdetails) {
-        throw new Error('Meeting not found');
-      }
-  
-      const { mentorname: mentorName, studentname: menteeName, meetingStatus, meetinglink: meetingLink } = meetdetails;
-  
-      if (!mentorName || !menteeName || !meetingStatus || !meetingLink) {
-        throw new Error('Incomplete meeting details');
-      }
-  
-      if (meetingStatus === 'approved' || meetingStatus === 'rejected') {
-        sendEmail(mentorName, menteeName, meetingLink,meetingStatus);
-      }
+        const meetdetails = await db.collection('meetings').findOne({ _id: new ObjectId(_id) });
+        console.log(meetdetails)
+        if (!meetdetails) {
+            throw new Error('Meeting not found');
+        }
+
+        const findMentor = async (mentorId) => {
+            let mentor = await db.collection('investors').findOne({ _id: new ObjectId(mentorId) });
+            if (mentor) return mentor.email;
+
+            mentor = await db.collection('mentors').findOne({ _id: new ObjectId(mentorId) });
+            if (mentor) return mentor.email;
+
+            mentor = await db.collection('entrepreneurs').findOne({ _id: new ObjectId(mentorId) });
+            return mentor.email;
+        };
+
+        let mentorEmail = await findMentor(meetdetails.mentorid);
+        console.log(mentorEmail)
+        console.log(meetdetails.studentid)
+        let studentDetails = await db.collection('Users').findOne({ _id: new ObjectId(meetdetails.studentId) });
+        let studentEmail = studentDetails;
+        console.log(studentEmail)
+        const { mentorname: mentorName, studentname: menteeName, title, startDate, startTime, endDate, endTime, meetingStatus, meetingLink } = meetdetails;
+
+        if (!mentorName || !mentorEmail || !menteeName || !studentEmail || !meetingStatus || !meetingLink) {
+            throw new Error('Incomplete meeting details');
+        }
+
+        if (meetingStatus === 'Approved' || meetingStatus === 'Rejected') {
+            // Send email to mentor
+            meetingconf('adhithiyan.21it@sonatech.ac.in', mentorEmail, 'SOLOPRO', mentorName, title, startDate, startTime, endDate, endTime, meetingLink, meetingStatus);
+            // Send email to mentee
+            meetingconf('adhithiyan.21it@sonatech.ac.in', studentEmail, 'SOLOPRO', menteeName, title, startDate, startTime, endDate, endTime, meetingLink, meetingStatus);
+        }
     } catch (error) {
-      console.error('Error handling meeting email:', error);
+        console.error('Error handling meeting email:', error.message);
     }
-  };
+};

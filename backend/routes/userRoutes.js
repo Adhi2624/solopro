@@ -8,8 +8,7 @@ const Mentor = require('../models/mentor');
 const Student = require('../models/student');
 const Investor = require('../models/investor');
 
-//const Entrepreneur = require('../models/entrepreneur');
-//const User = require('../models/User'); 
+
 const sendWelcomeEmail = require('../mailtemplates/registerMail');
 const sendMeetingEmail = require('../mailtemplates/meetingconfirm');
 

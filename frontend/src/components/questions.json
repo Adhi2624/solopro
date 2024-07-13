@@ -1,154 +1,131 @@
 {
-  "Student": [
-    {
-      "questionName": "collegeName",
-      "inputType": "text",
-      "label": "College Name",
-      "required": true
-    },
-    {
-      "questionName": "collegeLocation",
-      "inputType": "text",
-      "label": "College Location",
-      "required": true
-    },
-    {
-      "questionName": "native",
-      "inputType": "text",
-      "label": "Native",
-      "required": true
-    },
-    {
-      "questionName": "linkedin",
-      "inputType": "text",
-      "label": "LinkedIn Profile",
-      "required": true
-    },
-    {
-      "questionName": "course",
-      "inputType": "text",
-      "label": "Course",
-      "required": true
-    },
-    {
-      "questionName": "githubId",
-      "inputType": "text",
-      "label": "GitHub ID",
-      "required": true
-    },
-    {
-      "questionName": "collegeIdCardImage",
-      "inputType": "file",
-      "label": "College ID Card Image",
-      "required": true
-    },
-    {
-      "questionName": "age",
-      "inputType": "number",
-      "label": "Age",
-      "required": true
-    },
-    {
-      "questionName": "experience",
-      "inputType": "number",
-      "label": "experience (in years)",
-      "required": true
-    }
-  ],
-  "Mentor": [
-    {
-      "questionName": "areaOfExpertise",
-      "inputType": "text",
-      "label": "Area of Expertise",
-      "required": true
-    },
-    {
-      "questionName": "numberOfPreviousMentorships",
-      "inputType": "number",
-      "label": "Number of Previous Mentorships",
-      "required": true
-    },
-    {
-      "questionName": "availableToMentor",
-      "inputType": "checkbox",
-      "label": "Available to Mentor",
-      "required": false
-    },
-    {
-      "questionName": "linkedin",
-      "inputType": "text",
-      "label": "LinkedIn Profile",
-      "required": true
-    },
-    {
-      "questionName": "experience",
-      "inputType": "number",
-      "label": "experience (in years)",
-      "required": true
-    }
-  ],
-  "Investor": [
-    {
-      "questionName": "areaOfInterest",
-      "inputType": "text",
-      "label": "Area of Interest",
-      "required": true
-    },
-    {
-      "questionName": "previousInvestmentAmount",
-      "inputType": "number",
-      "label": "Previous Investment Amount",
-      "required": true
-    },
-    {
-      "questionName": "availableToInvest",
-      "inputType": "checkbox",
-      "label": "Available to Invest",
-      "required": false
-    },
-    {
-      "questionName": "linkedin",
-      "inputType": "text",
-      "label": "LinkedIn Profile",
-      "required": true
-    },
-    {
-      "questionName": "experience",
-      "inputType": "number",
-      "label": "experience (in years)",
-      "required": true
-    }
-  ],
-  "Entrepreneur": [
-    {
-      "questionName": "areaOfExpertise",
-      "inputType": "text",
-      "label": "Area of Expertise",
-      "required": true
-    },
-    {
-      "questionName": "numberOfPreviousMentorships",
-      "inputType": "number",
-      "label": "Number of Previous Mentorships",
-      "required": true
-    },
-    {
-      "questionName": "availableToMentor",
-      "inputType": "checkbox",
-      "label": "Available to Mentor",
-      "required": false
-    },
-    {
-      "questionName": "linkedin",
-      "inputType": "text",
-      "label": "LinkedIn Profile",
-      "required": true
-    },
-    {
-      "questionName": "experience",
-      "inputType": "number",
-      "label": "experience (in years)",
-      "required": true
-    }
-  ]
-}
+    "Student": [
+      {
+        "questionName": "collegeName",
+        "inputType": "text",
+        "label": "College Name",
+        "required": true
+      },
+      {
+        "questionName": "collegeLocation",
+        "inputType": "text",
+        "label": "College Location",
+        "required": true
+      },
+      {
+        "questionName": "native",
+        "inputType": "text",
+        "label": "Native",
+        "required": true
+      },
+      {
+        "questionName": "linkedin",
+        "inputType": "text",
+        "label": "LinkedIn Profile",
+        "required": true
+      },
+      {
+        "questionName": "course",
+        "inputType": "text",
+        "label": "Course",
+        "required": true
+      },
+      {
+        "questionName": "githubId",
+        "inputType": "text",
+        "label": "GitHub ID",
+        "required": true
+      },
+      {
+        "questionName": "collegeIdCardImage",
+        "inputType": "file",
+        "label": "College ID Card Image",
+        "required": true
+      },
+      {
+        "questionName": "age",
+        "inputType": "number",
+        "label": "Age",
+        "required": true
+      }
+    ],
+    "Mentor": [
+      {
+        "questionName": "areaOfExpertise",
+        "inputType": "text",
+        "label": "Area of Expertise",
+        "required": true
+      },
+      {
+        "questionName": "numberOfPreviousMentorships",
+        "inputType": "number",
+        "label": "Number of Previous Mentorships",
+        "required": true
+      },
+      {
+        "questionName": "availableToMentor",
+        "inputType": "checkbox",
+        "label": "Available to Mentor",
+        "required": false
+      },
+      {
+        "questionName": "linkedin",
+        "inputType": "text",
+        "label": "LinkedIn Profile",
+        "required": true
+      }
+    ],
+    "Investor": [
+      {
+        "questionName": "areaOfInterest",
+        "inputType": "text",
+        "label": "Area of Interest",
+        "required": true
+      },
+      {
+        "questionName": "previousInvestmentAmount",
+        "inputType": "number",
+        "label": "Previous Investment Amount",
+        "required": true
+      },
+      {
+        "questionName": "availableToInvest",
+        "inputType": "checkbox",
+        "label": "Available to Invest",
+        "required": false
+      },
+      {
+        "questionName": "linkedin",
+        "inputType": "text",
+        "label": "LinkedIn Profile",
+        "required": true
+      }
+    ],
+    "Entrepreneur": [
+      {
+        "questionName": "areaOfExpertise",
+        "inputType": "text",
+        "label": "Area of Expertise",
+        "required": true
+      },
+      {
+        "questionName": "numberOfPreviousMentorships",
+        "inputType": "number",
+        "label": "Number of Previous Mentorships",
+        "required": true
+      },
+      {
+        "questionName": "availableToMentor",
+        "inputType": "checkbox",
+        "label": "Available to Mentor",
+        "required": false
+      },
+      {
+        "questionName": "linkedin",
+        "inputType": "text",
+        "label": "LinkedIn Profile",
+        "required": true
+      }
+    ]
+  }
+  

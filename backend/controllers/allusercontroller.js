@@ -1,8 +1,8 @@
 const {getDB} = require('../config/db');
 const User=require('../models/User');
-const Student=require('../models/student');
-const mentor=require('../models/mentor');
-const investor=require('../models/investor');
+const Student=require('../models/Student');
+const mentor=require('../models/Mentor');
+const investor=require('../models/Investor');
 const entrepreneur=require('../models/Entrepreneur');
 exports.getAllData = async (req, res) => {
     try {

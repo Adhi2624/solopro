@@ -4,7 +4,7 @@ const {
   getInvestors,
   updateInvestor,
   deleteInvestor
-} = require('../controllers/investor-admin'); // Adjust the path as necessary
+} = require('../controllers/investor-admin.js'); // Adjust the path as necessary
 
 const router = express.Router();
 

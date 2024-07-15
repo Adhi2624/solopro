@@ -3,6 +3,14 @@
   border-right: 0.5px solid rgb(230, 227, 227);
   min-height: 100vh;
   background-color: white;
+  transition: transform 0.3s ease, width 0.3s ease;
+  transform: translateX(0);
+  width: 180px;
+
+  &.open {
+    transform: translateX(0);
+    width: 180px; // Adjust this width based on your design
+  }
 
   .top {
     height: 50px;
@@ -53,38 +61,70 @@
           color: #7451f8;
         }
 
-        span{
-            font-size: 13px;
-            font-weight: 600;
-            color: #888;
-            margin-left: 10px;
+        span {
+          font-size: 13px;
+          font-weight: 600;
+          color: #888;
+          margin-left: 10px;
         }
       }
     }
   }
 
-  .bottom{
-      display: flex;
-      align-items: center;
-      margin: 10px;
+  .bottom {
+    display: flex;
+    align-items: center;
+    margin: 10px;
 
-      .colorOption{
-          width: 20px;
-          height: 20px;
-          border-radius: 5px;
-          border: 1px solid #7451f8;
-          cursor: pointer;
-          margin: 5px;
+    .colorOption {
+      width: 20px;
+      height: 20px;
+      border-radius: 5px;
+      border: 1px solid #7451f8;
+      cursor: pointer;
+      margin: 5px;
 
-          &:nth-child(1){
-              background-color: whitesmoke;
-          }
-          &:nth-child(2){
-              background-color: #333;
-          }
-          &:nth-child(3){
-              background-color: darkblue;
-          }
+      &:nth-child(1) {
+        background-color: whitesmoke;
       }
+      &:nth-child(2) {
+        background-color: #333;
+      }
+      &:nth-child(3) {
+        background-color: darkblue;
+      }
+    }
+  }
+}
+
+.toggleButton {
+  display: none;
+  .icon {
+    font-size: 20px;
+    color: #0dc7e8c0;
+    cursor: pointer;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    z-index: 999;
+    top: 0;
+    left: 0;
+    width: 250px;
+    transform: translateX(-100%);
+    height: 100%;
+    &.open {
+      transform: translateX(0);
+    }
+  }
+
+  .toggleButton {
+    display: block;
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 1000;
   }
 }

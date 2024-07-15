@@ -12,8 +12,8 @@ const MentorProfile = () => {
   const lstorage = localStorage.getItem('user');
     const lstorageparse=JSON.parse(lstorage);
     
-    const sid=lstorageparse.value.uid;
-    console.log(sid);
+    const sid=lstorageparse.value.id;
+   
   const [meetingDetails, setMeetingDetails] = useState({
     title: '',
     startDate: '',
@@ -22,7 +22,7 @@ const MentorProfile = () => {
     endTime: '',
     meetinglink:'',
     meetingStatus:'waiting',
-    studentid:'',
+    studentid:`${sid}`,
     mentorid:`${id}`,
     mentorname:'',
     studentname:''
@@ -37,11 +37,7 @@ const MentorProfile = () => {
       .then((res) => {
         setMentorProfile(res.data);
         console.log(mentorProfile);
-        setMeetingDetails({
-          ...meetingDetails,
-          studentid:`${sid}`,// Same here, use studentid as a string,
-          mentorname:mentorProfile.name
-        });
+       
       })
       .catch((error) => alert(error));
 
@@ -63,13 +59,20 @@ const MentorProfile = () => {
   };
 
   const handleFormSubmit = () => {
+    setMeetingDetails({
+      ...meetingDetails,
+      studentid:`${sid}`,// Same here, use studentid as a string,
+      mentorname:mentorProfile.name
+    });
     const data = {
       ...meetingDetails,
     };
+
     console.log(meetingDetails);
     axios.post(`${backend}/schedulemeeting`, {meetingDetails})
       .then((res) => {
-        alert('Meeting request you will receive a response via mail');
+        alert('Meeting request raised successfully.');
+        // alert('Meeting request raised successfully. you will receive the response via mail');
         handleCloseModal();
       })
       .catch((error) => alert(error));

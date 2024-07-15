@@ -3,9 +3,8 @@ import Sidebar from "../../components/sidebar/Sidebar"
 import Navbar from "../../components/homepage/LandingPage/Navbarbri"
 import { useState } from "react";
 
-import DatatableMentors from "../../components/datatable/Datatable-Mentors"
-
-const ListMentors = () => {
+import DatatableEntrepreneur from "../../components/datatable/Datatabe-entre"
+const ListEntrepreneur = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleToggle = () => {
@@ -15,14 +14,13 @@ const ListMentors = () => {
   return (
     <div className="list">
       <Sidebar isOpen={isOpen} handleToggle={handleToggle} />
-      <div className="listContainer">
+      <div className={`listContainer ${isOpen ? "sidebar-open" : ""}`}>
         {/* <Navbar/> */}
         
-        <DatatableMentors/>
-        
+        <DatatableEntrepreneur/>
       </div>
     </div>
   )
 }
 
-export default ListMentors
+export default ListEntrepreneur

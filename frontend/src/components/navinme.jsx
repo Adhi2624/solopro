@@ -14,14 +14,14 @@ const Navinvmen = React.memo(() => {
   const [name, setName] = useState('');
   var role = lstorageparse.value.role;
   const backend = process.env.REACT_APP_BACKEND;
-  const fetchAppointmentCount = async () => {
-    try {
-      const response = await axios.get('/api/appointments/count');
-      setAppointmentCount(response.data.count);
-    } catch (error) {
-      console.error('Error fetching appointment count:', error);
-    }
-  };
+  // const fetchAppointmentCount = async () => {
+  //   try {
+  //     const response = await axios.get('/api/appointments/count');
+  //     setAppointmentCount(response.data.count);
+  //   } catch (error) {
+  //     console.error('Error fetching appointment count:', error);
+  //   }
+  // };
 
   useEffect(() => {
     axios.post(`${backend}/${role}/getprofileimg`, { id: id }).then((res) => {
@@ -29,7 +29,7 @@ const Navinvmen = React.memo(() => {
       setProfilePhoto(res.data.profileImage);
       setName(res.data.name)
     }).catch((err) => alert(err));
-    fetchAppointmentCount();
+   // fetchAppointmentCount();
   }, []);
 
   const handleLogout = () => {
@@ -46,23 +46,7 @@ const Navinvmen = React.memo(() => {
     <Navbar expand="lg" className="nav1 ">
       <Container>
         <Navbar.Brand href="/" className="d-flex align-items-center">
-        <img 
-
-src={soloLogo1} 
-
-style={{
-
-  height: '40px !important',
-
-  width: 'auto !important',
-
-  maxWidth: 'none !important'
-
-}} 
-
-alt='logo' 
-
-/>
+          <img src={soloLogo1} height={50} alt='logo' />
           <span className="ms-2" style={{ color: "white", fontWeight: 500, fontSize: "1.75rem", textShadow: "1px 1px 2px rgba(0, 0, 0, 0.5)" }}>SOLOPRO</span>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />

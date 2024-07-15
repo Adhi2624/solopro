@@ -1,23 +1,27 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
-const Mentor = require('../models/Mentor');
-const Student = require('../models/Student');
-const Investor = require('../models/Investor');
+
 const Entrepreneur = require('../models/Entrepreneur');
 const User = require('../models/User'); // Assuming you have a User model for basic user info
+const Mentor = require('../models/mentor');
+const Student = require('../models/student');
+const Investor = require('../models/investor');
+
+
 const sendWelcomeEmail = require('../mailtemplates/registerMail');
 const sendMeetingEmail = require('../mailtemplates/meetingconfirm');
 
 router.post('/', async (req, res) => {
-  const { email, password, userType, ...userData } = req.body;
   console.log(req.body);
+  const { email, password, userType, ...userData } = req.body;
+  
 
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = new User({
       email,
-      password: hashedPassword,
+      password: password,
       role: userType
     });
     await user.save();
@@ -80,12 +84,16 @@ router.post('/', async (req, res) => {
       const entrepreneur = new Entrepreneur(profileData);
       await entrepreneur.save();
     }
-
+    
     sendWelcomeEmail(req.body.name, req.body.email);
     res.status(201).json({ message: 'User created successfully' });
     // sendMeetingEmail(req.body.)
   } catch (error) {
     console.error("Server error:", error);
+    if (user && user._id) {
+      // Delete the user if created
+      await User.findByIdAndDelete(user._id);
+    }
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 });

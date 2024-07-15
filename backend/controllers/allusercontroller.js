@@ -1,6 +1,9 @@
 const {getDB} = require('../config/db');
-const User=require('../models/user');
-
+const User=require('../models/User');
+const Student=require('../models/Student');
+const mentor=require('../models/Mentor');
+const investor=require('../models/Investor');
+const entrepreneur=require('../models/Entrepreneur');
 exports.getAllData = async (req, res) => {
     try {
         const db = getDB(); // Get the database object
@@ -77,5 +80,58 @@ exports.getDataByName = async (req, res) => {
     } catch (error) {
         console.error("Error fetching data by name:", error);
         res.status(500).send("Internal Server Error");
+    }
+};
+
+exports.getUserById = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const user = await User.findById(id);
+        if (!user) {
+            return res.status(404).send({ error: 'User not found' });
+        }
+
+        let profile, name, profileImage;
+        switch (user.role) {
+            case 'Student':
+                profile = await Student.findOne({ email: user.email });
+                if (profile) {
+                    name = profile.name;
+                    profileImage = profile.profileImage;
+                }
+                break;
+            case 'Mentor':
+                profile = await Mentor.findOne({ email: user.email });
+                if (profile) {
+                    name = profile.name;
+                    profileImage = profile.profileImage;
+                }
+                break;
+            case 'Investor':
+                profile = await Investor.findOne({ email: user.email });
+                if (profile) {
+                    name = profile.name;
+                    profileImage = profile.profileImage;
+                }
+                break;
+            case 'Entrepreneur':
+                profile = await Entrepreneur.findOne({ email: user.email });
+                if (profile) {
+                    name = profile.name;
+                    profileImage = profile.profileImage;
+                }
+                break;
+            default:
+                console.log('Unknown role');
+                return res.status(400).send({ error: 'Unknown role' });
+        }
+
+        if (!profile) {
+            return res.status(404).send({ error: 'Profile not found' });
+        }
+
+        res.status(200).send({ name, profileImage });
+    } catch (error) {
+        res.status(500).send({ error: 'Failed to fetch user. Please try again.' });
     }
 };

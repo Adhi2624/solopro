@@ -1,3 +1,4 @@
+// mentorModel.js
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
@@ -14,7 +15,7 @@ const mentorSchema = new Schema({
   nativePlaceOrWork: { type: String },
   proofImage: { type: String },
   availableToMentor: { type: Boolean, required: true },
-  mentorshipCount: { type: Number, default: 0 },
+  mentorshipCount: { type: Number, default: 0 }
 });
 
 module.exports = mongoose.models.Mentor || mongoose.model('Mentor', mentorSchema);

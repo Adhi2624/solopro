@@ -71,10 +71,10 @@ const Blogs = () => {
 
         <h1 className="blog-heading">Blogs</h1>
         <h2 className="latest-updates mt-4">Latest Updates</h2>
-        <div className="row mt-4 justify-content-center">
+        <div className="row mt-4 justify-content-center " >
           {blogs.map((blog, index) => (
-            <div className="col-md-4" key={index} style={{ marginBottom: '20px' }}>
-              <div className="card bg-dark text-white h-100">
+            <div className="col-md-4 " key={index} style={{ marginBottom: '20px' }}>
+              <div className="card bg-dark text-white h-100 border border-primary shadow-lg bg-white rounded">
                 <img src={`data:image/png;base64,${blog.image}`} className="card-img-top-new" alt={`Blog ${index + 1}`} />
                 <div className="card-body d-flex flex-column">
                   <h5 className="card-title" style={{ marginBottom: '25px' }}><u>{blog.title}</u></h5>

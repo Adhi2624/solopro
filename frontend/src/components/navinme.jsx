@@ -14,14 +14,14 @@ const Navinvmen = React.memo(() => {
   const [name, setName] = useState('');
   var role = lstorageparse.value.role;
   const backend = process.env.REACT_APP_BACKEND;
-  const fetchAppointmentCount = async () => {
-    try {
-      const response = await axios.get('/api/appointments/count');
-      setAppointmentCount(response.data.count);
-    } catch (error) {
-      console.error('Error fetching appointment count:', error);
-    }
-  };
+  // const fetchAppointmentCount = async () => {
+  //   try {
+  //     const response = await axios.get('/api/appointments/count');
+  //     setAppointmentCount(response.data.count);
+  //   } catch (error) {
+  //     console.error('Error fetching appointment count:', error);
+  //   }
+  // };
 
   useEffect(() => {
     axios.post(`${backend}/${role}/getprofileimg`, { id: id }).then((res) => {
@@ -29,7 +29,7 @@ const Navinvmen = React.memo(() => {
       setProfilePhoto(res.data.profileImage);
       setName(res.data.name)
     }).catch((err) => alert(err));
-    fetchAppointmentCount();
+   // fetchAppointmentCount();
   }, []);
 
   const handleLogout = () => {

@@ -95,7 +95,7 @@ const startServer = async () => {
     app.post("/getappointments", meetingController.getAppointmentsByMentorId);
     app.post("/updatestatus", meetingController.updateAppointmentStatus);
     app.post("/Mentor/getprofileimg", mentorController.getprofileimg);
-    app.post("/entrepreneur/getprogileimg",entrepreneurcontroller.getprofileimg);
+    app.post("/Entrepreneur/getprofileimg",entrepreneurcontroller.getprofileimg);
     app.post("/Investor/getprofileimg", investorController.getprofileimg);
     app.post("/updatementor", mentorController.updateMentor);
     app.post("/updateentrepreneur",entrepreneurcontroller.updateentrepreneur);

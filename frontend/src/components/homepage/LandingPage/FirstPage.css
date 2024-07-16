@@ -106,6 +106,7 @@ footer .text-reset {
   white-space: nowrap; 
 }
 
+
 @media (max-width: 768px) {
   #unleas h3 {
     font-size: clamp(20px, 60px, 80px);

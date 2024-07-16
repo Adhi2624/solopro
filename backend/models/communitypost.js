@@ -11,8 +11,9 @@ const postSchema = new mongoose.Schema({
     content: { type: String, required: true },
     shortDesc: { type: String, required: true },
     likes: { type: Number, default: 0 },
+    likedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     comments: [commentSchema],
-    author: { type: mongoose.Schema.Types.ObjectId, required: true },
+    author: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User' },
     images: [String],
     videos: [String],
     role: { type: String }

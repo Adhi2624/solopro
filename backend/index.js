@@ -26,7 +26,9 @@ const usersRouter = require('./routes/users');
 const investorRoutes = require('./routes/investorRoutes'); // Adjust the path as necessary
 const MentorRoutes = require('./routes/mentorRoutes'); // Adjust the path as necessary
 const studentRoutes = require('./routes/studentRoutes');
+const entrepreneurRoutes = require('./routes/entrepreneurRoutes');
 
+const passwordRoutes = require('./routes/passwordRoutes');
 
 dotenv.config();
 const app = express();
@@ -34,24 +36,31 @@ const app = express();
 
 
 // Middleware
-app.use(express.json());
+app.use(express.json({ limit: '5mb' }));
 app.use(cors());
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
 // Establish database connections before starting the server
 const startServer = async () => {
+  
   try {
     await connectDB();
     await connectDB1();
+    console.log('MongoDB connection established');
+        app.get('/', (req, res) => {
+            res.send('Welcome to the API');
+        });
     // Import controllers
     const mentorController = require("./controllers/mentorController");
     const meetingController = require("./controllers/meetingController");
     const studentController = require("./controllers/studentController");
     const investorController = require("./controllers/investorController");
     const postControllers=require("./controllers/communityController");
+    const allusercontroller=require("./controllers/allusercontroller")
+    const entrepreneurcontroller=require('./controllers/entrepreneurcontroller');
     // Socket.io Setup
-    
+    app.get('/users/:id',allusercontroller.getUserById)
     app.get('/getstudents',studentController.getallstudents)
     app.use("/api/blogs", blogRoutes);
     app.use("/api/featuredStories", featuredStoryRoutes);
@@ -59,20 +68,24 @@ const startServer = async () => {
     app.use("/api/signup", userRoutes);
     app.use("/api/login", loginRoutes);
     app.use("/api/check-email", email);
-    
+    app.use('/password', passwordRoutes);
     // app.post('/createMeet', createMeet);
 
     app.use('/api', investorRoutes); // Use the new routes
     app.use('/api', MentorRoutes);
     app.use('/api', studentRoutes);
 
+    app.use('/api', entrepreneurRoutes);
+
 
     // Define API Endpoints
     app.get('/totaldata', getAllData);
     //app.get('/:name', getDataByName);
     app.get("/getmentors", mentorController.getAllMentors);
+    app.get("/getentrepreneur",entrepreneurcontroller.getAllEntrepreneur);
     app.get("/getinvestors", investorController.getAllInvestors);
     app.post("/getInvestor", investorController.getInvestorById);
+    app.get("/getentrepreneur",entrepreneurcontroller.getentrepreneurById);
     app.post("/getMentor", mentorController.getmentortById);
     app.post("/getstudent", studentController.getStudentById);
     app.post("/schedulemeeting", meetingController.scheduleMeeting);
@@ -82,8 +95,10 @@ const startServer = async () => {
     app.post("/getappointments", meetingController.getAppointmentsByMentorId);
     app.post("/updatestatus", meetingController.updateAppointmentStatus);
     app.post("/Mentor/getprofileimg", mentorController.getprofileimg);
+    app.post("/Entrepreneur/getprofileimg",entrepreneurcontroller.getprofileimg);
     app.post("/Investor/getprofileimg", investorController.getprofileimg);
     app.post("/updatementor", mentorController.updateMentor);
+    app.post("/updateentrepreneur",entrepreneurcontroller.updateentrepreneur);
     app.post("/updateinvestor", investorController.updateInvestor);
 
 
@@ -96,6 +111,7 @@ const startServer = async () => {
     //community
     app.post('/posts', upload.fields([{ name: 'images' }, { name: 'videos' }]), postControllers.createPost);
     app.put('/posts/:id', postControllers.updatePost);
+    app.get('/posts/:id', postControllers.getPost);
     app.get('/posts', postControllers.getPosts);
     app.put('/posts/:id/like', postControllers.likePost);
     app.post('/posts/:id/comments', postControllers.addComment);

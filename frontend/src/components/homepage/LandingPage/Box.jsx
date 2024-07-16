@@ -1,4 +1,5 @@
 import "./Box.css";
+import { Link } from 'react-router-dom';
 
 import { useState, useRef, useEffect } from "react";
 import team from '../images/team.png';
@@ -31,7 +32,8 @@ function Box() {
       });
     }
   }, [isIntersecting]);
-
+  
+ 
   return (
     <div className="Box">
       <main ref={ref}>
@@ -39,8 +41,10 @@ function Box() {
         <div className="child-two">
           <span className="Content"><p className="headder">Join Our Elite Squad of Champions!</p>
           <p>Enhance your intellect and wisdom.</p>
-          <button>Progress with Us</button></span>
+          <Link to="/login"> <button>Progress with Us</button></Link>
+          </span> 
         </div>
+       
       </main>
     </div>
   );

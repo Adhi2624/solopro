@@ -81,16 +81,17 @@ const UserList = () => {
                 <div className="d-flex justify-content-center mb-3" style={{ color: 'white' }}>
                     <input
                         type="text"
+                        style={{ color: 'white !important'  }}
                         className="form-control w-50"
                         placeholder="Search among all users"
                         value={searchTerm}
                         onChange={handleSearch}
-                        style={{ color: 'white' }}
+                        
                     />
-                    <select className="form-select w-auto ms-2" value={searchField} onChange={handleSearchFieldChange}>
-                        <option value="name">Name</option>
-                        <option value="email">Email</option>
-                        <option value="role">Role</option>
+                    <select className="form-select w-auto ms-2" value={searchField} style={{color:'white'}} onChange={handleSearchFieldChange}>
+                        <option value="name" style={{color:'black'}}>Name</option>
+                        <option value="email" style={{color:'black'}}>Email</option>
+                        <option value="role" style={{color:'black'}}>Role</option>
                     </select>
                 </div>
                 <div className="table-responsive">

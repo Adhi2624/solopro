@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import lottie from "./BLOG.json";
 import {
   TextField,
   Button,
@@ -13,13 +12,24 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  Checkbox,
   FormControlLabel,
-  Switch,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
 } from "@mui/material";
 import { styled, ThemeProvider, createTheme } from "@mui/material/styles";
-import Lottie from "react-lottie";
 import axios from "axios";
+import questions from "./questions.json"; // Import the JSON file
+import Lottie from "react-lottie";
+import signUpLottie from "./signuplottie.json"; // Import the Lottie animation
+import Nav from './nav';
 
+// Custom TextField styling for white text and border
 const CustomTextField = styled(TextField)({
   "& .MuiInputBase-root": {
     color: "white",
@@ -42,6 +52,7 @@ const CustomTextField = styled(TextField)({
   },
 });
 
+// Custom StepLabel styling for white text
 const CustomStepLabel = styled(StepLabel)({
   "& .MuiStepLabel-label": {
     color: "white",
@@ -54,8 +65,9 @@ const CustomStepLabel = styled(StepLabel)({
   },
 });
 
+// Custom Select styling for black text and white border
 const CustomSelect = styled(Select)({
-  color: "white",
+  color: "black",
   borderColor: "white",
   "& .MuiOutlinedInput-root": {
     "& fieldset": {
@@ -73,27 +85,37 @@ const CustomSelect = styled(Select)({
   },
   "& input:-webkit-autofill": {
     "-webkit-box-shadow": "0 0 0 1000px #000 inset",
-    "-webkit-text-fill-color": "white",
-    "caret-color": "white",
+    "-webkit-text-fill-color": "black",
+    "caret-color": "black",
   },
 });
 
+// Theme configuration with blue background
 const theme = createTheme({
   palette: {
     primary: {
       main: "#1976d2",
     },
     secondary: {
-      main: "#dc004e",
+      main: "#000000",
+    },
+    background: {
+      default: "#07161F", // Blue shade for the background
+    },
+  },
+  typography: {
+    allVariants: {
+      color: "white",
     },
   },
 });
 
+// Step labels for the stepper
 const steps = [
   "Email Verification",
   "Basic Information",
-  "User Questions",
   "User Type",
+  "User Questions",
   "Additional Details",
   "Review & Submit",
 ];
@@ -102,640 +124,414 @@ const SignupQuestions = () => {
   const navigate = useNavigate();
   const [activeStep, setActiveStep] = useState(0);
   const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [userQuestions, setUserQuestions] = useState([]);
+  const [linkedinProfile, setLinkedinProfile] = useState("");
   const [userType, setUserType] = useState("");
-  const [collegeName, setCollegeName] = useState("");
-  const [course, setCourse] = useState("");
-  const [collegeLocation, setCollegeLocation] = useState("");
-  const [git, setGit] = useState("");
-  const [collegeIdPhoto, setCollegeIdPhoto] = useState(null);
-  const [collegeIdPhotoUrl, setCollegeIdPhotoUrl] = useState("");
-  const [areaOfExpertise, setAreaOfExpertise] = useState("");
-  const [experience, setExperience] = useState("");
-  const [availableToMentor, setAvailableToMentor] = useState(false);
-  const [mentorshipCount, setMentorshipCount] = useState("");
-  const [availableToInvest, setAvailableToInvest] = useState(false);
-  const [investmentCount, setInvestmentCount] = useState("");
-  const [investmentAmount, setInvestmentAmount] = useState("");
-  const [proofImage, setProofImage] = useState(null);
-  const [proofImageUrl, setProofImageUrl] = useState("");
   const [profileImage, setProfileImage] = useState(null);
   const [profileImageUrl, setProfileImageUrl] = useState("");
-  const [orgnName, setOrgnName] = useState("");
-  const [orgnHead, setOrgnHead] = useState("");
-  const [orgnLocation, setOrgnLocation] = useState("");
-  const [orgnType, setOrgnType] = useState("");
-  const [orgnProofPhoto, setOrgnProofPhoto] = useState(null);
-  const [orgnProofPhotoUrl, setOrgnProofPhotoUrl] = useState("");
+  const [proofImage, setProofImage] = useState(null);
+  const [proofImageUrl, setProofImageUrl] = useState("");
+  const [userQuestions, setUserQuestions] = useState([]);
+  const [formData, setFormData] = useState({});
 
   const backend = process.env.REACT_APP_BACKEND;
 
-  const handleInputChange = (key, value) => {
-    setUserQuestions((prevQuestions) =>
-      prevQuestions.map((question) =>
-        question.key === key ? { ...question, value } : question
-      )
-    );
+  // Load questions based on user type
+  useEffect(() => {
+    if (userType) {
+      setUserQuestions(questions[userType]);
+    }
+  }, [userType]);
+
+  // Handle file change and resize the image
+  const handleFileChange = (e, setFile, setFileUrl) => {
+    const file = e.target.files[0];
+    if (file) {
+      setFile(file);
+
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement("canvas");
+          const MAX_WIDTH = 800;
+          const MAX_HEIGHT = 800;
+          let width = img.width;
+          let height = img.height;
+
+          if (width > height) {
+            if (width > MAX_WIDTH) {
+              height *= MAX_WIDTH / width;
+              width = MAX_WIDTH;
+            }
+          } else {
+            if (height > MAX_HEIGHT) {
+              width *= MAX_HEIGHT / height;
+              height = MAX_HEIGHT;
+            }
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0, width, height);
+
+          const resizedImage = canvas.toDataURL("image/jpeg");
+          setFileUrl(resizedImage);
+        };
+        img.src = event.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
-  const handleUserTypeChange = (event) => {
-    setUserType(event.target.value);
-  };
-
-  const defaultOptions = {
-    loop: true,
-    autoplay: true,
-    animationData: lottie,
-    rendererSettings: {
-      preserveAspectRatio: "xMidYMid slice",
-    },
-  };
-
+  // Handle next step validation and progression
   const handleNext = async () => {
     if (await validateCurrentStep()) {
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
     }
   };
 
+  // Handle back step
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleFileChange = (e, setFile, setFileUrl) => {
-    const file = e.target.files[0];
-    if (file) {
-        setFile(file);
-
-        const reader = new FileReader();
-        reader.onload = (event) => {
-            const img = new Image();
-            img.onload = () => {
-                const canvas = document.createElement('canvas');
-                const MAX_WIDTH = 500; // Set maximum width for resizing
-                const MAX_HEIGHT = 500; // Set maximum height for resizing
-                let width = img.width;
-                let height = img.height;
-
-                if (width > height) {
-                    if (width > MAX_WIDTH) {
-                        height *= MAX_WIDTH / width;
-                        width = MAX_WIDTH;
-                    }
-                } else {
-                    if (height > MAX_HEIGHT) {
-                        width *= MAX_HEIGHT / height;
-                        height = MAX_HEIGHT;
-                    }
-                }
-
-                canvas.width = width;
-                canvas.height = height;
-
-                const ctx = canvas.getContext('2d');
-                ctx.drawImage(img, 0, 0, width, height);
-
-                const dataUrl = canvas.toDataURL('image/jpeg'); // Converts image to base64 JPEG format
-                setFileUrl(dataUrl);
-            };
-            img.src = event.target.result;
-        };
-
-        reader.readAsDataURL(file);
-    }
-};
-
-
+  // Validate current step
   const validateCurrentStep = async () => {
     let isValid = true;
-
     if (activeStep === 0) {
       if (!email) {
         isValid = false;
-        alert("Please enter your email.");
+        alert("Email is required.");
       } else {
         try {
           const response = await axios.post(`${backend}/api/check-email`, {
             email,
           });
           if (response.data.exists) {
-            alert(
-              "This email is already in use. Redirecting to the login page."
-            );
-            navigate("/login");
             isValid = false;
+            alert("Email already exists. Redirecting to Login .");
+            navigate("/login");
           }
         } catch (error) {
           console.error("Error checking email:", error);
-          alert("There was an error checking your email.");
           isValid = false;
         }
       }
     } else if (activeStep === 1) {
-      if (!email || !password || !confirmPassword) {
+      if (!name || !phoneNumber  || !password || !confirmPassword) {
         isValid = false;
-        alert("All fields are required.");
+        alert("Name, Phone Number,  Password, and Confirm Password are required.");
       } else if (password !== confirmPassword) {
         isValid = false;
         alert("Passwords do not match.");
       }
     } else if (activeStep === 2) {
-      const incompleteQuestion = userQuestions.some((q) => !q.value);
-      if (incompleteQuestion) {
-        isValid = false;
-        alert("All questions are mandatory.");
-      }
-    } else if (activeStep === 3) {
       if (!userType) {
         isValid = false;
-        alert("Please select a user type.");
-      }
-    } else if (activeStep === 4) {
-      if (userType === "Student") {
-        if (
-          !collegeName ||
-          !course ||
-          !collegeLocation ||
-          !git ||
-          !collegeIdPhotoUrl
-        ) {
-          isValid = false;
-          alert("All fields are required for students.");
-        }
-      } else if (userType === "Mentor") {
-        if (
-          !areaOfExpertise ||
-          !experience ||
-          (availableToMentor && !mentorshipCount)
-        ) {
-          isValid = false;
-          alert("All fields are required for mentors.");
-        }
-      } else if (userType === "Investor") {
-        if (
-          (availableToInvest && (!investmentCount || !investmentAmount)) ||
-          !proofImageUrl
-        ) {
-          isValid = false;
-          alert("All fields are required for investors.");
-        }
-      } else if (userType === "Organization") {
-        if (
-          !orgnName ||
-          !orgnHead ||
-          !orgnLocation ||
-          !orgnType ||
-          !orgnProofPhotoUrl
-        ) {
-          isValid = false;
-          alert("All fields are required for organizations.");
-        }
+        alert("User Type is required.");
       }
     }
-
     return isValid;
   };
 
-  const handleSubmit = async () => {
-    if (await validateCurrentStep()) {
-      const userData = {
-        email,
-        password,
-        userQuestions,
-        userType,
-        collegeName,
-        course,
-        collegeLocation,
-        git,
-        collegeIdPhotoUrl,
-        areaOfExpertise,
-        experience,
-        availableToMentor,
-        mentorshipCount,
-        availableToInvest,
-        investmentCount,
-        investmentAmount,
-        proofImageUrl,
-        profileImageUrl,
-        orgnName,
-        orgnHead,
-        orgnLocation,
-        orgnType,
-        orgnProofPhotoUrl,
-      };
-      try {
-        await axios.post(`${backend}/api/submit-signup`, userData);
-        alert("Signup successful!");
-        navigate("/login");
-      } catch (error) {
-        console.error("Error submitting signup:", error);
-        alert("There was an error submitting your signup.");
-      }
-    }
+  // Handle input change for text fields
+  const handleInputChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: type === "checkbox" ? checked : value,
+    }));
   };
 
+  // Render user-specific questions based on input type
+  const renderUserQuestions = () => {
+    return userQuestions.map((question) => {
+      switch (question.inputType) {
+        case "text":
+          return (
+            <CustomTextField
+              key={question.questionName}
+              label={question.label}
+              name={question.questionName}
+              required={question.required}
+              fullWidth
+              variant="outlined"
+              sx={{ marginBottom: "20px" }}
+              onChange={handleInputChange}
+            />
+          );
+        case "number":
+          return (
+            <CustomTextField
+              key={question.questionName}
+              label={question.label}
+              name={question.questionName}
+              type="number"
+              required={question.required}
+              fullWidth
+              variant="outlined"
+              sx={{ marginBottom: "20px" }}
+              onChange={handleInputChange}
+            />
+          );
+        case "checkbox":
+          return (
+            <FormControlLabel
+              key={question.questionName}
+              control={
+                <Checkbox
+                  name={question.questionName}
+                  onChange={handleInputChange}
+                />
+              }
+              label={question.label}
+              sx={{ marginBottom: "20px" }}
+            />
+          );
+        case "file":
+          return (
+            <Box key={question.questionName}>
+              <Button
+                variant="contained"
+                component="label"
+                sx={{ marginBottom: "20px" }}
+              >
+                {question.label}
+                <input
+                  type="file"
+                  name={question.questionName}
+                  accept="image/*"
+                  hidden
+                  onChange={(e) =>
+                    handleFileChange(e, setProofImage, setProofImageUrl)
+                  }
+                />
+              </Button>
+              {proofImageUrl && (
+                <img
+                  src={proofImageUrl}
+                  alt="Proof"
+                  style={{
+                    maxWidth: "100px",
+                    maxHeight: "100px",
+                    marginBottom: "20px",
+                  }}
+                />
+              )}
+            </Box>
+          );
+        default:
+          return null;
+      }
+    });
+  };
+
+  // Handle form submission
+  const handleSubmit = async () => {
+    const formDataToSend = new FormData();
+    formDataToSend.append("email", email);
+    formDataToSend.append("name", name);
+    formDataToSend.append("phone", phoneNumber);
+    formDataToSend.append("password", password);
+    formDataToSend.append("linkedinProfile", linkedinProfile);
+    formDataToSend.append("userType", userType);
+  
+    if (profileImage) {
+      formDataToSend.append("profileImage", profileImageUrl);
+    }
+    if (proofImage) {
+      formDataToSend.append("proofImage", proofImageUrl);
+    }
+  
+    userQuestions.forEach((question) => {
+      formDataToSend.append(question.questionName, formData[question.questionName]);
+    });
+
+    const data = {};
+    for (let pair of formDataToSend.entries()) {
+      console.log(`${pair[0]}: ${pair[1]}`);
+      data[pair[0]] = pair[1]; 
+    }
+    
+    console.log(formDataToSend,data)
+
+   
+
+    try {
+      await axios.post(`${backend}/api/signup`, data);
+      alert("Signup successful!");
+      navigate("/login");
+    } catch (error) {
+      console.error("Error during signup:", error);
+      alert("An error occurred during signup. Please try again.");
+    }
+  };
+  
+  // Render the content for each step
   const renderStepContent = (step) => {
     switch (step) {
       case 0:
         return (
-          <Box>
-            <Lottie options={defaultOptions} height={400} width={400} />
-            <Typography variant="h6">Email Verification</Typography>
-            <CustomTextField
-              label="Email"
-              variant="outlined"
-              fullWidth
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </Box>
+          <CustomTextField
+            label="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            fullWidth
+            variant="outlined"
+          />
         );
       case 1:
         return (
-          <Box>
-            <Lottie options={defaultOptions} height={400} width={400} />
-            <Typography variant="h6">Basic Information</Typography>
+          <>
+            <CustomTextField
+              label="Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              fullWidth
+              variant="outlined"
+              sx={{ marginBottom: "20px" }}
+            />
+            <CustomTextField
+              label="Phone Number"
+              type="number"
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
+              fullWidth
+              variant="outlined"
+              sx={{ marginBottom: "20px" }}
+            />
+            <CustomTextField
+              label="LinkedIn Profile"
+              value={linkedinProfile}
+              onChange={(e) => setLinkedinProfile(e.target.value)}
+              fullWidth
+              variant="outlined"
+              sx={{ marginBottom: "20px" }}
+              type="link"
+            />
             <CustomTextField
               label="Password"
               type="password"
-              variant="outlined"
-              fullWidth
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              fullWidth
+              variant="outlined"
+              sx={{ marginBottom: "20px" }}
             />
             <CustomTextField
               label="Confirm Password"
               type="password"
-              variant="outlined"
-              fullWidth
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
+              fullWidth
+              variant="outlined"
+              sx={{ marginBottom: "20px" }}
             />
-          </Box>
+            <Button
+              variant="contained"
+              component="label"
+              sx={{ marginBottom: "20px" }}
+            >
+              Upload Profile Image
+              <input
+                type="file"
+                accept="image/*"
+                hidden
+                onChange={(e) =>
+                  handleFileChange(e, setProfileImage, setProfileImageUrl)
+                }
+              />
+            </Button>
+            {profileImageUrl && (
+              <img
+                src={profileImageUrl}
+                alt="Profile"
+                style={{
+                  maxWidth: "100px",
+                  maxHeight: "100px",
+                  marginBottom: "20px",
+                }}
+              />
+            )}
+          </>
         );
       case 2:
         return (
-          <Box>
-            <Lottie options={defaultOptions} height={400} width={400} />
-            <Typography variant="h6">
-              Lets Proceed with User Specific Questions
-            </Typography>
-            {userQuestions.map((question, index) => (
-              <CustomTextField
-                key={index}
-                label={question.question}
-                variant="outlined"
-                fullWidth
-                value={question.value}
-                onChange={(e) =>
-                  handleInputChange(question.key, e.target.value)
-                }
-              />
-            ))}
-          </Box>
+          <FormControl fullWidth style={{ backgroundColor: 'transparent' }}>
+  <InputLabel style={{ color: 'white' }}>User Type</InputLabel>
+  <CustomSelect
+    value={userType}
+    onChange={(e) => setUserType(e.target.value)}
+    label="User Type"
+    style={{ color: 'white' }}
+    MenuProps={{ PaperProps: { style: { backgroundColor: 'transparent' } } }} // Ensure menu background is transparent
+  >
+    {Object.keys(questions).map((type) => (
+      <MenuItem key={type} value={type} style={{ color: 'white' }}>
+        {type}
+      </MenuItem>
+    ))}
+  </CustomSelect>
+</FormControl>
+
+
         );
       case 3:
-        return (
-          <Box>
-            <Lottie options={defaultOptions} height={400} width={400} />
-            <Typography variant="h6">User Type</Typography>
-            <FormControl fullWidth>
-              <InputLabel>User Type</InputLabel>
-              <CustomSelect
-                value={userType}
-                onChange={handleUserTypeChange}
-                label="User Type"
-              >
-                <MenuItem value="Student">Student</MenuItem>
-                <MenuItem value="Mentor">Mentor</MenuItem>
-                <MenuItem value="Investor">Investor</MenuItem>
-                <MenuItem value="Organization">Organization</MenuItem>
-              </CustomSelect>
-            </FormControl>
-          </Box>
-        );
+        return renderUserQuestions();
       case 4:
         return (
-          <Box>
-            <Lottie options={defaultOptions} height={400} width={400} />
-            <Typography variant="h6">Additional Details</Typography>
-            {userType === "Student" && (
-              <>
-                <CustomTextField
-                  label="College Name"
-                  variant="outlined"
-                  fullWidth
-                  value={collegeName}
-                  onChange={(e) => setCollegeName(e.target.value)}
-                />
-                <CustomTextField
-                  label="Course"
-                  variant="outlined"
-                  fullWidth
-                  value={course}
-                  onChange={(e) => setCourse(e.target.value)}
-                />
-                <CustomTextField
-                  label="College Location"
-                  variant="outlined"
-                  fullWidth
-                  value={collegeLocation}
-                  onChange={(e) => setCollegeLocation(e.target.value)}
-                />
-                <CustomTextField
-                  label="GitHub Profile"
-                  variant="outlined"
-                  fullWidth
-                  value={git}
-                  onChange={(e) => setGit(e.target.value)}
-                />
-                <Button
-                  variant="contained"
-                  component="label"
-                  fullWidth
-                  sx={{ mt: 2 }}
-                >
-                  Upload College ID Photo
-                  <input
-                    type="file"
-                    hidden
-                    onChange={(e) =>
-                      handleFileChange(
-                        e,
-                        setCollegeIdPhoto,
-                        setCollegeIdPhotoUrl
-                      )
-                    }
-                  />
-                </Button>
-                {collegeIdPhotoUrl && (
-                  <img
-                    src={collegeIdPhotoUrl}
-                    alt="College ID"
-                    style={{ width: "100%", marginTop: "10px" }}
-                  />
-                )}
-              </>
-            )}
-            {userType === "Mentor" && (
-              <>
-                <CustomTextField
-                  label="Area of Expertise"
-                  variant="outlined"
-                  fullWidth
-                  value={areaOfExpertise}
-                  onChange={(e) => setAreaOfExpertise(e.target.value)}
-                />
-                <CustomTextField
-                  label="Years of Experience"
-                  variant="outlined"
-                  fullWidth
-                  value={experience}
-                  onChange={(e) => setExperience(e.target.value)}
-                />
-                <FormControlLabel
-                  control={
-                    <Switch
-                      checked={availableToMentor}
-                      onChange={(e) => setAvailableToMentor(e.target.checked)}
-                    />
-                  }
-                  label="Available to Mentor"
-                />
-                {availableToMentor && (
-                  <CustomTextField
-                    label="Number of People Mentored"
-                    variant="outlined"
-                    fullWidth
-                    value={mentorshipCount}
-                    onChange={(e) => setMentorshipCount(e.target.value)}
-                  />
-                )}
-              </>
-            )}
-            {userType === "Investor" && (
-              <>
-                <FormControlLabel
-                  control={
-                    <Switch
-                      checked={availableToInvest}
-                      onChange={(e) => setAvailableToInvest(e.target.checked)}
-                    />
-                  }
-                  label="Available to Invest"
-                />
-                {availableToInvest && (
-                  <>
-                    <CustomTextField
-                      label="Number of Investments"
-                      variant="outlined"
-                      fullWidth
-                      value={investmentCount}
-                      onChange={(e) => setInvestmentCount(e.target.value)}
-                    />
-                    <CustomTextField
-                      label="Total Investment Amount"
-                      variant="outlined"
-                      fullWidth
-                      value={investmentAmount}
-                      onChange={(e) => setInvestmentAmount(e.target.value)}
-                    />
-                  </>
-                )}
-                <Button
-                  variant="contained"
-                  component="label"
-                  fullWidth
-                  sx={{ mt: 2 }}
-                >
-                  Upload Proof of Investment
-                  <input
-                    type="file"
-                    hidden
-                    onChange={(e) =>
-                      handleFileChange(e, setProofImage, setProofImageUrl)
-                    }
-                  />
-                </Button>
-                {proofImageUrl && (
-                  <img
-                    src={proofImageUrl}
-                    alt="Proof of Investment"
-                    style={{ width: "100%", marginTop: "10px" }}
-                  />
-                )}
-              </>
-            )}
-            {userType === "Organization" && (
-              <>
-                <CustomTextField
-                  label="Organization Name"
-                  variant="outlined"
-                  fullWidth
-                  value={orgnName}
-                  onChange={(e) => setOrgnName(e.target.value)}
-                />
-                <CustomTextField
-                  label="Organization Head"
-                  variant="outlined"
-                  fullWidth
-                  value={orgnHead}
-                  onChange={(e) => setOrgnHead(e.target.value)}
-                />
-                <CustomTextField
-                  label="Organization Location"
-                  variant="outlined"
-                  fullWidth
-                  value={orgnLocation}
-                  onChange={(e) => setOrgnLocation(e.target.value)}
-                />
-                <CustomTextField
-                  label="Organization Type"
-                  variant="outlined"
-                  fullWidth
-                  value={orgnType}
-                  onChange={(e) => setOrgnType(e.target.value)}
-                />
-                <Button
-                  variant="contained"
-                  component="label"
-                  fullWidth
-                  sx={{ mt: 2 }}
-                >
-                  Upload Proof of Organization
-                  <input
-                    type="file"
-                    hidden
-                    onChange={(e) =>
-                      handleFileChange(
-                        e,
-                        setOrgnProofPhoto,
-                        setOrgnProofPhotoUrl
-                      )
-                    }
-                  />
-                </Button>
-                {orgnProofPhotoUrl && (
-                  <img
-                    src={orgnProofPhotoUrl}
-                    alt="Proof of Organization"
-                    style={{ width: "100%", marginTop: "10px" }}
-                  />
-                )}
-              </>
-            )}
-          </Box>
+          <>
+            <Typography variant="h6">Review your details:</Typography>
+            <TableContainer component={Paper}>
+              <Table style={{backgroundColor:"transparent"}}>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Field</TableCell>
+                    <TableCell>Value</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  <TableRow>
+                    <TableCell>Email</TableCell>
+                    <TableCell>{email}</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>Name</TableCell>
+                    <TableCell>{name}</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>Phone Number</TableCell>
+                    <TableCell>{phoneNumber}</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>LinkedIn Profile</TableCell>
+                    <TableCell>{linkedinProfile}</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>User Type</TableCell>
+                    <TableCell>{userType}</TableCell>
+                  </TableRow>
+                  {userQuestions.map((question) => (
+                    <TableRow key={question.questionName}>
+                      <TableCell>{question.label}</TableCell>
+                      <TableCell>{formData[question.questionName]}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </>
         );
       case 5:
         return (
-          <Box>
-            <Lottie options={defaultOptions} height={400} width={400} />
-            <Typography variant="h6">Review & Submit</Typography>
-            <Typography variant="body1">
-              <strong>Email:</strong> {email}
-            </Typography>
-            <Typography variant="body1">
-              <strong>User Type:</strong> {userType}
-            </Typography>
-            {userQuestions.map((question, index) => (
-              <Typography key={index} variant="body1">
-                <strong>{question.question}:</strong> {question.value}
-              </Typography>
-            ))}
-            {userType === "Student" && (
-              <>
-                <Typography variant="body1">
-                  <strong>College Name:</strong> {collegeName}
-                </Typography>
-                <Typography variant="body1">
-                  <strong>Course:</strong> {course}
-                </Typography>
-                <Typography variant="body1">
-                  <strong>College Location:</strong> {collegeLocation}
-                </Typography>
-                <Typography variant="body1">
-                  <strong>GitHub Profile:</strong> {git}
-                </Typography>
-                {collegeIdPhotoUrl && (
-                  <img
-                    src={collegeIdPhotoUrl}
-                    alt="College ID"
-                    style={{ width: "100%", marginTop: "10px" }}
-                  />
-                )}
-              </>
-            )}
-            {userType === "Mentor" && (
-              <>
-                <Typography variant="body1">
-                  <strong>Area of Expertise:</strong> {areaOfExpertise}
-                </Typography>
-                <Typography variant="body1">
-                  <strong>Years of Experience:</strong> {experience}
-                </Typography>
-                <Typography variant="body1">
-                  <strong>Available to Mentor:</strong>{" "}
-                  {availableToMentor ? "Yes" : "No"}
-                </Typography>
-                {availableToMentor && (
-                  <Typography variant="body1">
-                    <strong>Number of People Mentored:</strong>{" "}
-                    {mentorshipCount}
-                  </Typography>
-                )}
-              </>
-            )}
-            {userType === "Investor" && (
-              <>
-                <Typography variant="body1">
-                  <strong>Available to Invest:</strong>{" "}
-                  {availableToInvest ? "Yes" : "No"}
-                </Typography>
-                {availableToInvest && (
-                  <>
-                    <Typography variant="body1">
-                      <strong>Number of Investments:</strong> {investmentCount}
-                    </Typography>
-                    <Typography variant="body1">
-                      <strong>Total Investment Amount:</strong>{" "}
-                      {investmentAmount}
-                    </Typography>
-                  </>
-                )}
-                {proofImageUrl && (
-                  <img
-                    src={proofImageUrl}
-                    alt="Proof of Investment"
-                    style={{ width: "100%", marginTop: "10px" }}
-                  />
-                )}
-              </>
-            )}
-            {userType === "Organization" && (
-              <>
-                <Typography variant="body1">
-                  <strong>Organization Name:</strong> {orgnName}
-                </Typography>
-                <Typography variant="body1">
-                  <strong>Organization Head:</strong> {orgnHead}
-                </Typography>
-                <Typography variant="body1">
-                  <strong>Organization Location:</strong> {orgnLocation}
-                </Typography>
-                <Typography variant="body1">
-                  <strong>Organization Type:</strong> {orgnType}
-                </Typography>
-                {orgnProofPhotoUrl && (
-                  <img
-                    src={orgnProofPhotoUrl}
-                    alt="Proof of Organization"
-                    style={{ width: "100%", marginTop: "10px" }}
-                  />
-                )}
-              </>
-            )}
-          </Box>
+          <Button variant="contained" color="primary" onClick={handleSubmit}>
+            Submit
+          </Button>
         );
       default:
         return "Unknown step";
@@ -744,7 +540,35 @@ const SignupQuestions = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{ width: "100%", color: "white" }}>
+      {/* <Nav /> */}
+      <Box
+       
+        sx={{
+          backgroundColor: theme.palette.background.default,
+          minHeight: "100vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "column",
+          padding: "20px",
+        }}
+      >
+       
+        <Lottie
+          options={{
+            loop: true,
+            autoplay: true,
+            animationData: signUpLottie,
+            rendererSettings: {
+              preserveAspectRatio: "xMidYMid slice",
+            },
+          }}
+          height={200}
+          width={200}
+        />
+        <Typography variant="h4" sx={{ marginBottom: "20px" }}>
+          Signup
+        </Typography>
         <Stepper activeStep={activeStep} alternativeLabel>
           {steps.map((label) => (
             <Step key={label}>
@@ -752,30 +576,25 @@ const SignupQuestions = () => {
             </Step>
           ))}
         </Stepper>
-        {activeStep === steps.length ? (
-          <Box>
-            <Typography variant="h6" gutterBottom>
-              All steps completed
-            </Typography>
-            <Button onClick={handleSubmit} variant="contained" color="primary">
-              Submit
+        <Box sx={{ width: "100%", marginTop: "20px" }}>
+          {renderStepContent(activeStep)}
+          <Box sx={{ display: "flex", justifyContent: "space-between", marginTop: "20px" }}>
+            <Button
+              disabled={activeStep === 0}
+              onClick={handleBack}
+            >
+              Back
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleNext}
+              sx={{ marginLeft: "auto" }}
+            >
+              {activeStep === steps.length - 1 ? "Finish" : "Next"}
             </Button>
           </Box>
-        ) : (
-          <Box>
-            {renderStepContent(activeStep)}
-            <Box
-              sx={{ display: "flex", justifyContent: "space-between", mt: 2 }}
-            >
-              <Button disabled={activeStep === 0} onClick={handleBack}>
-                Back
-              </Button>
-              <Button variant="contained" color="primary" onClick={handleNext}>
-                {activeStep === steps.length - 1 ? "Submit" : "Next"}
-              </Button>
-            </Box>
-          </Box>
-        )}
+        </Box>
       </Box>
     </ThemeProvider>
   );

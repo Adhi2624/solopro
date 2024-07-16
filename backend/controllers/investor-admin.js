@@ -1,4 +1,4 @@
-const Investor = require('../models/investor'); // Adjust the path as necessary
+const Investor = require('../models/Investor'); // Adjust the path as necessary
 
 // Create a new investor
 const createInvestor = async (req, res) => {

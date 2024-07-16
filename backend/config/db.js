@@ -1,7 +1,8 @@
 // config/db.js
 const mongoose = require('mongoose');
+const uri=process.env.MONGODB_URI;
 const MongoClient = require('mongodb').MongoClient;
-const url = 'mongodb://localhost:27017';
+const url = uri;
 const dbName = 'solopro';
 
 let db;

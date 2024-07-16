@@ -43,9 +43,14 @@ const upload = multer({ storage });
 
 // Establish database connections before starting the server
 const startServer = async () => {
+  
   try {
     await connectDB();
     await connectDB1();
+    console.log('MongoDB connection established');
+        app.get('/', (req, res) => {
+            res.send('Welcome to the API');
+        });
     // Import controllers
     const mentorController = require("./controllers/mentorController");
     const meetingController = require("./controllers/meetingController");
@@ -90,7 +95,7 @@ const startServer = async () => {
     app.post("/getappointments", meetingController.getAppointmentsByMentorId);
     app.post("/updatestatus", meetingController.updateAppointmentStatus);
     app.post("/Mentor/getprofileimg", mentorController.getprofileimg);
-    app.post("/entrepreneur/getprogileimg",entrepreneurcontroller.getprofileimg);
+    app.post("/Entrepreneur/getprofileimg",entrepreneurcontroller.getprofileimg);
     app.post("/Investor/getprofileimg", investorController.getprofileimg);
     app.post("/updatementor", mentorController.updateMentor);
     app.post("/updateentrepreneur",entrepreneurcontroller.updateentrepreneur);

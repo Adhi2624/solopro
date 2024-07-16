@@ -1,6 +1,6 @@
 import "./list.scss"
 import Sidebar from "../../components/sidebar/Sidebar"
-import Navbar from "../../components/navbar/Navbar"
+import Navbar from "../../components/homepage/LandingPage/Navbarbri"
 import { useState } from "react";
 
 import DatatableMentors from "../../components/datatable/Datatable-Mentors"
@@ -16,7 +16,7 @@ const ListMentors = () => {
     <div className="list">
       <Sidebar isOpen={isOpen} handleToggle={handleToggle} />
       <div className="listContainer">
-        <Navbar/>
+        {/* <Navbar/> */}
         
         <DatatableMentors/>
         

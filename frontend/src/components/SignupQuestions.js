@@ -398,6 +398,7 @@ const SignupQuestions = () => {
             />
             <CustomTextField
               label="Phone Number"
+              type="number"
               value={phoneNumber}
               onChange={(e) => setPhoneNumber(e.target.value)}
               fullWidth
@@ -411,6 +412,7 @@ const SignupQuestions = () => {
               fullWidth
               variant="outlined"
               sx={{ marginBottom: "20px" }}
+              type="link"
             />
             <CustomTextField
               label="Password"
@@ -538,7 +540,7 @@ const SignupQuestions = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Nav />
+      {/* <Nav /> */}
       <Box
        
         sx={{

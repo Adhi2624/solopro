@@ -7,7 +7,7 @@ exports.getAllEntrepreneur = async (req, res) => {
     try {
         const db = getDB(); // Get the database object
         
-        const Entrepreneur = await db.collection("Entrepreneur").find().toArray();
+        const Entrepreneur = await db.collection("entrepreneurs").find().toArray();
         res.send(Entrepreneur);
     } catch (error) {
         console.error("Error fetching Entrepreneur:", error);
@@ -21,7 +21,7 @@ exports.getentrepreneurById = async (req, res) => {
     try {
         const db = getDB();
         const id = req.body._id;
-        const user = await db.collection("Entrepreneur").findOne({ _id: new ObjectId(id) });
+        const user = await db.collection("entrepreneurs").findOne({ _id: new ObjectId(id) });
         if (user) {
             res.json(user);
         } else {
@@ -38,7 +38,8 @@ exports.getprofileimg=async(req,res)=>
         const id=req.body.id;
         try{
         const db=getDB();
-        const profile= await (await db).collection('Entrepreneur').findOne({_id : new ObjectId(id)});
+        const profile= await (await db).collection('entrepreneurs').findOne({_id : new ObjectId(id)});
+       // console.log(profile);
         if (profile && profile.profileImage){
             res.json({ profileImage: profile.profileImage, name: profile.name });
         }
@@ -58,7 +59,7 @@ exports.getprofileimg=async(req,res)=>
         const { _id, ...dataup } = data;
         try {
             const db = await getDB();
-            await db.collection('Entrepreneur').updateOne(
+            await db.collection('entrepreneurs').updateOne(
                 { _id: new ObjectId(id) }, // Filter to select the document by ID
                 { $set: dataup } // Update operation
             );

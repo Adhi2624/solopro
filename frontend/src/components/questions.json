@@ -22,7 +22,7 @@
         "questionName": "linkedin",
         "inputType": "text",
         "label": "LinkedIn Profile",
-        "required": true
+        "required": false
       },
       {
         "questionName": "course",
@@ -34,7 +34,7 @@
         "questionName": "githubId",
         "inputType": "text",
         "label": "GitHub ID",
-        "required": true
+        "required": false
       },
       {
         "questionName": "collegeIdCardImage",

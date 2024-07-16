@@ -4,9 +4,10 @@ const bcrypt = require('bcrypt');
 
 const Entrepreneur = require('../models/Entrepreneur');
 const User = require('../models/User'); // Assuming you have a User model for basic user info
-const Mentor = require('../models/mentor');
-const Student = require('../models/student');
-const Investor = require('../models/investor');
+const Mentor = require('../models/Mentor');
+const Student = require('../models/Student');
+const Investor = require('../models/Investor');
+const admin = require('../models/admin');
 
 
 const sendWelcomeEmail = require('../mailtemplates/registerMail');
@@ -83,6 +84,11 @@ router.post('/', async (req, res) => {
       });
       const entrepreneur = new Entrepreneur(profileData);
       await entrepreneur.save();
+    }
+    else if (userType === 'admin') {
+      
+      const admin= new admin(profileData);
+      await admin.save();
     }
     
     sendWelcomeEmail(req.body.name, req.body.email);

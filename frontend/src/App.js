@@ -7,6 +7,7 @@ import BlogDetail from "./components/blog/BlogDetails";
 import AdminBlog from "./components/blog/AdminBlog";
 import SignupQuestions from "./components/SignupQuestions";
 import StudentsRoute from "./routes/studentsRoute";
+import AdminRoute from "./routes/adminroute";
 import MiRoute from "./routes/mi";
 import NotFoundPage from "./components/404";
 import GOOGLR from "./components/GOOGLR";
@@ -20,10 +21,12 @@ import "./style/dark.scss";
 import { DarkModeContext } from "./context/darkModeContext";
 import CreateMeet from "./components/GOOGLR";
 import List from "./pages/list/List";
+import UserList from "./components/tables/userlist";
 import ListMentors from "./pages/list/List-mentors";
 import ListStudents from "./pages/list/List-students";
 import ListEntrepreneur from "./pages/list/List-entre"; 
 import ForgotPassword from "./components/forgotpassword";
+
 function App() {
   const { darkMode } = useContext(DarkModeContext);
 
@@ -51,7 +54,9 @@ function App() {
             <Route path="/mi/*" element={<MiRoute />} />
           </Route>
           
-          <Route path="/dashboard" element={<HomePage />} />
+          <Route
+          element={<PrivateRoute allowedRoles={["Admin"]}/>}
+          ><Route path="/dashboard" element={<HomePage />} /></Route>
           <Route path="/users">
             <Route index element={<List />} />
             <Route path=":userId" element={<Single />} />
@@ -62,6 +67,7 @@ function App() {
           </Route>
           <Route path="/students" element={<ListStudents />} />
           <Route path="/mentors" element={<ListMentors />} />
+          <Route path="/userlist" element={<UserList />} />
           <Route path="/investors" element={<List />} />
           <Route path="/Entrepreneur" element={<ListEntrepreneur />} />
 

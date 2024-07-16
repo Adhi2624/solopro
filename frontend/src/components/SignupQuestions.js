@@ -585,13 +585,13 @@ const SignupQuestions = () => {
               Back
             </Button>
             <Button
-              variant="contained"
-              color="primary"
-              onClick={handleSubmit}
-              sx={{ marginLeft: "auto" }}
-            >
-              {activeStep === steps.length - 1 ?  "Next" :"Done"}
-            </Button>
+  variant="contained"
+  color="primary"
+  onClick={activeStep === steps.length - 1 ? handleSubmit : handleNext}
+  sx={{ marginLeft: "auto" }}
+>
+  {activeStep === steps.length - 1 ? "Done" : "Next"}
+</Button>
           </Box>
         </Box>
       </Box>

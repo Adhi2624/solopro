@@ -4,7 +4,8 @@ const OAuth2Data = require('../googlecredentials.json'); // Your OAuth credentia
 
 const { client_id, client_secret, redirect_uris } = OAuth2Data.web;
 const oAuth2Client = new google.auth.OAuth2(client_id, client_secret, redirect_uris[0]);
-
+const emailid=process.env.EMAIL_USERNAME;
+const pw=process.env.EMAIL_PASSWORD;
 const createMeet = async (req, res) => {
   const { code } = req.body;
 

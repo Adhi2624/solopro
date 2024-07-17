@@ -7,8 +7,11 @@ const User = require('../models/User'); // Assuming you have a User model for ba
 const Mentor = require('../models/Mentor');
 const Student = require('../models/Student');
 const Investor = require('../models/Investor');
+
 const Admin = require('../models/Admin');
 
+// const Entrepreneur = require('../models/entrepreneur');
+// const User = require('../models/User'); 
 const sendWelcomeEmail = require('../mailtemplates/registerMail');
 const sendMeetingEmail = require('../mailtemplates/meetingconfirm');
 
@@ -94,10 +97,6 @@ router.post('/', async (req, res) => {
     // sendMeetingEmail(req.body.)
   } catch (error) {
     console.error("Server error:", error);
-    if (user && user._id) {
-      // Delete the user if created
-      await User.findByIdAndDelete(user._id);
-    }
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 });

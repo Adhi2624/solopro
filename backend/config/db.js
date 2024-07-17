@@ -10,10 +10,7 @@ let dbClient;
 // Connect to MongoDB using Mongoose
 const connectDB = async () => {
   try {
-    await mongoose.connect(`${uri}/${dbName}`, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    await mongoose.connect(`${uri}/${dbName}`);
 
     mongoose.Promise = global.Promise;
     db = mongoose.connection;
@@ -31,10 +28,7 @@ const connectDB = async () => {
 // Connect to MongoDB using MongoDB native driver
 const connectDB1 = async () => {
   try {
-    const client = await MongoClient.connect(uri, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    const client = await MongoClient.connect(uri);
 
     console.log("MongoDB connected successfully via MongoDB driver");
     dbClient = client;

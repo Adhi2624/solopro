@@ -39,6 +39,28 @@ function Footer() {
               <p>Elevating Startups</p>
             </Col>
 
+<<<<<<< HEAD
+            <Col md="2" lg="2" xl="2" className="mx-auto mb-4">
+              <h6 className="text-uppercase fw-bold mb-4">Background</h6>
+              <p>
+                <Link to="#!" className="text-reset">
+                  Our history
+                </Link>
+              </p>
+              <p>
+                <Link to="#!" className="text-reset">
+                  Job Opportunities
+                </Link>
+              </p>
+              <p>
+                <Link to="#!" className="text-reset">
+                  Vendors
+                </Link>
+              </p>
+              <p>
+                <Link to="#!" className="text-reset">
+                  Investors
+=======
             
 
             <Col md="3" lg="2" xl="2" className="mx-auto mb-4">
@@ -51,11 +73,36 @@ function Footer() {
               <p>
                 <Link to="/login" className="text-reset">
                   Find Mentors
+>>>>>>> e3f946724b2b68aaec0847ceb208368550127e10
+                </Link>
+              </p>
+            </Col>
+
+            <Col md="3" lg="2" xl="2" className="mx-auto mb-4">
+              <h6 className="text-uppercase fw-bold mb-4">Affiliate</h6>
+              <p>
+<<<<<<< HEAD
+                <Link to="#!" className="text-reset">
+                  Become a Partner
                 </Link>
               </p>
               <p>
+                <Link to="#!" className="text-reset">
+                  Lead Generator
+                </Link>
+              </p>
+              <p>
+                <Link to="#!" className="text-reset">
+                  Press Media
+                </Link>
+              </p>
+              <p>
+                <Link to="#!" className="text-reset">
+                  Ambassadors
+=======
                 <Link to="/login" className="text-reset">
                   Network!
+>>>>>>> e3f946724b2b68aaec0847ceb208368550127e10
                 </Link>
               </p>
               
@@ -68,7 +115,11 @@ function Footer() {
               </p>
               <p>
                 <i className="icon-envelope me-3" />
+<<<<<<< HEAD
+                info@example.com
+=======
                 soloprobusiness@gmail.com
+>>>>>>> e3f946724b2b68aaec0847ceb208368550127e10
               </p>
               <p>
                 <i className="icon-phone me-3" /> + 01 234 567 88

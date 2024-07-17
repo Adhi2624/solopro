@@ -22,7 +22,7 @@
         "questionName": "linkedin",
         "inputType": "text",
         "label": "LinkedIn Profile",
-        "required": true
+        "required": false
       },
       {
         "questionName": "course",
@@ -34,7 +34,7 @@
         "questionName": "githubId",
         "inputType": "text",
         "label": "GitHub ID",
-        "required": true
+        "required": false
       },
       {
         "questionName": "collegeIdCardImage",
@@ -73,6 +73,11 @@
         "inputType": "text",
         "label": "LinkedIn Profile",
         "required": true
+      },{
+        "questionName": "experience",
+        "inputType": "num'",
+        "label": "experience (in years)",
+        "required": true
       }
     ],
     "Investor": [
@@ -99,6 +104,11 @@
         "inputType": "text",
         "label": "LinkedIn Profile",
         "required": true
+      },{
+        "questionName": "experience",
+        "inputType": "num'",
+        "label": "experience (in years)",
+        "required": true
       }
     ],
     "Entrepreneur": [
@@ -124,6 +134,11 @@
         "questionName": "linkedin",
         "inputType": "text",
         "label": "LinkedIn Profile",
+        "required": true
+      },{
+        "questionName": "experience",
+        "inputType": "num'",
+        "label": "experience (in years)",
         "required": true
       }
     ]

@@ -85,7 +85,7 @@ const startServer = async () => {
     app.get("/getentrepreneur",entrepreneurcontroller.getAllEntrepreneur);
     app.get("/getinvestors", investorController.getAllInvestors);
     app.post("/getInvestor", investorController.getInvestorById);
-    app.get("/getentrepreneur",entrepreneurcontroller.getentrepreneurById);
+    app.post("/getEntrepreneur",entrepreneurcontroller.getentrepreneurById);
     app.post("/getMentor", mentorController.getmentortById);
     app.post("/getstudent", studentController.getStudentById);
     app.post("/schedulemeeting", meetingController.scheduleMeeting);

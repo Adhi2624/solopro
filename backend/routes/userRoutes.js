@@ -8,6 +8,8 @@ const Mentor = require('../models/Mentor');
 const Student = require('../models/Student');
 const Investor = require('../models/Investor');
 
+const Admin = require('../models/Admin');
+
 // const Entrepreneur = require('../models/entrepreneur');
 // const User = require('../models/User'); 
 const sendWelcomeEmail = require('../mailtemplates/registerMail');
@@ -16,13 +18,14 @@ const sendMeetingEmail = require('../mailtemplates/meetingconfirm');
 router.post('/', async (req, res) => {
   console.log(req.body);
   const { email, password, userType, ...userData } = req.body;
-  
+
+  let user = null;
 
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
-    const user = new User({
+    user = new User({
       email,
-      password: password,
+      password: hashedPassword,
       role: userType
     });
     await user.save();
@@ -84,8 +87,11 @@ router.post('/', async (req, res) => {
       });
       const entrepreneur = new Entrepreneur(profileData);
       await entrepreneur.save();
+    } else if (userType === 'admin') {
+      const admin = new Admin(profileData);
+      await admin.save();
     }
-    
+
     sendWelcomeEmail(req.body.name, req.body.email);
     res.status(201).json({ message: 'User created successfully' });
     // sendMeetingEmail(req.body.)

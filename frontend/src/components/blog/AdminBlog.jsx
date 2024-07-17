@@ -6,7 +6,7 @@ import { styled, ThemeProvider, createTheme } from "@mui/material/styles";
 import { TextField } from '@mui/material';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
-import Button from '@mui/joy/Button'; 
+import Button from '@mui/joy/Button';
 
 const AdminBlog = () => {
   const [title, setTitle] = useState('');
@@ -27,7 +27,7 @@ const AdminBlog = () => {
   const [moreStories, setMoreStories] = useState([]);
   const [editMode, setEditMode] = useState(false);
   const [currentId, setCurrentId] = useState(null);
-  const backend=process.env.REACT_APP_BACKEND;
+  const backend = process.env.REACT_APP_BACKEND;
   useEffect(() => {
     fetchData();
   }, []);
@@ -225,18 +225,18 @@ const AdminBlog = () => {
   // const history = useHistory()
   const navigate = useNavigate();
 
-const handleback= ()=>{
-  // const history = useHistory();
+  const handleback = () => {
+    // const history = useHistory();
 
-  navigate(-1); 
+    navigate(-1);
 
 
-}
+  }
   return (
-    <div className="container mt-5" style={{color:'white'}}>
+    <div className="container mt-5" style={{ color: 'white' }}>
       <h2 className="text-center">Admin Panel</h2>
       <div className="pb-4">
-      <Button onClick={handleback}>Back to posts</Button></div>
+        <Button onClick={handleback}>Back to posts</Button></div>
       {/* <GoBackButton /></div> */}
       <form onSubmit={handleAddOrUpdateBlog} className="mb-5">
         <h3>{editMode ? 'Update Blog Post' : 'Add New Blog Post'}</h3>
@@ -245,7 +245,7 @@ const handleback= ()=>{
           <input
             type="text"
             className="form-control"
-            style={{color:"white"}}
+            style={{ color: "white" }}
             id="title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
@@ -258,14 +258,16 @@ const handleback= ()=>{
             type="file"
             className="form-control"
             id="image"
+            accept="image/*"
             onChange={(e) => setImage(e.target.files[0])}
           />
+
         </div>
         <div className="mb-3">
           <label htmlFor="description" className="form-label">Description</label>
           <textarea
             className="form-control"
-            style={{color:"white"}}
+            style={{ color: "white" }}
             id="description"
             rows="3"
             value={description}
@@ -277,7 +279,7 @@ const handleback= ()=>{
           <label htmlFor="order" className="form-label">Order</label>
           <input
             type="number"
-            style={{color:"white"}}
+            style={{ color: "white" }}
             className="form-control"
             id="order"
             value={order}
@@ -343,7 +345,7 @@ const handleback= ()=>{
           <label htmlFor="featuredDescription" className="form-label">Description</label>
           <textarea
             className="form-control"
-            style={{color:"white"}}
+            style={{ color: "white" }}
             id="featuredDescription"
             rows="3"
             value={featuredDescription}
@@ -419,7 +421,7 @@ const handleback= ()=>{
           <textarea
             className="form-control"
             id="moreShortDescription"
-            style={{color:"white"}}
+            style={{ color: "white" }}
             rows="3"
             value={moreShortDescription}
             onChange={(e) => setMoreShortDescription(e.target.value)}

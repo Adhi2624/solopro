@@ -1,16 +1,17 @@
 const nodemailer = require('nodemailer');
-
+require('dotenv').config();
+const ademail=process.env.EMAIL_USERNAME;
+const adpw=process.env.EMAIL_PASSWORD;
 // Function to send email
 async function sendWelcomeEmail(username, useremail) {
     // Create a transporter object using SMTP transport
-    console.log(username,useremail)
     let transporter = nodemailer.createTransport({
-        host: 'smtp.office365.com', // Replace with your SMTP server
-        port: 587, // Replace with your SMTP port
-        secure: false, // true for 465, false for other ports
+        host: 'smtp.gmail.com',
+        port: 587,
+        secure: false,
         auth: {
-            user: 'adhithiyan.21it@sonatech.ac.in', // Replace with your email
-            pass: 'Adhi@2624', // Replace with your email password
+            user: ademail,
+            pass: adpw,
         },
     });
 
@@ -93,7 +94,7 @@ async function sendWelcomeEmail(username, useremail) {
                                                                     <td align="left" style="padding:20px;Margin:0">
                                                                         <h3 style="Margin:0;line-height:34px;mso-line-height-rule:exactly;font-family:Imprima, Arial, sans-serif;font-size:28px;font-style:normal;font-weight:bold;color:#2D3142">Welcome, ${username}</h3>
                                                                         <p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:Imprima, Arial, sans-serif;line-height:27px;color:#2D3142;font-size:18px"><br></p>
-                                                                        <p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:Imprima, Arial, sans-serif;line-height:27px;color:#2D3142;font-size:18px">You're receiving this message because you recently signed up for a account.<br></p>
+                                                                        <p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:Imprima, Arial, sans-serif;line-height:27px;color:#2D3142;font-size:18px">You're receiving this message because you recently signed up for an account.<br></p>
                                                                         <p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:Imprima, Arial, sans-serif;line-height:27px;color:#2D3142;font-size:18px"><br></p>
                                                                         <p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:Imprima, Arial, sans-serif;line-height:27px;color:#2D3142;font-size:18px">You can log in using the following email: ${useremail}<br></p>
                                                                         <p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:Imprima, Arial, sans-serif;line-height:27px;color:#2D3142;font-size:18px"><br></p>
@@ -113,10 +114,6 @@ async function sendWelcomeEmail(username, useremail) {
                                                     <tr>
                                                         <td align="center" valign="top" style="padding:0;Margin:0;width:530px">
                                                             <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
-                                                                <tr>
-                                                                    
-                                                                </tr>
-
                                                                 <tr>
                                                                     <td align="center" style="padding:0;Margin:0;padding-top:20px">
                                                                         <span class="es-button-border" style="border-style:solid;border-color:#6F76D9;background:#6F76D9;border-width:1px;display:inline-block;border-radius:5px;width:auto">
@@ -144,10 +141,10 @@ async function sendWelcomeEmail(username, useremail) {
 
     // Define mail options
     let mailOptions = {
-        from: 'adhithiyan.21it@sonatech.ac.in', // sender address
-        to: useremail, // list of receivers
+        from: ademail, // sender address (must be your Gmail)
+        to: useremail, // list of receivers (recipient's email)
         subject: 'Welcome to Solopro', // Subject line
-        html: htmlTemplate, // html body
+        html: htmlTemplate, // HTML body
     };
 
     // Send mail with defined transport object
@@ -158,5 +155,6 @@ async function sendWelcomeEmail(username, useremail) {
         console.error('Error sending email: %s', error);
     }
 }
+
 
 module.exports = sendWelcomeEmail;

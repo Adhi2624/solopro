@@ -527,20 +527,19 @@ const SignupQuestions = () => {
             </TableContainer>
           </>
         );
-      case 5:
-        return (
-          <Button variant="contained" color="primary" onClick={handleSubmit}>
-            Submit
-          </Button>
-        );
-      default:
-        return "Unknown step";
+      // case 5:
+      //   return (
+      //     <Button variant="contained" color="primary" onClick={handleSubmit}>
+      //       Submit
+      //     </Button>
+      //   );
+      
     }
   };
 
   return (
     <ThemeProvider theme={theme}>
-      <Nav /> 
+      <Nav />
       <Box
        
         sx={{
@@ -586,13 +585,13 @@ const SignupQuestions = () => {
               Back
             </Button>
             <Button
-              variant="contained"
-              color="primary"
-              onClick={handleNext}
-              sx={{ marginLeft: "auto" }}
-            >
-              {activeStep === steps.length - 1 ? "Finish" : "Next"}
-            </Button>
+  variant="contained"
+  color="primary"
+  onClick={activeStep === steps.length - 1 ? handleSubmit : handleNext}
+  sx={{ marginLeft: "auto" }}
+>
+  {activeStep === steps.length - 1 ? "Done" : "Next"}
+</Button>
           </Box>
         </Box>
       </Box>

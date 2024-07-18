@@ -128,7 +128,7 @@ const SignupQuestions = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [linkedinProfile, setLinkedinProfile] = useState("");
+ 
   const [userType, setUserType] = useState("");
   const [profileImage, setProfileImage] = useState(null);
   const [profileImageUrl, setProfileImageUrl] = useState("");
@@ -338,7 +338,7 @@ const SignupQuestions = () => {
     formDataToSend.append("name", name);
     formDataToSend.append("phone", phoneNumber);
     formDataToSend.append("password", password);
-    formDataToSend.append("linkedinProfile", linkedinProfile);
+    
     formDataToSend.append("userType", userType);
   
     if (profileImage) {
@@ -405,15 +405,7 @@ const SignupQuestions = () => {
               variant="outlined"
               sx={{ marginBottom: "20px" }}
             />
-            <CustomTextField
-              label="LinkedIn Profile"
-              value={linkedinProfile}
-              onChange={(e) => setLinkedinProfile(e.target.value)}
-              fullWidth
-              variant="outlined"
-              sx={{ marginBottom: "20px" }}
-              type="link"
-            />
+            
             <CustomTextField
               label="Password"
               type="password"
@@ -508,10 +500,7 @@ const SignupQuestions = () => {
                     <TableCell>Phone Number</TableCell>
                     <TableCell>{phoneNumber}</TableCell>
                   </TableRow>
-                  <TableRow>
-                    <TableCell>LinkedIn Profile</TableCell>
-                    <TableCell>{linkedinProfile}</TableCell>
-                  </TableRow>
+                 
                   <TableRow>
                     <TableCell>User Type</TableCell>
                     <TableCell>{userType}</TableCell>

@@ -17,6 +17,9 @@ const transporter = nodemailer.createTransport({
     user: ademail,
     pass: adpw,
   },
+  tls: {
+    rejectUnauthorized: false
+  }
 });
 
 const forgotPassword = async (req, res) => {

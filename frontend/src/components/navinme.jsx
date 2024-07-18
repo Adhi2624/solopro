@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Navbar, Container, Nav, NavLink ,Button} from 'react-bootstrap';
+import { Navbar, Container, Nav, NavLink, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import soloLogo1 from '../images/image.svg';
 import axios from 'axios';
@@ -29,18 +29,18 @@ const Navinvmen = React.memo(() => {
       setProfilePhoto(res.data.profileImage);
       setName(res.data.name)
     }).catch((err) => alert(err));
-   // fetchAppointmentCount();
+    // fetchAppointmentCount();
   }, []);
 
   const handleLogout = () => {
     // Remove items from localStorage
-    
+
     localStorage.removeItem('user');
 
     // Redirect to login or home page
     // Example: Replace with your desired logout behavior
     window.location.href = '/'; // Redirect to login page after logout
-};
+  };
 
   return (
     <Navbar expand="lg" className="nav1 ">
@@ -56,6 +56,8 @@ const Navinvmen = React.memo(() => {
             <NavLink as={Link} to="appointments" className="nav-item text-white">
               Appointments {appointmentCount > 0 && (<span className="badge bg-secondary">{appointmentCount}</span>)}
             </NavLink>
+            <NavLink href="community" className="nav-item text-white">community</NavLink>
+            <NavLink href="alluser" className="nav-item text-white">allusers</NavLink>
             <NavLink href={`/mi/miprofile/${id}`} className="profile-link nav-item">
               <div className='d-flex align-items-center col'>
                 <img src={profilePhoto} width="30" height="30" className="rounded-circle me-2" alt="profile" />

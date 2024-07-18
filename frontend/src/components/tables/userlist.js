@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Nav1 from '../nav1';
-import { FaSort, FaSortUp, FaSortDown } from 'react-icons/fa';
+import { FaSort, FaSortUp, FaSortDown, FaUser } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom'; // or useNavigate if using React Router v6
 
 const UserList = () => {
     const [userList, setUserList] = useState([]);
@@ -12,6 +13,7 @@ const UserList = () => {
     const [searchField, setSearchField] = useState('name');
     const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' });
     const backend = process.env.REACT_APP_BACKEND;
+     const navigate = useNavigate(); 
 
     useEffect(() => {
         axios.get(`${backend}/totaldata`)
@@ -74,6 +76,17 @@ const UserList = () => {
         setSearchField(event.target.value);
     };
 
+    const handleProfileNavigation = (userId, role) => {
+        if (role === 'Student') {
+            navigate(`studentprofile/${userId}`);
+        } else {
+            role=role.toLowerCase();
+            navigate(`${role}/${userId}`);
+        }
+    };
+    
+        
+
     return (
         <div>
             <Nav1 />
@@ -86,7 +99,6 @@ const UserList = () => {
                         placeholder="Search among all users"
                         value={searchTerm}
                         onChange={handleSearch}
-                        
                     />
                     <select className="form-select w-auto ms-2" value={searchField} style={{color:'white'}} onChange={handleSearchFieldChange}>
                         <option value="name" style={{color:'black'}}>Name</option>
@@ -101,14 +113,21 @@ const UserList = () => {
                                 <th scope="col" onClick={() => sortData('name')}>Name {getSortIcon('name')}</th>
                                 <th scope="col" onClick={() => sortData('email')}>Email {getSortIcon('email')}</th>
                                 <th scope="col" onClick={() => sortData('role')}>Role {getSortIcon('role')}</th>
+                                <th scope="col">Profile</th>
                             </tr>
                         </thead>
                         <tbody>
                             {currentUsers.map((user, idx) => (
-                                <tr key={idx}>
+                                <tr key={user._id}>
                                     <td>{user.name}</td>
                                     <td>{user.email}</td>
                                     <td>{user.role}</td>
+                                    <td>
+                                        <FaUser
+                                            onClick={() => handleProfileNavigation(user._id,user.role)}
+                                            style={{ cursor: 'pointer', color: 'white' }}
+                                        />
+                                    </td>
                                 </tr>
                             ))}
                         </tbody>
@@ -128,7 +147,7 @@ const UserList = () => {
             </div>
         </div>
     );
-}
+};
 
 const Pagination = ({ itemsPerPage, totalItems, paginate, currentPage, handleItemsPerPageChange, indexOfFirstItem, indexOfLastItem }) => {
     const pageNumbers = [];
@@ -178,6 +197,6 @@ const Pagination = ({ itemsPerPage, totalItems, paginate, currentPage, handleIte
             </div>
         </nav>
     );
-}
+};
 
 export default UserList;

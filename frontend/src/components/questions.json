@@ -79,6 +79,11 @@
         "inputType": "text",
         "label": "LinkedIn Profile",
         "required": true
+      },{
+        "questionName": "experience",
+        "inputType": "num'",
+        "label": "experience (in years)",
+        "required": true
       }
     ],
     "Investor": [
@@ -111,6 +116,11 @@
         "inputType": "text",
         "label": "LinkedIn Profile",
         "required": true
+      },{
+        "questionName": "experience",
+        "inputType": "num'",
+        "label": "experience (in years)",
+        "required": true
       }
     ],
     "Entrepreneur": [
@@ -136,6 +146,11 @@
         "questionName": "linkedin",
         "inputType": "text",
         "label": "LinkedIn Profile",
+        "required": true
+      },{
+        "questionName": "experience",
+        "inputType": "num'",
+        "label": "experience (in years)",
         "required": true
       }
     ]

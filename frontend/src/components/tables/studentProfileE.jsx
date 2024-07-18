@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Container, Row, Col, Card, Button, Form, ListGroup, Table } from 'react-bootstrap';
 import Nav1 from '../nav1';
+import Navinvmen from '../navinme';
 import '../../css/Studentprofile.css'; // Import CSS file
 
 const StudentProfile = () => {
@@ -17,7 +18,8 @@ const StudentProfile = () => {
  
 
   const localStorageId = lstorageparse.value.uid;
-
+  const urole=lstorageparse.value.role;
+  const isstudent= urole==='Student';
   useEffect(() => {
     axios
       .post(`${backend}/getstudent`, { _id: _id })
@@ -108,7 +110,7 @@ const StudentProfile = () => {
 
   return (
     <>
-      <Nav1 />
+      {isstudent?<Nav1/>:<Navinvmen/>}
       <Container fluid className="main-body mt-lg-3">
         <Row className="justify-content-center">
           <Col lg={8} md={10}>

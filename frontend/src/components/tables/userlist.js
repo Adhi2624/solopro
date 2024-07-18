@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Nav1 from '../nav1';
+import Navinvmen from '../navinme';
 import { FaSort, FaSortUp, FaSortDown, FaUser } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom'; // or useNavigate if using React Router v6
 
@@ -13,6 +14,10 @@ const UserList = () => {
     const [searchField, setSearchField] = useState('name');
     const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' });
     const backend = process.env.REACT_APP_BACKEND;
+    const lstorage = localStorage.getItem('user');
+    const lstorageparse=JSON.parse(lstorage);
+  const urole=lstorageparse.value.role;
+  const isstudent= urole==='Student';
      const navigate = useNavigate(); 
 
     useEffect(() => {
@@ -77,11 +82,20 @@ const UserList = () => {
     };
 
     const handleProfileNavigation = (userId, role) => {
+        if (isstudent){
         if (role === 'Student') {
-            navigate(`studentprofile/${userId}`);
+            navigate(`/student/studentprofile/${userId}`);
         } else {
             role=role.toLowerCase();
-            navigate(`${role}/${userId}`);
+            navigate(`/student/${role}/${userId}`);
+        }}
+        else{
+            if (role === 'Student') {
+                navigate(`/mi/studentprofile/${userId}`);
+            } else {
+                role=role.toLowerCase();
+                navigate(`/mi/${role}/${userId}`);
+            }
         }
     };
     
@@ -89,7 +103,8 @@ const UserList = () => {
 
     return (
         <div>
-            <Nav1 />
+            {isstudent?<Nav1/>:<Navinvmen/>}
+           
             <div className='p-1 mt-3'>
                 <div className="d-flex justify-content-center mb-3" style={{ color: 'white' }}>
                     <input

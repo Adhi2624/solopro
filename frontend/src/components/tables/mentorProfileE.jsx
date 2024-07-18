@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Container, Row, Col, Card, Button, ListGroup, Form } from 'react-bootstrap';
-import Navimi from '../navinme';
+import Nav1 from '../nav1';
+import Navinvmen from '../navinme';
 import '../../css/MentorProfile.css';
 
 const MentorProfileE = () => {
@@ -14,7 +15,7 @@ const MentorProfileE = () => {
   const localStorageUser = JSON.parse(localStorage.getItem('user'));
   const backend = process.env.REACT_APP_BACKEND;
   const role = localStorageUser.value.role;
-
+  const isstudent= role==='Student';
   useEffect(() => {
     axios
       .post(`${backend}/get${role}`, { _id: _id })
@@ -113,7 +114,7 @@ const MentorProfileE = () => {
 
   return (
     <>
-      <Navimi />
+      {isstudent?<Nav1/>:<Navinvmen/>}
       <Container fluid className="main-body mt-4">
         <Row className="justify-content-center">
           <Col lg={8} md={10}>

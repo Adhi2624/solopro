@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Container, Row, Col, Card, Button, ListGroup, Modal, Form } from 'react-bootstrap';
 import Nav1 from '../nav1';
+import Navinvmen from '../navinme';
 import '../../css/MentorProfile.css'; // Import CSS file
 
 const MentorProfile = () => {
@@ -13,7 +14,8 @@ const MentorProfile = () => {
     const lstorageparse=JSON.parse(lstorage);
     
     const sid=lstorageparse.value.id;
-   
+    const urole=lstorageparse.value.role;
+  const isstudent= urole==='Student';
   const [meetingDetails, setMeetingDetails] = useState({
     title: '',
     startDate: '',
@@ -80,7 +82,7 @@ const MentorProfile = () => {
 
   return (
     <>
-      <Nav1 />
+      {isstudent?<Nav1/>:<Navinvmen/>}
       <Container fluid className="main-body mt-lg-3">
         <Row className="justify-content-center">
           <Col lg={8} md={10}>

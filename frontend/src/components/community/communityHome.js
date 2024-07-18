@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Nav1 from '../nav1';
+import Navinvmen from '../navinme';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button } from 'react-bootstrap';
 //import './CommunityHome.css'; // Assuming you have custom CSS for additional styles
@@ -13,7 +14,10 @@ const CommunityHome = () => {
     const [sortBy, setSortBy] = useState('date');
     const [sortOrder, setSortOrder] = useState('desc');
     const backend = process.env.REACT_APP_BACKEND;
-
+    const lstorage = localStorage.getItem('user');
+    const lstorageparse=JSON.parse(lstorage);
+  const urole=lstorageparse.value.role;
+  const isstudent= urole==='Student';
     useEffect(() => {
         fetchPosts();
     }, []);
@@ -52,7 +56,7 @@ const CommunityHome = () => {
 
     return (
         <div>
-            <Nav1 />
+            {isstudent?<Nav1/>:<Navinvmen/>}
             <div className="container mt-5">
                 <h1 className="text-white">Community Posts</h1>
                 <Button href='community/post'>post</Button>

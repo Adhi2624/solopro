@@ -85,7 +85,7 @@ app.post('/api/signup', upload.none(), async (req, res) => {
       });
       console.log(profileData);
     }
-
+   
     //sendWelcomeEmail(req.body.name, req.body.email);
     // res.status(201).json({ message: 'User created successfully' });
     // sendMeetingEmail(req.body.);

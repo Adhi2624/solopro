@@ -88,7 +88,7 @@
     ],
     "Investor": [
       {
-        "questionName": "areaOfInterest",
+        "questionName": "areaOfExpertise",
         "inputType": "text",
         "label": "Area of Interest",
         "required": true

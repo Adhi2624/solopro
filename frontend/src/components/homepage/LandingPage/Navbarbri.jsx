@@ -1,8 +1,8 @@
 import React, { useRef, useState } from "react";
-import { Link } from "react-router-dom"; 
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FiSend, FiMenu, FiX } from "react-icons/fi";
-import logo from '../images/Icon.png'; 
+import logo from '../images/Icon.png';
 import './Navbar.css';
 
 const Navbar = () => {
@@ -11,32 +11,32 @@ const Navbar = () => {
   return (
     <div className="header">
       <div className="logo">
-        <Link className="navbar-brand" >
+        <Link className="navbar-brand">
           <img src={logo} alt="Logo" width="30" height="30" className="d-inline-block align-top" />
           <p className="brand-name">SOLOPRO</p>
         </Link>
-        <button className="toggle-button" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-          {isMenuOpen ? <FiX /> : <FiMenu />}
-        </button>
       </div>
+      <button className="toggle-button" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+        {isMenuOpen ? <FiX /> : <FiMenu />}
+      </button>
       <div className={`slide-tabs-container ${isMenuOpen ? 'open' : ''}`}>
-        <SlideTabs />
+        <SlideTabs isMenuOpen={isMenuOpen} />
       </div>
-      <NeumorphismButton />
+      {!isMenuOpen && <div className="top-right-button"><NeumorphismButton /></div>}
     </div>
   );
 };
 
 const NeumorphismButton = () => {
   return (
-    <Link to="/signUp"  className="neumorphism-button">
-    <FiSend />
-    <span><b>Join Now</b></span>
-  </Link>
+    <Link to="/signUp" className="neumorphism-button">
+      <FiSend />
+      <span><b>Join Now</b></span>
+    </Link>
   );
 };
 
-const SlideTabs = () => {
+const SlideTabs = ({ isMenuOpen }) => {
   const [position, setPosition] = useState({
     left: 0,
     width: 0,
@@ -57,6 +57,7 @@ const SlideTabs = () => {
       <Tab setPosition={setPosition}>Storyline</Tab>
       <Tab setPosition={setPosition}>Initiatives</Tab>
       <Tab setPosition={setPosition}>Blogs</Tab>
+      {isMenuOpen && <li className="tab-item"><NeumorphismButton /></li>}
       <Cursor position={position} />
     </ul>
   );

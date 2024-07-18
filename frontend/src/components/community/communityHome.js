@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Nav1 from '../nav1';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Button } from 'react-bootstrap';
 //import './CommunityHome.css'; // Assuming you have custom CSS for additional styles
 
 const CommunityHome = () => {
@@ -54,6 +55,7 @@ const CommunityHome = () => {
             <Nav1 />
             <div className="container mt-5">
                 <h1 className="text-white">Community Posts</h1>
+                <Button href='community/post'>post</Button>
                 <div className="input-group mb-3">
                     <input
                         type="text"

@@ -26,21 +26,23 @@ const handleLogout = () => {
 const StudentsRoute = () => {
   return (
     <Routes>
-      <Route path='/' element={<StudentLandingPage />} />
-      <Route path='/mentorpage' element={<MentorList />} />
-      <Route path='/investorpage' element={<InvestorList />} />
-      <Route path='/Entrepreneur' element={<MentorentrepenureList />} />
-      <Route path='/:role/:id' element={<MentorProfile />} />
-      <Route path='/studentprofile/:_id' element={<StudentProfileE />} />
-      <Route path='/alluser' element={<UserList />} />
-      <Route path='/blogs' element={<Blogs />} />
-      <Route path='/blogs/:type/:id' element={<BlogDetail />} />
-      <Route path='/community'>
-        <Route index element={<CommunityHome />} />
-        <Route path='post' element={<PostForm />} />
-        <Route path='posts/:id' element={<PostDetail/>}/>
-      </Route>
-    </Routes>
+    <Route path='/' element={<StudentLandingPage />} />
+    <Route path='/mentorpage' element={<MentorList />} />
+    <Route path='/investorpage' element={<InvestorList />} />
+    <Route path='/Entrepreneur' element={<MentorentrepenureList />} />
+    <Route path='/:role/:id' element={<MentorProfile />} />
+    <Route path='/studentprofile/:_id' element={<StudentProfileE />} />
+    <Route path='/alluser' element={<UserList />}>
+      <Route path='studentprofile/:_id' element={<StudentProfileE />} />
+    </Route>
+    <Route path='/blogs' element={<Blogs />} />
+    <Route path='/blogs/:type/:id' element={<BlogDetail />} />
+    <Route path='/community'>
+      <Route index element={<CommunityHome />} />
+      <Route path='post' element={<PostForm />} />
+      <Route path='posts/:id' element={<PostDetail />} />
+    </Route>
+  </Routes>
 
   );
 };

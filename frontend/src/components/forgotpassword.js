@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import {React} from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link  } from "react-router-dom";
 import { MD5 } from "crypto-js";
@@ -17,14 +18,14 @@ import {
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import axios from "axios";
 
-
+// require('dotenv').config();
 const theme = createTheme({
   typography: {
     fontFamily: "Montserrat, Arial, sans-serif",
   },
 });
 
-const backendUrl = `${process.env.REACT_APP_BACKEND}`;
+const backendUrl = process.env.REACT_APP_BACKEND;
 function Copyright(props) {
   return (
     <Typography

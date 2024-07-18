@@ -469,10 +469,10 @@ const SignupQuestions = () => {
     onChange={(e) => setUserType(e.target.value)}
     label="User Type"
     style={{ color: 'white' }}
-    MenuProps={{ PaperProps: { style: { backgroundColor: 'transparent' } } }} // Ensure menu background is transparent
+    MenuProps={{ PaperProps: { style: { backdropFilter:'blur(8px)'} } }} // Ensure menu background is transparent
   >
     {Object.keys(questions).map((type) => (
-      <MenuItem key={type} value={type} style={{ color: 'white' }}>
+      <MenuItem key={type} value={type} style={{ color: 'black' }}>
         {type}
       </MenuItem>
     ))}

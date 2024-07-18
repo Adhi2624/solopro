@@ -57,6 +57,12 @@
         "required": true
       },
       {
+        "questionName": "experience",
+        "inputType": "number",
+        "label": "Experience (Months)",
+        "required": true
+      },
+      {
         "questionName": "numberOfPreviousMentorships",
         "inputType": "number",
         "label": "Number of Previous Mentorships",
@@ -80,6 +86,12 @@
         "questionName": "areaOfInterest",
         "inputType": "text",
         "label": "Area of Interest",
+        "required": true
+      },
+      {
+        "questionName": "experience",
+        "inputType": "number",
+        "label": "Experience (Months)",
         "required": true
       },
       {

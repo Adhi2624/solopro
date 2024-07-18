@@ -1,21 +1,25 @@
-const express = require('express');
-const router = express.Router();
+// controllers/authController.js
+
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
-const User = require('../models/user');
 const { getDB } = require('../config/db');
+
+const ademail = process.env.EMAIL_USERNAME;
+const adpw = process.env.EMAIL_PASSWORD;
 
 // Email service configuration
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
+  host: 'smtp.gmail.com',
+  port: 587,
+  secure: false,
   auth: {
-    user: process.env.EMAIL,
-    pass: process.env.EMAIL_PASSWORD,
+    user: ademail,
+    pass: adpw,
   },
 });
 
-router.post('/forgot_password', async (req, res) => {
+const forgotPassword = async (req, res) => {
   const { email } = req.body;
 
   try {
@@ -32,7 +36,7 @@ router.post('/forgot_password', async (req, res) => {
     await db.collection('users').updateOne({ email }, { $set: { otp } });
 
     const mailOptions = {
-      from: process.env.EMAIL,
+      from: ademail,
       to: email,
       subject: 'Password Reset OTP',
       text: `Your OTP for password reset is ${otp}`,
@@ -44,9 +48,9 @@ router.post('/forgot_password', async (req, res) => {
     console.error('Server error: ', error);
     res.status(500).json({ message: 'Server error', error: error.message });
   }
-});
+};
 
-router.post('/update_password', async (req, res) => {
+const updatePassword = async (req, res) => {
   const { email, password, otp } = req.body;
 
   try {
@@ -69,6 +73,9 @@ router.post('/update_password', async (req, res) => {
     console.error('Server error: ', error);
     res.status(500).json({ message: 'Server error', error: error.message });
   }
-});
+};
 
-module.exports = router;
+module.exports = {
+  forgotPassword,
+  updatePassword,
+};

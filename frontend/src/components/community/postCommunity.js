@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Nav1 from '../nav1';
+import Navinvmen from '../navinme';
 import '../../css/postFrom.css'; // We'll use this for custom styles
 
 const PostForm = () => {
@@ -10,6 +12,10 @@ const PostForm = () => {
     const [images, setImages] = useState([]);
     const [videos, setVideos] = useState([]);
     const backend=process.env.REACT_APP_BACKEND;
+    const lstorage = localStorage.getItem('user');
+    const lstorageparse=JSON.parse(lstorage);
+  const urole=lstorageparse.value.role;
+  const isstudent= urole==='Student';
     const handleFileChange = (e) => {
         const { files, name } = e.target;
         if (name === 'images') {
@@ -46,6 +52,8 @@ const PostForm = () => {
     };
 
     return (
+        <div>
+            {isstudent?<Nav1/>:<Navinvmen/>}
         <form className="post-form container" onSubmit={submitPost}>
             <div className="form-group">
                 <label htmlFor="title">Title</label>
@@ -102,6 +110,7 @@ const PostForm = () => {
             </div>
             <button className="btn btn-primary" type="submit">Post</button>
         </form>
+        </div>
     );
 };
 

@@ -15,21 +15,48 @@ const CommunityHome = () => {
     const [sortOrder, setSortOrder] = useState('desc');
     const backend = process.env.REACT_APP_BACKEND;
     const lstorage = localStorage.getItem('user');
-    const lstorageparse=JSON.parse(lstorage);
-  const urole=lstorageparse.value.role;
-  const isstudent= urole==='Student';
-    useEffect(() => {
-        fetchPosts();
-    }, []);
-
+    const lstorageparse = JSON.parse(lstorage);
+    const urole = lstorageparse.value.role;
+    const isstudent = urole === 'Student';
     const fetchPosts = async () => {
         try {
             const res = await axios.get(`${backend}/posts`);
-            setPosts(res.data);
+
+            // Fetch author details for each post
+            const postsWithAuthors = await Promise.all(
+                res.data.map(async (post) => {
+                    const authorRes = await axios.get(`${backend}/users/${post.author}`);
+                    const author = authorRes.data;
+                    console.log(author)
+                    return {
+                        ...post,
+                        authorName: author.name,         // Assuming the author object has a 'name' field
+                        authorProfileImg: author.profileImage // Assuming the author object has a 'profileImg' field
+                    };
+                })
+            );
+
+            setPosts(postsWithAuthors);
+            console.log(posts)
         } catch (err) {
             console.error("Error fetching posts:", err);
         }
     };
+
+    useEffect(() => {
+        fetchPosts();
+        console.log(posts);
+    }, []);
+
+    // const fetchPosts = async () => {
+    //     try {
+    //         const res = await axios.get(`${backend}/posts`);
+    //         setPosts(res.data);
+
+    //     } catch (err) {
+    //         console.error("Error fetching posts:", err);
+    //     }
+    // };
 
     const handleSearch = () => {
         const searchTerm = search.toLowerCase();
@@ -56,7 +83,7 @@ const CommunityHome = () => {
 
     return (
         <div>
-            {isstudent?<Nav1/>:<Navinvmen/>}
+            {isstudent ? <Nav1 /> : <Navinvmen />}
             <div className="container mt-5">
                 <h1 className="text-white">Community Posts</h1>
                 <Button href='community/post'>post</Button>
@@ -91,11 +118,13 @@ const CommunityHome = () => {
                         displayPosts.map((post) => (
                             <div key={post._id} className="col-md-4">
                                 <div className="card mb-4">
-                                    <img src={post.author.photo} alt={post.author.name} className="card-img-top" />
+                                    <img src={post.images[0]} alt={post.author.name} className="card-img-top" />
                                     <div className="card-body">
                                         <h5 className="card-title">{post.title}</h5>
                                         <p className="card-text">{post.shortDesc}</p>
-                                        <p className="card-text">Posted by: {post.author.name} ({post.author.role})</p>
+                                        <p className="card-text">Posted by:  <img src={post.authorProfileImg
+                                        } alt={"profileimg not found"} className="w-25" />{post.authorName
+                                            } ({post.author.role})</p>
                                         <p className="card-text">Date: {new Date(post.createdAt).toLocaleDateString()}</p>
                                         <Link to={`posts/${post._id}`} className="btn btn-primary">View Post</Link>
                                     </div>

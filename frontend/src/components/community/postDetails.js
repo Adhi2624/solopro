@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import Nav1 from '../nav1';
+import Navinvmen from '../navinme';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const PostDetail = () => {
@@ -12,7 +13,8 @@ const PostDetail = () => {
     const lstorage = localStorage.getItem('user');
     const lstorageparse = JSON.parse(lstorage);
     const token = lstorageparse;
-
+    const urole=lstorageparse.value.role;
+    const isstudent= urole==='Student';
     useEffect(() => {
         fetchPost();
     }, []);
@@ -63,7 +65,7 @@ const PostDetail = () => {
 
     return (
         <div>
-            <Nav1 />
+            {isstudent?<Nav1/>:<Navinvmen/>}
             <div className="container mt-5" style={{ color: 'white' }}>
                 <h1>{post.title}</h1>
                 <p>{post.content}</p>

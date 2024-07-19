@@ -20,6 +20,8 @@ const StudentProfile = () => {
   const localStorageId = lstorageparse.value.uid;
   const urole=lstorageparse.value.role;
   const isstudent= urole==='Student';
+
+  const shshed=_id===localStorageId;
   useEffect(() => {
     axios
       .post(`${backend}/getstudent`, { _id: _id })
@@ -307,7 +309,7 @@ const StudentProfile = () => {
             </Card>
           </Col>
         </Row>
-        <Row className="justify-content-center mt-4">
+        {shshed?<Row className="justify-content-center mt-4">
           <Col lg={10} md={12}>
             <h5 className="mb-3 text-light">Scheduled Appointments</h5>
             <div className="appointment-table-container">
@@ -363,7 +365,8 @@ const StudentProfile = () => {
             </div>
           </Col>
         </Row>
-      </Container>
+ :null}
+             </Container>
     </>
   );
 };

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import entrepreneurTableRow from '../entrepreneurrow'; // Assuming this component exists
+import EntrepreneurTableRow from '../entrepreneurrow';
 import axios from 'axios';
 import Nav1 from '../nav1';
 import { TextField, Select, MenuItem } from '@mui/material';
@@ -29,16 +29,16 @@ const CustomTextField = styled(TextField)({
 
 const CustomSelect = styled(Select)({
     color: "white",
-    borderColor: "white !important", // Ensure border color is white
+    borderColor: "white !important",
     "& .MuiOutlinedInput-root": {
         "& fieldset": {
-            borderColor: "white !important", // Ensure border color is white
+            borderColor: "white !important",
         },
         "&:hover fieldset": {
-            borderColor: "white !important", // Ensure border color is white on hover
+            borderColor: "white !important",
         },
         "&.Mui-focused fieldset": {
-            borderColor: "white !important", // Ensure border color is white when focused
+            borderColor: "white !important",
         },
     },
     "& .MuiSelect-select": {
@@ -51,14 +51,13 @@ const CustomSelect = styled(Select)({
     },
 });
 
-
 const MentorentrepenureList = () => {
     const [entrepreneurlist, setEntrepreneurlist] = useState([]);
     const [filteredEntrepreneur, setFilteredEntrepreneur] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [EntrepreneurPerPage, setEntrepreneurPerPage] = useState(10);
+    const [entrepreneurPerPage, setEntrepreneurPerPage] = useState(10);
     const [searchTerm, setSearchTerm] = useState('');
-    const [searchField, setSearchField] = useState('name'); // Default search field
+    const [searchField, setSearchField] = useState('name');
     const backend = process.env.REACT_APP_BACKEND;
 
     useEffect(() => {
@@ -71,16 +70,16 @@ const MentorentrepenureList = () => {
     }, [backend]);
 
     useEffect(() => {
-        const results = entrepreneurlist.filter(mentor =>
-            mentor[searchField].toLowerCase().includes(searchTerm.toLowerCase())
+        const results = entrepreneurlist.filter(entrepreneur =>
+            entrepreneur[searchField]?.toLowerCase().includes(searchTerm.toLowerCase())
         );
         setFilteredEntrepreneur(results);
         setCurrentPage(1);
     }, [searchTerm, searchField, entrepreneurlist]);
 
-    const indexOfLastMentor = currentPage * EntrepreneurPerPage;
-    const indexOfFirstMentor = indexOfLastMentor - EntrepreneurPerPage;
-    const currentEntrepreneur = filteredEntrepreneur.slice(indexOfFirstMentor, indexOfLastMentor);
+    const indexOfLastEntrepreneur = currentPage * entrepreneurPerPage;
+    const indexOfFirstEntrepreneur = indexOfLastEntrepreneur - entrepreneurPerPage;
+    const currentEntrepreneur = filteredEntrepreneur.slice(indexOfFirstEntrepreneur, indexOfLastEntrepreneur);
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -95,7 +94,7 @@ const MentorentrepenureList = () => {
 
     const handleSearchFieldChange = (event) => {
         setSearchField(event.target.value);
-        setSearchTerm(''); // Clear search term when changing search field
+        setSearchTerm('');
     };
 
     return (
@@ -126,9 +125,6 @@ const MentorentrepenureList = () => {
                         <MenuItem value="status">Status</MenuItem>
                     </CustomSelect>
                 </div>
-                <div className="d-flex justify-content-center mb-3">
-                    
-                </div>
                 <div className="table-responsive">
                     <table className="table text-light" id="mentor-table">
                         <thead>
@@ -143,21 +139,21 @@ const MentorentrepenureList = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {currentEntrepreneur.map((mentor, idx) => (
-                                <entrepreneurTableRow  key={idx} entrepreneur={mentor} />
+                            {currentEntrepreneur.map((entrepreneur, idx) => (
+                                <EntrepreneurTableRow key={idx} entrepreneur={entrepreneur} />
                             ))}
                         </tbody>
                     </table>
                 </div>
                 {filteredEntrepreneur.length >= 10 && (
                     <Pagination
-                        EntrepreneurPerPage={EntrepreneurPerPage}
+                        EntrepreneurPerPage={entrepreneurPerPage}
                         totalEntrepreneur={filteredEntrepreneur.length}
                         paginate={paginate}
                         currentPage={currentPage}
                         handleEntrepreneurPerPageChange={handleEntrepreneurPerPageChange}
-                        indexOfFirstMentor={indexOfFirstMentor}
-                        indexOfLastMentor={indexOfLastMentor}
+                        indexOfFirstMentor={indexOfFirstEntrepreneur}
+                        indexOfLastMentor={indexOfLastEntrepreneur}
                     />
                 )}
             </div>

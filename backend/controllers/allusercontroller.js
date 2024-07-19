@@ -1,9 +1,9 @@
 const {getDB} = require('../config/db');
 const User=require('../models/User');
 const Student=require('../models/Student');
-const mentor=require('../models/Mentor');
-const investor=require('../models/Investor');
-const entrepreneur=require('../models/Entrepreneur');
+const Mentor=require('../models/Mentor');
+const Investor=require('../models/Investor');
+const Entrepreneur=require('../models/Entrepreneur');
 exports.getAllData = async (req, res) => {
     try {
         const db = getDB(); // Get the database object
@@ -90,7 +90,7 @@ exports.getUserById = async (req, res) => {
         if (!user) {
             return res.status(404).send({ error: 'User not found' });
         }
-
+        console.log(user);
         let profile, name, profileImage;
         switch (user.role) {
             case 'Student':

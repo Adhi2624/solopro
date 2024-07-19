@@ -36,12 +36,17 @@ const PostDetail = () => {
 
     const handleLike = async () => {
         try {
-            await axios.put(`${backend}/posts/${id}/like`);
+            await axios.put(`${backend}/posts/${id}/like`, null, {
+                headers: {
+                    'user-id': token.value.id // Replace `userId` with the actual user ID variable
+                }
+            });
             fetchPost(); // Refresh post data
         } catch (err) {
             console.error("Error liking post:", err);
         }
     };
+    
 
     const handleCommentSubmit = async (e) => {
         e.preventDefault();

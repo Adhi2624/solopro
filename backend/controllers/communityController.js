@@ -80,7 +80,7 @@ exports.getPosts = async (req, res) => {
 exports.likePost = async (req, res) => {
     const { id } = req.params;
     const userId = req.headers['user-id']; // Assuming the user ID is passed in the headers
-
+    console.log(id,userId)
     try {
         const post = await Post.findById(id);
 
@@ -90,13 +90,16 @@ exports.likePost = async (req, res) => {
 
         // Check if the user has already liked the post
         if (post.likedBy.includes(userId)) {
-            return res.status(400).send({ error: 'User has already liked this post' });
-        }
 
+            post.likedBy.pop(userId);
+            post.likes -= 1;
+          //  return res.status(400).send({ error: 'User has already liked this post' });
+        }
+        else{
         // Add the user's ID to the likedBy array and increment the like count
         post.likedBy.push(userId);
         post.likes += 1;
-
+        }
         await post.save();
         res.status(200).send(post);
     } catch (error) {

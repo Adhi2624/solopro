@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Nav1 from '../nav1';
 import Navinvmen from '../navinme';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button } from 'react-bootstrap';
-//import './CommunityHome.css'; // Assuming you have custom CSS for additional styles
 
 const CommunityHome = () => {
     const [posts, setPosts] = useState([]);
@@ -13,63 +12,48 @@ const CommunityHome = () => {
     const [filter, setFilter] = useState('content');
     const [sortBy, setSortBy] = useState('date');
     const [sortOrder, setSortOrder] = useState('desc');
+
     const backend = process.env.REACT_APP_BACKEND;
     const lstorage = localStorage.getItem('user');
     const lstorageparse = JSON.parse(lstorage);
     const urole = lstorageparse.value.role;
-    const isstudent = urole === 'Student';
-    const fetchPosts = async () => {
-        try {
-            const res = await axios.get(`${backend}/posts`);
-
-            // Fetch author details for each post
-            const postsWithAuthors = await Promise.all(
-                res.data.map(async (post) => {
-                    const authorRes = await axios.get(`${backend}/users/${post.author}`);
-                    const author = authorRes.data;
-                    console.log(author)
-                    return {
-                        ...post,
-                        authorName: author.name,         // Assuming the author object has a 'name' field
-                        authorProfileImg: author.profileImage // Assuming the author object has a 'profileImg' field
-                    };
-                })
-            );
-
-            setPosts(postsWithAuthors);
-            console.log(posts)
-        } catch (err) {
-            console.error("Error fetching posts:", err);
-        }
-    };
+    const isStudent = urole === 'Student';
 
     useEffect(() => {
+        const fetchPosts = async () => {
+            try {
+                const res = await axios.get(`${backend}/posts`);
+                const postsWithAuthors = await Promise.all(
+                    res.data.map(async (post) => {
+                        const authorRes = await axios.get(`${backend}/users/${post.author}`);
+                        const author = authorRes.data;
+                        return {
+                            ...post,
+                            authorName: author.name,
+                            authorProfileImg: author.profileImage,
+                        };
+                    })
+                );
+                setPosts(postsWithAuthors);
+            } catch (err) {
+                console.error("Error fetching posts:", err);
+            }
+        };
         fetchPosts();
-        console.log(posts);
-    }, []);
+    }, [backend]);
 
-    // const fetchPosts = async () => {
-    //     try {
-    //         const res = await axios.get(`${backend}/posts`);
-    //         setPosts(res.data);
-
-    //     } catch (err) {
-    //         console.error("Error fetching posts:", err);
-    //     }
-    // };
-
-    const handleSearch = () => {
+    const filteredPosts = useMemo(() => {
         const searchTerm = search.toLowerCase();
         return posts.filter(post => {
             if (filter === 'content') return post.content.toLowerCase().includes(searchTerm);
             if (filter === 'title') return post.title.toLowerCase().includes(searchTerm);
-            if (filter === 'author') return post.author.name.toLowerCase().includes(searchTerm);
+            if (filter === 'author') return post.authorName.toLowerCase().includes(searchTerm);
             return true;
         });
-    };
+    }, [posts, search, filter]);
 
-    const handleSort = (filteredPosts) => {
-        return filteredPosts.sort((a, b) => {
+    const sortedPosts = useMemo(() => {
+        return [...filteredPosts].sort((a, b) => {
             if (sortBy === 'date') {
                 return sortOrder === 'asc' ? new Date(a.createdAt) - new Date(b.createdAt) : new Date(b.createdAt) - new Date(a.createdAt);
             } else if (sortBy === 'title') {
@@ -77,16 +61,14 @@ const CommunityHome = () => {
             }
             return 0;
         });
-    };
-
-    const displayPosts = handleSort(handleSearch());
+    }, [filteredPosts, sortBy, sortOrder]);
 
     return (
         <div>
-            {isstudent ? <Nav1 /> : <Navinvmen />}
+            {isStudent ? <Nav1 /> : <Navinvmen />}
             <div className="container mt-5">
                 <h1 className="text-white">Community Posts</h1>
-                <Button href='community/post'>post</Button>
+                <Button href='community/post'>Post</Button>
                 <div className="input-group mb-3">
                     <input
                         type="text"
@@ -112,19 +94,20 @@ const CommunityHome = () => {
                     </div>
                 </div>
                 <div className="row">
-                    {displayPosts.length === 0 ? (
+                    {sortedPosts.length === 0 ? (
                         <p className="text-white">There are currently no community posts available.</p>
                     ) : (
-                        displayPosts.map((post) => (
+                        sortedPosts.map((post) => (
                             <div key={post._id} className="col-md-4">
                                 <div className="card mb-4">
-                                    <img src={post.images[0]} alt={post.author.name} className="card-img-top" />
+                                    <img src={post.images[0]} alt={post.authorName} className="card-img-top" />
                                     <div className="card-body">
                                         <h5 className="card-title">{post.title}</h5>
                                         <p className="card-text">{post.shortDesc}</p>
-                                        <p className="card-text">Posted by:  <img src={post.authorProfileImg
-                                        } alt={"profileimg not found"} className="w-25" />{post.authorName
-                                            } ({post.author.role})</p>
+                                        <p className="card-text">Posted by: 
+                                            <img src={post.authorProfileImg} alt="Profile" className="w-25" />
+                                            {post.authorName} - {post.role}
+                                        </p>
                                         <p className="card-text">Date: {new Date(post.createdAt).toLocaleDateString()}</p>
                                         <Link to={`posts/${post._id}`} className="btn btn-primary">View Post</Link>
                                     </div>

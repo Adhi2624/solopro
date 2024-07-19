@@ -29,3 +29,7 @@ code {
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.inline-image {
+  display: inline !important;
+}

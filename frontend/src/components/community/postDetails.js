@@ -13,8 +13,9 @@ const PostDetail = () => {
     const lstorage = localStorage.getItem('user');
     const lstorageparse = JSON.parse(lstorage);
     const token = lstorageparse;
-    const urole=lstorageparse.value.role;
-    const isstudent= urole==='Student';
+    const urole = lstorageparse.value.role;
+    const isStudent = urole === 'Student';
+
     useEffect(() => {
         fetchPost();
     }, []);
@@ -22,7 +23,6 @@ const PostDetail = () => {
     const fetchPost = async () => {
         try {
             const res = await axios.get(`${backend}/posts/${id}`);
-            console.log(comment.author)
             const postWithAuthors = await Promise.all(
                 res.data.comments.map(async (comment) => {
                     const author = await axios.get(`${backend}/users/${comment.author}`);
@@ -30,7 +30,6 @@ const PostDetail = () => {
                 })
             );
             setPost({ ...res.data, comments: postWithAuthors });
-            console.log(post)
         } catch (err) {
             console.error("Error fetching post:", err);
         }
@@ -40,20 +39,22 @@ const PostDetail = () => {
         try {
             await axios.put(`${backend}/posts/${id}/like`, null, {
                 headers: {
-                    'user-id': token.value.id // Replace `userId` with the actual user ID variable
+                    'user-id': token.value.id
                 }
             });
-            fetchPost(); // Refresh post data
+            setPost((prevPost) => ({
+                ...prevPost,
+                likes: prevPost.likes + 1
+            }));
         } catch (err) {
             console.error("Error liking post:", err);
         }
     };
-    
 
     const handleCommentSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post(`${backend}/posts/${id}/comments`, { text: comment, id: lstorageparse.value.id });
+            await axios.post(`${backend}/posts/${id}/comments`, { text: comment, id: token.value.id });
             setComment('');
             fetchPost(); // Refresh post data
         } catch (err) {
@@ -65,12 +66,14 @@ const PostDetail = () => {
 
     return (
         <div>
-            {isstudent?<Nav1/>:<Navinvmen/>}
+            {isStudent ? <Nav1 /> : <Navinvmen />}
             <div className="container mt-5" style={{ color: 'white' }}>
                 <h1>{post.title}</h1>
                 <p>{post.content}</p>
                 <div>
-                    <button className="btn btn-primary" onClick={handleLike}>Like ({post.likes})</button>
+                    <button className="btn btn-primary" onClick={handleLike}>
+                        Like ({post.likes})
+                    </button>
                 </div>
                 <div>
                     <h2>Comments</h2>

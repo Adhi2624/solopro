@@ -22,10 +22,10 @@ router.post('/', async (req, res) => {
   let user = null;
 
   try {
-    const hashedPassword = await bcrypt.hash(password, 10);
+    //const hashedPassword = await bcrypt.hash(password, 10);
     user = new User({
       email,
-      password: hashedPassword,
+      password: password,
       role: userType
     });
     await user.save();

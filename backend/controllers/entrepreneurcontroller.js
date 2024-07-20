@@ -3,12 +3,13 @@ const { getDB } = require('../config/db');
 
 
 exports.getAllEntrepreneur = async (req, res) => {
-    console.log("cn")
+    
     try {
         const db = getDB(); // Get the database object
         
         const Entrepreneur = await db.collection("entrepreneurs").find().toArray();
         res.send(Entrepreneur);
+        
     } catch (error) {
         console.error("Error fetching Entrepreneur:", error);
         res.status(500).send("Internal Server Error");

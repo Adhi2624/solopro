@@ -5,6 +5,7 @@ import Nav1 from '../nav1';
 import Navinvmen from '../navinme';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button } from 'react-bootstrap';
+import { Box } from '@mui/material';
 
 const CommunityHome = () => {
     const [posts, setPosts] = useState([]);
@@ -64,7 +65,7 @@ const CommunityHome = () => {
     }, [filteredPosts, sortBy, sortOrder]);
 
     return (
-        <div>
+        <Box sx={{backgroundColor:"#040F15"}}>
             {isStudent ? <Nav1 /> : <Navinvmen />}
             <div className="container mt-5">
                 <h1 className="text-white">Community Posts</h1>
@@ -117,7 +118,7 @@ const CommunityHome = () => {
                     )}
                 </div>
             </div>
-        </div>
+        </Box>
     );
 };
 

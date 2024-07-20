@@ -28,8 +28,14 @@ router.post('/', async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
     console.log("user found")
+    
+    const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+        console.log(hashedPassword)    
+    console.log(user.password)
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
+
       return res.status(400).json({ message: 'Invalid credentials' });
     }
 

@@ -3,6 +3,7 @@ import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Nav1 from '../nav1';
 import Navinvmen from '../navinme';
+import { Box } from '@mui/material';
 import '../../css/postFrom.css'; // We'll use this for custom styles
 
 const PostForm = () => {
@@ -103,7 +104,7 @@ const PostForm = () => {
     };
 
     return (
-        <div>
+        <Box sx={{backgroundColor:"#040F15"}}>
             {isstudent ? <Nav1 /> : <Navinvmen />}
             <form className="post-form container" onSubmit={submitPost}>
                 <div className="form-group">
@@ -161,7 +162,7 @@ const PostForm = () => {
                 </div>
                 <button className="btn btn-primary" type="submit">Post</button>
             </form>
-        </div>
+        </Box>
     );
 };
 

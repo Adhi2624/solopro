@@ -7,6 +7,7 @@ import Investor from './investor.json'
 import mentor from './mentor.json'
 import profile from'./profileAnimation.json'
 import Navmi from './navinme';
+import commlogo from '../images/community.json'
 import logo from '../images/image.svg'
 import appoinmentss from './appoinmentAnimation.json'
 const MiLandingPage = () => {
@@ -28,6 +29,11 @@ const MiLandingPage = () => {
       title: 'go to profile',
       animationUrl: profile,
       link: `/mi/miprofile/${id}`
+    },
+    {
+      title: 'Community',
+      animationUrl: commlogo, // Use the imported BLOG object directly
+      link: '/mi/community'
     },
   ];
 

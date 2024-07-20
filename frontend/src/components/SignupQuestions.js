@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link as RouterLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import {
   TextField,
@@ -27,7 +28,7 @@ import axios from "axios";
 import questions from "./questions.json"; // Import the JSON file
 import Lottie from "react-lottie";
 import signUpLottie from "./signuplottie.json"; // Import the Lottie animation
-import Nav from './nav';
+import Nav from "./nav";
 
 // Custom TextField styling for white text and border
 const CustomTextField = styled(TextField)({
@@ -128,7 +129,8 @@ const SignupQuestions = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
- 
+  const [isPasswordValid, setIsPasswordValid] = useState(true);
+
   const [userType, setUserType] = useState("");
   const [profileImage, setProfileImage] = useState(null);
   const [profileImageUrl, setProfileImageUrl] = useState("");
@@ -223,9 +225,11 @@ const SignupQuestions = () => {
         }
       }
     } else if (activeStep === 1) {
-      if (!name || !phoneNumber  || !password || !confirmPassword) {
+      if (!name || !phoneNumber || !password || !confirmPassword) {
         isValid = false;
-        alert("Name, Phone Number,  Password, and Confirm Password are required.");
+        alert(
+          "Name, Phone Number,  Password, and Confirm Password are required."
+        );
       } else if (password !== confirmPassword) {
         isValid = false;
         alert("Passwords do not match.");
@@ -235,7 +239,7 @@ const SignupQuestions = () => {
         isValid = false;
         alert("User Type is required.");
       }
-    }
+    } 
     return isValid;
   };
 
@@ -250,7 +254,9 @@ const SignupQuestions = () => {
 
   // Render user-specific questions based on input type
   const renderUserQuestions = () => {
+    // return <Typography variant="h1">hi</Typography> 
     return userQuestions.map((question) => {
+      
       switch (question.inputType) {
         case "text":
           return (
@@ -330,7 +336,13 @@ const SignupQuestions = () => {
       }
     });
   };
+  const handlePasswordChange = (e) => {
+    const newPassword = e.target.value;
+    setPassword(newPassword);
 
+    const passwordRegex = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/; // Example regex: at least one uppercase letter, one digit, and 8 characters long
+    setIsPasswordValid(passwordRegex.test(newPassword));
+  };
   // Handle form submission
   const handleSubmit = async () => {
     const formDataToSend = new FormData();
@@ -338,29 +350,30 @@ const SignupQuestions = () => {
     formDataToSend.append("name", name);
     formDataToSend.append("phone", phoneNumber);
     formDataToSend.append("password", password);
-    
+
     formDataToSend.append("userType", userType);
-  
+
     if (profileImage) {
       formDataToSend.append("profileImage", profileImageUrl);
     }
     if (proofImage) {
       formDataToSend.append("proofImage", proofImageUrl);
     }
-  
+
     userQuestions.forEach((question) => {
-      formDataToSend.append(question.questionName, formData[question.questionName]);
+      formDataToSend.append(
+        question.questionName,
+        formData[question.questionName]
+      );
     });
 
     const data = {};
     for (let pair of formDataToSend.entries()) {
       console.log(`${pair[0]}: ${pair[1]}`);
-      data[pair[0]] = pair[1]; 
+      data[pair[0]] = pair[1];
     }
-    
-    console.log(formDataToSend,data)
 
-   
+    console.log(formDataToSend, data);
 
     try {
       await axios.post(`${backend}/api/signup`, data);
@@ -371,19 +384,36 @@ const SignupQuestions = () => {
       alert("An error occurred during signup. Please try again.");
     }
   };
-  
+
   // Render the content for each step
   const renderStepContent = (step) => {
     switch (step) {
       case 0:
         return (
-          <CustomTextField
-            label="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            fullWidth
-            variant="outlined"
-          />
+          <div>
+            <CustomTextField
+              label="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              fullWidth
+              variant="outlined"
+            />
+            <Typography
+              sx={{
+                textAlign: "center",
+                paddingTop: "10px",
+                fontStyle: "montserrat",
+                fontSize: "5px",
+              }}
+            >
+              prefferably work mail :-)
+            </Typography>
+            <RouterLink to="/login" style={{ textDecoration: "none" }}>
+              <Button fullWidth variant="outlined" sx={{ mt: 3, mb: 2 }}>
+                Already Have an Account?
+              </Button>
+            </RouterLink>
+          </div>
         );
       case 1:
         return (
@@ -400,21 +430,40 @@ const SignupQuestions = () => {
               label="Phone Number"
               type="number"
               value={phoneNumber}
+              inputProps={{
+                maxLength: 10,
+                minLength: 10,
+              }}
               onChange={(e) => setPhoneNumber(e.target.value)}
               fullWidth
               variant="outlined"
               sx={{ marginBottom: "20px" }}
             />
-            
-            <CustomTextField
-              label="Password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              fullWidth
-              variant="outlined"
-              sx={{ marginBottom: "20px" }}
-            />
+
+            <div>
+              <CustomTextField
+                label="Password"
+                type="password"
+                value={password}
+                onChange={handlePasswordChange}
+                fullWidth
+                variant="outlined"
+                sx={{ marginBottom: "20px" }}
+                InputProps={{
+                  style: {
+                    borderColor: isPasswordValid ? "inherit" : "red",
+                  },
+                }}
+              />
+              <Typography
+                variant="body2"
+                color={isPasswordValid ? "green" : "error"}
+                sx={{ marginBottom: "20px" }}
+              >
+                Password must be at least 8 characters long, contain at least
+                one uppercase letter and one digit.
+              </Typography>
+            </div>
             <CustomTextField
               label="Confirm Password"
               type="password"
@@ -454,33 +503,40 @@ const SignupQuestions = () => {
         );
       case 2:
         return (
-          <FormControl fullWidth style={{ backgroundColor: 'transparent' }}>
-  <InputLabel style={{ color: 'white' }}>User Type</InputLabel>
-  <CustomSelect
-    value={userType}
-    onChange={(e) => setUserType(e.target.value)}
-    label="User Type"
-    style={{ color: 'white' }}
-    MenuProps={{ PaperProps: { style: { backdropFilter:'blur(8px)'} } }} // Ensure menu background is transparent
-  >
-    {Object.keys(questions).map((type) => (
-      <MenuItem key={type} value={type} style={{ color: 'black' }}>
-        {type}
-      </MenuItem>
-    ))}
-  </CustomSelect>
-</FormControl>
-
-
+          <div>
+            <Typography variant="h6" sx={{ marginBottom: "20px",textAlign:"center" }}>Tell us Who you are!</Typography>
+          <FormControl fullWidth style={{ backgroundColor: "transparent" }}>
+            <InputLabel style={{ color: "white" }}>I am a</InputLabel>
+            <CustomSelect
+              value={userType}
+              onChange={(e) => setUserType(e.target.value)}
+              label="User Type"
+              style={{ color: "white" }}
+              MenuProps={{
+                PaperProps: { style: { backdropFilter: "blur(8px)" } },
+              }} // Ensure menu background is transparent
+            >
+              {Object.keys(questions).map((type) => (
+                <MenuItem key={type} value={type} style={{ color: "black" }}>
+                  {type}
+                </MenuItem>
+              ))}
+            </CustomSelect>
+          </FormControl>
+          </div>
         );
       case 3:
-        return renderUserQuestions();
+        return (
+          <div>
+            <Typography  variant="h6" sx={{textAlign:"center",paddingBottom:"10px"}}>Tell us a lil bit more about yourself...</Typography>
+        {renderUserQuestions()}
+        </div>)
       case 4:
         return (
           <>
             <Typography variant="h6">Review your details:</Typography>
             <TableContainer component={Paper}>
-              <Table style={{backgroundColor:"transparent"}}>
+              <Table style={{ backgroundColor: "transparent" }}>
                 <TableHead>
                   <TableRow>
                     <TableCell>Field</TableCell>
@@ -500,7 +556,7 @@ const SignupQuestions = () => {
                     <TableCell>Phone Number</TableCell>
                     <TableCell>{phoneNumber}</TableCell>
                   </TableRow>
-                 
+
                   <TableRow>
                     <TableCell>User Type</TableCell>
                     <TableCell>{userType}</TableCell>
@@ -522,15 +578,14 @@ const SignupQuestions = () => {
       //       Submit
       //     </Button>
       //   );
-      
     }
   };
 
   return (
     <ThemeProvider theme={theme}>
       <Nav />
+
       <Box
-       
         sx={{
           backgroundColor: theme.palette.background.default,
           minHeight: "100vh",
@@ -541,7 +596,11 @@ const SignupQuestions = () => {
           padding: "20px",
         }}
       >
-       
+        <Typography
+          sx={{ paddingBottom: "40px", fontSize: "25px", textAlign: "center" }}
+        >
+          Signing up into Solopro
+        </Typography>
         <Lottie
           options={{
             loop: true,
@@ -554,8 +613,8 @@ const SignupQuestions = () => {
           height={200}
           width={200}
         />
-        <Typography variant="h4" sx={{ marginBottom: "20px" }}>
-          Signup
+        <Typography variant="h6" sx={{ marginBottom: "20px" }}>
+          Let's get you signed up to Solopro
         </Typography>
         <Stepper activeStep={activeStep} alternativeLabel>
           {steps.map((label) => (
@@ -566,21 +625,27 @@ const SignupQuestions = () => {
         </Stepper>
         <Box sx={{ width: "100%", marginTop: "20px" }}>
           {renderStepContent(activeStep)}
-          <Box sx={{ display: "flex", justifyContent: "space-between", marginTop: "20px" }}>
-            <Button
-              disabled={activeStep === 0}
-              onClick={handleBack}
-            >
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              marginTop: "20px",
+            }}
+          >
+            {/* <Typography>All done! click on sumbit to start a great jouney</Typography> */}
+            <Button disabled={activeStep === 0} onClick={handleBack}>
               Back
             </Button>
             <Button
-  variant="contained"
-  color="primary"
-  onClick={activeStep === steps.length - 1 ? handleSubmit : handleNext}
-  sx={{ marginLeft: "auto" }}
->
-  {activeStep === steps.length - 1 ? "Done" : "Next"}
-</Button>
+              variant="contained"
+              color="primary"
+              onClick={
+                activeStep === steps.length - 2 ? handleSubmit : handleNext
+              }
+              sx={{ marginLeft: "auto" }}
+            >
+              {activeStep === steps.length - 2 ? "Done" : "Next"}
+            </Button>
           </Box>
         </Box>
       </Box>

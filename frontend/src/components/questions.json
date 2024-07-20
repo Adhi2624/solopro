@@ -3,37 +3,37 @@
       {
         "questionName": "collegeName",
         "inputType": "text",
-        "label": "College Name",
+        "label": "Where do you study",
         "required": true
       },
       {
         "questionName": "collegeLocation",
         "inputType": "text",
-        "label": "College Location",
+        "label": "Location of the institution",
         "required": true
       },
       {
         "questionName": "native",
         "inputType": "text",
-        "label": "Native",
+        "label": "Where are you from (native)",
         "required": true
       },
       {
         "questionName": "linkedin",
         "inputType": "text",
-        "label": "LinkedIn Profile",
+        "label": "your LinkedIn Profile",
         "required": false
       },
       {
         "questionName": "course",
         "inputType": "text",
-        "label": "Course",
+        "label": "Which course are you in",
         "required": true
       },
       {
         "questionName": "githubId",
         "inputType": "text",
-        "label": "GitHub ID",
+        "label": "your GitHub ID",
         "required": false
       },
       {
@@ -45,7 +45,7 @@
       {
         "questionName": "age",
         "inputType": "number",
-        "label": "Age",
+        "label": "How old are you",
         "required": true
       }
     ],

@@ -30,16 +30,16 @@ const CustomTextField = styled(TextField)({
 
 const CustomSelect = styled(Select)({
     color: "white",
-    borderColor: "white !important", // Ensure border color is white
+    borderColor: "white !important",
     "& .MuiOutlinedInput-root": {
         "& fieldset": {
-            borderColor: "white !important", // Ensure border color is white
+            borderColor: "white !important",
         },
         "&:hover fieldset": {
-            borderColor: "white !important", // Ensure border color is white on hover
+            borderColor: "white !important",
         },
         "&.Mui-focused fieldset": {
-            borderColor: "white !important", // Ensure border color is white when focused
+            borderColor: "white !important",
         },
     },
     "& .MuiSelect-select": {
@@ -56,9 +56,9 @@ const MentorentrepenureList = () => {
     const [entrepreneurlist, setEntrepreneurlist] = useState([]);
     const [filteredEntrepreneur, setFilteredEntrepreneur] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [EntrepreneurPerPage, setEntrepreneurPerPage] = useState(10);
+    const [entrepreneurPerPage, setEntrepreneurPerPage] = useState(10);
     const [searchTerm, setSearchTerm] = useState('');
-    const [searchField, setSearchField] = useState('name'); // Default search field
+    const [searchField, setSearchField] = useState('name');
     const backend = process.env.REACT_APP_BACKEND;
 
     useEffect(() => {
@@ -79,9 +79,9 @@ const MentorentrepenureList = () => {
         setCurrentPage(1);
     }, [searchTerm, searchField, entrepreneurlist]);
 
-    const indexOfLastMentor = currentPage * EntrepreneurPerPage;
-    const indexOfFirstMentor = indexOfLastMentor - EntrepreneurPerPage;
-    const currentEntrepreneur = filteredEntrepreneur.slice(indexOfFirstMentor, indexOfLastMentor);
+    const indexOfLastEntrepreneur = currentPage * entrepreneurPerPage;
+    const indexOfFirstEntrepreneur = indexOfLastEntrepreneur - entrepreneurPerPage;
+    const currentEntrepreneur = filteredEntrepreneur.slice(indexOfFirstEntrepreneur, indexOfLastEntrepreneur);
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -96,7 +96,7 @@ const MentorentrepenureList = () => {
 
     const handleSearchFieldChange = (event) => {
         setSearchField(event.target.value);
-        setSearchTerm(''); // Clear search term when changing search field
+        setSearchTerm('');
     };
     const handleback = () => {
         // const history = useHistory();
@@ -172,13 +172,13 @@ const MentorentrepenureList = () => {
                 </div>
                 {filteredEntrepreneur.length >= 10 && (
                     <Pagination
-                        EntrepreneurPerPage={EntrepreneurPerPage}
+                        EntrepreneurPerPage={entrepreneurPerPage}
                         totalEntrepreneur={filteredEntrepreneur.length}
                         paginate={paginate}
                         currentPage={currentPage}
                         handleEntrepreneurPerPageChange={handleEntrepreneurPerPageChange}
-                        indexOfFirstMentor={indexOfFirstMentor}
-                        indexOfLastMentor={indexOfLastMentor}
+                        indexOfFirstMentor={indexOfFirstEntrepreneur}
+                        indexOfLastMentor={indexOfLastEntrepreneur}
                     />
                 )}
             </div>

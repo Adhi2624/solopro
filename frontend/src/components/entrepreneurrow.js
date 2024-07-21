@@ -25,5 +25,6 @@ const EntrepreneurTableRow = ({ entrepreneur }) => {
         </tr>
     );
 };
+}
 
 export default EntrepreneurTableRow;

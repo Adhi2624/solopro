@@ -63,16 +63,16 @@ exports.getPost = async (req, res) => {
 };
 
 exports.getPosts = async (req, res) => {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+
     try {
-        // Fetch raw posts from the database
-        const rawPosts = await Post.find();
-        console.log('Raw Posts:', JSON.stringify(rawPosts, null, 2));
-        
-        // Send the populated posts as a JSON response
-        res.status(200).json(rawPosts);
-    } catch (error) {
-        console.error('Error:', error);
-        res.status(500).json({ error: 'Failed to retrieve posts. Please try again.' });
+        const posts = await Post.find().skip(skip).limit(limit);
+        const total = await Post.countDocuments();
+        res.json({ posts, total, page, pages: Math.ceil(total / limit) });
+    } catch (err) {
+        res.status(500).json({ error: 'Failed to retrieve posts.' });
     }
 };
 

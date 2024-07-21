@@ -16,9 +16,8 @@ const postSchema = new mongoose.Schema({
     author: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User' },
     images: [String],
     videos: [String],
-    role: { type: String }
-}, {
-    timestamps: true
+    role: { type: String },
+    createdAt:{ type : Date, default: Date.now }
 });
 
 

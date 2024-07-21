@@ -119,7 +119,7 @@ const startServer = async () => {
     app.post('/posts/:id/comments', postControllers.addComment);
     app.delete('/posts/:id', postControllers.deletePost);
 
-
+    app.post('/forgot_password',forgotPassword);
     // Error Handler Middleware
     app.use(errorHandler);
 

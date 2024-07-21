@@ -1,10 +1,11 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Nav1 from '../nav1';
 import Navinvmen from '../navinme';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button } from 'react-bootstrap';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 const CommunityHome = () => {
     const [posts, setPosts] = useState([]);
@@ -12,6 +13,8 @@ const CommunityHome = () => {
     const [filter, setFilter] = useState('content');
     const [sortBy, setSortBy] = useState('date');
     const [sortOrder, setSortOrder] = useState('desc');
+    const [page, setPage] = useState(1);
+    const [hasMore, setHasMore] = useState(true);
 
     const backend = process.env.REACT_APP_BACKEND;
     const lstorage = localStorage.getItem('user');
@@ -19,28 +22,38 @@ const CommunityHome = () => {
     const urole = lstorageparse.value.role;
     const isStudent = urole === 'Student';
 
-    useEffect(() => {
-        const fetchPosts = async () => {
-            try {
-                const res = await axios.get(`${backend}/posts`);
-                const postsWithAuthors = await Promise.all(
-                    res.data.map(async (post) => {
-                        const authorRes = await axios.get(`${backend}/users/${post.author}`);
-                        const author = authorRes.data;
-                        return {
-                            ...post,
-                            authorName: author.name,
-                            authorProfileImg: author.profileImage,
-                        };
-                    })
-                );
-                setPosts(postsWithAuthors);
-            } catch (err) {
-                console.error("Error fetching posts:", err);
-            }
-        };
-        fetchPosts();
+    const fetchPosts = useCallback(async (page) => {
+        try {
+            const res = await axios.get(`${backend}/posts`, { params: { page, limit: 10 } });
+            const postsWithAuthors = await Promise.all(
+                res.data.posts.map(async (post) => {
+                    const authorRes = await axios.get(`${backend}/users/${post.author}`);
+                    const author = authorRes.data;
+                    return {
+                        ...post,
+                        authorName: author.name,
+                        authorProfileImg: author.profileImage,
+                    };
+                })
+            );
+            setPosts((prevPosts) => {
+                const newPosts = postsWithAuthors.filter(post => !prevPosts.some(p => p._id === post._id));
+                return [...prevPosts, ...newPosts];
+            });
+            setHasMore(page < res.data.pages);
+            console.log(posts)
+        } catch (err) {
+            console.error("Error fetching posts:", err);
+        }
     }, [backend]);
+
+    useEffect(() => {
+        fetchPosts(page);
+    }, [page, fetchPosts]);
+
+    const loadMorePosts = () => {
+        setPage((prevPage) => prevPage + 1);
+    };
 
     const filteredPosts = useMemo(() => {
         const searchTerm = search.toLowerCase();
@@ -93,29 +106,37 @@ const CommunityHome = () => {
                         </select>
                     </div>
                 </div>
-                <div className="row">
-                    {sortedPosts.length === 0 ? (
-                        <p className="text-white">There are currently no community posts available.</p>
-                    ) : (
-                        sortedPosts.map((post) => (
-                            <div key={post._id} className="col-md-4">
-                                <div className="card mb-4">
-                                    <img src={post.images[0]} alt={post.authorName} className="card-img-top" />
-                                    <div className="card-body">
-                                        <h5 className="card-title">{post.title}</h5>
-                                        <p className="card-text">{post.shortDesc}</p>
-                                        <p className="card-text">Posted by: 
-                                            <img src={post.authorProfileImg} alt="Profile" className="w-25" />
-                                            {post.authorName} - {post.role}
-                                        </p>
-                                        <p className="card-text">Date: {new Date(post.createdAt).toLocaleDateString()}</p>
-                                        <Link to={`posts/${post._id}`} className="btn btn-primary">View Post</Link>
+                <InfiniteScroll
+                    dataLength={sortedPosts.length}
+                    next={loadMorePosts}
+                    hasMore={hasMore}
+                    loader={<h4>Loading...</h4>}
+                    //endMessage={<p className="text-white">There are no more posts to show.</p>}
+                >
+                    <div className="row">
+                        {sortedPosts.length === 0 ? (
+                            <p className="text-white">There are currently no community posts available.</p>
+                        ) : (
+                            sortedPosts.map((post) => (
+                                <div key={post._id} className="col-md-4">
+                                    <div className="card mb-4">
+                                        <img src={post.images[0]} alt={post.authorName} className="card-img-top" />
+                                        <div className="card-body">
+                                            <h5 className="card-title">{post.title}</h5>
+                                            <p className="card-text">{post.shortDesc}</p>
+                                            <p className="card-text">Posted by: 
+                                                <img src={post.authorProfileImg} alt="Profile" className="w-25" />
+                                                {post.authorName} - {post.role}
+                                            </p>
+                                            <p className="card-text">Date: {new Date(post.createdAt).toLocaleDateString()}</p>
+                                            <Link to={`posts/${post._id}`} className="btn btn-primary">View Post</Link>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        ))
-                    )}
-                </div>
+                            ))
+                        )}
+                    </div>
+                </InfiniteScroll>
             </div>
         </div>
     );

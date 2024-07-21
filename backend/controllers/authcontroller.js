@@ -22,9 +22,11 @@ const transporter = nodemailer.createTransport({
   }
 });
 
+
+
 const forgotPassword = async (req, res) => {
   const { email } = req.body;
-
+console.log(ademail,adpw)
   try {
     const db = await getDB();
     const user = await db.collection('users').findOne({ email });
@@ -34,24 +36,27 @@ const forgotPassword = async (req, res) => {
     }
 
     const otp = crypto.randomInt(100000, 999999).toString();
-    user.otp = otp;
+    const otpExpiry = Date.now() + 90 * 1000; // 90 seconds from now
 
-    await db.collection('users').updateOne({ email }, { $set: { otp } });
+    await db.collection('users').updateOne({ email }, { $set: { otp, otpExpiry } });
 
     const mailOptions = {
       from: ademail,
       to: email,
       subject: 'Password Reset OTP',
-      text: `Your OTP for password reset is ${otp}`,
+      text: `Your OTP for password reset is ${otp}. It will expire in 90 seconds.`,
     };
 
     await transporter.sendMail(mailOptions);
-    res.json({ otp });
+    res.json({ message: 'OTP sent successfully' });
   } catch (error) {
-    console.error('Server error: ', error);
+    console.error('Server error:', error);
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
+
+
+
 
 const updatePassword = async (req, res) => {
   const { email, password, otp } = req.body;
@@ -68,12 +73,19 @@ const updatePassword = async (req, res) => {
       return res.status(400).json({ message: 'Invalid OTP' });
     }
 
+    if (Date.now() > user.otpExpiry) {
+      return res.status(400).json({ message: 'OTP has expired' });
+    }
+
     const hashedPassword = await bcrypt.hash(password, 10);
-    await db.collection('users').updateOne({ email }, { $set: { password: hashedPassword, otp: null } });
+    await db.collection('users').updateOne(
+      { email },
+      { $set: { password: hashedPassword, otp: null, otpExpiry: null } }
+    );
 
     res.json({ message: 'Password changed successfully' });
   } catch (error) {
-    console.error('Server error: ', error);
+    console.error('Server error:', error);
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 };

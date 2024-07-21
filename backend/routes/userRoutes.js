@@ -3,7 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 
 const Entrepreneur = require('../models/Entrepreneur');
-const User = require('../models/User'); // Assuming you have a User model for basic user info
+const User = require('../models/user'); // Assuming you have a User model for basic user info
 const Mentor = require('../models/Mentor');
 const Student = require('../models/Student');
 const Investor = require('../models/Investor');

@@ -13,54 +13,60 @@ import {
   Typography,
   Select,
   ThemeProvider,
+  Card,
+  CardContent,
+  IconButton,
+  Box,
 } from "@mui/material";
 import { styled, createTheme } from "@mui/material/styles";
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import SendIcon from '@mui/icons-material/Send';
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Box } from "@mui/material";
+
 const CustomSelect = styled(Select)({
-    color: "black",
-    borderColor: "white",
-    "& .MuiOutlinedInput-root": {
-      "& fieldset": {
-        borderColor: "white",
-      },
-      "&:hover fieldset": {
-        borderColor: "white",
-      },
-      "&.Mui-focused fieldset": {
-        borderColor: "white",
-      },
+  color: "black",
+  borderColor: "white",
+  "& .MuiOutlinedInput-root": {
+    "& fieldset": {
+      borderColor: "white",
     },
-    "& .MuiSelect-select": {
-      backgroundColor: "transparent",
+    "&:hover fieldset": {
+      borderColor: "white",
     },
-    "& input:-webkit-autofill": {
-      "-webkit-box-shadow": "0 0 0 1000px #000 inset",
-      "-webkit-text-fill-color": "black",
-      "caret-color": "black",
+    "&.Mui-focused fieldset": {
+      borderColor: "white",
     },
-  });
-  
-  // Theme configuration with blue background
-  const theme = createTheme({
-    palette: {
-      primary: {
-        main: "#1976d2",
-      },
-      secondary: {
-        main: "#000000",
-      },
-      background: {
-        default: "#07161F", // Blue shade for the background
-      },
+  },
+  "& .MuiSelect-select": {
+    backgroundColor: "transparent",
+  },
+  "& input:-webkit-autofill": {
+    "-webkit-box-shadow": "0 0 0 1000px #000 inset",
+    "-webkit-text-fill-color": "black",
+    "caret-color": "black",
+  },
+});
+
+// Theme configuration with blue background
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#1976d2",
     },
-    typography: {
-      allVariants: {
-        color: "white",
-      },
+    secondary: {
+      main: "#000000",
     },
-  });
-  
+    background: {
+      default: "#07161F", // Blue shade for the background
+    },
+  },
+  typography: {
+    allVariants: {
+      color: "white",
+    },
+  },
+});
+
 const CustomTextField = styled(TextField)({
   "& .MuiInputBase-root": {
     color: "white",
@@ -82,6 +88,7 @@ const CustomTextField = styled(TextField)({
     "caret-color": "white",
   },
 });
+
 const PostDetail = () => {
   const { id } = useParams();
   const [post, setPost] = useState(null);
@@ -136,7 +143,7 @@ const PostDetail = () => {
         id: token.value.id,
       });
       setComment("");
-      fetchPost(); 
+      fetchPost();
     } catch (err) {
       console.error("Error submitting comment:", err);
     }
@@ -145,71 +152,80 @@ const PostDetail = () => {
   if (!post) return <p style={{ color: "white" }}>Loading...</p>;
 
   return (
-    <Box sx={{ backgroundColor: "#040F15", fontStyle: "montserrat" }}>
-      {isStudent ? <Nav1 /> : <Navinvmen />}
-      <div
-        className="container mt-5"
-        style={{ color: "white", backgroundColor: "#040F15" }}
-      >
-        <Typography
-          variant="h3"
-          sx={{ textAlign: "center", fontStyle: "montserrat" }}
-        >
-          {post.title}
-        </Typography>
-    
-        <p className="mt-5">{post.content}</p>
-        <div>
-          <button className="btn btn-primary" onClick={handleLike}>
-            Like ({post.likes})
-          </button>
-        </div>
-        <div>
-          <h2>Comments</h2>
-          <form onSubmit={handleCommentSubmit}>
-            <div className="form-group">
-              <textarea
-                className="form-control"
-                style={{
-                  color: "white",
-                  backgroundColor: "#333",
-                  border: "1px solid #555",
-                  padding: "10px",
-                  borderRadius: "5px",
-                  resize: "none",
-                }}
-                value={comment}
-                onChange={(e) => setComment(e.target.value)}
-                placeholder="Add a comment"
-              ></textarea>
-            </div>
-            <button type="submit" className="btn btn-primary">
-              Submit
-            </button>
-          </form>
-          <div className="mt-4">
-            {post.comments.map((comment) => (
-              <div
-                key={comment._id}
-                className="mb-2"
-                style={{ color: "white" }}
-              >
-                <img
-                  src={comment.author.profileImage}
-                  alt={comment.author.name}
-                  width="30"
-                  height="30"
-                />
-                <strong>
-                  {comment.author.name} ({comment.author.role})
-                </strong>
-                : {comment.content}
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </Box>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Box sx={{ backgroundColor: "#040F15", minHeight: "100vh", padding: 3 }}>
+        {isStudent ? <Nav1 /> : <Navinvmen />}
+        <Grid container justifyContent="center" alignItems="center">
+          <Grid item xs={12} sm={8} md={6}>
+            <Card sx={{ backgroundColor: "#1a1a1a", color: "white", mb: 3 }}>
+              <CardContent>
+                <Typography variant="h3" align="center">
+                  {post.title}
+                </Typography>
+                <Typography variant="body1" sx={{ mt: 2 }}>
+                  {post.content}
+                </Typography>
+                <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 2 }}>
+                  <IconButton onClick={handleLike} color="primary">
+                    <FavoriteIcon /> {post.likes}
+                  </IconButton>
+                </Box>
+              </CardContent>
+            </Card>
+            <Card sx={{ backgroundColor: "#1a1a1a", color: "white", mb: 3 }}>
+              <CardContent>
+                <Typography variant="h5">Comments</Typography>
+                <form onSubmit={handleCommentSubmit} style={{ marginTop: "1rem" }}>
+                  <CustomTextField
+                    variant="outlined"
+                    fullWidth
+                    multiline
+                    rows={4}
+                    value={comment}
+                    onChange={(e) => setComment(e.target.value)}
+                    placeholder="Add a comment"
+                  />
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    endIcon={<SendIcon />}
+                    sx={{ mt: 2 }}
+                  >
+                    Submit
+                  </Button>
+                </form>
+                <Box sx={{ mt: 3 }}>
+                  {post.comments.map((comment) => (
+                    <Card
+                      key={comment._id}
+                      sx={{ backgroundColor: "#333", color: "white", mb: 2 }}
+                    >
+                      <CardContent>
+                        <Box sx={{ display: "flex", alignItems: "center" }}>
+                          <Avatar
+                            src={comment.author.profileImage}
+                            alt={comment.author.name}
+                            sx={{ mr: 2 }}
+                          />
+                          <Typography variant="body1">
+                            <strong>{comment.author.name} ({comment.author.role})</strong>
+                          </Typography>
+                        </Box>
+                        <Typography variant="body2" sx={{ mt: 1 }}>
+                          {comment.content}
+                        </Typography>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </Box>
+              </CardContent>
+            </Card>
+          </Grid>
+        </Grid>
+      </Box>
+    </ThemeProvider>
   );
 };
 

@@ -2,6 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const EntrepreneurTableRow = ({ entrepreneur }) => {
+    if (!entrepreneur || !entrepreneur._id) {
+        return null; // Return null if entrepreneur is undefined or _id is not present
+    }
+
+    console.log(entrepreneur._id);
+
+const EntrepreneurTableRow = ({ entrepreneur }) => {
     return (
         <tr className='text-center'>
             <td>{entrepreneur.profileImage ? <img className='img-fluid rounded-circle' src={entrepreneur.profileImage} alt="Entrepreneur" width="50" height="50" /> : ""}</td>

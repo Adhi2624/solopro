@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import Nav1 from '../nav1';
 import Navinvmen from '../navinme';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import { Box } from '@mui/material';
 const PostDetail = () => {
     const { id } = useParams();
     const [post, setPost] = useState(null);
@@ -65,9 +65,9 @@ const PostDetail = () => {
     if (!post) return <p style={{ color: 'white' }}>Loading...</p>;
 
     return (
-        <div>
+        <Box sx={{backgroundColor:"#040F15"}}>
             {isStudent ? <Nav1 /> : <Navinvmen />}
-            <div className="container mt-5" style={{ color: 'white' }}>
+            <div className="container mt-5" style={{ color: 'white' ,backgroundColor:"#040F15"}}>
                 <h1>{post.title}</h1>
                 <p>{post.content}</p>
                 <div>
@@ -106,7 +106,7 @@ const PostDetail = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </Box>
     );
 };
 

@@ -77,7 +77,7 @@ const CommunityHome = () => {
     }, [filteredPosts, sortBy, sortOrder]);
 
     return (
-        <div>
+        <Box sx={{backgroundColor:"#040F15"}}>
             {isStudent ? <Nav1 /> : <Navinvmen />}
             <div className="container mt-5">
                 <h1 className="text-white">Community Posts</h1>
@@ -138,7 +138,7 @@ const CommunityHome = () => {
                     </div>
                 </InfiniteScroll>
             </div>
-        </div>
+        </Box>
     );
 };
 

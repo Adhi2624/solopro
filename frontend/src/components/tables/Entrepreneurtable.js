@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import EntrepreneurTableRow from '../entrepreneurrow';
+import EntrepreneurTableRow from '../entrepreneurrow'; // Ensure correct import
 import axios from 'axios';
 import Nav1 from '../nav1';
-import { TextField, Select, MenuItem } from '@mui/material';
+import { TextField, Select, MenuItem, Typography } from '@mui/material';
 import { styled } from '@mui/system';
-
+import { Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 const CustomTextField = styled(TextField)({
     "& .MuiInputBase-root": {
         color: "white",
@@ -63,6 +64,7 @@ const MentorentrepenureList = () => {
     useEffect(() => {
         axios.get(`${backend}/getentrepreneur`)
             .then(res => {
+                console.log("Fetched Data: ", res.data); // Log fetched data
                 setEntrepreneurlist(res.data);
                 setFilteredEntrepreneur(res.data);
             })
@@ -70,8 +72,8 @@ const MentorentrepenureList = () => {
     }, [backend]);
 
     useEffect(() => {
-        const results = entrepreneurlist.filter(entrepreneur =>
-            entrepreneur[searchField]?.toLowerCase().includes(searchTerm.toLowerCase())
+        const results = entrepreneurlist.filter(mentor =>
+            mentor[searchField]?.toLowerCase().includes(searchTerm.toLowerCase())
         );
         setFilteredEntrepreneur(results);
         setCurrentPage(1);
@@ -90,16 +92,28 @@ const MentorentrepenureList = () => {
 
     const handleSearch = (event) => {
         setSearchTerm(event.target.value);
-    };
+    };const navigate = useNavigate();
 
     const handleSearchFieldChange = (event) => {
         setSearchField(event.target.value);
         setSearchTerm('');
     };
-
+    const handleback = () => {
+        // const history = useHistory();
+        
+        navigate(-1);
+    
+    
+      }
     return (
-        <div>
+        <div style={{backgroundColor:"#040F15"}}>
             <Nav1 />
+            <Button
+                variant="contained"
+                component="label"
+                onClick={handleback}
+                sx={{ marginTop: "20px",marginLeft:"20px" }}
+              >Back</Button>
             <div className='p-1 mt-3'>
                 <div className="d-flex justify-content-center mb-3">
                     <CustomTextField
@@ -125,6 +139,9 @@ const MentorentrepenureList = () => {
                         <MenuItem value="status">Status</MenuItem>
                     </CustomSelect>
                 </div>
+                <div className="d-flex justify-content-center mb-3">
+                    {/* Add any additional elements if needed */}
+                </div>
                 <div className="table-responsive">
                     <table className="table text-light" id="mentor-table">
                         <thead>
@@ -139,9 +156,17 @@ const MentorentrepenureList = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {currentEntrepreneur.map((entrepreneur, idx) => (
-                                <EntrepreneurTableRow key={idx} entrepreneur={entrepreneur} />
-                            ))}
+                            {currentEntrepreneur.length > 0 ? (
+                                currentEntrepreneur.map((mentor, idx) => (
+                                    <EntrepreneurTableRow key={mentor._id} entrepreneur={mentor} />
+                                ))
+                            ) : (
+                                <tr>
+                                    <td colSpan="7" className="text-center">
+                                        <Typography>No data available</Typography>
+                                    </td>
+                                </tr>
+                            )}
                         </tbody>
                     </table>
                 </div>

@@ -17,7 +17,10 @@ const postSchema = new mongoose.Schema({
     images: [String],
     videos: [String],
     role: { type: String }
+}, {
+    timestamps: true
 });
+
 
 const Post = mongoose.model('Post', postSchema);
 module.exports = Post;

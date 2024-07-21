@@ -130,7 +130,7 @@ const SignupQuestions = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isPasswordValid, setIsPasswordValid] = useState(true);
-
+const [emailvalid,setemailvalid]=useState(true);
   const [userType, setUserType] = useState("");
   const [profileImage, setProfileImage] = useState(null);
   const [profileImageUrl, setProfileImageUrl] = useState("");
@@ -206,7 +206,7 @@ const SignupQuestions = () => {
   const validateCurrentStep = async () => {
     let isValid = true;
     if (activeStep === 0) {
-      if (!email) {
+      if (!email ) {
         isValid = false;
         alert("Email is required.");
       } else {
@@ -225,7 +225,8 @@ const SignupQuestions = () => {
         }
       }
     } else if (activeStep === 1) {
-      if (!name || !phoneNumber || !password || !confirmPassword) {
+      let numlen=phoneNumber.length
+      if (!name || !phoneNumber || !password || !confirmPassword ||numlen!=10) {
         isValid = false;
         alert(
           "Name, Phone Number,  Password, and Confirm Password are required."
@@ -336,6 +337,12 @@ const SignupQuestions = () => {
       }
     });
   };
+  const handleemailchange =(e)=>{
+    const newemail=e.target.value;
+    setEmail(newemail);
+    const emailregex= /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$/;
+    setemailvalid(emailregex.test(newemail));
+  }
   const handlePasswordChange = (e) => {
     const newPassword = e.target.value;
     setPassword(newPassword);
@@ -393,9 +400,11 @@ const SignupQuestions = () => {
           <div>
             <CustomTextField
               label="Email"
+              type={email}
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={handleemailchange}
               fullWidth
+              textAlign="centre"
               variant="outlined"
             />
             <Typography
@@ -418,8 +427,9 @@ const SignupQuestions = () => {
       case 1:
         return (
           <>
+          <Typography variant="h6" sx={{textAlign:"center",fontStyle:"Montserrat",paddingBottom:"30px"}}>Tell us something about you</Typography>
             <CustomTextField
-              label="Name"
+              label="Tell us your name"
               value={name}
               onChange={(e) => setName(e.target.value)}
               fullWidth
@@ -442,7 +452,7 @@ const SignupQuestions = () => {
 
             <div>
               <CustomTextField
-                label="Password"
+                label="Set a Password"
                 type="password"
                 value={password}
                 onChange={handlePasswordChange}
@@ -534,7 +544,7 @@ const SignupQuestions = () => {
       case 4:
         return (
           <>
-            <Typography variant="h6">Review your details:</Typography>
+            <Typography variant="h6"  sx={{textAlign:"center",paddingBottom:"10px"}}>Review your details</Typography>
             <TableContainer component={Paper}>
               <Table style={{ backgroundColor: "transparent" }}>
                 <TableHead>
@@ -594,6 +604,7 @@ const SignupQuestions = () => {
           alignItems: "center",
           flexDirection: "column",
           padding: "20px",
+          overflowX:"hidden"
         }}
       >
         <Typography
@@ -610,8 +621,8 @@ const SignupQuestions = () => {
               preserveAspectRatio: "xMidYMid slice",
             },
           }}
-          height={200}
-          width={200}
+          height={400}
+          width={400}
         />
         <Typography variant="h6" sx={{ marginBottom: "20px" }}>
           Let's get you signed up to Solopro

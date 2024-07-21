@@ -8,7 +8,6 @@ const EntrepreneurTableRow = ({ entrepreneur }) => {
 
     console.log(entrepreneur._id);
 
-const EntrepreneurTableRow = ({ entrepreneur }) => {
     return (
         <tr className='text-center'>
             <td>{entrepreneur.profileImage ? <img className='img-fluid rounded-circle' src={entrepreneur.profileImage} alt="Entrepreneur" width="50" height="50" /> : ""}</td>

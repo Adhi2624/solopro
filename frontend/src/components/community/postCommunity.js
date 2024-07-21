@@ -1,10 +1,37 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { useNavigate } from 'react-router-dom';
 import Nav1 from '../nav1';
 import Navinvmen from '../navinme';
-import { Box } from '@mui/material';
+import { Box, TextField, Button, Typography, Snackbar, Alert, styled } from '@mui/material';
 import '../../css/postFrom.css'; // We'll use this for custom styles
+
+const StyledForm = styled('form')({
+    maxWidth: '600px',
+    margin: '0 auto',
+    padding: '2rem',
+    backgroundColor: '#1E2A38',
+    borderRadius: '8px',
+    boxShadow: '0 0 10px rgba(0,0,0,0.3)',
+});
+
+const StyledTextField = styled(TextField)({
+    '& .MuiInputBase-input': {
+        color: 'white',
+    },
+    '& .MuiInputLabel-root': {
+        color: 'white',
+    },
+    '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+        borderColor: 'white',
+    },
+    '&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+        borderColor: '#80deea',
+    },
+    '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+        borderColor: '#80deea',
+    },
+});
 
 const PostForm = () => {
     const [content, setContent] = useState('');
@@ -12,12 +39,15 @@ const PostForm = () => {
     const [shortDesc, setShortDesc] = useState('');
     const [images, setImages] = useState([]);
     const [videos, setVideos] = useState([]);
+    const [openSnackbar, setOpenSnackbar] = useState(false);
+    const navigate = useNavigate();
     const backend = process.env.REACT_APP_BACKEND;
+    
     const lstorage = localStorage.getItem('user');
     const lstorageparse = JSON.parse(lstorage);
     const urole = lstorageparse.value.role;
     const isstudent = urole === 'Student';
-
+    
     const handleFileChange = (e) => {
         const { files, name } = e.target;
         if (name === 'images') {
@@ -26,7 +56,7 @@ const PostForm = () => {
             setVideos(files);
         }
     };
-
+    var now = new Date();
     const resizeImage = (file, maxWidth, maxHeight) => {
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
@@ -80,7 +110,9 @@ const PostForm = () => {
         formData.append('content', content);
         formData.append('title', title);
         formData.append('shortDesc', shortDesc);
+        formData.append('Date',now);
         console.log(token.value.uid);
+
 
         // Resize images before appending to formData
         for (let i = 0; i < images.length; i++) {
@@ -101,45 +133,65 @@ const PostForm = () => {
         setShortDesc('');
         setImages([]);
         setVideos([]);
+        
+        // Show the success message
+        setOpenSnackbar(true);
+
+        // Redirect to the previous page after 2 seconds
+        setTimeout(() => {
+            navigate(-1);
+        }, 2000);
+    };
+
+    const handleCloseSnackbar = () => {
+        setOpenSnackbar(false);
     };
 
     return (
-        <Box sx={{backgroundColor:"#040F15"}}>
+        <Box sx={{ backgroundColor: "#040F15", minHeight: "100vh", paddingTop: "2rem" }}>
             {isstudent ? <Nav1 /> : <Navinvmen />}
-            <form className="post-form container" onSubmit={submitPost}>
+            <StyledForm onSubmit={submitPost}>
+                <Typography variant="h4" align="center" color="white" gutterBottom>
+                    Create a Post
+                </Typography>
                 <div className="form-group">
-                    <label htmlFor="title">Title</label>
-                    <input
+                    <StyledTextField
+                        fullWidth
                         id="title"
-                        className="form-control text-white bg-dark"
-                        type="text"
+                        label="Title"
+                        variant="outlined"
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
-                        placeholder="Title"
+                        margin="normal"
                     />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="content">Content</label>
-                    <textarea
+                    <StyledTextField
+                        fullWidth
                         id="content"
-                        className="form-control text-white bg-dark"
+                        label="Content"
+                        variant="outlined"
+                        multiline
+                        rows={4}
                         value={content}
                         onChange={(e) => setContent(e.target.value)}
-                        placeholder="Content"
+                        margin="normal"
                     />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="shortDesc">Short Description</label>
-                    <textarea
+                    <StyledTextField
+                        fullWidth
                         id="shortDesc"
-                        className="form-control text-white bg-dark"
+                        label="Short Description"
+                        variant="outlined"
+                        multiline
+                        rows={2}
                         value={shortDesc}
                         onChange={(e) => setShortDesc(e.target.value)}
-                        placeholder="Short Description"
+                        margin="normal"
                     />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="images">Images</label>
                     <input
                         id="images"
                         className="form-control-file"
@@ -147,10 +199,10 @@ const PostForm = () => {
                         name="images"
                         multiple
                         onChange={handleFileChange}
+                        style={{ color: 'white', margin: '10px 0' }}
                     />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="videos">Videos</label>
                     <input
                         id="videos"
                         className="form-control-file"
@@ -158,10 +210,22 @@ const PostForm = () => {
                         name="videos"
                         multiple
                         onChange={handleFileChange}
+                        style={{ color: 'white', margin: '10px 0' }}
                     />
                 </div>
-                <button className="btn btn-primary" type="submit">Post</button>
-            </form>
+                <Button variant="contained" color="primary" type="submit" fullWidth>
+                    Post
+                </Button>
+            </StyledForm>
+            <Snackbar
+                open={openSnackbar}
+                autoHideDuration={2000}
+                onClose={handleCloseSnackbar}
+            >
+                <Alert onClose={handleCloseSnackbar} severity="success" sx={{ width: '100%' }}>
+                    Post submitted successfully!
+                </Alert>
+            </Snackbar>
         </Box>
     );
 };

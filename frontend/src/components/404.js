@@ -33,8 +33,8 @@ const NotFoundPage = () => {
                 </p>
               </div>
               <div className="lc-block">
-                <a className="btn btn-lg btn-primary"  role="button" onClick={()=>navigate('/')}>
-                  Back to homepage
+                <a className="btn btn-lg btn-primary"  role="button" onClick={()=>navigate(-1)}>
+                  Navigate Back
                 </a>
               </div>
             </div>

@@ -126,10 +126,11 @@ const PostDetail = () => {
           "user-id": token.value.id,
         },
       });
-      setPost((prevPost) => ({
-        ...prevPost,
-        likes: prevPost.likes + 1,
-      }));
+      // setPost((prevPost) => ({
+      //   ...prevPost,
+      //   likes: prevPost.likes + 1,
+      // }));
+      fetchPost(); 
     } catch (err) {
       console.error("Error liking post:", err);
     }
@@ -160,6 +161,7 @@ const PostDetail = () => {
           <Grid item xs={12} sm={8} md={6}>
             <Card sx={{ backgroundColor: "#1a1a1a", color: "white", mb: 3 }}>
               <CardContent>
+              <img src={`data:image/jpeg;base64,`+post.images[0]} alt={post.authorName} style={{ width: '100%', borderRadius: '8px' }} />
                 <Typography variant="h3" align="center">
                   {post.title}
                 </Typography>

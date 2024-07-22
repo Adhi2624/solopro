@@ -6,7 +6,7 @@ import Navinvmen from '../navinme';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button } from 'react-bootstrap';
 import InfiniteScroll from 'react-infinite-scroll-component';
-
+import Box from '@mui/material/Box';
 const CommunityHome = () => {
     const [posts, setPosts] = useState([]);
     const [search, setSearch] = useState('');

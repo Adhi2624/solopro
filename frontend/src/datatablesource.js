@@ -168,11 +168,7 @@ const InvestorList = () => {
       headerName: "Area of Expertise",
       width: 200,
     },
-    {
-      field: "placeOfService",
-      headerName: "Place of Service",
-      width: 200,
-    },
+    
     {
       field: "numberOfPeopleMentored",
       headerName: "Number of People Mentored",

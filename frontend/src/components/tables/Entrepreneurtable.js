@@ -134,7 +134,7 @@ const MentorentrepenureList = () => {
                     >
                         <MenuItem value="name">Name</MenuItem>
                         <MenuItem value="areaOfExpertise">Area of Expertise</MenuItem>
-                        <MenuItem value="placeOfService">Place of Service</MenuItem>
+                      
                         <MenuItem value="numberOfPeopleMentored">Number of People Mentored</MenuItem>
                         <MenuItem value="status">Status</MenuItem>
                     </CustomSelect>
@@ -149,7 +149,7 @@ const MentorentrepenureList = () => {
                                 <th scope="col">Image</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Area of Expertise</th>
-                                <th scope="col">Place of Service</th>
+                               
                                 <th scope="col">Number of People Mentored</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">Profile</th>

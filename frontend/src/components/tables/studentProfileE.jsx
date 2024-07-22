@@ -274,20 +274,7 @@ const StudentProfile = () => {
                               <span>{studentProfile.linkedin || 'Unavailable'}</span>
                             )}
                           </ListGroup.Item>
-                          <ListGroup.Item>
-                            <h6 className="mb-0">College ID Photo</h6>
-                            {isEditing ? (
-                              <Form.Control
-                                type="file"
-                                name="profileImage"
-                                onChange={handleImageChange}
-                              />
-                            ) : (
-                              <a href={studentProfile.profileImage} target="_blank" rel="noopener noreferrer">
-                                <img src={studentProfile.profileImage} alt="College ID" style={{ maxWidth: '100px', maxHeight: '100px' }} />
-                              </a>
-                            )}
-                          </ListGroup.Item>
+                          
                         </ListGroup>
                       </Col>
                     </Row>

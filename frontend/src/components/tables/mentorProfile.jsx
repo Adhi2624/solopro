@@ -41,11 +41,11 @@ const MentorProfile = () => {
         console.log(mentorProfile);
        
       })
-      .catch((error) => alert(error));
+      .catch((error) => console.log(error));
 
       axios.post(`${backend}/student/getprofileimg`,{id:sid}).then((res)=>{
         setMeetingDetails({...meetingDetails,studentname:res.data.name})
-    }).catch((err)=>alert(err));
+    }).catch((err)=>console.log(err));
 
   }, [id]);
 
@@ -91,7 +91,7 @@ const MentorProfile = () => {
                 <Row>
                   <Col md={4} className="mb-4 mb-md-0 text-center">
                     <div className="mentor-avatar">
-                      <img src={mentorProfile.proofImage} alt="Mentor" className="rounded-circle inline-image" width="150" />
+                      <img src={mentorProfile.profileImage} alt="Mentor" className="rounded-circle inline-image" width="150" />
                     </div>
                     <div className="mt-3">
                       <h4>{mentorProfile.name || 'Unavailable'}</h4>

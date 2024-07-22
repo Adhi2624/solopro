@@ -99,7 +99,7 @@ const InvestorList = () => {
 
     return (
         <div>
-            {/* <Nav1 /> */}
+            <Nav1 />
             <div className='p-5 mt-3'>
                 <div className="d-flex justify-content-center mb-3">
                     <CustomTextField
@@ -120,7 +120,7 @@ const InvestorList = () => {
                     >
                         <MenuItem value="name">Name</MenuItem>
                         <MenuItem value="areaOfExpertise">Area of Expertise</MenuItem>
-                        <MenuItem value="placeOfService">Place of Service</MenuItem>
+                       
                         <MenuItem value="numberOfPeopleMentored">Number of People Mentored</MenuItem>
                         <MenuItem value="status">Status</MenuItem>
                     </CustomSelect>
@@ -135,7 +135,7 @@ const InvestorList = () => {
                                 <th scope="col">Image</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Area of Expertise</th>
-                                <th scope="col">Place of Service</th>
+                              
                                 <th scope="col">Number of People Mentored</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">Profile</th>

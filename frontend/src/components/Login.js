@@ -1,16 +1,19 @@
 import * as React from "react";
+import { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import firebaseConfig from "./firebaseconfig";
 //import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import CssBaseline from "@mui/material/CssBaseline";
+import { IconButton, InputAdornment } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 import Link from "@mui/material/Link";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import { Typography, TextField } from '@mui/material';
+import { Typography, TextField } from "@mui/material";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import loginimage from "./login.png";
@@ -69,7 +72,7 @@ const handleGoogleSignIn = async () => {
       headers: {
         "Content-Type": "application/json",
         //Authorization: `Bearer ${token}`
-      }
+      },
     });
   } catch (error) {
     console.error("Error signing in with Google:", error);
@@ -82,14 +85,17 @@ const defaultTheme = createTheme({
   },
 });
 
+
 export default function Login() {
+  const [showPassword, setShowPassword] = useState(false);
+
+const handleClickShowPassword = () => setShowPassword(!showPassword);
   const navigate = useNavigate();
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const email = data.get("email");
     const password = data.get("password");
-    
 
     try {
       const response = await axios.post(`${backend}/api/login`, {
@@ -105,12 +111,15 @@ export default function Login() {
 
       if (userData.role === "Student") {
         navigate("/student/");
-      } else if (userData.role === "Mentor" || userData.role === "Investor" ||userData.role === "Entrepreneur" ) {
+      } else if (
+        userData.role === "Mentor" ||
+        userData.role === "Investor" ||
+        userData.role === "Entrepreneur"
+      ) {
         navigate("/mi/");
       } else if (userData.role === "Admin") {
         navigate("/admin/");
       }
-      
     } catch (error) {
       alert(
         `Login failed: ${
@@ -123,10 +132,14 @@ export default function Login() {
   return (
     <ThemeProvider theme={defaultTheme}>
       <>
-         <Navbarr /> 
-        
-{/* <Navbar /> */}
-        <Grid container component="main" sx={{ height: "100vh", backgroundColor: "#040F15" }}>
+        <Navbarr />
+
+        {/* <Navbar /> */}
+        <Grid
+          container
+          component="main"
+          sx={{ height: "100vh", backgroundColor: "#040F15" }}
+        >
           <CssBaseline />
           {/* <Grid
               item
@@ -231,7 +244,7 @@ export default function Login() {
                   fullWidth
                   name="password"
                   label="Password"
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   id="password"
                   autoComplete="current-password"
                   InputLabelProps={{
@@ -240,9 +253,20 @@ export default function Login() {
                   InputProps={{
                     style: {
                       color: "white",
-
                       borderColor: "white",
                     },
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          edge="end"
+                          sx={{ color: "white" }}
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
                   }}
                   sx={{
                     borderRadius: "10px",
@@ -258,19 +282,20 @@ export default function Login() {
                       },
                     },
                     "& input:-webkit-autofill": {
-                      WebkitBoxShadow: "0 0 0 1000px  inset",
+                      WebkitBoxShadow: "0 0 0 1000px inset",
                       WebkitTextFillColor: "white",
                     },
                     "& input:-webkit-autofill:focus": {
-                      WebkitBoxShadow: "0 0 0 1000px  inset",
+                      WebkitBoxShadow: "0 0 0 1000px inset",
                       WebkitTextFillColor: "white",
                     },
                     "& input:-webkit-autofill:hover": {
-                      WebkitBoxShadow: "0 0 0 1000px  inset",
+                      WebkitBoxShadow: "0 0 0 1000px inset",
                       WebkitTextFillColor: "white",
                     },
                   }}
                 />
+
                 <Button
                   type="submit"
                   fullWidth

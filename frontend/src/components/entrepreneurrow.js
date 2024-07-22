@@ -13,7 +13,7 @@ const EntrepreneurTableRow = ({ entrepreneur }) => {
             <td>{entrepreneur.profileImage ? <img className='img-fluid rounded-circle' src={entrepreneur.profileImage} alt="Entrepreneur" width="50" height="50" /> : ""}</td>
             <td>{entrepreneur.name || ""}</td>
             <td>{entrepreneur.areaOfExpertise || ""}</td>
-            <td>{entrepreneur.nativePlaceOrWork || ""}</td>
+          
             <td>{entrepreneur.EntrepreneurshipCount || ""}</td>
             <td><span className={entrepreneur.availableToEntrepreneur === 'true' ? 'badge text-bg-success' : 'badge text-bg-danger'}>{entrepreneur.availableToEntrepreneur === 'true' ? 'Available' : 'Not Available'}</span></td>
             <td>

@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 // import { useHistory } from "react-router-dom";
 // import GoBackButton from './GoBackButton';
 import { useNavigate } from 'react-router-dom';
-import { styled, ThemeProvider, createTheme } from "@mui/material/styles";
-import { TextField } from '@mui/material';
+
+import { Box, TextField, Button, Typography, Snackbar, Alert, styled } from '@mui/material';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
-import Button from '@mui/joy/Button';
+
 
 const AdminBlog = () => {
+  const [openSnackbar, setOpenSnackbar] = useState(false);
   const [title, setTitle] = useState('');
   const [image, setImage] = useState(null);
   const [description, setDescription] = useState('');
@@ -52,6 +53,10 @@ const AdminBlog = () => {
       "caret-color": "white",
     },
   });
+  const handleCloseSnackbar = () => {
+    setOpenSnackbar(false);
+};
+
   const fetchData = async () => {
     try {
       const blogsResponse = await axios.get(`${backend}/api/blogs`);
@@ -89,7 +94,11 @@ const AdminBlog = () => {
         });
       }
       fetchData();
+      setOpenSnackbar(true);
       resetForm();
+      setTimeout(() => {
+        navigate(-1);
+    }, 4000);
     } catch (error) {
       console.error(error);
     }
@@ -137,6 +146,10 @@ const AdminBlog = () => {
       }
       fetchData();
       resetForm();
+      setOpenSnackbar(true);
+      setTimeout(() => {
+        navigate(-1);
+    }, 4000);
     } catch (error) {
       console.error(error);
     }
@@ -182,7 +195,11 @@ const AdminBlog = () => {
         });
       }
       fetchData();
+      setOpenSnackbar(true);
       resetForm();
+      setTimeout(() => {
+        navigate(-1);
+    }, 4000);
     } catch (error) {
       console.error(error);
     }
@@ -234,7 +251,7 @@ const AdminBlog = () => {
   }
   return (
     <div className="container mt-5" style={{ color: 'white' }}>
-      <h2 className="text-center">Admin Panel</h2>
+      <h2 className="text-center">Blog Management Panel</h2>
       <div className="pb-4">
         <Button onClick={handleback}>Back to posts</Button></div>
       {/* <GoBackButton /></div> */}
@@ -478,6 +495,15 @@ const AdminBlog = () => {
           </tbody>
         </table>
       </div>
+      <Snackbar
+                open={openSnackbar}
+                autoHideDuration={3000}
+                onClose={handleCloseSnackbar}
+            >
+                <Alert onClose={handleCloseSnackbar} severity="success" sx={{ width: '100%' }}>
+                    Post submitted successfully!
+                </Alert>
+            </Snackbar>
     </div>
   );
 };

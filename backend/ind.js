@@ -6,7 +6,7 @@ const Mentor = require('./models/Mentor');
 const Student = require('./models/Student');
 const Investor = require('./models/Investor');
 const Entrepreneur = require('./models/Entrepreneur');
-const User = require('./models/user');
+const User = require('./models/User');
 const sendWelcomeEmail = require('./mailtemplates/registerMail');
 const passwordRoutes = require('./routes/passwordRoutes');
 

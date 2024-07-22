@@ -122,7 +122,7 @@ const UserList = () => {
                     </select>
                 </div>
                 <div className="table-responsive">
-                    <table className="table table-dark table-hover" id="mentor-table" style={{ backgroundColor: '#343a40' }}>
+                    <table className="table table-dark table-hover" id="mentor-table" style={{ backgroundColor: '#343a40' ,textAlign:'center'}}>
                         <thead>
                             <tr className='text-center'>
                                 <th scope="col" onClick={() => sortData('name')}>Name {getSortIcon('name')}</th>
@@ -137,7 +137,7 @@ const UserList = () => {
                                     <td>{user.name}</td>
                                     <td>{user.email}</td>
                                     <td>{user.role}</td>
-                                    <td>
+                                    <td style={{alignContent:'center'}}> 
                                         <FaUser
                                             onClick={() => handleProfileNavigation(user._id,user.role)}
                                             style={{ cursor: 'pointer', color: 'white' }}

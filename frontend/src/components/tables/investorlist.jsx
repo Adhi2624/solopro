@@ -99,7 +99,7 @@ const InvestorList = () => {
 
     return (
         <div>
-            <Nav1 />
+            {/* <Nav1 /> */}
             <div className='p-5 mt-3'>
                 <div className="d-flex justify-content-center mb-3">
                     <CustomTextField

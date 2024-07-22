@@ -56,9 +56,10 @@ function App() {
             <Route path="/mi/*" element={<MiRoute />} />
           </Route>
           
-          <Route
+          {/* <Route
           element={<PrivateRoute allowedRoles={["Admin"]}/>}
-          ><Route path="/dashboard" element={<HomePage />} /></Route>
+          ><Route path="/dashboard" element={<HomePage />} /></Route> */}
+          <Route path="/dashboard" element={<HomePage />} />
           <Route path="/users">
             <Route index element={<List />} />
             <Route path=":userId" element={<Single />} />

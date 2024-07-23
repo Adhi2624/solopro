@@ -174,9 +174,9 @@ const Appointments = () => {
   );
 
   return (
-    <>
+    < div style={{backgroundColor:"#040F15"}}>
       <Navinvmen />
-      <div className='container-fluid mt-3'>
+      <div className='container-fluid mt-3' style={{backgroundColor:"#040F15"}}>
         <div className="row mb-3 justify-content-center">
           <div className="col-md-6 col-lg-3 mb-2">
             <input
@@ -207,7 +207,7 @@ const Appointments = () => {
           <p className="text-center text-light">No meetings to be approved.</p>
         )}
       </div>
-    </>
+    </div>
   );
 };
 

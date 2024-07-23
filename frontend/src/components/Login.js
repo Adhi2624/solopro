@@ -56,16 +56,9 @@ function Copyright(props) {
 }
 
 const handleGoogleSignIn = async () => {
-  //const provider = new GoogleAuthProvider();
+  
   try {
-    // const result = await signInWithPopup(auth, provider);
-    // const token = await result.user.getIdToken();
-
-    // // Log the authentication data from Google
-    // console.log("Google Sign-In Result:", result);
-    // console.log("Google Auth Token:", token);
-    // console.log("Google User Info:", result.user);
-
+   
     // Send token to backend
     await fetch(`${backend}/api/login`, {
       method: "POST",
@@ -134,35 +127,21 @@ const handleClickShowPassword = () => setShowPassword(!showPassword);
       <>
         <Navbarr />
 
-        {/* <Navbar /> */}
+       
         <Grid
           container
           component="main"
-          sx={{ height: "100vh", backgroundColor: "#040F15" }}
+          sx={{ height: "100%", backgroundColor: "#040F15" }}
         >
           <CssBaseline />
-          {/* <Grid
-              item
-              xs={false}
-              sm={4}
-              md={7}
-              sx={{
-                backgroundImage: `url(${loginimage})`,
-                backgroundRepeat: "no-repeat",
-                backgroundColor: "#040F15",
-                backgroundSize: "cover",  // Adjusted from "contain" to "cover"
-                backgroundPosition: "center",
-                backgroundAttachment: "fixed" // Optional, depends on your design needs
-              }}
-            /> */}
-
+         
           <Grid
             item
             xs={12}
             sm={8}
             md={5}
             component={Paper}
-            elevation={6}
+            // elevation={6}
             fullWidth
             style={{ backgroundColor: "#040F15", color: "white" }}
           >
@@ -173,7 +152,7 @@ const handleClickShowPassword = () => setShowPassword(!showPassword);
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-                mt: 30,
+                mt: 5,
               }}
             >
               <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
@@ -189,7 +168,7 @@ const handleClickShowPassword = () => setShowPassword(!showPassword);
                 component="form"
                 noValidate
                 onSubmit={handleSubmit}
-                sx={{ mt: 10 }}
+                sx={{ mt: 7 }}
                 style={{ color: "white", width: "55%" }}
               >
                 <TextField

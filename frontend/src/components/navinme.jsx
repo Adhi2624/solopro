@@ -56,8 +56,8 @@ const Navinvmen = React.memo(() => {
             <NavLink as={Link} to="/mi/appointments" className="nav-item text-white">
               Appointments {appointmentCount > 0 && (<span className="badge bg-secondary">{appointmentCount}</span>)}
             </NavLink>
-            <NavLink href="/mi/community" className="nav-item text-white">community</NavLink>
-            <NavLink href="/mi/alluser" className="nav-item text-white">allusers</NavLink>
+            <NavLink href="/mi/community" className="nav-item text-white">Solopro Community</NavLink>
+            <NavLink href="/mi/alluser" className="nav-item text-white">All Users</NavLink>
             <NavLink href={`/mi/miprofile/${id}`} className="profile-link nav-item">
               <div className='d-flex align-items-center col'>
                 <img src={profilePhoto} width="30" height="30" className="rounded-circle me-2" alt="profile" />

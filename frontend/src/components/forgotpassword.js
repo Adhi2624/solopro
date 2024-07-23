@@ -10,10 +10,14 @@ import {
   Box,
   Grid,
   Typography,
+  InputAdornment,
+  IconButton,
   createTheme,
   ThemeProvider,
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import axios from "axios";
 
 const theme = createTheme({
@@ -64,6 +68,10 @@ export default function ForgotPassword() {
   const [showPassword, setShowPassword] = useState(false);
   const [otpTimer, setOtpTimer] = useState(0);
   const [disableSubmitButton, setDisableSubmitButton] = useState(false);
+  const [isPasswordValid, setIsPasswordValid] = useState(false);
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -90,6 +98,8 @@ export default function ForgotPassword() {
   const handlePasswordChange = (event) => {
     const value = event.target.value;
     setPassword(value);
+    const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+    setIsPasswordValid(passwordRegex.test(value));
     setPasswordError(validatePassword(value));
   };
 
@@ -103,6 +113,14 @@ export default function ForgotPassword() {
     setCPasswordError(value !== password ? "Passwords do not match" : "");
   };
 
+  const handleClickShowPassword = () => {
+    setPasswordVisible(!passwordVisible);
+  };
+
+  const handleClickShowConfirmPassword = () => {
+    setConfirmPasswordVisible(!confirmPasswordVisible);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -111,11 +129,10 @@ export default function ForgotPassword() {
         alert("Email not found. Contact Administrator");
       } else {
         setShowOtp(true);
-        alert("an otp has been sent your mail valid for 120 seconds")
+        alert("An OTP has been sent to your email. Valid for 120 seconds");
         setOriginalOtp(response.data.otp);
         setOtpTimer(60);
         setDisableSubmitButton(true);
-        
       }
     } catch (error) {
       alert("An error occurred. Please try again later.");
@@ -233,10 +250,26 @@ export default function ForgotPassword() {
                   id="password"
                   label="New Password"
                   name="password"
-                  type="password"
+                  type={passwordVisible ? "text" : "password"}
                   autoComplete="new-password"
                   InputLabelProps={{ style: { color: "white" } }}
-                  InputProps={{ style: { color: "white", borderColor: "white" } }}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          edge="end"
+                          sx={{ color: "white" }}
+                        >
+                          {passwordVisible ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                    style: {
+                      borderColor: isPasswordValid ? "inherit" : "red",
+                    },
+                  }}
                   sx={{
                     "& .MuiOutlinedInput-root": {
                       "& fieldset": { borderColor: "white" },
@@ -247,6 +280,14 @@ export default function ForgotPassword() {
                   value={password}
                   onChange={handlePasswordChange}
                 />
+                <Typography
+                  variant="body2"
+                  color={isPasswordValid ? "green" : "error"}
+                  sx={{ marginBottom: "20px" }}
+                >
+                  Password must be at least 8 characters long, contain at least
+                  one uppercase letter and one digit.
+                </Typography>
                 {passwordError && <span className="error-message">{passwordError}</span>}
                 <TextField
                   margin="normal"
@@ -255,10 +296,24 @@ export default function ForgotPassword() {
                   id="cpassword"
                   label="Confirm Password"
                   name="cpassword"
-                  type="password"
+                  type={confirmPasswordVisible ? "text" : "password"}
                   autoComplete="new-password"
                   InputLabelProps={{ style: { color: "white" } }}
-                  InputProps={{ style: { color: "white", borderColor: "white" } }}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowConfirmPassword}
+                          edge="end"
+                          sx={{ color: "white" }}
+                        >
+                          {confirmPasswordVisible ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                    style: { color: "white", borderColor: "white" },
+                  }}
                   sx={{
                     "& .MuiOutlinedInput-root": {
                       "& fieldset": { borderColor: "white" },

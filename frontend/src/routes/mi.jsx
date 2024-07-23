@@ -18,7 +18,7 @@ const MiRoute = () => {
   return (
     <Routes>
       <Route path='/*' element={<MiLandingPage />} />
-      <Route path="/appoinments" element={<Appoinments />} />
+      <Route path="/appointments" element={<Appoinments />} />
       <Route path="/miprofile/:_id" element={<MentorProfileE />} />
       <Route path="/blogs" element={<Blogs />} />
       <Route path="/blogs/:type/:id" element={<BlogDetail />} />

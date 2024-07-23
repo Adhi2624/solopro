@@ -21,9 +21,9 @@ const MiLandingPage = () => {
       link: '/mi/blogs'
     },
     {
-      title: 'Appoinments',
+      title: 'appointments',
       animationUrl: appoinmentss,
-      link: '/mi/appoinments'
+      link: '/mi/appointments'
     },
     {
       title: 'go to profile',

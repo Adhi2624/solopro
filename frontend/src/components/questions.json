@@ -81,7 +81,7 @@
         "required": true
       },{
         "questionName": "experience",
-        "inputType": "num'",
+        "inputType": "number",
         "label": "experience (in years)",
         "required": true
       }
@@ -118,7 +118,7 @@
         "required": true
       },{
         "questionName": "experience",
-        "inputType": "num'",
+        "inputType": "number",
         "label": "experience (in years)",
         "required": true
       }
@@ -149,7 +149,7 @@
         "required": true
       },{
         "questionName": "experience",
-        "inputType": "num'",
+        "inputType": "number",
         "label": "experience (in years)",
         "required": true
       }

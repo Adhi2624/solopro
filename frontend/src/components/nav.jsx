@@ -18,9 +18,10 @@ const Navbarr = () => {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" className="ms-auto d-lg-none" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto flex-column flex-lg-row">
-                        <Nav.Link href="#our-storyline" className='text-nowrap'>Our Storyline</Nav.Link>
-                        <Nav.Link href="#our-initiatives" className='text-nowrap'>Our Initiatives</Nav.Link>
-                        <Nav.Link href="#join-our-tribe" className='text-nowrap'>Join our Tribe!</Nav.Link>
+                    <Nav.Link href="#capablity" className='text-nowrap'>Join our Tribe!</Nav.Link>
+                        
+                        <Nav.Link href="#Serviceee" className='text-nowrap'>Our Initiatives</Nav.Link>
+                        <Nav.Link href="#timeline" className='text-nowrap'>Our Storyline</Nav.Link>
                     </Nav>
                     {/* Register and Login links for mobile */}
                     <Nav className="ms-auto flex-column flex-lg-row d-lg-none">

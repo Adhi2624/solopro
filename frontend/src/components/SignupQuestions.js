@@ -255,8 +255,17 @@ const SignupQuestions = () => {
         isValid = false;
         alert("User Type is required.");
       }
+    } else if (activeStep === 3) {
+      // Validate user questions
+      for (const question of userQuestions) {
+        if (question.required && !formData[question.questionName]) {
+          isValid = false;
+          alert(`Please answer the question: ${question.label}`);
+          break;
+        }
+      }
     }
-    return isValid;
+    return isValid; 
   };
 
   // Handle input change for text fields
@@ -659,12 +668,6 @@ const SignupQuestions = () => {
 </TableContainer>
           </>
         );
-      // case 5:
-      //   return (
-      //     <Button variant="contained" color="primary" onClick={handleSubmit}>
-      //       Submit
-      //     </Button>
-      //   );
     }
   };
   const isBase64Image = (str) => {

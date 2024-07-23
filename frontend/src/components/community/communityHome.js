@@ -101,6 +101,7 @@ const CommunityHome = () => {
     const fetchPosts = useCallback(async (page) => {
         try {
             const res = await axios.get(`${backend}/posts`, { params: { page, limit: 10 } });
+           
             const postsWithAuthors = await Promise.all(
                 res.data.posts.map(async (post) => {
                     const authorRes = await axios.get(`${backend}/users/${post.author}`);
@@ -110,7 +111,9 @@ const CommunityHome = () => {
                         authorName: author.name,
                         authorProfileImg: author.profileImage,
                     };
+                    
                 })
+                
             );
             setPosts((prevPosts) => {
                 const newPosts = postsWithAuthors.filter(post => !prevPosts.some(p => p._id === post._id));

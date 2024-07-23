@@ -1,8 +1,6 @@
-import {React} from "react";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Link  } from "react-router-dom";
-import { MD5 } from "crypto-js";
+import { Link } from "react-router-dom";
 import {
   Avatar,
   Button,
@@ -18,7 +16,6 @@ import {
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import axios from "axios";
 
-// require('dotenv').config();
 const theme = createTheme({
   typography: {
     fontFamily: "Montserrat, Arial, sans-serif",
@@ -26,6 +23,7 @@ const theme = createTheme({
 });
 
 const backendUrl = process.env.REACT_APP_BACKEND;
+
 function Copyright(props) {
   return (
     <Typography
@@ -42,7 +40,6 @@ function Copyright(props) {
           textDecoration: "none",
           "&:hover": {
             textDecoration: "none",
-          
           },
         }}
       >
@@ -53,6 +50,7 @@ function Copyright(props) {
     </Typography>
   );
 }
+
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
@@ -64,7 +62,19 @@ export default function ForgotPassword() {
   const [cpassword, setCPassword] = useState("");
   const [cpasswordError, setCPasswordError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [otpTimer, setOtpTimer] = useState(0);
+  const [disableSubmitButton, setDisableSubmitButton] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    let timer;
+    if (otpTimer > 0) {
+      timer = setTimeout(() => setOtpTimer(otpTimer - 1), 1000);
+    } else {
+      setDisableSubmitButton(false);
+    }
+    return () => clearTimeout(timer);
+  }, [otpTimer]);
 
   const handleEmailChange = (event) => {
     const value = event.target.value;
@@ -97,12 +107,15 @@ export default function ForgotPassword() {
     e.preventDefault();
     try {
       const response = await axios.post(`${backendUrl}/forgot_password`, { email });
-      if (response.data === "no") {
+      if (response.data.message === "User not found") {
         alert("Email not found. Contact Administrator");
       } else {
         setShowOtp(true);
+        alert("an otp has been sent your mail valid for 60 secs")
         setOriginalOtp(response.data.otp);
-        console.log(originalOtp)
+        setOtpTimer(60);
+        setDisableSubmitButton(true);
+        
       }
     } catch (error) {
       alert("An error occurred. Please try again later.");
@@ -111,7 +124,7 @@ export default function ForgotPassword() {
 
   const handleOtpSubmit = (e) => {
     e.preventDefault();
-    console.log(otp,originalOtp);
+    console.log(otp, originalOtp);
     if (otp === originalOtp) {
       setShowPassword(true);
     } else {
@@ -121,9 +134,8 @@ export default function ForgotPassword() {
 
   const handlePasswordSubmit = async (e) => {
     e.preventDefault();
-    const hashedPassword = MD5(password).toString();
     try {
-      const response = await axios.post(`${backendUrl}/update_password`, { email, password: hashedPassword });
+      const response = await axios.post(`${backendUrl}/update_password`, { email, password });
       if (response.data === "no") {
         alert("Technical Failure. Please try again");
       } else {
@@ -174,8 +186,14 @@ export default function ForgotPassword() {
                 onChange={handleEmailChange}
               />
               {emailError && <span className="error-message">{emailError}</span>}
-              <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-                Submit
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+                disabled={disableSubmitButton}
+              >
+                Submit {otpTimer > 0 && `(${otpTimer}s)`}
               </Button>
             </Box>
             {showOtp && (
@@ -260,13 +278,10 @@ export default function ForgotPassword() {
             <Button fullWidth variant="contained" onClick={handleBack} sx={{ mt: 3, mb: 2 }}>
               Back
             </Button>
-            <Copyright sx={{ mt: 5, color: "white" ,textDecoration:'none'}} />
+            <Copyright sx={{ mt: 5, color: "white", textDecoration: 'none' }} />
           </Box>
         </Grid>
-        
       </Grid>
-        
     </ThemeProvider>
-    
   );
 }

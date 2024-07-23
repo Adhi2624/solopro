@@ -111,7 +111,7 @@ export default function ForgotPassword() {
         alert("Email not found. Contact Administrator");
       } else {
         setShowOtp(true);
-        alert("an otp has been sent your mail valid for 60 secs")
+        alert("an otp has been sent your mail valid for 120 seconds")
         setOriginalOtp(response.data.otp);
         setOtpTimer(60);
         setDisableSubmitButton(true);

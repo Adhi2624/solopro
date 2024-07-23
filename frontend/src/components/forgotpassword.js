@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import axios from "axios";
+import Nav from './nav';
 
 const theme = createTheme({
   typography: {
@@ -153,6 +154,7 @@ export default function ForgotPassword() {
 
   return (
     <ThemeProvider theme={theme}>
+      <Nav></Nav>
       <Grid container component="main" sx={{ height: "100vh", backgroundColor: "#040F15" }}>
         <CssBaseline />
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square sx={{ backgroundColor: "#040F15", color: "white" }}>

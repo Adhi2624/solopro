@@ -42,9 +42,9 @@ function App() {
           <Route path="/" element={<FirstPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signUp" element={<SignupQuestions />} />
-          <Route path="/blogs" element={<Blogs />} />
+          {/* <Route path="/blogs" element={<Blogs />} />
           <Route path="/blogs/:type/:id" element={<BlogDetail />} />
-          <Route path="/adminblog" element={<AdminBlog />} />
+          <Route path="/adminblog" element={<AdminBlog />} /> */}
 
           <Route element={<PrivateRoute allowedRoles={["Student"]} />}>
             <Route path="/student/*" element={<StudentsRoute />} />
@@ -56,11 +56,11 @@ function App() {
             <Route path="/mi/*" element={<MiRoute />} />
           </Route>
           
-          {/* <Route
+           <Route path="/admin/*"
           element={<PrivateRoute allowedRoles={["Admin"]}/>}
-          ><Route path="/dashboard" element={<HomePage />} /></Route> */}
-          <Route path="/dashboard" element={<HomePage />} />
-          <Route path="/users">
+          ><Route path="dashboard" element={<HomePage />} />
+          {/* <Route path="dashboard" element={<HomePage />} /> */}
+          <Route path="users">
             <Route index element={<List />} />
             <Route path=":userId" element={<Single />} />
             <Route
@@ -68,12 +68,12 @@ function App() {
               element={<New inputs={userInputs} title="Add New User" />}
             />
           </Route>
-          <Route path="/students" element={<ListStudents />} />
-          <Route path="/mentors" element={<ListMentors />} />
-          <Route path="/userlist" element={<UserList />} />
-          <Route path="/investors" element={<List />} />
-          <Route path="/Entrepreneur" element={<ListEntrepreneur />} />
-
+          <Route path="students" element={<ListStudents />} />
+          <Route path="mentors" element={<ListMentors />} />
+          <Route path="userlist" element={<UserList />} />
+          <Route path="investors" element={<List />} />
+          <Route path="Entrepreneur" element={<ListEntrepreneur />} />
+          </Route> 
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>

@@ -56,7 +56,7 @@ const Blogs = () => {
   }, []);
 
   const handleReadMore = (id, type) => {
-    navigate(`/blogs/${type}/${id}`);
+    navigate(`${type}/${id}`);
   };
 
   const handleLoadMore = () => {

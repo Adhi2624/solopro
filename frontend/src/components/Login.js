@@ -111,7 +111,7 @@ const handleClickShowPassword = () => setShowPassword(!showPassword);
       ) {
         navigate("/mi/");
       } else if (userData.role === "Admin") {
-        navigate("/admin/");
+        navigate("/admin/dashboard");
       }
     } catch (error) {
       alert(

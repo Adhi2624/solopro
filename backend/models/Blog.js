@@ -28,6 +28,9 @@ const AdminBlogSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  userid: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User' },
+  role:{type:String},
+  username:{type:String}
 });
 
 module.exports = mongoose.model('AdminBlog', AdminBlogSchema);

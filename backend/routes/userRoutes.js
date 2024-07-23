@@ -43,13 +43,13 @@ router.post('/', async (req, res) => {
     };
 
     if (userType === 'Student') {
-      const { git, collegeName, course, collegeLocation, collegeIdPhoto } = userData;
+      const { git, collegeName, course, collegeLocation,collegeIdCardImage } = userData;
       Object.assign(profileData, {
         git,
         collegeName,
         course,
         collegeLocation,
-        collegeIdPhoto
+        collegeIdCardImage
       });
       const student = new Student(profileData);
       await student.save();

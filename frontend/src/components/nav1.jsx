@@ -46,7 +46,7 @@ const Nav1 = React.memo(() => {
                         <NavLink href="/student/mentorpage" className="nav-item text-white">Mentors</NavLink>
                         <NavLink href="/student/investorpage" className="nav-item text-white">Investors</NavLink>
                         <NavLink href="/student/alluser" className="nav-item text-white">All Users</NavLink>
-                        <NavLink href="/student/community" className="nav-item text-white">community</NavLink>
+                        <NavLink href="/student/community" className="nav-item text-white">Solopro Community</NavLink>
                         <NavLink href={`/student/studentprofile/${id}`} className="profile-link nav-item">
                             <div className='d-flex align-items-center col'>
                                 <img src={profilePhoto} width="30" height="30" className="rounded-circle me-2" alt="profile" />

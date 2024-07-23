@@ -71,6 +71,7 @@ exports.getPosts = async (req, res) => {
         const posts = await Post.find().skip(skip).limit(limit);
         const total = await Post.countDocuments();
         res.json({ posts, total, page, pages: Math.ceil(total / limit) });
+        console.log(res.body);
     } catch (err) {
         res.status(500).json({ error: 'Failed to retrieve posts.' });
     }

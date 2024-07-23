@@ -11,7 +11,7 @@ const Investor = require('../models/Investor');
 const Admin = require('../models/admin');
 
 // const Entrepreneur = require('../models/entrepreneur');
-// const User = require('../models/User'); 
+// const User = require('../models/User');
 const sendWelcomeEmail = require('../mailtemplates/registerMail');
 const sendMeetingEmail = require('../mailtemplates/meetingconfirm');
 

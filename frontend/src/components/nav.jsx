@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -5,6 +6,15 @@ import soloLogo1 from '../images/image.svg';
 import '../css/style.css';
 
 const Navbarr = () => {
+    const [isCollapsed, setIsCollapsed] = useState(true);
+
+    const handleToggle = () => {
+        setIsCollapsed(prevState => {
+            const newState = !prevState;
+            return newState;
+        });
+    };
+
     return (
         <Navbar expand="lg" className="rounded-4 mt-lg-1 mx-lg-1 rounded-sm-0 mt-md-1 mx-sm-0 flex-nowrap">
             <Container fluid>
@@ -12,11 +22,16 @@ const Navbarr = () => {
                 <div className="d-lg-none w-100 text-center mb-3">
                     <Navbar.Brand href="/" className="mx-auto d-inline-flex align-items-center">
                         <img src={soloLogo1} alt='logo' className="me-2" style={{ height: '50px' }} />
-                        <span className="align-self-center" style={{ color: 'black' }}>SOLOPRO</span>
+                        {isCollapsed?<span className="align-self-center" style={{ color: 'black' }}>SOLOPRO</span>:null}
+
                     </Navbar.Brand>
                 </div>
-                <Navbar.Toggle aria-controls="basic-navbar-nav" className="ms-auto d-lg-none" />
-                <Navbar.Collapse id="basic-navbar-nav">
+                <Navbar.Toggle 
+                    aria-controls="basic-navbar-nav" 
+                    className="ms-auto d-lg-none" 
+                    onClick={handleToggle}
+                />
+                <Navbar.Collapse id="basic-navbar-nav" in={!isCollapsed}>
                     <Nav className="me-auto flex-column flex-lg-row">
                     <Nav.Link href="#capablity" className='text-nowrap'>Join our Tribe!</Nav.Link>
                         

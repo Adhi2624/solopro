@@ -29,6 +29,11 @@ const AdminBlog = () => {
   const [editMode, setEditMode] = useState(false);
   const [currentId, setCurrentId] = useState(null);
   const backend = process.env.REACT_APP_BACKEND;
+  const lstorage = localStorage.getItem('user');
+  const lstorageparse = JSON.parse(lstorage);
+  const urole = lstorageparse.value.role;
+  const uid=lstorageparse.value.uid;
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -57,18 +62,28 @@ const AdminBlog = () => {
     setOpenSnackbar(false);
 };
 
-  const fetchData = async () => {
-    try {
-      const blogsResponse = await axios.get(`${backend}/api/blogs`);
-      const featuredStoriesResponse = await axios.get(`${backend}/api/featuredStories`);
-      const moreStoriesResponse = await axios.get(`${backend}/api/moreStories`);
-      setBlogs(blogsResponse.data);
-      setFeaturedStories(featuredStoriesResponse.data);
-      setMoreStories(moreStoriesResponse.data);
-    } catch (error) {
-      console.error(error);
+const fetchData = async () => {
+  try {
+    let blogsResponse, featuredStoriesResponse, moreStoriesResponse;
+
+    if (['Student', 'Mentor', 'Investor', 'Entrepreneur'].includes(urole)) {
+      blogsResponse = await axios.get(`${backend}/api/blogs`, { params: { uid: uid } });
+      featuredStoriesResponse = await axios.get(`${backend}/api/featuredStories`, { params: { uid: uid } });
+      moreStoriesResponse = await axios.get(`${backend}/api/moreStories`, { params: { uid: uid } });
+    } else {
+      blogsResponse = await axios.get(`${backend}/api/blogs`);
+      featuredStoriesResponse = await axios.get(`${backend}/api/featuredStories`);
+      moreStoriesResponse = await axios.get(`${backend}/api/moreStories`);
     }
-  };
+
+    setBlogs(blogsResponse.data);
+    setFeaturedStories(featuredStoriesResponse.data);
+    setMoreStories(moreStoriesResponse.data);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 
   const handleAddOrUpdateBlog = async (e) => {
     e.preventDefault();
@@ -78,6 +93,8 @@ const AdminBlog = () => {
     formData.append('description', description);
     formData.append('order', order);
     formData.append('archived', archived);
+    formData.append('userid',uid);
+    formData.append('role',urole);
 
     try {
       if (editMode) {
@@ -114,13 +131,20 @@ const AdminBlog = () => {
   };
 
   const handleDeleteBlog = async (id) => {
-    try {
-      await axios.delete(`${backend}/api/blogs/${id}`);
-      fetchData();
-    } catch (error) {
-      console.error(error);
+    const isConfirmed = window.confirm('Are you sure you want to delete this blog?');
+    
+    if (isConfirmed) {
+      try {
+        await axios.delete(`${backend}/api/blogs/${id}`);
+        alert('Blog deleted successfully.');
+        fetchData();
+      } catch (error) {
+        console.error(error);
+        alert('An error occurred while deleting the blog.');
+      }
     }
   };
+  
 
   const handleAddOrUpdateFeaturedStory = async (e) => {
     e.preventDefault();
@@ -129,6 +153,8 @@ const AdminBlog = () => {
     formData.append('description', featuredDescription);
     formData.append('order', featuredOrder);
     formData.append('archived', featuredArchived);
+    formData.append('userid',uid);
+    formData.append('role',urole);
 
     try {
       if (editMode) {
@@ -164,13 +190,20 @@ const AdminBlog = () => {
   };
 
   const handleDeleteFeaturedStory = async (id) => {
-    try {
-      await axios.delete(`${backend}/api/featuredStories/${id}`);
-      fetchData();
-    } catch (error) {
-      console.error(error);
+    const isConfirmed = window.confirm('Are you sure you want to delete this featured story?');
+    
+    if (isConfirmed) {
+      try {
+        await axios.delete(`${backend}/api/featuredStories/${id}`);
+        alert('Featured story deleted successfully.');
+        fetchData();
+      } catch (error) {
+        console.error(error);
+        alert('An error occurred while deleting the featured story.');
+      }
     }
   };
+  
 
   const handleAddOrUpdateMoreStory = async (e) => {
     e.preventDefault();
@@ -179,7 +212,8 @@ const AdminBlog = () => {
     formData.append('shortDescription', moreShortDescription);
     formData.append('order', moreOrder);
     formData.append('archived', moreArchived);
-
+    formData.append('userid',uid);
+    formData.append('role',urole);
     try {
       if (editMode) {
         await axios.put(`${backend}/api/moreStories/${currentId}`, formData, {

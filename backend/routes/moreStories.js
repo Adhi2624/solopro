@@ -84,12 +84,10 @@ router.put('/:id', upload.single('image'), async (req, res) => {
 // Delete a more story
 router.delete('/:id', async (req, res) => {
   try {
-    const story = await MoreStory.findById(req.params.id);
+    const story = await MoreStory.findByIdAndDelete(req.params.id);
     if (!story) {
       return res.status(404).json({ msg: 'Story not found' });
     }
-
-    await story.remove();
     res.json({ msg: 'Story removed' });
   } catch (err) {
     console.error(err.message);

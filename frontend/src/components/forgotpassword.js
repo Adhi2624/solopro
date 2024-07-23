@@ -102,6 +102,7 @@ export default function ForgotPassword() {
       } else {
         setShowOtp(true);
         setOriginalOtp(response.data.otp);
+        console.log(originalOtp)
       }
     } catch (error) {
       alert("An error occurred. Please try again later.");
@@ -110,6 +111,7 @@ export default function ForgotPassword() {
 
   const handleOtpSubmit = (e) => {
     e.preventDefault();
+    console.log(otp,originalOtp);
     if (otp === originalOtp) {
       setShowPassword(true);
     } else {

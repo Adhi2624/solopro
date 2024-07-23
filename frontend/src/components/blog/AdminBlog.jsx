@@ -131,13 +131,20 @@ const fetchData = async () => {
   };
 
   const handleDeleteBlog = async (id) => {
-    try {
-      await axios.delete(`${backend}/api/blogs/${id}`);
-      fetchData();
-    } catch (error) {
-      console.error(error);
+    const isConfirmed = window.confirm('Are you sure you want to delete this blog?');
+    
+    if (isConfirmed) {
+      try {
+        await axios.delete(`${backend}/api/blogs/${id}`);
+        alert('Blog deleted successfully.');
+        fetchData();
+      } catch (error) {
+        console.error(error);
+        alert('An error occurred while deleting the blog.');
+      }
     }
   };
+  
 
   const handleAddOrUpdateFeaturedStory = async (e) => {
     e.preventDefault();
@@ -183,13 +190,20 @@ const fetchData = async () => {
   };
 
   const handleDeleteFeaturedStory = async (id) => {
-    try {
-      await axios.delete(`${backend}/api/featuredStories/${id}`);
-      fetchData();
-    } catch (error) {
-      console.error(error);
+    const isConfirmed = window.confirm('Are you sure you want to delete this featured story?');
+    
+    if (isConfirmed) {
+      try {
+        await axios.delete(`${backend}/api/featuredStories/${id}`);
+        alert('Featured story deleted successfully.');
+        fetchData();
+      } catch (error) {
+        console.error(error);
+        alert('An error occurred while deleting the featured story.');
+      }
     }
   };
+  
 
   const handleAddOrUpdateMoreStory = async (e) => {
     e.preventDefault();

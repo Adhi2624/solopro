@@ -108,17 +108,16 @@ router.put('/:id', upload.single('image'), async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
   try {
-    const blog = await AdminBlog.findById(req.params.id);
+    const blog = await AdminBlog.findByIdAndDelete(req.params.id);
     if (!blog) {
       return res.status(404).json({ msg: 'Blog not found' });
     }
-
-    await blog.remove();
     res.json({ msg: 'Blog removed' });
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');
   }
 });
+
 
 module.exports = router;

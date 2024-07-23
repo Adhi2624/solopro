@@ -120,6 +120,7 @@ const startServer = async () => {
     app.delete('/posts/:id', postControllers.deletePost);
 
     app.post('/forgot_password',forgotPassword);
+    app.post('/update_password',updatePassword)
     // Error Handler Middleware
     app.use(errorHandler);
 

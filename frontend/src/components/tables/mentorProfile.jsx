@@ -13,7 +13,7 @@ const MentorProfile = () => {
   const lstorage = localStorage.getItem('user');
     const lstorageparse=JSON.parse(lstorage);
     
-    const sid=lstorageparse.value.id;
+    const sid=lstorageparse.value.uid;
     const urole=lstorageparse.value.role;
   const isstudent= urole==='Student';
   const [meetingDetails, setMeetingDetails] = useState({
@@ -71,7 +71,8 @@ const [peru,setperu]=useState('')
     setMeetingDetails({
       ...meetingDetails,
       studentid:`${sid}`,// Same here, use studentid as a string,
-      mentorname:mentorProfile.name
+      mentorname:mentorProfile.name,
+      studentname:`${peru}`
     });
     console.log(peru);
     console.log(meetingDetails);

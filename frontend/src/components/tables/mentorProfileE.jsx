@@ -214,15 +214,16 @@ const MentorProfileE = () => {
                           )}
                           <ListGroup.Item>
                             <h6 className="mb-0">Status</h6>
-                            
+                            {/*  */}
                               <Form.Select
+                              
                                 name={role === 'Mentor' ? 'availableToMentor' : 'availableToInvest'}
                                 value={editedProfile.availableToMentor || editedProfile.availableToInvest || ''}
                                 onChange={handleStatusChange}
                                 className="mt-2 text-light"
                               >
-                                <option value="true">Available</option>
-                                <option value="false">Not available</option>
+                                <option value="true" style={{color:'green',fontSize:'15px'}}>Available</option>
+                                <option value="false" style={{color:'red',fontSize:'15px',fontWeight:'9px'}}>Not available</option>
                               </Form.Select>
                             
                           </ListGroup.Item>

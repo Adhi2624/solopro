@@ -28,7 +28,7 @@ const Navinvmen = React.memo(() => {
       console.log(res.data)
       setProfilePhoto(res.data.profileImage);
       setName(res.data.name)
-    }).catch((err) => alert(err));
+    }).catch((err) => console.log(err));
     // fetchAppointmentCount();
   }, []);
 

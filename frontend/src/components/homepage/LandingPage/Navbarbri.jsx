@@ -6,6 +6,7 @@ import logo from '../images/Icon.png';
 import './Navbar.css';
 
 const Navbar = () => {
+  
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
@@ -29,7 +30,7 @@ const Navbar = () => {
 
 const NeumorphismButton = () => {
   return (
-    <Link to="/signUp" className="neumorphism-button">
+    <Link to="/login" className="neumorphism-button">
       <FiSend />
       <span><b>Join Now</b></span>
     </Link>

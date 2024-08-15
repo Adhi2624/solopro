@@ -10,7 +10,7 @@ import StudentsRoute from "./routes/studentsRoute";
 import AdminRoute from "./routes/adminroute";
 import MiRoute from "./routes/mi";
 import NotFoundPage from "./components/404";
-import GOOGLR from "./components/GOOGLR";
+
 import PrivateRoute from "./routes/privateRoute/PrivateRoute";
 import FirstPage from "./components/homepage/LandingPage/FirstPage";
 import HomePage from "./pages/home/Home";
@@ -19,7 +19,7 @@ import New from "./pages/new/New";
 import { productInputs, userInputs } from "./formSource";
 import "./style/dark.scss";
 import { DarkModeContext } from "./context/darkModeContext";
-import CreateMeet from "./components/GOOGLR";
+
 import List from "./pages/list/List";
 import UserList from "./components/tables/userlist";
 import ListMentors from "./pages/list/List-mentors";

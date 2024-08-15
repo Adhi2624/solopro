@@ -12,6 +12,7 @@ const Appointments = () => {
   const [sortDirection, setSortDirection] = useState('asc');
   const [currentPage, setCurrentPage] = useState(1);
   const [appointmentsPerPage] = useState(20);
+  const[Loading,setLoading]=useState(false)
   const backend = process.env.REACT_APP_BACKEND;
   const lstorage = localStorage.getItem('user');
   const lstorageparse = JSON.parse(lstorage);
@@ -36,18 +37,32 @@ const Appointments = () => {
   const handleStatusChange = async (appointmentId, newStatus) => {
     const confirmChange = window.confirm("Are you sure you want to change the meeting status?");
     if (!confirmChange) return;
-  
-    try {
-      await axios.post(`${backend}/updatestatus`, { appointmentId: appointmentId, meetingStatus: newStatus,email:useremail });
-      fetchAppointments();
-      
 
+    // Disable button or show loading indicator (if applicable)
+    setLoading(true);  // Example: using state to show loading spinner
+
+    try {
+        const response = await axios.post(`${backend}/updatestatus`, {
+            appointmentId: appointmentId,
+            meetingStatus: newStatus,
+            email: useremail
+        });
+
+        if (response.status === 200) {
+            alert("Meeting status updated successfully.");
+            // Update UI instead of reloading the page
+            fetchAppointments();  // Fetch the latest appointments to reflect the changes
+        } else {
+            throw new Error('Unexpected response status');
+        }
     } catch (error) {
-      console.error('Error updating meeting status:', error);
+        console.error('Error updating meeting status:', error);
+        alert('An error occurred while updating the meeting status. Please try again.');
+    } finally {
+        setLoading(false);  // Re-enable the button or hide loading indicator
     }
-    window.location.reload(); // Refresh the page
-  };
-  
+};
+
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
@@ -59,11 +74,14 @@ const Appointments = () => {
 
   const filterAppointments = (appointments) => {
     return appointments.filter(appointment => {
-      const matchesSearchTerm = appointment.studentname.toLowerCase().includes(searchTerm.toLowerCase());
-      const matchesFilterDate = filterDate ? appointment.startDate === filterDate : true;
-      return matchesSearchTerm && matchesFilterDate;
+        const matchesSearchTerm = appointment.studentname 
+            ? appointment.studentname.toLowerCase().includes(searchTerm.toLowerCase()) 
+            : false;
+        const matchesFilterDate = filterDate ? appointment.startDate === filterDate : true;
+        return matchesSearchTerm && matchesFilterDate;
     });
-  };
+};
+
 
   const sortAppointments = (appointments) => {
     if (sortColumn) {

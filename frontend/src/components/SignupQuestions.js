@@ -437,7 +437,7 @@ const SignupQuestions = () => {
                 textAlign: "center",
                 paddingTop: "10px",
                 fontStyle: "montserrat",
-                fontSize: "5px",
+                fontSize: "15px",
               }}
             >
               prefferably work mail :-)
@@ -589,7 +589,7 @@ const SignupQuestions = () => {
                 style={{ color: "white" }}
                 MenuProps={{
                   PaperProps: { style: { backdropFilter: "blur(8px)" } },
-                }} // Ensure menu background is transparent
+                }} // Ensure menu transparent
               >
                 {Object.keys(questions).map((type) => (
                   <MenuItem key={type} value={type} style={{ color: "black" }}>

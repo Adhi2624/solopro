@@ -2,7 +2,7 @@ import * as React from "react";
 import { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import firebaseConfig from "./firebaseconfig";
+// import firebaseConfig from "./firebaseconfig";
 //import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import CssBaseline from "@mui/material/CssBaseline";
 import { IconButton, InputAdornment } from "@mui/material";

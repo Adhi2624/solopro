@@ -174,7 +174,7 @@ const Pagination = ({ investorsPerPage, totalInvestors, paginate, currentPage, h
     const showingTo = Math.min(indexOfLastInvestor, totalInvestors);
 
     return (
-        <nav className='d-flex flex-column flex-md-row justify-content-between align-items-center p-3' id='pagebar'>
+        <nav className='d-flex flex-column flex-md-row justify-content-between align-items-center p-3' id='pagebar ' style={{backgroundColor:"#040F15"}}>
             <div className='text-light mb-2 mb-md-0'>
                 {`Showing ${showingFrom} to ${showingTo} of ${totalInvestors} entries`}
             </div>

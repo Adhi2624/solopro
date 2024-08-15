@@ -40,7 +40,7 @@
         "questionName": "collegeIdCardImage",
         "inputType": "file",
         "label": "College ID Card Image",
-        "required": true
+        "required": false
       },
       {
         "questionName": "age",

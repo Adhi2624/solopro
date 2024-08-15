@@ -4,6 +4,7 @@ import Nav1 from '../nav1';
 import Navinvmen from '../navinme';
 import { FaSort, FaSortUp, FaSortDown, FaUser } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom'; // or useNavigate if using React Router v6
+import { Typography } from '@mui/material';
 
 const UserList = () => {
     const [userList, setUserList] = useState([]);
@@ -102,14 +103,16 @@ const UserList = () => {
         
 
     return (
-        <div>
+        <div style={{backgroundColor:"#040F15"}}>
             {isstudent?<Nav1/>:<Navinvmen/>}
            
-            <div className='p-1 mt-3'>
+            <div className='p-1 mt-3' >
                 <div className="d-flex justify-content-center mb-3" style={{ color: 'white' }}>
+                    <Typography sx={{paddingRight:"20px",paddingTop:"10px",fontStyle:"montserrat"}}>Search among fellow users</Typography>
+                    
                     <input
                         type="text"
-                        style={{ color: 'white !important'  }}
+                        style={{ color: 'white !important' ,borderColor:'white' }}
                         className="form-control w-50"
                         placeholder="Search among all users"
                         value={searchTerm}
@@ -122,7 +125,7 @@ const UserList = () => {
                     </select>
                 </div>
                 <div className="table-responsive">
-                    <table className="table table-dark table-hover" id="mentor-table" style={{ backgroundColor: '#343a40' ,textAlign:'center'}}>
+                    <table className="table table-dark table-hover" id="mentor-table" style={{ backgroundColor: '#343a40' ,textAlign:'center',alignContent:'center'}}>
                         <thead>
                             <tr className='text-center'>
                                 <th scope="col" onClick={() => sortData('name')}>Name {getSortIcon('name')}</th>
@@ -140,7 +143,7 @@ const UserList = () => {
                                     <td style={{alignContent:'center'}}> 
                                         <FaUser
                                             onClick={() => handleProfileNavigation(user._id,user.role)}
-                                            style={{ cursor: 'pointer', color: 'white' }}
+                                            style={{ cursor: 'pointer', color: 'white',alignItems:'center' }}
                                         />
                                     </td>
                                 </tr>

@@ -4,15 +4,19 @@ import { useNavigate } from 'react-router-dom';
 import Nav1 from '../nav1';
 import Navinvmen from '../navinme';
 import { Box, TextField, Button, Typography, Snackbar, Alert, styled } from '@mui/material';
-import '../../css/postFrom.css'; // We'll use this for custom styles
+import '../../css/postFrom.css';
 
 const StyledForm = styled('form')({
     maxWidth: '600px',
+    width: '100%',
     margin: '0 auto',
     padding: '2rem',
     backgroundColor: '#1E2A38',
     borderRadius: '8px',
     boxShadow: '0 0 10px rgba(0,0,0,0.3)',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '1.5rem',
 });
 
 const StyledTextField = styled(TextField)({
@@ -31,6 +35,62 @@ const StyledTextField = styled(TextField)({
     '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
         borderColor: '#80deea',
     },
+    '& .MuiInputBase-root': {
+        padding: '0.5rem',
+    },
+});
+
+const FileInputLabel = styled('label')({
+    color: 'white',
+    display: 'block',
+    marginBottom: '0.5rem',
+    cursor: 'pointer',
+});
+
+const StyledFileInput = styled('input')({
+    display: 'none',
+});
+
+const FilePreviewContainer = styled(Box)({
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: '10px',
+    marginTop: '10px',
+});
+
+const FilePreviewItem = styled(Box)({
+    position: 'relative',
+    width: '100px',
+    height: '100px',
+    borderRadius: '8px',
+    overflow: 'hidden',
+    backgroundColor: '#1E2A38',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    border: '1px solid white',
+});
+
+const PreviewImage = styled('img')({
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+});
+
+const PreviewVideo = styled('video')({
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+});
+
+const RemoveButton = styled(Button)({
+    position: 'absolute',
+    top: '5px',
+    right: '5px',
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    color: 'white',
+    padding: '2px 6px',
+    minWidth: '0',
 });
 
 const PostForm = () => {
@@ -42,21 +102,29 @@ const PostForm = () => {
     const [openSnackbar, setOpenSnackbar] = useState(false);
     const navigate = useNavigate();
     const backend = process.env.REACT_APP_BACKEND;
-    
+
     const lstorage = localStorage.getItem('user');
     const lstorageparse = JSON.parse(lstorage);
     const urole = lstorageparse.value.role;
     const isstudent = urole === 'Student';
-    
+
     const handleFileChange = (e) => {
         const { files, name } = e.target;
         if (name === 'images') {
-            setImages(files);
+            setImages([...images, ...Array.from(files)]);
         } else {
-            setVideos(files);
+            setVideos([...videos, ...Array.from(files)]);
         }
     };
-    var now = new Date();
+
+    const removeFile = (file, type) => {
+        if (type === 'image') {
+            setImages(images.filter((img) => img !== file));
+        } else {
+            setVideos(videos.filter((vid) => vid !== file));
+        }
+    };
+
     const resizeImage = (file, maxWidth, maxHeight) => {
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
@@ -91,7 +159,7 @@ const PostForm = () => {
                             resolve(blob);
                         },
                         file.type,
-                        0.75 // Adjust quality here
+                        0.75
                     );
                 };
                 img.onerror = (error) => {
@@ -110,11 +178,7 @@ const PostForm = () => {
         formData.append('content', content);
         formData.append('title', title);
         formData.append('shortDesc', shortDesc);
-        formData.append('Date',now);
-        console.log(token.value.uid);
 
-
-        // Resize images before appending to formData
         for (let i = 0; i < images.length; i++) {
             const resizedImage = await resizeImage(images[i], 800, 800);
             formData.append('images', resizedImage, images[i].name);
@@ -133,11 +197,9 @@ const PostForm = () => {
         setShortDesc('');
         setImages([]);
         setVideos([]);
-        
-        // Show the success message
+
         setOpenSnackbar(true);
 
-        // Redirect to the previous page after 2 seconds
         setTimeout(() => {
             navigate(-1);
         }, 2000);
@@ -148,13 +210,15 @@ const PostForm = () => {
     };
 
     return (
-        <Box sx={{ backgroundColor: "#040F15", minHeight: "100vh", paddingTop: "2rem" }}>
-            {isstudent ? <Nav1 /> : <Navinvmen />}
-            <StyledForm onSubmit={submitPost}>
-                <Typography variant="h4" align="center" color="white" gutterBottom>
-                    Create a Post
-                </Typography>
-                <div className="form-group">
+        <Box sx={{ backgroundColor: "#040F15", minHeight: "100vh", display: 'flex', flexDirection: 'column' }}>
+            <Box sx={{ flexShrink: 0 }}>
+                {isstudent ? <Nav1 /> : <Navinvmen />}
+            </Box>
+            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexGrow: 1 }}>
+                <StyledForm onSubmit={submitPost}>
+                    <Typography variant="h4" align="center" color="white" gutterBottom>
+                        Create a Post
+                    </Typography>
                     <StyledTextField
                         fullWidth
                         id="title"
@@ -164,8 +228,6 @@ const PostForm = () => {
                         onChange={(e) => setTitle(e.target.value)}
                         margin="normal"
                     />
-                </div>
-                <div className="form-group">
                     <StyledTextField
                         fullWidth
                         id="content"
@@ -177,8 +239,6 @@ const PostForm = () => {
                         onChange={(e) => setContent(e.target.value)}
                         margin="normal"
                     />
-                </div>
-                <div className="form-group">
                     <StyledTextField
                         fullWidth
                         id="shortDesc"
@@ -190,39 +250,82 @@ const PostForm = () => {
                         onChange={(e) => setShortDesc(e.target.value)}
                         margin="normal"
                     />
-                </div>
-                <div className="form-group">
-                    <input
-                        id="images"
-                        className="form-control-file"
-                        type="file"
-                        name="images"
-                        multiple
-                        onChange={handleFileChange}
-                        style={{ color: 'white', margin: '10px 0' }}
-                    />
-                </div>
-                <div className="form-group">
-                    <input
-                        id="videos"
-                        className="form-control-file"
-                        type="file"
-                        name="videos"
-                        multiple
-                        onChange={handleFileChange}
-                        style={{ color: 'white', margin: '10px 0' }}
-                    />
-                </div>
-                <Button variant="contained" color="primary" type="submit" fullWidth>
-                    Post
-                </Button>
-            </StyledForm>
-            <Snackbar
-                open={openSnackbar}
-                autoHideDuration={2000}
-                onClose={handleCloseSnackbar}
-            >
-                <Alert onClose={handleCloseSnackbar} severity="success" sx={{ width: '100%' }}>
+                    
+                    {/* Image Upload */}
+                    <Box>
+                        <FileInputLabel htmlFor="images">Upload Images
+                        <Button variant="contained" component="span" fullWidth>
+                            Upload Images
+                        </Button>
+                        </FileInputLabel>
+                        <StyledFileInput
+                            id="images"
+                            type="file"
+                            name="images"
+                            multiple
+                            accept="image/*"
+                            onChange={handleFileChange}
+                        />
+                        
+                    </Box>
+                    
+                    {/* Video Upload */}
+                    <Box>
+                        <FileInputLabel htmlFor="videos">Upload Videos<Button variant="contained" component="span" fullWidth>
+                            Upload Videos
+                        </Button>
+
+                        </FileInputLabel>
+                        <StyledFileInput
+                            id="videos"
+                            type="file"
+                            name="videos"
+                            multiple
+                            accept="video/*"
+                            onChange={handleFileChange}
+                        />
+                        
+                    </Box>
+
+                    {/* File Preview */}
+                    <FilePreviewContainer>
+                        {images.length > 0 && images.map((file, index) => (
+                            <FilePreviewItem key={index}>
+                                <PreviewImage src={URL.createObjectURL(file)} alt={`preview-${index}`} />
+                                <RemoveButton
+                                    onClick={() => removeFile(file, 'image')}
+                                    size="small"
+                                >
+                                    X
+                                </RemoveButton>
+                            </FilePreviewItem>
+                        ))}
+                        {videos.length > 0 && videos.map((file, index) => (
+                            <FilePreviewItem key={index}>
+                                <PreviewVideo src={URL.createObjectURL(file)} controls />
+                                <RemoveButton
+                                    onClick={() => removeFile(file, 'video')}
+                                    size="small"
+                                >
+                                    X
+                                </RemoveButton>
+                            </FilePreviewItem>
+                        ))}
+                    </FilePreviewContainer>
+                    
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        color="primary"
+                        fullWidth
+                        sx={{ marginTop: '1rem' }}
+                    >
+                        Submit Post
+                    </Button>
+                </StyledForm>
+            </Box>
+            <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+                <Alert onClose={handleCloseSnackbar} severity="success">
                     Post submitted successfully!
                 </Alert>
             </Snackbar>

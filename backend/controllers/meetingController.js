@@ -3,6 +3,7 @@ const {getDB } = require('../config/db');
 const meeting=require("../models/meeting")
 const db=getDB();
 const meetingconf=require('../mailtemplates/meetingconfirm')
+const meetingrej = require('../mailtemplates/meetingconfirm')
 
 exports.scheduleMeeting = async (req, res) => {
     try {
@@ -118,11 +119,13 @@ const sendMail = async (_id) => {
             throw new Error('Incomplete meeting details');
         }
 
-        if (meetingStatus === 'Approved' || meetingStatus === 'Rejected') {
+        if (meetingStatus === 'Approved') {
             // Send email to mentor
             meetingconf('soloprobusiness@gmail.com', mentorEmail, 'SOLOPRO', mentorName, title, startDate, startTime, endDate, endTime, meetinglink, meetingStatus);
-            // Send email to mentee
-            meetingconf('soloprobusiness@gmail.com', studentEmail, 'SOLOPRO', menteeName, title, startDate, startTime, endDate, endTime, meetinglink, meetingStatus);
+            // Send email to mentee}
+        }
+        else if (meetingStatus ==='Rejected') {
+            meetingrej('soloprobusiness@gmail.com', studentEmail, 'SOLOPRO', menteeName, title, startDate, startTime, endDate, endTime, meetinglink, meetingStatus);
         }
     } catch (error) {
         console.error('Error handling meeting email:', error.message);

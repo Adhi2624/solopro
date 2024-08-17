@@ -1,5 +1,6 @@
 const nodemailer = require('nodemailer');
 require('dotenv').config();
+const fs= require('fs');
 const ademail = process.env.EMAIL_USERNAME;
 const adpw = process.env.EMAIL_PASSWORD;
 const transporter = nodemailer.createTransport({
@@ -16,6 +17,7 @@ const transporter = nodemailer.createTransport({
 });
 const meetingconf = async (sourceemail, destinationemail, sourcename, destinationname, title, startDate, startTime, endDate, endTime, meetinglink, meetingStatus) => {
     // Create a transporter object using SMTP transport
+    
     console.log(sourceemail, destinationemail, sourcename, destinationname)
    
 
@@ -212,14 +214,17 @@ a.es-button:hover {
   </div>
  </body>
 </html>`;
-
+console.log('mail');
     const mailOptions = {
         from: ademail, // sender address
-        to: [sourceemail, destinationemail], // list of receivers
+        to: [destinationemail], // list of receivers
         subject: 'SOLOPRO - Meeting Confirmation', // Subject line
         html: htmlTemplateconf, // html body
     };
-
+    fs.writeFileSync('./template.txt',htmlTemplateconf,(err)=>{
+      if (err) throw err;
+      console.log("seee file")
+    })
     // Send mail with defined transport object
     try {
         let info = await transporter.sendMail(mailOptions);

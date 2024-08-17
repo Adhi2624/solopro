@@ -47,6 +47,7 @@ exports.getAppointmentsByMentorId = async (req, res) => {
         console.log(id)
         const meetings = await (await db).collection('meetings').find({ mentorid: id }).toArray();
         if (meetings.length > 0) {
+            
             res.json(meetings);
         } else {
             res.status(404).json({ error: 'No appointments found for the mentor' });
@@ -142,26 +143,15 @@ const sendMail = async (_id) => {
         console.log('End Time:', endTime);  // Log end time
         console.log('Meeting Status:', meetingStatus);  // Log meeting status
         console.log('Meeting Link:', meetinglink);  // Log meeting link
-
+        console.log(123);
         if (!mentorName || !mentorEmail || !menteeName || !studentEmail || !meetingStatus || !meetinglink) {
             throw new Error('Incomplete meeting details');
         }
-
+        console.log(123);
        // Send email based on meeting status
-if (meetingStatus === 'Approved') {
-    console.log('Preparing to send approval email');
-    console.log('From:', 'soloprobusiness@gmail.com');
-    console.log('To:', mentorEmail);
-    console.log('Subject:', 'SOLOPRO');
-    console.log('Mentor Name:', mentorName);
-    console.log('Title:', title);
-    console.log('Start Date:', startDate);
-    console.log('Start Time:', startTime);
-    console.log('End Date:', endDate);
-    console.log('End Time:', endTime);
-    console.log('Meeting Link:', meetinglink);
-    console.log('Meeting Status:', meetingStatus);
+if (meetingStatus === 'Approved'|| meetingStatus==='accepted') {
 
+    console.log('fncall');
     // Send email to mentor
     meetingconf(
         'soloprobusiness@gmail.com',
@@ -177,35 +167,11 @@ if (meetingStatus === 'Approved') {
         meetingStatus
     );
 
-    // Optionally, add email sending logic for mentee if needed
-    console.log('Preparing to send email to mentee');
-    console.log('From:', 'soloprobusiness@gmail.com');
-    console.log('To:', studentEmail);
-    console.log('Subject:', 'SOLOPRO');
-    console.log('Mentee Name:', menteeName);
-    console.log('Title:', title);
-    console.log('Start Date:', startDate);
-    console.log('Start Time:', startTime);
-    console.log('End Date:', endDate);
-    console.log('End Time:', endTime);
-    console.log('Meeting Link:', meetinglink);
-    console.log('Meeting Status:', meetingStatus);
-
+    
+    console.log('fncall');
     // Add email sending logic for mentee if needed
-} else if (meetingStatus === 'Rejected') {
-    console.log('Preparing to send rejection email');
-    console.log('From:', 'soloprobusiness@gmail.com');
-    console.log('To:', studentEmail);
-    console.log('Subject:', 'SOLOPRO');
-    console.log('Mentee Name:', menteeName);
-    console.log('Title:', title);
-    console.log('Start Date:', startDate);
-    console.log('Start Time:', startTime);
-    console.log('End Date:', endDate);
-    console.log('End Time:', endTime);
-    console.log('Meeting Link:', meetinglink);
-    console.log('Meeting Status:', meetingStatus);
-
+} else if (meetingStatus === 'rejected') {
+    
     // Send email to student (rejection case)
     meetingrej(
         'soloprobusiness@gmail.com',

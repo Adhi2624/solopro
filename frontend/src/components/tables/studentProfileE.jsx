@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Container, Row, Col, Card, Button, Form, ListGroup, Table } from 'react-bootstrap';
 import Nav1 from '../nav1';
+import Navinvmen from '../navinme';
 import '../../css/Studentprofile.css'; // Import CSS file
 
 const StudentProfile = () => {
@@ -17,7 +18,10 @@ const StudentProfile = () => {
  
 
   const localStorageId = lstorageparse.value.uid;
+  const urole=lstorageparse.value.role;
+  const isstudent= urole==='Student';
 
+  const shshed=_id===localStorageId;
   useEffect(() => {
     axios
       .post(`${backend}/getstudent`, { _id: _id })
@@ -108,7 +112,7 @@ const StudentProfile = () => {
 
   return (
     <>
-      <Nav1 />
+      {isstudent?<Nav1/>:<Navinvmen/>}
       <Container fluid className="main-body mt-lg-3">
         <Row className="justify-content-center">
           <Col lg={8} md={10}>
@@ -117,7 +121,7 @@ const StudentProfile = () => {
                 <Row>
                   <Col md={4} className="mb-4 mb-md-0 text-center">
                     <div className="student-avatar">
-                      <img src={studentProfile.profileImage} alt="Student" className="rounded-circle" width="150" />
+                      <img src={studentProfile.profileImage} alt="Student" className="rounded-circle inline-image" width="150"  />
                     </div>
                     <div className="mt-3">
                       <h4>{studentProfile.name || 'Unavailable'}</h4>
@@ -270,20 +274,7 @@ const StudentProfile = () => {
                               <span>{studentProfile.linkedin || 'Unavailable'}</span>
                             )}
                           </ListGroup.Item>
-                          <ListGroup.Item>
-                            <h6 className="mb-0">College ID Photo</h6>
-                            {isEditing ? (
-                              <Form.Control
-                                type="file"
-                                name="profileImage"
-                                onChange={handleImageChange}
-                              />
-                            ) : (
-                              <a href={studentProfile.profileImage} target="_blank" rel="noopener noreferrer">
-                                <img src={studentProfile.profileImage} alt="College ID" style={{ maxWidth: '100px', maxHeight: '100px' }} />
-                              </a>
-                            )}
-                          </ListGroup.Item>
+                          
                         </ListGroup>
                       </Col>
                     </Row>
@@ -305,7 +296,7 @@ const StudentProfile = () => {
             </Card>
           </Col>
         </Row>
-        <Row className="justify-content-center mt-4">
+        {shshed?<Row className="justify-content-center mt-4">
           <Col lg={10} md={12}>
             <h5 className="mb-3 text-light">Scheduled Appointments</h5>
             <div className="appointment-table-container">
@@ -361,7 +352,8 @@ const StudentProfile = () => {
             </div>
           </Col>
         </Row>
-      </Container>
+ :null}
+             </Container>
     </>
   );
 };

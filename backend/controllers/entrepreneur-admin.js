@@ -1,5 +1,5 @@
-const Entrepreneur = require('../models/entrepreneur'); // Adjust the path as necessary
-
+const Entrepreneur = require('../models/Entrepreneur'); // Adjust the path as necessary
+//
 // Create a new entrepreneur
 const createEntrepreneur = async (req, res) => {
   const { userId, name, phone, email, linkedin, areaOfExpertise, experience, profileImage, institution, nativePlaceOrWork, proofImage, startupName, startupDescription, fundingReceived } = req.body;

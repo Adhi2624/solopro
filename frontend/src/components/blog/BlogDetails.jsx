@@ -7,10 +7,16 @@ import 'react-medium-image-zoom/dist/styles.css';
 import './BlogDetails.css';
 import { useNavigate } from 'react-router-dom';
 import Button from '@mui/joy/Button'; 
+import Nav1 from '../nav1';
+import Navmi from '../navinme';
 const BlogDetail = () => {
   const { id, type } = useParams();
   const [content, setContent] = useState(null);
   const backend = process.env.REACT_APP_BACKEND;
+  const lstorage = localStorage.getItem('user');
+  const lstorageparse = JSON.parse(lstorage);
+  const role = lstorageparse.value.role;
+  
   const handleback= ()=>{
     // const history = useHistory();
   
@@ -42,6 +48,7 @@ const BlogDetail = () => {
 
   return (
     <div>
+      {role === 'Student' ? <Nav1 /> : <Navmi />}
       <header className="bg-dark text-white py-3 mb-4">
       <div style={{padding:'10px',border:'10px'}}>
       <Button onClick={handleback}>Back to posts</Button>
@@ -65,7 +72,7 @@ const BlogDetail = () => {
           <h1 className="content-title" style={{ color: 'white' }}>{content.title || 'Story'}</h1>
           <p className="content-description" style={{ color: 'white' }}>{content.description || content.shortDescription}</p>
           <p className="content-date">Posted on {new Date(content.date).toLocaleDateString()}</p>
-          <p className="content-author">By {content.authorName} - {content.authorRole}</p>
+          <p className="content-author">By {content.username} - {content.role}</p>
         </div>
       </div>
 

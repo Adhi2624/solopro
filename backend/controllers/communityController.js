@@ -63,16 +63,17 @@ exports.getPost = async (req, res) => {
 };
 
 exports.getPosts = async (req, res) => {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+
     try {
-        // Fetch raw posts from the database
-        const rawPosts = await Post.find();
-        console.log('Raw Posts:', JSON.stringify(rawPosts, null, 2));
-        
-        // Send the populated posts as a JSON response
-        res.status(200).json(rawPosts);
-    } catch (error) {
-        console.error('Error:', error);
-        res.status(500).json({ error: 'Failed to retrieve posts. Please try again.' });
+        const posts = await Post.find().skip(skip).limit(limit);
+        const total = await Post.countDocuments();
+        res.json({ posts, total, page, pages: Math.ceil(total / limit) });
+        console.log(res.body);
+    } catch (err) {
+        res.status(500).json({ error: 'Failed to retrieve posts.' });
     }
 };
 
@@ -80,7 +81,7 @@ exports.getPosts = async (req, res) => {
 exports.likePost = async (req, res) => {
     const { id } = req.params;
     const userId = req.headers['user-id']; // Assuming the user ID is passed in the headers
-
+    console.log(id,userId)
     try {
         const post = await Post.findById(id);
 
@@ -90,13 +91,16 @@ exports.likePost = async (req, res) => {
 
         // Check if the user has already liked the post
         if (post.likedBy.includes(userId)) {
-            return res.status(400).send({ error: 'User has already liked this post' });
-        }
 
+            post.likedBy.pop(userId);
+            post.likes -= 1;
+          //  return res.status(400).send({ error: 'User has already liked this post' });
+        }
+        else{
         // Add the user's ID to the likedBy array and increment the like count
         post.likedBy.push(userId);
         post.likes += 1;
-
+        }
         await post.save();
         res.status(200).send(post);
     } catch (error) {

@@ -9,21 +9,20 @@
   border: none;
   outline: none;
   cursor: pointer;
-  box-shadow: 
-    -5px -5px 10px rgba(166, 158, 158, 0.8), 
+  box-shadow:
+    -5px -5px 10px rgba(166, 158, 158, 0.8),
     5px 5px 10px rgba(0, 0, 0, 0.25);
   transition: all 0.3s ease;
 }
 
 .neumorphism-button:hover {
-  box-shadow: 
-    -1px -1px 5px rgba(98, 94, 94, 0.6), 
-    1px 1px 5px rgba(0, 0, 0, 0.3), 
-    inset -2px -2px 5px rgb(97, 94, 94), 
+  box-shadow:
+    -1px -1px 5px rgba(98, 94, 94, 0.6),
+    1px 1px 5px rgba(0, 0, 0, 0.3),
+    inset -2px -2px 5px rgb(97, 94, 94),
     inset 2px 2px 4px rgba(0, 0, 0, 0.3);
   color: black;
 }
-
 
 .header {
   display: flex;
@@ -67,12 +66,18 @@
   align-items: center;
 }
 
+.top-right-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
 .slide-tabs {
   position: relative;
   display: flex;
   justify-content: center;
   width: fit-content;
-  border-radius: 9999px;
+  border-radius: 20px;
   margin-top: 10px;
   border: 2px solid rgb(123, 11, 242);
   background-color: transparent;
@@ -102,13 +107,13 @@
 @media (max-width: 768px) {
   .toggle-button {
     display: block;
-    color: #1FBAB6;
+    color: rgb(127, 7, 255);
   }
 
   .slide-tabs-container {
     position: absolute;
     top: 50px;
-    left: 0;
+    left: 80%;
     right: 0;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     max-height: 0;
@@ -132,8 +137,8 @@
   .tab-cursor {
     display: none;
   }
-}
 
-.header, .neumorphism-button {
-  height: 100%;
+  .top-right-button {
+    display: none;
+  }
 }

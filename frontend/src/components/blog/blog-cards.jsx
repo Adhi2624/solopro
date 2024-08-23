@@ -56,7 +56,7 @@ const Blogs = () => {
   }, []);
 
   const handleReadMore = (id, type) => {
-    navigate(`/blogs/${type}/${id}`);
+    navigate(`${type}/${id}`);
   };
 
   const handleLoadMore = () => {
@@ -94,7 +94,7 @@ const Blogs = () => {
                   </p>
                   <p className="card-text">
                     <small className="text" style={{ color: 'teal' }}>
-                      By {blog.authorName} - {blog.authorRole}
+                      By {blog.username} - {blog.role}
                     </small>
                   </p>
                   <button className="btn btn-primary mt-auto" onClick={() => handleReadMore(blog._id, 'blogs')}>Read More</button>

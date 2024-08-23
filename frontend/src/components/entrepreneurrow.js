@@ -1,18 +1,23 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const entrepreneurTableRow = ({ Entrepreneur }) => {
-    console.log(Entrepreneur._id)
+const EntrepreneurTableRow = ({ entrepreneur }) => {
+    if (!entrepreneur || !entrepreneur._id) {
+        return null; // Return null if entrepreneur is undefined or _id is not present
+    }
+
+    console.log(entrepreneur._id);
+
     return (
         <tr className='text-center'>
-            <td>{Entrepreneur.profileImage ? <img className='img-fluid rounded-circle' src={Entrepreneur.profileImage} alt="Entrepreneur" width="50" height="50" /> : ""}</td>
-            <td>{Entrepreneur.name || ""}</td>
-            <td>{Entrepreneur.areaOfExpertise || ""}</td>
-            <td>{Entrepreneur.nativePlaceOrWork || ""}</td>
-            <td>{Entrepreneur.EntrepreneurshipCount || ""}</td>
-            <td><span className={Entrepreneur.availableToEntrepreneur === 'true' ? 'badge text-bg-success' : 'badge text-bg-danger'}>{Entrepreneur.availableToEntrepreneur === 'true' ? 'Available' : 'Not Available'}</span></td>
+            <td>{entrepreneur.profileImage ? <img className='img-fluid rounded-circle' src={entrepreneur.profileImage} alt="Entrepreneur" width="50" height="50" /> : ""}</td>
+            <td>{entrepreneur.name || ""}</td>
+            <td>{entrepreneur.areaOfExpertise || ""}</td>
+          
+            <td>{entrepreneur.EntrepreneurshipCount || ""}</td>
+            <td><span className={entrepreneur.availableToEntrepreneur === 'true' ? 'badge text-bg-success' : 'badge text-bg-danger'}>{entrepreneur.availableToEntrepreneur === 'true' ? 'Available' : 'Not Available'}</span></td>
             <td>
-                <Link to={`/student/Entrepreneur/${Entrepreneur._id}`}>
+                <Link to={`/student/entrepreneur/${entrepreneur._id}`}>
                     <button className="btn btn-primary">View Profile</button>
                 </Link>
             </td>
@@ -20,4 +25,5 @@ const entrepreneurTableRow = ({ Entrepreneur }) => {
     );
 };
 
-export default entrepreneurTableRow;
+
+export default EntrepreneurTableRow;

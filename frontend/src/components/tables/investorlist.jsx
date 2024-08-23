@@ -120,7 +120,7 @@ const InvestorList = () => {
                     >
                         <MenuItem value="name">Name</MenuItem>
                         <MenuItem value="areaOfExpertise">Area of Expertise</MenuItem>
-                        <MenuItem value="placeOfService">Place of Service</MenuItem>
+                       
                         <MenuItem value="numberOfPeopleMentored">Number of People Mentored</MenuItem>
                         <MenuItem value="status">Status</MenuItem>
                     </CustomSelect>
@@ -135,7 +135,7 @@ const InvestorList = () => {
                                 <th scope="col">Image</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Area of Expertise</th>
-                                <th scope="col">Place of Service</th>
+                              
                                 <th scope="col">Number of People Mentored</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">Profile</th>
@@ -174,7 +174,7 @@ const Pagination = ({ investorsPerPage, totalInvestors, paginate, currentPage, h
     const showingTo = Math.min(indexOfLastInvestor, totalInvestors);
 
     return (
-        <nav className='d-flex flex-column flex-md-row justify-content-between align-items-center p-3' id='pagebar'>
+        <nav className='d-flex flex-column flex-md-row justify-content-between align-items-center p-3' id='pagebar ' style={{backgroundColor:"#040F15"}}>
             <div className='text-light mb-2 mb-md-0'>
                 {`Showing ${showingFrom} to ${showingTo} of ${totalInvestors} entries`}
             </div>

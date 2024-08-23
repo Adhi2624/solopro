@@ -230,7 +230,7 @@ const Datatable = () => {
     { field: "name", headerName: "Name", width: 200, editable: true },
     { field: "email", headerName: "Email", width: 230, editable: true },
     { field: "areaOfExpertise", headerName: "Area of Expertise", width: 200, editable: true },
-    { field: "placeOfService", headerName: "Place of Service", width: 200, editable: true },
+    
     { field: "status", headerName: "Status", width: 120, editable: true },
   ];
 

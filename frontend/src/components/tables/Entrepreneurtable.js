@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import entrepreneurTableRow from '../entrepreneurrow'; // Assuming this component exists
+import EntrepreneurTableRow from '../entrepreneurrow'; // Ensure correct import
 import axios from 'axios';
 import Nav1 from '../nav1';
-import { TextField, Select, MenuItem } from '@mui/material';
+import { TextField, Select, MenuItem, Typography } from '@mui/material';
 import { styled } from '@mui/system';
-
+import { Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 const CustomTextField = styled(TextField)({
     "& .MuiInputBase-root": {
         color: "white",
@@ -29,16 +30,16 @@ const CustomTextField = styled(TextField)({
 
 const CustomSelect = styled(Select)({
     color: "white",
-    borderColor: "white !important", // Ensure border color is white
+    borderColor: "white !important",
     "& .MuiOutlinedInput-root": {
         "& fieldset": {
-            borderColor: "white !important", // Ensure border color is white
+            borderColor: "white !important",
         },
         "&:hover fieldset": {
-            borderColor: "white !important", // Ensure border color is white on hover
+            borderColor: "white !important",
         },
         "&.Mui-focused fieldset": {
-            borderColor: "white !important", // Ensure border color is white when focused
+            borderColor: "white !important",
         },
     },
     "& .MuiSelect-select": {
@@ -51,19 +52,19 @@ const CustomSelect = styled(Select)({
     },
 });
 
-
 const MentorentrepenureList = () => {
     const [entrepreneurlist, setEntrepreneurlist] = useState([]);
     const [filteredEntrepreneur, setFilteredEntrepreneur] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [EntrepreneurPerPage, setEntrepreneurPerPage] = useState(10);
+    const [entrepreneurPerPage, setEntrepreneurPerPage] = useState(10);
     const [searchTerm, setSearchTerm] = useState('');
-    const [searchField, setSearchField] = useState('name'); // Default search field
+    const [searchField, setSearchField] = useState('name');
     const backend = process.env.REACT_APP_BACKEND;
 
     useEffect(() => {
         axios.get(`${backend}/getentrepreneur`)
             .then(res => {
+                console.log("Fetched Data: ", res.data); // Log fetched data
                 setEntrepreneurlist(res.data);
                 setFilteredEntrepreneur(res.data);
             })
@@ -72,15 +73,15 @@ const MentorentrepenureList = () => {
 
     useEffect(() => {
         const results = entrepreneurlist.filter(mentor =>
-            mentor[searchField].toLowerCase().includes(searchTerm.toLowerCase())
+            mentor[searchField]?.toLowerCase().includes(searchTerm.toLowerCase())
         );
         setFilteredEntrepreneur(results);
         setCurrentPage(1);
     }, [searchTerm, searchField, entrepreneurlist]);
 
-    const indexOfLastMentor = currentPage * EntrepreneurPerPage;
-    const indexOfFirstMentor = indexOfLastMentor - EntrepreneurPerPage;
-    const currentEntrepreneur = filteredEntrepreneur.slice(indexOfFirstMentor, indexOfLastMentor);
+    const indexOfLastEntrepreneur = currentPage * entrepreneurPerPage;
+    const indexOfFirstEntrepreneur = indexOfLastEntrepreneur - entrepreneurPerPage;
+    const currentEntrepreneur = filteredEntrepreneur.slice(indexOfFirstEntrepreneur, indexOfLastEntrepreneur);
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -91,16 +92,28 @@ const MentorentrepenureList = () => {
 
     const handleSearch = (event) => {
         setSearchTerm(event.target.value);
-    };
+    };const navigate = useNavigate();
 
     const handleSearchFieldChange = (event) => {
         setSearchField(event.target.value);
-        setSearchTerm(''); // Clear search term when changing search field
+        setSearchTerm('');
     };
-
+    const handleback = () => {
+        // const history = useHistory();
+        
+        navigate(-1);
+    
+    
+      }
     return (
-        <div>
+        <div style={{backgroundColor:"#040F15"}}>
             <Nav1 />
+            <Button
+                variant="contained"
+                component="label"
+                onClick={handleback}
+                sx={{ marginTop: "20px",marginLeft:"20px" }}
+              >Back</Button>
             <div className='p-1 mt-3'>
                 <div className="d-flex justify-content-center mb-3">
                     <CustomTextField
@@ -121,13 +134,13 @@ const MentorentrepenureList = () => {
                     >
                         <MenuItem value="name">Name</MenuItem>
                         <MenuItem value="areaOfExpertise">Area of Expertise</MenuItem>
-                        <MenuItem value="placeOfService">Place of Service</MenuItem>
+                      
                         <MenuItem value="numberOfPeopleMentored">Number of People Mentored</MenuItem>
                         <MenuItem value="status">Status</MenuItem>
                     </CustomSelect>
                 </div>
                 <div className="d-flex justify-content-center mb-3">
-                    
+                    {/* Add any additional elements if needed */}
                 </div>
                 <div className="table-responsive">
                     <table className="table text-light" id="mentor-table">
@@ -136,28 +149,36 @@ const MentorentrepenureList = () => {
                                 <th scope="col">Image</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Area of Expertise</th>
-                                <th scope="col">Place of Service</th>
+                               
                                 <th scope="col">Number of People Mentored</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">Profile</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {currentEntrepreneur.map((mentor, idx) => (
-                                <entrepreneurTableRow  key={idx} entrepreneur={mentor} />
-                            ))}
+                            {currentEntrepreneur.length > 0 ? (
+                                currentEntrepreneur.map((mentor, idx) => (
+                                    <EntrepreneurTableRow key={mentor._id} entrepreneur={mentor} />
+                                ))
+                            ) : (
+                                <tr>
+                                    <td colSpan="7" className="text-center">
+                                        <Typography>No data available</Typography>
+                                    </td>
+                                </tr>
+                            )}
                         </tbody>
                     </table>
                 </div>
                 {filteredEntrepreneur.length >= 10 && (
                     <Pagination
-                        EntrepreneurPerPage={EntrepreneurPerPage}
+                        EntrepreneurPerPage={entrepreneurPerPage}
                         totalEntrepreneur={filteredEntrepreneur.length}
                         paginate={paginate}
                         currentPage={currentPage}
                         handleEntrepreneurPerPageChange={handleEntrepreneurPerPageChange}
-                        indexOfFirstMentor={indexOfFirstMentor}
-                        indexOfLastMentor={indexOfLastMentor}
+                        indexOfFirstMentor={indexOfFirstEntrepreneur}
+                        indexOfLastMentor={indexOfLastEntrepreneur}
                     />
                 )}
             </div>

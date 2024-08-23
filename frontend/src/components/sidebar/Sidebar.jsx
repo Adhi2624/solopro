@@ -37,7 +37,7 @@ const Sidebar = ({ isOpen, handleToggle }) => {
       </div>
       <div className={`sidebar ${isOpen ? "open" : ""}`}>
         <div className="top">
-          <Link to="/" style={{ textDecoration: "none" }}>
+          <Link to="/admin/dashboard" style={{ textDecoration: "none" }}>
             <span className="logo">SOLOPRO</span>
           </Link>
         </div>
@@ -45,7 +45,7 @@ const Sidebar = ({ isOpen, handleToggle }) => {
         <div className="center">
           <ul>
             <p className="title">MAIN</p>
-            <Link to="/dashboard" style={{ textDecoration: "none" }}>
+            <Link to="/admin/dashboard" style={{ textDecoration: "none" }}>
               <li>
                 <DashboardIcon className="icon" />
                 <span>Dashboard</span>
@@ -53,25 +53,25 @@ const Sidebar = ({ isOpen, handleToggle }) => {
             </Link>
 
             <p className="title">LISTS</p>
-            <Link to="/students" style={{ textDecoration: "none" }}>
+            <Link to="/admin/students" style={{ textDecoration: "none" }}>
               <li>
                 <CastForEducationIcon className="icon" />
                 <span>Students</span>
               </li>
             </Link>
-            <Link to="/mentors" style={{ textDecoration: "none" }}>
+            <Link to="/admin/mentors" style={{ textDecoration: "none" }}>
               <li>
                 <SchoolIcon className="icon" />
                 <span>Mentors</span>
               </li>
             </Link>
-            <Link to="/investors" style={{ textDecoration: "none" }}>
+            <Link to="/admin/investors" style={{ textDecoration: "none" }}>
               <li>
                 <LocalShippingIcon className="icon" />
                 <span>Investors</span>
               </li>
             </Link>
-            <Link to="/Entrepreneur" style={{ textDecoration: "none" }}>
+            <Link to="/admin/Entrepreneur" style={{ textDecoration: "none" }}>
               <li>
                 <SchoolIcon className="icon" />
                 <span>Entrepreneur</span>

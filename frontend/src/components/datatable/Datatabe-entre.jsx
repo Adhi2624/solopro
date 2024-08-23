@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import { CircularProgress } from '@mui/material';
-
+import {Typography} from "@mui/material";
 const backend = process.env.REACT_APP_BACKEND;
 
 const DatatableEntrepreneurs = () => {
@@ -101,12 +101,11 @@ const DatatableEntrepreneurs = () => {
     <div className="datatable">
       <div className="datatableTitle">
         Entrepreneur List
-        <Link to="/entrepreneurs/new" className="link">
-          Add New
-        </Link>
+        
       </div>
       {renderLoading()}
       {error && <div className="errorMessage">{error}</div>}
+      <Typography>Double Click to edit the datas</Typography>
       <DataGrid
         className="datagrid"
         rows={data}

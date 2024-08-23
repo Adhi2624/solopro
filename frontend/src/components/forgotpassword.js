@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Link  } from "react-router-dom";
-import { MD5 } from "crypto-js";
+import { Link } from "react-router-dom";
 import {
   Avatar,
   Button,
@@ -11,12 +10,16 @@ import {
   Box,
   Grid,
   Typography,
+  InputAdornment,
+  IconButton,
   createTheme,
   ThemeProvider,
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import axios from "axios";
-
+import Nav from './nav';
 
 const theme = createTheme({
   typography: {
@@ -24,7 +27,8 @@ const theme = createTheme({
   },
 });
 
-const backendUrl = `${process.env.REACT_APP_BACKEND}`;
+const backendUrl = process.env.REACT_APP_BACKEND;
+
 function Copyright(props) {
   return (
     <Typography
@@ -41,7 +45,6 @@ function Copyright(props) {
           textDecoration: "none",
           "&:hover": {
             textDecoration: "none",
-          
           },
         }}
       >
@@ -52,6 +55,7 @@ function Copyright(props) {
     </Typography>
   );
 }
+
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
@@ -63,7 +67,23 @@ export default function ForgotPassword() {
   const [cpassword, setCPassword] = useState("");
   const [cpasswordError, setCPasswordError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [otpTimer, setOtpTimer] = useState(0);
+  const [disableSubmitButton, setDisableSubmitButton] = useState(false);
+  const [isPasswordValid, setIsPasswordValid] = useState(false);
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
+
   const navigate = useNavigate();
+
+  useEffect(() => {
+    let timer;
+    if (otpTimer > 0) {
+      timer = setTimeout(() => setOtpTimer(otpTimer - 1), 1000);
+    } else {
+      setDisableSubmitButton(false);
+    }
+    return () => clearTimeout(timer);
+  }, [otpTimer]);
 
   const handleEmailChange = (event) => {
     const value = event.target.value;
@@ -79,6 +99,8 @@ export default function ForgotPassword() {
   const handlePasswordChange = (event) => {
     const value = event.target.value;
     setPassword(value);
+    const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+    setIsPasswordValid(passwordRegex.test(value));
     setPasswordError(validatePassword(value));
   };
 
@@ -92,15 +114,26 @@ export default function ForgotPassword() {
     setCPasswordError(value !== password ? "Passwords do not match" : "");
   };
 
+  const handleClickShowPassword = () => {
+    setPasswordVisible(!passwordVisible);
+  };
+
+  const handleClickShowConfirmPassword = () => {
+    setConfirmPasswordVisible(!confirmPasswordVisible);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post(`${backendUrl}/forgot_password`, { email });
-      if (response.data === "no") {
+      if (response.data.message === "User not found") {
         alert("Email not found. Contact Administrator");
       } else {
         setShowOtp(true);
+        alert("An OTP has been sent to your email. Valid for 120 seconds");
         setOriginalOtp(response.data.otp);
+        setOtpTimer(60);
+        setDisableSubmitButton(true);
       }
     } catch (error) {
       alert("An error occurred. Please try again later.");
@@ -109,6 +142,7 @@ export default function ForgotPassword() {
 
   const handleOtpSubmit = (e) => {
     e.preventDefault();
+    console.log(otp, originalOtp);
     if (otp === originalOtp) {
       setShowPassword(true);
     } else {
@@ -118,9 +152,8 @@ export default function ForgotPassword() {
 
   const handlePasswordSubmit = async (e) => {
     e.preventDefault();
-    const hashedPassword = MD5(password).toString();
     try {
-      const response = await axios.post(`${backendUrl}/update_password`, { email, password: hashedPassword });
+      const response = await axios.post(`${backendUrl}/update_password`, { email, password });
       if (response.data === "no") {
         alert("Technical Failure. Please try again");
       } else {
@@ -138,6 +171,7 @@ export default function ForgotPassword() {
 
   return (
     <ThemeProvider theme={theme}>
+      <Nav></Nav>
       <Grid container component="main" sx={{ height: "100vh", backgroundColor: "#040F15" }}>
         <CssBaseline />
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square sx={{ backgroundColor: "#040F15", color: "white" }}>
@@ -171,8 +205,14 @@ export default function ForgotPassword() {
                 onChange={handleEmailChange}
               />
               {emailError && <span className="error-message">{emailError}</span>}
-              <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-                Submit
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+                disabled={disableSubmitButton}
+              >
+                Submit {otpTimer > 0 && `(${otpTimer}s)`}
               </Button>
             </Box>
             {showOtp && (
@@ -212,10 +252,26 @@ export default function ForgotPassword() {
                   id="password"
                   label="New Password"
                   name="password"
-                  type="password"
+                  type={passwordVisible ? "text" : "password"}
                   autoComplete="new-password"
                   InputLabelProps={{ style: { color: "white" } }}
-                  InputProps={{ style: { color: "white", borderColor: "white" } }}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          edge="end"
+                          sx={{ color: "white" }}
+                        >
+                          {passwordVisible ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                    style: {
+                      borderColor: isPasswordValid ? "inherit" : "red",
+                    },
+                  }}
                   sx={{
                     "& .MuiOutlinedInput-root": {
                       "& fieldset": { borderColor: "white" },
@@ -226,6 +282,14 @@ export default function ForgotPassword() {
                   value={password}
                   onChange={handlePasswordChange}
                 />
+                <Typography
+                  variant="body2"
+                  color={isPasswordValid ? "green" : "error"}
+                  sx={{ marginBottom: "20px" }}
+                >
+                  Password must be at least 8 characters long, contain at least
+                  one uppercase letter and one digit.
+                </Typography>
                 {passwordError && <span className="error-message">{passwordError}</span>}
                 <TextField
                   margin="normal"
@@ -234,10 +298,24 @@ export default function ForgotPassword() {
                   id="cpassword"
                   label="Confirm Password"
                   name="cpassword"
-                  type="password"
+                  type={confirmPasswordVisible ? "text" : "password"}
                   autoComplete="new-password"
                   InputLabelProps={{ style: { color: "white" } }}
-                  InputProps={{ style: { color: "white", borderColor: "white" } }}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowConfirmPassword}
+                          edge="end"
+                          sx={{ color: "white" }}
+                        >
+                          {confirmPasswordVisible ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                    style: { color: "white", borderColor: "white" },
+                  }}
                   sx={{
                     "& .MuiOutlinedInput-root": {
                       "& fieldset": { borderColor: "white" },
@@ -257,13 +335,10 @@ export default function ForgotPassword() {
             <Button fullWidth variant="contained" onClick={handleBack} sx={{ mt: 3, mb: 2 }}>
               Back
             </Button>
-            <Copyright sx={{ mt: 5, color: "white" ,textDecoration:'none'}} />
+            <Copyright sx={{ mt: 5, color: "white", textDecoration: 'none' }} />
           </Box>
         </Grid>
-        
       </Grid>
-        
     </ThemeProvider>
-    
   );
 }

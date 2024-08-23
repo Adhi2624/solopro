@@ -1,16 +1,20 @@
 import * as React from "react";
+import { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import firebaseConfig from "./firebaseconfig";
+// import firebaseConfig from "./firebaseconfig";
 //import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
+import { IconButton, InputAdornment } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+
 import Link from "@mui/material/Link";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
+import { Typography, TextField } from "@mui/material";
+
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import loginimage from "./login.png";
 import Navbarr from "./nav";
@@ -52,23 +56,16 @@ function Copyright(props) {
 }
 
 const handleGoogleSignIn = async () => {
-  //const provider = new GoogleAuthProvider();
+  
   try {
-    // const result = await signInWithPopup(auth, provider);
-    // const token = await result.user.getIdToken();
-
-    // // Log the authentication data from Google
-    // console.log("Google Sign-In Result:", result);
-    // console.log("Google Auth Token:", token);
-    // console.log("Google User Info:", result.user);
-
+   
     // Send token to backend
     await fetch(`${backend}/api/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         //Authorization: `Bearer ${token}`
-      }
+      },
     });
   } catch (error) {
     console.error("Error signing in with Google:", error);
@@ -81,7 +78,11 @@ const defaultTheme = createTheme({
   },
 });
 
+
 export default function Login() {
+  const [showPassword, setShowPassword] = useState(false);
+
+const handleClickShowPassword = () => setShowPassword(!showPassword);
   const navigate = useNavigate();
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -103,12 +104,15 @@ export default function Login() {
 
       if (userData.role === "Student") {
         navigate("/student/");
-      } else if (userData.role === "Mentor" || userData.role === "Investor" ||userData.role === "Entrepreneur" ) {
+      } else if (
+        userData.role === "Mentor" ||
+        userData.role === "Investor" ||
+        userData.role === "Entrepreneur"
+      ) {
         navigate("/mi/");
       } else if (userData.role === "Admin") {
-        navigate("/admin/");
+        navigate("/admin/dashboard");
       }
-      
     } catch (error) {
       alert(
         `Login failed: ${
@@ -121,33 +125,23 @@ export default function Login() {
   return (
     <ThemeProvider theme={defaultTheme}>
       <>
-         <Navbarr /> 
-        
-{/* <Navbar /> */}
-        <Grid container component="main" sx={{ height: "100vh", backgroundColor: "#040F15" }}>
-          <CssBaseline />
-          {/* <Grid
-              item
-              xs={false}
-              sm={4}
-              md={7}
-              sx={{
-                backgroundImage: `url(${loginimage})`,
-                backgroundRepeat: "no-repeat",
-                backgroundColor: "#040F15",
-                backgroundSize: "cover",  // Adjusted from "contain" to "cover"
-                backgroundPosition: "center",
-                backgroundAttachment: "fixed" // Optional, depends on your design needs
-              }}
-            /> */}
+        <Navbarr />
 
+       
+        <Grid
+          container
+          component="main"
+          sx={{ height: "100%", backgroundColor: "#040F15" }}
+        >
+          <CssBaseline />
+         
           <Grid
             item
             xs={12}
             sm={8}
             md={5}
             component={Paper}
-            elevation={6}
+            // elevation={6}
             fullWidth
             style={{ backgroundColor: "#040F15", color: "white" }}
           >
@@ -158,7 +152,7 @@ export default function Login() {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-                mt: 30,
+                mt: 5,
               }}
             >
               <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
@@ -174,7 +168,7 @@ export default function Login() {
                 component="form"
                 noValidate
                 onSubmit={handleSubmit}
-                sx={{ mt: 10 }}
+                sx={{ mt: 7 }}
                 style={{ color: "white", width: "55%" }}
               >
                 <TextField
@@ -229,7 +223,7 @@ export default function Login() {
                   fullWidth
                   name="password"
                   label="Password"
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   id="password"
                   autoComplete="current-password"
                   InputLabelProps={{
@@ -238,9 +232,20 @@ export default function Login() {
                   InputProps={{
                     style: {
                       color: "white",
-
                       borderColor: "white",
                     },
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          edge="end"
+                          sx={{ color: "white" }}
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
                   }}
                   sx={{
                     borderRadius: "10px",
@@ -256,19 +261,20 @@ export default function Login() {
                       },
                     },
                     "& input:-webkit-autofill": {
-                      WebkitBoxShadow: "0 0 0 1000px  inset",
+                      WebkitBoxShadow: "0 0 0 1000px inset",
                       WebkitTextFillColor: "white",
                     },
                     "& input:-webkit-autofill:focus": {
-                      WebkitBoxShadow: "0 0 0 1000px  inset",
+                      WebkitBoxShadow: "0 0 0 1000px inset",
                       WebkitTextFillColor: "white",
                     },
                     "& input:-webkit-autofill:hover": {
-                      WebkitBoxShadow: "0 0 0 1000px  inset",
+                      WebkitBoxShadow: "0 0 0 1000px inset",
                       WebkitTextFillColor: "white",
                     },
                   }}
                 />
+
                 <Button
                   type="submit"
                   fullWidth

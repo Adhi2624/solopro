@@ -3,6 +3,7 @@ const {getDB } = require('../config/db');
 const meeting=require("../models/meeting")
 const db=getDB();
 const meetingconf=require('../mailtemplates/meetingconfirm')
+const meetingrej = require('../mailtemplates/meetingconfirm')
 
 exports.scheduleMeeting = async (req, res) => {
     try {
@@ -46,6 +47,7 @@ exports.getAppointmentsByMentorId = async (req, res) => {
         console.log(id)
         const meetings = await (await db).collection('meetings').find({ mentorid: id }).toArray();
         if (meetings.length > 0) {
+            
             res.json(meetings);
         } else {
             res.status(404).json({ error: 'No appointments found for the mentor' });
@@ -60,13 +62,14 @@ exports.updateAppointmentStatus = async (req, res) => {
     try {
      //   const db = getDB();
         const { appointmentId, meetingStatus } = req.body;
-        console.log(req.body)
+        
         const updatedAppointment =await (await db).collection('meetings').updateOne(
             { _id: new ObjectId(appointmentId) },
             { $set: { meetingStatus: meetingStatus } },
             { returnOriginal: false }
         );
         await sendMail(appointmentId);
+
         console.log(updatedAppointment.value)
         if (updatedAppointment.value) {
            
@@ -77,49 +80,117 @@ exports.updateAppointmentStatus = async (req, res) => {
         }
 
     } catch (error) {
-        console.error("Error updating appointment status:", error);
+        console.error("Error updating appointment status:", error.message);
         res.status(500).send("Internal Server Error");
     }
 };
 
 const sendMail = async (_id) => {
     try {
+        // Fetch meeting details
         const meetdetails = await db.collection('meetings').findOne({ _id: new ObjectId(_id) });
-        console.log(meetdetails)
+        console.log('Meeting Details:', meetdetails);  // Log meeting details
+
         if (!meetdetails) {
             throw new Error('Meeting not found');
         }
 
+        // Function to find mentor's email
         const findMentor = async (mentorId) => {
             let mentor = await db.collection('investors').findOne({ _id: new ObjectId(mentorId) });
-            if (mentor) return mentor.email;
+            if (mentor) {
+                console.log('Mentor found in investors:', mentor.email);  // Log found mentor's email
+                return mentor.email;
+            }
 
             mentor = await db.collection('mentors').findOne({ _id: new ObjectId(mentorId) });
-            if (mentor) return mentor.email;
+            if (mentor) {
+                console.log('Mentor found in mentors:', mentor.email);  // Log found mentor's email
+                return mentor.email;
+            }
 
             mentor = await db.collection('entrepreneurs').findOne({ _id: new ObjectId(mentorId) });
-            return mentor.email;
+            if (mentor) {
+                console.log('Mentor found in entrepreneurs:', mentor.email);  // Log found mentor's email
+                return mentor.email;
+            }
+
+            console.log('Mentor not found');
+            return null;
         };
 
         let mentorEmail = await findMentor(meetdetails.mentorid);
-        console.log(mentorEmail)
-        console.log(meetdetails.studentid)
-        let studentDetails = await db.collection('Users').findOne({ _id: new ObjectId(meetdetails.studentId) });
-        let studentEmail = studentDetails;
-        console.log(studentEmail)
-        const { mentorname: mentorName, studentname: menteeName, title, startDate, startTime, endDate, endTime, meetingStatus, meetingLink } = meetdetails;
+        console.log('Mentor Email:', mentorEmail);  // Log mentor's email
 
-        if (!mentorName || !mentorEmail || !menteeName || !studentEmail || !meetingStatus || !meetingLink) {
+        let studentDetails = await (await db).collection('students').findOne({ _id: new ObjectId(meetdetails.studentid) });
+        console.log('Student Details:', studentDetails);  // Log student details
+
+        if (!studentDetails) {
+            console.log('Student not found');
+            throw new Error('Student not found');
+        }
+
+        let studentEmail = studentDetails.email;
+        console.log('Student Email:', studentEmail);  // Log student's email
+
+        const { mentorname: mentorName, studentname: menteeName, title, startDate, startTime, endDate, endTime, meetingStatus, meetinglink } = meetdetails;
+        console.log('Mentor Name:', mentorName);  // Log mentor name
+        console.log('Mentee Name:', menteeName);  // Log mentee name
+        console.log('Title:', title);  // Log title
+        console.log('Start Date:', startDate);  // Log start date
+        console.log('Start Time:', startTime);  // Log start time
+        console.log('End Date:', endDate);  // Log end date
+        console.log('End Time:', endTime);  // Log end time
+        console.log('Meeting Status:', meetingStatus);  // Log meeting status
+        console.log('Meeting Link:', meetinglink);  // Log meeting link
+        console.log(123);
+        if (!mentorName || !mentorEmail || !menteeName || !studentEmail || !meetingStatus || !meetinglink) {
             throw new Error('Incomplete meeting details');
         }
+        console.log(123);
+       // Send email based on meeting status
+if (meetingStatus === 'Approved'|| meetingStatus==='accepted') {
 
-        if (meetingStatus === 'Approved' || meetingStatus === 'Rejected') {
-            // Send email to mentor
-            meetingconf('adhithiyan.21it@sonatech.ac.in', mentorEmail, 'SOLOPRO', mentorName, title, startDate, startTime, endDate, endTime, meetingLink, meetingStatus);
-            // Send email to mentee
-            meetingconf('adhithiyan.21it@sonatech.ac.in', studentEmail, 'SOLOPRO', menteeName, title, startDate, startTime, endDate, endTime, meetingLink, meetingStatus);
-        }
+    console.log('fncall');
+    // Send email to mentor
+    meetingconf(
+        'soloprobusiness@gmail.com',
+        mentorEmail,
+        'SOLOPRO',
+        mentorName,
+        title,
+        startDate,
+        startTime,
+        endDate,
+        endTime,
+        meetinglink,
+        meetingStatus
+    );
+
+    
+    console.log('fncall');
+    // Add email sending logic for mentee if needed
+} else if (meetingStatus === 'rejected') {
+    
+    // Send email to student (rejection case)
+    meetingrej(
+        'soloprobusiness@gmail.com',
+        studentEmail,
+        'SOLOPRO',
+        menteeName,
+        title,
+        startDate,
+        startTime,
+        endDate,
+        endTime,
+        meetinglink,
+        meetingStatus
+    );
+}
+
     } catch (error) {
-        console.error('Error handling meeting email:', error.message);
+        console.log(1)
+        console.error('Error handling meeting email:', error);
     }
 };
+

@@ -15,6 +15,7 @@ const studentSchema = new Schema({
   profileImage: { type: String },
   institution: { type: String },
   nativePlaceOrWork: { type: String },
+  collegeIdCardImage:{type:String}
 });
 
 module.exports = mongoose.models.Student || mongoose.model('Student', studentSchema);

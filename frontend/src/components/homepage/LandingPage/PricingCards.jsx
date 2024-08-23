@@ -19,7 +19,7 @@ export default function PricingCards() {
       sx={{
         width: '100%',
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 300px), 1fr))',
+        gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 400px), 1fr))',
         gap: 2,
       }}
     >

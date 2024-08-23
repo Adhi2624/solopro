@@ -13,7 +13,7 @@ const Lotie = () => {
         <p className="headline">Begin Your Expedition</p>
         <p className="subheadline">Leap into the future with VioletVanguard.</p>
         <a href="/signup" style={{ textDecoration: 'none' }}>
-          <button className='jump' >Jump In</button>
+          <button className='jump'  >Jump In</button>
         </a>
       </div>
     </div>

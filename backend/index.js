@@ -9,6 +9,7 @@ const { connectDB, connectDB1 } = require("./config/db");
 const { errorHandler } = require("./middleware/errorHandler");
 const multer = require('multer');
 const sharp = require('sharp');
+const { forgotPassword, updatePassword } = require('./controllers/authcontroller');
 
 const { getAllData, getDataByName } = require('./controllers/allusercontroller');
 
@@ -17,9 +18,9 @@ const featuredStoryRoutes = require("./routes/featuredStories");
 const moreStoryRoutes = require("./routes/moreStories");
 const userRoutes = require("./routes/userRoutes");
 const loginRoutes = require("./routes/loginRoutes");
+const authRoutes = require('./routes/authroutes');
 
 const email = require("./controllers/emailverify");
-
 
 const totalCountRoutes = require('./routes/totalCountRoutes'); 
 const usersRouter = require('./routes/users');
@@ -28,7 +29,8 @@ const MentorRoutes = require('./routes/mentorRoutes'); // Adjust the path as nec
 const studentRoutes = require('./routes/studentRoutes');
 const entrepreneurRoutes = require('./routes/entrepreneurRoutes');
 
-const passwordRoutes = require('./routes/passwordRoutes');
+
+// const { default: ForgotPassword } = require("../frontend/src/components/forgotpassword");
 
 dotenv.config();
 const app = express();
@@ -68,9 +70,9 @@ const startServer = async () => {
     app.use("/api/signup", userRoutes);
     app.use("/api/login", loginRoutes);
     app.use("/api/check-email", email);
-    app.use('/password', passwordRoutes);
+    // app.use('/password', passwordRoutes);
     // app.post('/createMeet', createMeet);
-
+        
     app.use('/api', investorRoutes); // Use the new routes
     app.use('/api', MentorRoutes);
     app.use('/api', studentRoutes);
@@ -117,7 +119,8 @@ const startServer = async () => {
     app.post('/posts/:id/comments', postControllers.addComment);
     app.delete('/posts/:id', postControllers.deletePost);
 
-
+    app.post('/forgot_password',forgotPassword);
+    app.post('/update_password',updatePassword)
     // Error Handler Middleware
     app.use(errorHandler);
 

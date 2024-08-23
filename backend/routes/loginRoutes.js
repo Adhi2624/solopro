@@ -27,12 +27,18 @@ router.post('/', async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
-
+    console.log("user found")
+    
+    const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+        console.log(hashedPassword)    
+    console.log(user.password)
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
+
       return res.status(400).json({ message: 'Invalid credentials' });
     }
-
+    if(user.role!=='Admin'){
     const RoleModel = roleModels[user.role];
     if (!RoleModel) {
       return res.status(500).json({ message: 'Invalid user role' });
@@ -44,7 +50,11 @@ router.post('/', async (req, res) => {
     }
 
     res.json({ email: user.email, role: user.role, id: user._id, uid: userProfile._id });
-    console.log({ email: user.email, role: user.role, id: user._id, uid: userProfile._id });
+    console.log({ email: user.email, role: user.role, id: user._id, uid: userProfile._id });}
+    else{
+      
+    res.json({ email: user.email, role: user.role, id: user._id, uid: user._id });
+    }
   } catch (error) {
     console.error('Server error: ', error);
     res.status(500).json({ message: 'Server error', error: error.message });

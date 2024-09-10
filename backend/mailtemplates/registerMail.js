@@ -117,8 +117,11 @@ async function sendWelcomeEmail(username, useremail) {
                                                                 <tr>
                                                                     <td align="center" style="padding:0;Margin:0;padding-top:20px">
                                                                         <span class="es-button-border" style="border-style:solid;border-color:#6F76D9;background:#6F76D9;border-width:1px;display:inline-block;border-radius:5px;width:auto">
-                                                                            <a href="" class="es-button" target="_blank" style="mso-style-priority:100 !important;text-decoration:none;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;color:#FFFFFF;font-size:16px;display:inline-block;background:#6F76D9;border-radius:5px;font-family:Imprima, Arial, sans-serif;font-weight:normal;font-style:normal;line-height:19px;width:auto;text-align:center;padding:10px 20px 10px 20px;border-color:#6F76D9">Visit our website</a>
-                                                                        </span>
+    <a href="https://solopro.co.in" class="es-button" target="_blank" style="mso-style-priority:100 !important;text-decoration:none;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;color:#FFFFFF;font-size:16px;display:inline-block;background:#6F76D9;border-radius:5px;font-family:Imprima, Arial, sans-serif;font-weight:normal;font-style:normal;line-height:19px;width:auto;text-align:center;padding:10px 20px 10px 20px;border-color:#6F76D9">
+        Visit our website
+    </a>
+</span>
+
                                                                     </td>
                                                                 </tr>
                                                             </table>
